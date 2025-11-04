@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Trust Assessment</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 40px;
+        }
+        h1 { color: #333; margin-bottom: 15px; font-size: 28px; }
+        .progress { text-align: center; color: #666; margin-bottom: 30px; font-size: 14px; }
+        .section { margin-bottom: 35px; padding: 25px; background: #f8f9fa; border-radius: 8px; }
+        .section h2 { color: #667eea; margin-bottom: 15px; font-size: 20px; }
+        .question { margin-bottom: 20px; padding: 15px; background: white; border-radius: 6px; }
+        .question-text { font-weight: 500; color: #333; margin-bottom: 12px; }
+        .likert-scale { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+        .likert-option { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .likert-option input { margin-bottom: 5px; width: 20px; height: 20px; cursor: pointer; }
+        .likert-label { font-size: 11px; color: #666; text-align: center; line-height: 1.3; }
+        .scale-ends { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: #888; font-style: italic; }
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 100px;
+            margin-top: 10px;
+        }
+        textarea:focus { outline: none; border-color: #667eea; }
+        .timer { background: #fff3cd; padding: 8px 12px; border-radius: 6px; margin-bottom: 10px; font-weight: 600; color: #856404; font-size: 14px; }
+        button {
+            width: 100%; padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border: none; border-radius: 8px;
+            font-size: 18px; font-weight: 600; cursor: pointer;
+            transition: transform 0.2s; margin-top: 20px;
+        }
+        button:hover:not(:disabled) { transform: translateY(-2px); }
+        button:disabled { opacity: 0.6; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <div id="ait-timer" style="position:fixed; top:12px; right:12px; padding:6px 10px; border:1px solid #e0e0e0; border-radius:6px; background:#fff; z-index:9999; font-family:system-ui, -apple-system, Segoe UI, Roboto; box-shadow:0 2px 10px rgba(0,0,0,.06)">
+      ⏳ <span id="ait-time-left"></span> left
+    </div>
+    <div class="container">
+        <h1>🤖 AI Trust & Technology Use</h1>
+        <p class="progress">Final baseline assessment • Estimated time: 4-5 minutes</p>
+
+        <!-- Trust in AI -->
+        <div class="section">
+            <h2>Trust in AI Systems</h2>
+            {% for q in questions.trust %}
+            {% set i = loop.index0 %}
+            <div class="question">
+                <div class="question-text">{{ q }}</div>
+                <div class="likert-scale">
+                    {% for val in range(1, 8) %}
+                    <div class="likert-option">
+                        <input type="radio" name="trust_{{ i }}" value="{{ val }}" required>
+                        <span class="likert-label">{{ val }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="scale-ends">
+                    <span>Strongly disagree</span>
+                    <span>Strongly agree</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Dependence on AI -->
+        <div class="section">
+            <h2>Technology Dependence</h2>
+            {% for q in questions.dependence %}
+            {% set i = loop.index0 %}
+            <div class="question">
+                <div class="question-text">{{ q }}</div>
+                <div class="likert-scale">
+                    {% for val in range(1, 8) %}
+                    <div class="likert-option">
+                        <input type="radio" name="dep_{{ i }}" value="{{ val }}" required>
+                        <span class="likert-label">{{ val }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="scale-ends">
+                    <span>Strongly disagree</span>
+                    <span>Strongly agree</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Technical Skill -->
+        <div class="section">
+            <h2>Technical Proficiency</h2>
+            {% for q in questions.skill %}
+            {% set i = loop.index0 %}
+            <div class="question">
+                <div class="question-text">{{ q }}</div>
+                <div class="likert-scale">
+                    {% for val in range(1, 8) %}
+                    <div class="likert-option">
+                        <input type="radio" name="skill_{{ i }}" value="{{ val }}" required>
+                        <span class="likert-label">{{ val }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="scale-ends">
+                    <span>Strongly disagree</span>
+                    <span>Strongly agree</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Open Reflection -->
+        <div class="section">
+            <h2>Optional: AI in Your Life</h2>
+            <p style="color: #666; margin-bottom: 10px;">Briefly describe how you use AI or smart digital tools in your daily life (e.g., search engines, assistants, study aids).</p>
+            <div class="timer" id="timer">Time limit: 30 seconds</div>
+            <textarea id="reflection" placeholder="Type your response here (optional)..."></textarea>
+        </div>
+
+        <button onclick="submitForm()" id="submitBtn">Continue to Experiment →</button>
+    </div>
+
+    <script>
+        // Start timer
+        let remaining = 30;
+        const timerInterval = setInterval(() => {
+            remaining--;
+            document.getElementById('timer').textContent = `Time limit: ${remaining} seconds`;
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('reflection').disabled = true;
+            }
+        }, 1000);
+
+        function submitForm() {
+            // Collect trust ratings
+            const trust = {};
+            {% for i in range(questions.trust|length) %}
+            const trust{{ i }} = document.querySelector('input[name="trust_{{ i }}"]:checked');
+            if (!trust{{ i }}) {
+                alert('Please answer all trust questions');
+                return;
+            }
+            trust[{{ i }}] = parseInt(trust{{ i }}.value);
+            {% endfor %}
+
+            // Collect dependence ratings
+            const dependence = {};
+            {% for i in range(questions.dependence|length) %}
+            const dep{{ i }} = document.querySelector('input[name="dep_{{ i }}"]:checked');
+            if (!dep{{ i }}) {
+                alert('Please answer all dependence questions');
+                return;
+            }
+            dependence[{{ i }}] = parseInt(dep{{ i }}.value);
+            {% endfor %}
+
+            // Collect skill ratings
+            const skill = {};
+            {% for i in range(questions.skill|length) %}
+            const skill{{ i }} = document.querySelector('input[name="skill_{{ i }}"]:checked');
+            if (!skill{{ i }}) {
+                alert('Please answer all skill questions');
+                return;
+            }
+            skill[{{ i }}] = parseInt(skill{{ i }}.value);
+            {% endfor %}
+
+            // Collect reflection
+            const reflection = document.getElementById('reflection').value.trim();
+
+            // Submit
+            document.getElementById('submitBtn').disabled = true;
+            fetch('/submit_ai_trust', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    trust: trust,
+                    dependence: dependence,
+                    skill: skill,
+                    reflection: reflection
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                window.location.href = data.redirect;
+            });
+        }
+</script>
+    <script>
+      // ===== Global 5-minute limit for AI Trust =====
+      // Provided by app.py
+      const AIT_DEADLINE = {{ ait_deadline | default(0) | tojson }}; // epoch seconds
+      const SERVER_NOW   = {{ server_now   | default(0) | tojson }};
+
+      const aitTimerEl = document.getElementById('ait-time-left');
+      const submitBtn  = document.getElementById('submitBtn');
+
+      function fmt(ms){
+        const s = Math.max(0, Math.floor(ms/1000));
+        const m = Math.floor(s/60);
+        const r = s % 60;
+        return `${m}:${r.toString().padStart(2,'0')}`;
+      }
+
+      async function autoSubmitAIT(){
+        try {
+          // Build a safe payload without blocking on missing answers
+          const trust = {};
+          {% for i in range(questions.trust|length) %}
+          { const el = document.querySelector('input[name="trust_{{ i }}"]:checked'); if (el) trust[{{ i }}] = parseInt(el.value); }
+          {% endfor %}
+
+          const dependence = {};
+          {% for i in range(questions.dependence|length) %}
+          { const el = document.querySelector('input[name="dep_{{ i }}"]:checked'); if (el) dependence[{{ i }}] = parseInt(el.value); }
+          {% endfor %}
+
+          const skill = {};
+          {% for i in range(questions.skill|length) %}
+          { const el = document.querySelector('input[name="skill_{{ i }}"]:checked'); if (el) skill[{{ i }}] = parseInt(el.value); }
+          {% endfor %}
+
+          const reflection = (document.getElementById('reflection')?.value || '').trim();
+
+          if (submitBtn) submitBtn.disabled = true;
+          const res = await fetch('/submit_ai_trust', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ trust, dependence, skill, reflection })
+          });
+          const j = await res.json();
+          if (j && j.redirect) window.location.href = j.redirect; else window.location.href = '/randomize';
+        } catch(e) {
+          window.location.href = '/randomize';
+        }
+      }
+
+      (function tickAIT(){
+        const leftMs = (AIT_DEADLINE * 1000) - Date.now();
+        if (aitTimerEl) aitTimerEl.textContent = fmt(leftMs);
+        if (leftMs <= 0) { autoSubmitAIT(); return; }
+        requestAnimationFrame(tickAIT);
+      })();
+    </script>
+</body>
+</html>

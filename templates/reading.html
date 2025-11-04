@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Reading Phase - Article {{ article_num + 1 }}</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Georgia',serif;background:#f5f7fa;overflow-x:hidden}
+        .header{background:#fff;padding:15px 20px;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center}
+        .progress-info{font-size:14px;color:#666}
+        .timer{font-size:18px;font-weight:600;color:#667eea;font-family:'Segoe UI',sans-serif}
+        .timer.warning{color:#ff6b6b}
+        .layout{display:flex;min-height:calc(100vh - 60px)}
+        .main-content{order:1; flex:1; padding:40px; max-width:800px; margin:0 auto}
+        /* When the AI summary is open (synchronous mode), tighten main content and leave space on the right */
+        body.with-summary .main-content{max-width:760px; margin:0 24px 0 auto}
+        .article-title{font-size:32px;color:#333;margin-bottom:30px;line-height:1.3}
+        .article-text{font-size:16pt;line-height:1.8;color:#333;text-align:justify}
+        .article-text p{margin-bottom:20px}
+        .sidebar{order:2; flex:0 0 360px; width:360px; background:#fff; border-left:3px solid #667eea; padding:30px; overflow-y:auto; position:sticky; top:60px; height:calc(100vh - 60px)}
+        .sidebar h3{color:#667eea;margin-bottom:15px;font-size:18px;font-family:'Segoe UI',sans-serif}
+        .summary-text{font-size:13pt;line-height:1.6;color:#555}
+        .summary-text ul{list-style-position:inside;margin:0;padding:0}
+        .summary-text li{margin-bottom:10px}
+        .pre-reading-overlay{position:fixed;inset:0;background:#fff;z-index:200;display:flex;align-items:center;justify-content:center}
+        .pre-reading-content{max-width:600px;padding:40px;text-align:center}
+        .pre-reading-content h2{color:#667eea;margin-bottom:20px;font-size:24px}
+        .pre-reading-summary{font-size:14pt;line-height:1.6;color:#333;text-align:left;margin-bottom:30px;padding:30px;background:#f8f9fa;border-radius:8px}
+        .post-reading-message{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:200;display:none;align-items:center;justify-content:center}
+        .post-reading-content{background:#fff;padding:40px;border-radius:12px;max-width:600px}
+        .post-reading-content h2{color:#667eea;margin-bottom:20px}
+        .post-reading-summary{font-size:14pt;line-height:1.6;margin-bottom:30px;padding:30px;background:#f8f9fa;border-radius:8px}
+        button{padding:14px 30px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:transform .2s}
+        button:hover{transform:translateY(-2px)}
+        .summary-toggle{position:fixed;bottom:30px;right:30px;padding:15px 25px;background:#667eea;color:#fff;border:none;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px rgba(102,126,234,.4);z-index:50}
+        .continue-btn{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);padding:16px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:18px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(102,126,234,.4);z-index:50}
+        /* --- TEST MODE floating skip for ALL timings --- */
+        .test-skip{position:fixed;bottom:30px;right:30px;margin-right:140px;padding:12px 18px;border-radius:50px;background:#999;color:#fff;font-size:13px;font-weight:600;z-index:60;border:none;cursor:pointer}
+        @media (max-width:1200px){
+            .layout{flex-direction:column}
+            .sidebar{width:100%;position:relative;height:auto;border-left:none;border-top:3px solid #667eea}
+            .test-skip{margin-right:0;right:30px;bottom:90px}
+            /* On smaller screens, show the summary as a floating panel instead of shrinking the article */
+            body.with-summary .sidebar{position:fixed; right:0; top:60px; height:calc(100vh - 60px); max-width:92vw; width:92vw; box-shadow:-8px 0 24px rgba(0,0,0,.15); z-index:120}
+            body.with-summary .main-content{margin:0 auto}
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="progress-info">📖 Article {{ article_num + 1 }} of 3 • {{ timing|replace('_',' ')|title }} Mode</div>
+        <!-- Header timer removed: using the unified top-right badge instead -->
+    </div>
+
+    <div id="read-timer" style="position:fixed; top:12px; right:12px; padding:6px 10px; border:1px solid #e0e0e0; border-radius:6px; background:#fff; z-index:9999; font-family:system-ui, -apple-system, Segoe UI, Roboto; box-shadow:0 2px 10px rgba(0,0,0,.06)">
+      ⏳ <span id="read-time-left"></span> left
+    </div>
+
+    <!-- Pre-reading overlay (B2) -->
+    {% if timing == 'pre_reading' %}
+    <div class="pre-reading-overlay" id="preReadingOverlay">
+        <div class="pre-reading-content">
+            <h2>🔍 AI Summary Preview</h2>
+            <p style="color:#666;margin-bottom:20px">
+                You may preview this summary for up to 90 seconds. You can start reading immediately, but you cannot reopen the summary once you begin.
+            </p>
+            <div class="pre-reading-summary">
+              {% if structure == 'segmented' %}
+                <ul class="summary-list">
+                  {% for line in summary.splitlines() %}
+                    {% set t = line.strip() %}
+                    {% if t %}<li>{{ t.lstrip('•-').strip() }}</li>{% endif %}
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>{{ summary }}</p>
+              {% endif %}
+            </div>
+            <button id="startReadingBtn">Start Reading Now</button>
+
+            {% if test_mode %}
+            <!-- TEST MODE: instant skip from summary screen -->
+            <button type="button" class="skip-btn" onclick="finishReading()">
+                Skip reading (test)
+            </button>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Post-reading overlay (B3) -->
+    {% if timing == 'post_reading' %}
+    <div class="post-reading-message" id="postReadingOverlay">
+        <div class="post-reading-content">
+            <h2>✨ AI Summary</h2>
+            <p style="color:#666;margin-bottom:20px">Here's the AI-generated summary based on the article you just read.</p>
+            <div class="post-reading-summary">
+              {% if structure == 'segmented' %}
+                <ul class="summary-list">
+                  {% for line in summary.splitlines() %}
+                    {% set t = line.strip() %}
+                    {% if t %}<li>{{ t.lstrip('•-').strip() }}</li>{% endif %}
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>{{ summary }}</p>
+              {% endif %}
+            </div>
+            <button onclick="startBreakAfterPostSummary()">Start 5‑minute Break →</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="layout">
+        <div class="main-content">
+            <h1 class="article-title">{{ article_title }}</h1>
+            <div class="article-text" id="articleText">
+                <p>{{ article_text|replace('\n\n','</p><p>')|safe }}</p>
+            </div>
+        </div>
+
+        <!-- Synchronous (B1) — hidden by default, open via button -->
+        {% if timing == 'synchronous' %}
+        <button class="summary-toggle" id="summaryToggleBtn" type="button" title="Open AI Summary">📋 Open AI Summary</button>
+        <div class="sidebar" id="sidebar" style="display:none;">
+            <h3>🤖 AI Summary</h3>
+            <div class="summary-text">
+              {% if structure == 'segmented' %}
+                <ul class="summary-list">
+                  {% for line in summary.splitlines() %}
+                    {% set t = line.strip() %}
+                    {% if t %}<li>{{ t.lstrip('•-').strip() }}</li>{% endif %}
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>{{ summary }}</p>
+              {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if timing == 'post_reading' %}
+    <button class="summary-toggle" id="postSummaryBtn" type="button" title="Open AI Summary" style="display:none;">📋 AI Summary</button>
+    {% endif %}
+
+    <button class="continue-btn" id="continueBtn" style="display:none" onclick="finishReading()">Start 5‑minute Break →</button>
+
+    <!-- TEST MODE: global floating skip button (all timings) -->
+    {% if test_mode %}
+    <button class="test-skip" id="testSkipBtn" type="button" title="Shortcut: S" onclick="finishReading()">Skip reading (test)</button>
+    {% endif %}
+
+
+    <script>
+        // Make test_mode available to JS
+        const TEST_MODE = {{ 'true' if test_mode else 'false' }};
+        const timing = '{{ timing }}';
+        const articleNum = {{ article_num }};
+        let startTime = Date.now();
+        let readingTime = 0, summaryViewTime = 0, summaryViews = 0, scrollDepth = 0;
+        const timeLimit = 12 * 60 * 1000;  // 12 minutes
+        const hardCap  = 15 * 60 * 1000;   // 15 minutes
+        const preReadingMinTime = TEST_MODE ? 0 : 90 * 1000; // 0s in test mode
+
+        // ===== Reading countdown badge (12-minute default) =====
+        (function(){
+          // Prefer template-provided limit if present; else default 12 min
+          const LIMIT_MS  = (typeof READING_LIMIT_MS !== 'undefined' && READING_LIMIT_MS) ? READING_LIMIT_MS : (12 * 60 * 1000);
+          const el        = document.getElementById('read-time-left');
+          const box       = document.getElementById('read-timer');
+
+          // Ensure a startTime exists (page already sets one, this is just a guard)
+          if (typeof startTime === 'undefined' || !startTime) {
+            window.startTime = Date.now();
+          }
+          const endAt = startTime + (TEST_MODE ? 0 : LIMIT_MS);
+
+          function fmt(ms){
+            const s = Math.max(0, Math.floor(ms/1000));
+            const m = Math.floor(s/60);
+            const r = s % 60;
+            return `${m}:${r.toString().padStart(2,'0')}`;
+          }
+          function warn(ms){
+            if (!box) return;
+            if (ms <= 60_000) { box.style.background = '#fff1f0'; box.style.borderColor = '#ffccc7'; }
+            else if (ms <= 180_000) { box.style.background = '#fff7e6'; box.style.borderColor = '#ffd591'; }
+            else { box.style.background = '#fff'; box.style.borderColor = '#e0e0e0'; }
+          }
+
+          let finished = false;
+          const origFinish = (typeof finishReading === 'function') ? finishReading : null;
+          function safeFinish(){
+            if (finished) return; finished = true;
+            if (origFinish) return origFinish();
+          }
+
+          (function tick(){
+            const left = endAt - Date.now();
+            if (el) el.textContent = fmt(left);
+            warn(left);
+            if (left <= 0) { safeFinish(); return; }
+            requestAnimationFrame(tick);
+          })();
+        })();
+
+        // Timer (reading time)
+        const timerInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const mins = Math.floor(elapsed / 60000);
+            const secs = Math.floor((elapsed % 60000) / 1000);
+            const remaining = Math.max(0, timeLimit - elapsed);
+            const remMins = Math.floor(remaining / 60000);
+            const remSecs = Math.floor((remaining % 60000) / 1000);
+            const t = document.getElementById('timer');
+            if (t){
+                t.textContent = `Time: ${mins}:${secs.toString().padStart(2,'0')} / 12:00 (${remMins}:${remSecs.toString().padStart(2,'0')} remaining)`;
+                if (remaining < 60000) t.classList.add('warning');
+            }
+            if (elapsed >= timeLimit && document.getElementById('continueBtn')){
+                document.getElementById('continueBtn').style.display = 'block';
+            }
+            if (elapsed >= hardCap) finishReading();
+        }, 1000);
+
+        // Synchronous (B1) — toggle open/close as a right-side split panel
+        (function(){
+          const btn  = document.getElementById('summaryToggleBtn');
+          const side = document.getElementById('sidebar');
+          if (!btn || !side) return;
+
+          function openSummary(){
+            side.style.display = 'block';
+            document.body.classList.add('with-summary');
+            btn.textContent = '✖︎ Close AI Summary';
+            // keep reader oriented at the top region
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+          function closeSummary(){
+            side.style.display = 'none';
+            document.body.classList.remove('with-summary');
+            btn.textContent = '📋 Open AI Summary';
+          }
+
+          btn.addEventListener('click', () => {
+            const visible = side.style.display !== 'none';
+            visible ? closeSummary() : openSummary();
+          });
+        })();
+
+        // B3 (Post-reading) — timed reveal of the AI Summary button at 9 minutes
+        (function(){
+          const btn  = document.getElementById('postSummaryBtn');
+          const post = document.getElementById('postReadingOverlay');
+          const NINE_MIN_MS = TEST_MODE ? 0 : (9 * 60 * 1000);
+          if (typeof timing !== 'undefined' && timing === 'post_reading' && btn) {
+            setTimeout(() => {
+              // Only reveal if the overlay isn't already open
+              const overlayOpen = post && post.style.display === 'flex';
+              if (!overlayOpen) btn.style.display = 'inline-block';
+            }, NINE_MIN_MS);
+          }
+        })();
+
+        // Post-reading (B3) — open overlay via button after reading completes
+        (function(){
+          const btn = document.getElementById('postSummaryBtn');
+          const overlay = document.getElementById('postReadingOverlay');
+          if (btn && overlay) {
+            btn.addEventListener('click', () => {
+              overlay.style.display = 'flex';
+            });
+          }
+        })();
+
+        // Pre-reading behavior (B2)
+        let preReadingStart = Date.now();
+        const startBtn = document.getElementById('startReadingBtn');
+        // Enable immediately: participants can start reading right away
+        if (startBtn) {
+            startBtn.disabled = false;
+            startBtn.textContent = 'Start Reading Now';
+            startBtn.addEventListener('click', async () => {
+                // Log how long they viewed the summary before starting
+                summaryViewTime += Date.now() - preReadingStart;
+                summaryViews++;
+                // Permanently lock summary for this article
+                try {
+                    await fetch('/lock_summary', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ article_num: articleNum })
+                    });
+                } catch (e) { /* ignore */ }
+                // Hide overlay and do NOT provide a way back
+                const overlay = document.getElementById('preReadingOverlay');
+                if (overlay) overlay.style.display = 'none';
+                startTime = Date.now();
+                if (TEST_MODE && document.getElementById('continueBtn')){
+                    document.getElementById('continueBtn').style.display = 'block';
+                }
+            });
+        }
+
+        // Scroll tracking
+        let maxScroll = 0;
+        window.addEventListener('scroll', () => {
+            const pct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+            maxScroll = Math.max(maxScroll, pct);
+            scrollDepth = Math.round(maxScroll * 100);
+        });
+
+        // Logging helper
+        function logBehavior(event, data = {}) {
+            fetch('/log_reading', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ event, timestamp: Date.now(), ...data })
+            });
+        }
+
+        function finishReading() {
+            clearInterval(timerInterval);
+            const pre = document.getElementById('preReadingOverlay');
+            const post = document.getElementById('postReadingOverlay');
+
+            // Log reading
+            readingTime = Date.now() - startTime;
+            logBehavior('reading_complete', {
+                totalReadingTime: readingTime,
+                summaryViewTime, summaryViews, scrollDepth
+            });
+
+            // If timing is post_reading, reveal the AI Summary button now and STOP here
+            if (timing === 'post_reading') {
+                if (pre) pre.style.display = 'none';
+                const btn = document.getElementById('postSummaryBtn');
+                if (btn) btn.style.display = 'inline-block';
+                return; // user will click the button to view the summary, then proceed to break
+            }
+
+            // Otherwise (pre_reading / synchronous) → go to pre-test break
+            if (pre) pre.style.display = 'none';
+            if (post) post.style.display = 'none';
+            window.location.href = `/break_before_test/${articleNum}`;
+        }
+
+        function startBreakAfterPostSummary(){
+            const post = document.getElementById('postReadingOverlay');
+            let viewMs = 0;
+            if (post && post.style.display === 'flex') {
+                // Rough measure: treat time since overlay shown as summary view time
+                // If you store the exact start, replace with that value
+                viewMs = 0;
+            }
+            summaryViewTime += viewMs;
+            window.location.href = `/break_before_test/${articleNum}`;
+        }
+
+        // Keyboard shortcuts in TEST MODE
+        document.addEventListener('keydown', (e) => {
+            if (!TEST_MODE) return;
+            if (e.key.toLowerCase() === 's') { // skip reading
+                e.preventDefault();
+                finishReading();
+            }
+        });
+
+        // Prevent accidental navigation before finishing
+        window.addEventListener('beforeunload', (e) => {
+            if (readingTime === 0) { e.preventDefault(); e.returnValue = ''; }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            logBehavior('visibility_change', { hidden: document.hidden });
+        });
+    </script>
+</body>
+</html>

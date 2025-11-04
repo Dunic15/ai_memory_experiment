@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Selection / 语言选择</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 50px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+
+        .language-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .lang-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 25px 40px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .lang-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .lang-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s ease;
+        }
+
+        .lang-btn:hover::before {
+            left: 100%;
+        }
+
+        .lang-btn .flag {
+            font-size: 32px;
+            margin-right: 15px;
+            display: inline-block;
+        }
+
+        .lang-btn .text {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .lang-btn .primary {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .lang-btn .secondary {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .lang-btn {
+                padding: 20px 30px;
+                font-size: 18px;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🌍</div>
+        <h1>Welcome to the Memory Experiment</h1>
+        <h1 style="font-size: 28px; margin-top: 10px;">欢迎参加记忆实验</h1>
+        
+        <p class="subtitle">Please select your preferred language<br>请选择您的语言</p>
+        
+        <div class="language-buttons">
+            <button class="lang-btn" onclick="selectLanguage('en')">
+                <span class="flag">🇬🇧</span>
+                <span class="text">
+                    <span class="primary">English</span>
+                    <span class="secondary">Continue in English</span>
+                </span>
+            </button>
+            
+            <button class="lang-btn" onclick="selectLanguage('zh')">
+                <span class="flag">🇨🇳</span>
+                <span class="text">
+                    <span class="primary">中文</span>
+                    <span class="secondary">用中文继续</span>
+                </span>
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px; color: #667eea;">Loading / 加载中...</p>
+        </div>
+
+        <div class="footer">
+            AI-Assisted Human Memory Encoding Experiment<br>
+            人工智能辅助的人类记忆编码实验
+        </div>
+    </div>
+
+    <script>
+        function selectLanguage(lang) {
+            // Show loading animation
+            document.getElementById('loading').classList.add('active');
+            
+            // Disable buttons
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            // Send selection to server
+            fetch('/set_lang/' + lang, {
+                method: 'GET'
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirect to login page
+                    window.location.href = '/';
+                } else {
+                    throw new Error('Failed to set language');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error selecting language. Please try again.\n选择语言时出错，请重试。');
+                document.getElementById('loading').classList.remove('active');
+                buttons.forEach(btn => btn.disabled = false);
+            });
+        }
+
+        // Add keyboard support
+        document.addEventListener('keydown', function(event) {
+            if (event.key === '1' || event.key === 'e' || event.key === 'E') {
+                selectLanguage('en');
+            } else if (event.key === '2' || event.key === 'z' || event.key === 'Z') {
+                selectLanguage('zh');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Phase - Article {{ article_num + 1 }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 40px;
+        }
+        .timer-badge {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            z-index: 9999;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto;
+            box-shadow: 0 2px 10px rgba(0,0,0,.06);
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .timer-badge.warning {
+            background: #fff7e6;
+            border-color: #ffd591;
+            color: #d46b08;
+        }
+        .timer-badge.critical {
+            background: #fff1f0;
+            border-color: #ffccc7;
+            color: #cf1322;
+        }
+        .test-badge {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            background: #111;
+            color: #fff;
+            font-size: 11px;
+            letter-spacing: .4px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            z-index: 9999;
+            display: none;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .progress {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .recall-container {
+            position: relative;
+        }
+        .counters {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border: 2px solid #e0e0e0;
+        }
+        .counter {
+            flex: 1;
+            text-align: center;
+        }
+        .counter-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .counter-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        .counter-value.warning {
+            color: #ff9800;
+        }
+        .counter-value.good {
+            color: #28a745;
+        }
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            line-height: 1.8;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        textarea.paste-attempt {
+            border-color: #ff4d4f !important;
+            animation: shake 0.3s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .paste-warning {
+            display: none;
+            background: #fff1f0;
+            border-left: 4px solid #ff4d4f;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            color: #cf1322;
+            font-size: 14px;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .guideline {
+            background: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #0050b3;
+        }
+        .slider-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+        }
+        .slider-question {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .slider-container {
+            margin: 20px 0;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+            margin-top: 8px;
+        }
+        .slider-value {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+            margin-top: 10px;
+        }
+        .mcq-section {
+            display: none;
+        }
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+        }
+        .question-text {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .options label {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .options label:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .options input {
+            margin-right: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            text-align: center;
+        }
+        .modal-content h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .modal-content p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            margin: 0;
+        }
+        .secondary-btn {
+            background: #e0e0e0 !important;
+            color: #333 !important;
+        }
+        
+        /* ✅ SKIP RECALL FIX: Hide recall section when skip_recall flag is set */
+        {% if skip_recall or start_on_mcq %}
+        #recallSection {
+            display: none !important;
+        }
+        #mcqSection {
+            display: block !important;
+        }
+        #timerBadge {
+            display: none !important;
+        }
+        {% endif %}
+        /* ✅ END SKIP RECALL FIX */
+    </style>
+</head>
+<body>
+    <div id="testBadge" class="test-badge">TEST MODE</div>
+    <div class="timer-badge" id="timerBadge">
+        ⏱️ <span id="timeLeft">6:00</span>
+    </div>
+
+    <div class="container">
+        <h1>📝 Article {{ article_num + 1 }} Test</h1>
+        <p class="progress">{{ article_title }}</p>
+
+        <!-- FREE RECALL SECTION -->
+        <div class="section" id="recallSection">
+            <h2>Free Recall</h2>
+            
+            <div class="guideline">
+                <strong>💡 Remember:</strong> Write in short, idea-based sentences using the pattern "A → B because C". 
+                Aim for 8–12 sentences focusing on specific ideas and relationships.
+            </div>
+
+            <div class="recall-container">
+
+                <textarea 
+                    id="recallText" 
+                    placeholder="Type your ideas here… Use one idea per sentence."
+                    spellcheck="true"
+                ></textarea>
+
+                <div class="paste-warning" id="pasteWarning">
+                    <strong>⚠️ Paste not allowed.</strong> Please type your response in your own words. 
+                    This helps ensure authentic recall.
+                </div>
+            </div>
+
+            <!-- Post-recall sliders -->
+            <div class="slider-section">
+                <div class="slider-question">
+                    How confident are you that you recalled the main ideas accurately?
+                </div>
+                <div class="slider-container">
+                    <input type="range" id="confidenceSlider" min="1" max="7" value="4" />
+                    <div class="slider-labels">
+                        <span>1 - Not confident</span>
+                        <span>7 - Very confident</span>
+                    </div>
+                    <div class="slider-value" id="confidenceValue">4</div>
+                </div>
+            </div>
+
+            <div class="slider-section">
+                <div class="slider-question">
+                    How mentally demanding was this task?
+                </div>
+                <div class="slider-container">
+                    <input type="range" id="difficultySlider" min="1" max="7" value="4" />
+                    <div class="slider-labels">
+                        <span>1 - Very easy</span>
+                        <span>7 - Very demanding</span>
+                    </div>
+                    <div class="slider-value" id="difficultyValue">4</div>
+                </div>
+            </div>
+
+            <button id="submitRecallBtn" onclick="submitRecall()" disabled>
+                Continue to Multiple Choice →
+            </button>
+        </div>
+
+        <!-- MCQ SECTION (hidden initially) -->
+        <div class="section mcq-section" id="mcqSection">
+            <h2>Recognition Questions</h2>
+            <p style="color: #666; margin-bottom: 20px;">Answer the following questions based on the article.</p>
+
+            {% for q in questions %}
+            <div class="question">
+                <div class="question-text">{{ loop.index }}. {{ q.q }}</div>
+                <div class="options">
+                    {% for opt in q.options %}
+                    <label>
+                        <input type="radio" name="q{{ loop.index0 }}" value="{{ loop.index0 }}" required>
+                        {{ opt }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            <button onclick="submitTest()">Submit Test →</button>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3>⚠️ Submit with few sentences?</h3>
+            <p>We recommend at least 3 idea sentences for meaningful recall. You currently have <strong id="modalSentenceCount">0</strong> sentence(s).</p>
+            <p>Would you like to submit anyway or keep writing?</p>
+            <div class="modal-buttons">
+                <button class="secondary-btn" onclick="closeModal()">Keep Writing</button>
+                <button onclick="forceSubmitRecall()">Submit Anyway</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast for auto-submit -->
+    <div id="toast" style="display:none; position:fixed; bottom:20px; right:20px; background:#323232; color:white; padding:16px 24px; border-radius:8px; z-index:10001; animation:fadeIn 0.3s;">
+        ⏰ Time's up — your response was saved
+    </div>
+
+    <script>
+        const TEST_MODE = {{ 'true' if test_mode else 'false' }};
+        const articleNum = {{ article_num }};
+        const START_ON_MCQ = {{ 'true' if start_on_mcq else 'false' }};
+        const RECALL_TIME_MS   = {{ recall_total_ms }};   // total countdown (server-provided)
+        const RECALL_UNLOCK_MS = {{ recall_unlock_ms }};  // when the Continue button unlocks
+        const startTime = Date.now();
+        
+        let pasteAttempts = 0;
+        let recallData = {
+            start_time: new Date().toISOString(),
+            paste_attempts: 0,
+            over_limit: false
+        };
+
+        // Show test badge if in test mode
+        if (TEST_MODE) {
+            document.getElementById('testBadge').style.display = 'block';
+        }
+
+        // Timer
+        const timerBadge = document.getElementById('timerBadge');
+        const timeLeftEl = document.getElementById('timeLeft');
+
+        function updateTimer() {
+            const elapsed = Date.now() - startTime;
+            const remaining = Math.max(0, RECALL_TIME_MS - elapsed);
+            const mins = Math.floor(remaining / 60000);
+            const secs = Math.floor((remaining % 60000) / 1000);
+
+            timeLeftEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+
+            // Unlock the Continue button once unlock threshold is reached
+            if (elapsed >= RECALL_UNLOCK_MS) {
+                const btn = document.getElementById('submitRecallBtn');
+                if (btn) btn.disabled = false;
+            }
+
+            // Color coding
+            if (remaining <= 60000) {
+                timerBadge.classList.add('critical');
+                timerBadge.classList.remove('warning');
+            } else if (remaining <= 120000) {
+                timerBadge.classList.add('warning');
+                timerBadge.classList.remove('critical');
+            } else {
+                timerBadge.classList.remove('warning', 'critical');
+            }
+
+            if (remaining <= 0) {
+                autoSubmitRecall();
+                return;
+            }
+
+            requestAnimationFrame(updateTimer);
+        }
+        updateTimer();
+
+        // Helper to show only MCQ section (used for skip recall)
+        function showMCQOnly() {
+            const recall = document.getElementById('recallSection');
+            const mcq = document.getElementById('mcqSection');
+            const badge = document.getElementById('timerBadge');
+            if (recall) recall.style.display = 'none';
+            if (mcq) mcq.style.display = 'block';
+            if (badge) badge.style.display = 'none';
+            window.scrollTo(0, 0);
+        }
+
+        // Text area and counters
+        const textarea = document.getElementById('recallText');
+        const submitBtn = document.getElementById('submitRecallBtn');
+        const pasteWarning = document.getElementById('pasteWarning');
+
+        // Prevent paste
+        textarea.addEventListener('paste', (e) => {
+            e.preventDefault();
+            pasteAttempts++;
+            recallData.paste_attempts = pasteAttempts;
+            
+            // Visual feedback
+            textarea.classList.add('paste-attempt');
+            pasteWarning.style.display = 'block';
+            
+            setTimeout(() => {
+                textarea.classList.remove('paste-attempt');
+            }, 300);
+            
+            setTimeout(() => {
+                pasteWarning.style.display = 'none';
+            }, 3000);
+        });
+
+        // Prevent drag-drop
+        textarea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            pasteAttempts++;
+            recallData.paste_attempts = pasteAttempts;
+            pasteWarning.style.display = 'block';
+            setTimeout(() => pasteWarning.style.display = 'none', 3000);
+        });
+
+        // Update counters
+        textarea.addEventListener('input', updateCounters);
+        
+        function updateCounters() {
+            const text = textarea.value;
+            const chars = text.length;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
+            // No live counters displayed
+            // Flag over limit
+            recallData.over_limit = sentences > 10;
+            const confidenceTouched = document.getElementById('confidenceSlider').dataset.touched;
+            const difficultyTouched = document.getElementById('difficultySlider').dataset.touched;
+            const unlocked = (Date.now() - startTime) >= RECALL_UNLOCK_MS;
+
+            // Before unlock: require >=3 sentences AND both sliders touched
+            // After unlock: allow proceeding regardless of counts
+            const btn = document.getElementById('submitRecallBtn');
+            if (btn) {
+                if (unlocked) {
+                    btn.disabled = false;
+                } else {
+                    btn.disabled = !(sentences >= 3 && confidenceTouched && difficultyTouched);
+                }
+            }
+        }
+
+        // Slider updates
+        const confidenceSlider = document.getElementById('confidenceSlider');
+        const difficultySlider = document.getElementById('difficultySlider');
+        const confidenceValue = document.getElementById('confidenceValue');
+        const difficultyValue = document.getElementById('difficultyValue');
+
+        confidenceSlider.addEventListener('input', (e) => {
+            confidenceValue.textContent = e.target.value;
+            e.target.dataset.touched = 'true';
+            updateCounters();
+        });
+
+        difficultySlider.addEventListener('input', (e) => {
+            difficultyValue.textContent = e.target.value;
+            e.target.dataset.touched = 'true';
+            updateCounters();
+        });
+
+        // Submit recall
+        function submitRecall() {
+            const text = textarea.value.trim();
+            const sentences = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
+            
+            if (sentences < 3) {
+                document.getElementById('modalSentenceCount').textContent = sentences;
+                document.getElementById('confirmModal').style.display = 'flex';
+                return;
+            }
+            
+            proceedWithRecallSubmit();
+        }
+
+        function forceSubmitRecall() {
+            closeModal();
+            proceedWithRecallSubmit();
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function autoSubmitRecall() {
+            // Show toast
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 3000);
+            
+            proceedWithRecallSubmit();
+        }
+
+        function proceedWithRecallSubmit() {
+            const text = textarea.value.trim();
+            recallData.end_time = new Date().toISOString();
+            recallData.recall_text = text;
+            recallData.sentence_count = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
+            recallData.word_count = text ? text.split(/\s+/).length : 0;
+            recallData.char_count = text.length;
+            recallData.confidence = parseInt(confidenceSlider.value);
+            recallData.perceived_difficulty = parseInt(difficultySlider.value);
+            recallData.time_spent_ms = Date.now() - startTime;
+
+            // Hide recall, show MCQ
+            showMCQOnly();
+        }
+
+        // Submit full test
+        function submitTest() {
+            const mcqData = {};
+            {% for q in questions %}
+            const q{{ loop.index0 }} = document.querySelector('input[name="q{{ loop.index0 }}"]:checked');
+            if (!q{{ loop.index0 }}) {
+                alert('Please answer all questions');
+                return;
+            }
+            mcqData['q{{ loop.index0 }}'] = parseInt(q{{ loop.index0 }}.value);
+            {% endfor %}
+            
+            fetch('/submit_test', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    article_num: articleNum,
+                    recall: recallData,
+                    mcq: mcqData
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                window.location.href = data.redirect;
+            });
+        }
+
+        // Prevent accidental navigation
+        window.addEventListener('beforeunload', (e) => {
+            if (!recallData.end_time) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // If requested (via /skip_recall/<idx>), start directly on MCQs
+        if (START_ON_MCQ) {
+            showMCQOnly();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recall Instructions</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 50px;
+        }
+        .test-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #111;
+            color: #fff;
+            font-size: 11px;
+            letter-spacing: .4px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: none;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 32px;
+            text-align: center;
+        }
+        .instruction-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .instruction-box h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .instruction-box p, .instruction-box ul {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .instruction-box ul {
+            margin-left: 25px;
+        }
+        .instruction-box li {
+            margin-bottom: 10px;
+        }
+        .pattern-example {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 2px solid #e0e0e0;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            color: #667eea;
+            font-size: 15px;
+        }
+        .timer-notice {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .timer-notice strong {
+            color: #856404;
+            font-size: 18px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        button {
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.3s;
+        }
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .countdown {
+            display: inline-block;
+            font-weight: 700;
+            color: #667eea;
+            font-size: 20px;
+            margin-left: 10px;
+        }
+        .skip-btn {
+            background: #999;
+            padding: 12px 24px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="testBadge" class="test-badge">TEST MODE</div>
+        
+        <h1>📝 Free Recall Instructions</h1>
+        
+        <div class="instruction-box">
+            <h2>Free Recall (6 minutes)</h2>
+            
+            <p><strong>Write everything you remember from the article in short, idea-based sentences.</strong></p>
+            
+            <p>Use the pattern:</p>
+            <div class="pattern-example">
+                "A → B because C" (cause → effect → reason)<br>
+                or<br>
+                "X leads to Y due to Z"
+            </div>
+            
+            <ul>
+                <li><strong>Aim for 8–12 sentences</strong> (max accepted for scoring = 10)</li>
+                <li>Focus on <strong>specific ideas and links</strong>, not general impressions</li>
+                <li><strong>No copy/paste</strong>; write in your own words</li>
+                <li>You have <strong>6:00 minutes</strong>. A timer will show your remaining time</li>
+            </ul>
+        </div>
+        
+        <div class="timer-notice">
+            <strong>⏳ Please read the instructions carefully</strong><br>
+            <span id="lockMessage">You can start in <span class="countdown" id="countdown">30</span> seconds</span>
+        </div>
+        
+        <div class="button-container">
+            <button id="startBtn" onclick="startRecall()" disabled>Start Recall Task →</button>
+            <button id="skipBtn" class="skip-btn" onclick="skipToRecall()" style="display:none;">Skip (test mode)</button>
+        </div>
+    </div>
+
+    <script>
+        const TEST_MODE = {{ 'true' if test_mode else 'false' }};
+        const articleNum = {{ article_num }};
+        const LOCK_DURATION = TEST_MODE ? 0 : 30; // 30 seconds in normal mode, 0 in test
+        
+        let timeLeft = LOCK_DURATION;
+        const startBtn = document.getElementById('startBtn');
+        const countdownEl = document.getElementById('countdown');
+        const lockMsg = document.getElementById('lockMessage');
+        
+        // Show test badge and skip button in test mode
+        if (TEST_MODE) {
+            document.getElementById('testBadge').style.display = 'inline-block';
+            document.getElementById('skipBtn').style.display = 'inline-block';
+            startBtn.disabled = false;
+        }
+        
+        // Countdown timer
+        if (!TEST_MODE && LOCK_DURATION > 0) {
+            const interval = setInterval(() => {
+                timeLeft--;
+                countdownEl.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    startBtn.disabled = false;
+                    lockMsg.innerHTML = '<strong style="color: #28a745;">✓ You may now begin</strong>';
+                }
+            }, 1000);
+        } else if (!TEST_MODE) {
+            // If lock is 0, enable immediately
+            startBtn.disabled = false;
+            lockMsg.innerHTML = '<strong style="color: #28a745;">✓ You may now begin</strong>';
+        }
+        
+        function startRecall() {
+            window.location.href = `/test/${articleNum}`;
+        }
+        
+        function skipToRecall() {
+            window.location.href = `/test/${articleNum}`;
+        }
+        
+        // Keyboard shortcut for test mode
+        if (TEST_MODE) {
+            document.addEventListener('keydown', (e) => {
+                if (e.key.toLowerCase() === 's') {
+                    e.preventDefault();
+                    skipToRecall();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
