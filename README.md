@@ -47,20 +47,26 @@ A Flask web application for conducting memory encoding experiments with AI-assis
 ai_memory_experiment/
 ├── app.py                      # Main Flask application
 ├── requirements.txt            # Python dependencies
+├── Procfile                    # Deployment config
+├── runtime.txt                 # Python version
+├── render.yaml                 # Render.com config
+│
+├── docs/                       # Documentation
+│   ├── DEPLOYMENT.md           # Deployment instructions
+│   ├── DATA_STORAGE_ANALYSIS.md # Data storage guide
+│   ├── DATA_ANALYSIS_FEATURES.md # Data export features
+│   └── PROJECT_STRUCTURE.md    # Folder organization
+│
+├── scripts/                    # Utility scripts
+│   └── setup/                  # Setup scripts
+│
 ├── templates/                  # HTML templates
-│   ├── language_selection.html
-│   ├── login.html
-│   ├── consent.html
-│   ├── prior_knowledge.html
-│   ├── ai_trust.html
-│   ├── reading.html
-│   ├── test.html
-│   └── ...
 ├── static/                     # CSS, JavaScript, images
 ├── experiment_data/           # Participant data (CSV files)
-├── translation_cache/         # Cached translations
-└── README.md                  # This file
+└── translation_cache/         # Cached translations
 ```
+
+**See `docs/PROJECT_STRUCTURE.md` for detailed folder organization.**
 
 ## Setting Up Git and GitHub (First Time)
 
@@ -192,7 +198,8 @@ See `DEPLOYMENT.md` for detailed instructions.
 3. **Database** (Recommended for production):
    - Use PostgreSQL on Render/Railway
    - Data persists across redeploys
-   - See `DATA_STORAGE_ANALYSIS.md` for details
+
+**See `docs/DATA_ANALYSIS_FEATURES.md` for complete data export guide.**
 
 ## Environment Variables
 
@@ -321,11 +328,14 @@ ARTICLES = {
 ## Support
 
 For issues or questions:
-1. Check `DEPLOYMENT.md` for deployment help
-2. Check `DATA_STORAGE_ANALYSIS.md` for data storage options
-3. Review server logs for error messages
+1. Check `docs/DEPLOYMENT.md` for deployment help
+2. Check `docs/DATA_STORAGE_ANALYSIS.md` for data storage options
+3. Check `docs/DATA_ANALYSIS_FEATURES.md` for data export features
+4. Review server logs for error messages
 
 ## Acknowledgments
 
 Built with Flask, deep-translator, and modern web technologies.
+
+
 
