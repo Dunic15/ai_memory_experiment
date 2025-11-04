@@ -98,12 +98,16 @@
         <form action="/login" method="POST" id="loginForm">
             <div class="form-group">
                 <label for="full_name">{{ tr("Full Name") }} *</label>
-                <input type="text" id="full_name" name="full_name" required>
+                <input type="text" id="full_name" name="full_name" required
+                       oninvalid="this.setCustomValidity('{{ tr("Please fill in this field") }}')"
+                       oninput="this.setCustomValidity('')">
             </div>
 
             <div class="form-group">
                 <label for="profession">{{ tr("Profession / Field of Study") }} *</label>
-                <input type="text" id="profession" name="profession" required>
+                <input type="text" id="profession" name="profession" required
+                       oninvalid="this.setCustomValidity('{{ tr("Please fill in this field") }}')"
+                       oninput="this.setCustomValidity('')">
             </div>
 
             <div class="form-group">
@@ -115,7 +119,9 @@
 
             <div class="form-group">
                 <label for="gender">{{ tr("Gender") }} *</label>
-                <select id="gender" name="gender" required>
+                <select id="gender" name="gender" required
+                        oninvalid="this.setCustomValidity('{{ tr("Please select an option") }}')"
+                        oninput="this.setCustomValidity('')">
                     <option value="">{{ tr("Select...") }}</option>
                     <option value="M">{{ tr("Male") }}</option>
                     <option value="F">{{ tr("Female") }}</option>
@@ -126,7 +132,9 @@
 
             <div class="form-group">
                 <label for="native_language">{{ tr("Native Language") }} *</label>
-                <input type="text" id="native_language" name="native_language" required>
+                <input type="text" id="native_language" name="native_language" required
+                       oninvalid="this.setCustomValidity('{{ tr("Please fill in this field") }}')"
+                       oninput="this.setCustomValidity('')">
             </div>
 
             <button type="submit" id="submitBtn">{{ tr("Continue to Study") }} →</button>

@@ -68,7 +68,14 @@
                 {% for para in paragraphs %}
                     {% if para.strip() %}
                         {% set first_char = para.strip()[0] if para.strip() else '' %}
-                        {% if first_char and first_char.isupper() %}
+                        {% set is_paragraph = False %}
+                        {# Check if it's a paragraph: starts with uppercase letter OR Chinese character #}
+                        {% if first_char %}
+                            {% if first_char.isupper() or (first_char >= '\u4e00' and first_char <= '\u9fff') %}
+                                {% set is_paragraph = True %}
+                            {% endif %}
+                        {% endif %}
+                        {% if is_paragraph %}
                             {% set para_count = para_count + 1 %}
                             <p>{{ para.strip() }}</p>
                         {% endif %}

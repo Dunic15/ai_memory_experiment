@@ -1,6 +1,37 @@
-.DS_Store
+# Python
 __pycache__/
-.venv/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
 venv/
-server.log
+.venv/
+ENV/
+
+# Flask
+instance/
+.webassets-cache
+
+# Data files
 experiment_data/
+*.csv
+*.log
+
+# Translation cache (optional - you might want to commit this)
+translation_cache/
+*.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local

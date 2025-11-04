@@ -135,6 +135,15 @@
             border-radius: 6px;
             border: 2px solid #e0e0e0;
         }
+        .bullet-point span {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+            font-size: 18px;
+            color: #667eea;
+            line-height: 1;
+            flex-shrink: 0;
+        }
         .bullet-point input {
             flex: 1;
             padding: 8px 12px;
@@ -143,6 +152,8 @@
             font-family: 'Georgia', serif;
             font-size: 16px;
             background: white;
+            display: flex;
+            align-items: center;
         }
         .bullet-point input:focus {
             outline: 2px solid #667eea;
@@ -462,8 +473,12 @@
         // Timer
         const timerBadge = document.getElementById('timerBadge');
         const timeLeftEl = document.getElementById('timeLeft');
+        let timerRunning = true;
+        let timerInterval = null;
 
         function updateTimer() {
+            if (!timerRunning) return;
+            
             const elapsed = Date.now() - startTime;
             const remaining = Math.max(0, RECALL_TIME_MS - elapsed);
             const mins = Math.floor(remaining / 60000);
@@ -489,11 +504,13 @@
             }
 
             if (remaining <= 0) {
+                timerRunning = false;
+                if (timerInterval) clearInterval(timerInterval);
                 autoSubmitRecall();
                 return;
             }
 
-            requestAnimationFrame(updateTimer);
+            timerInterval = setTimeout(updateTimer, 100);
         }
         updateTimer();
 
@@ -629,11 +646,21 @@
         }
 
         function autoSubmitRecall() {
+            // Stop timer immediately
+            timerRunning = false;
+            if (timerInterval) {
+                clearTimeout(timerInterval);
+                timerInterval = null;
+            }
+            
             // Show toast
             const toast = document.getElementById('toast');
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 3000);
+            if (toast) {
+                toast.style.display = 'block';
+                setTimeout(() => toast.style.display = 'none', 3000);
+            }
             
+            // Proceed to MCQ immediately
             proceedWithRecallSubmit();
         }
 

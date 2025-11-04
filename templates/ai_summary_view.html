@@ -111,13 +111,17 @@
                 const trimmed = line.trim();
                 if (trimmed) {
                     const li = document.createElement('li');
-                    // Remove bullet markers if present
-                    li.textContent = trimmed.replace(/^[-•]\s*/, '');
+                    // Remove bullet markers if present (handle both - and •)
+                    // Try multiple patterns to catch different formats
+                    let cleaned = trimmed.replace(/^[-•]\s+/, '');
+                    cleaned = cleaned.replace(/^[-•]\s*/, '');
+                    li.textContent = cleaned.trim();
                     ul.appendChild(li);
                 }
             });
             summaryContent.appendChild(ul);
         } else {
+            // Integrated: show as paragraph
             const p = document.createElement('p');
             p.textContent = summaryText;
             summaryContent.appendChild(p);

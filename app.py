@@ -90,6 +90,7 @@ def _auto_translate(text: str, target_lang: str) -> str:
     Translate text to target language using GoogleTranslator.
     Uses file-based cache for persistence, in-memory cache for speed.
     Maps 'zh' to 'zh-CN' for Simplified Chinese.
+    Handles long texts by chunking (Google Translator has 5000 char limit).
     """
     if not text or target_lang == "en":
         return text
@@ -105,7 +106,36 @@ def _auto_translate(text: str, target_lang: str) -> str:
             return text
         # Map 'zh' to 'zh-CN' (Simplified Chinese) for GoogleTranslator
         translator_lang = "zh-CN" if target_lang == "zh" else target_lang
-        translated = GoogleTranslator(source="auto", target=translator_lang).translate(text)
+        translator = GoogleTranslator(source="auto", target=translator_lang)
+        
+        # Google Translator has a 5000 character limit - split long texts
+        if len(text) > 4500:
+            import re
+            import time
+            # Split by sentences
+            sentences = re.split(r'([.!?]\s+)', text)
+            translated_parts = []
+            current_chunk = ""
+            
+            for part in sentences:
+                if len(current_chunk + part) > 4000:
+                    # Translate current chunk
+                    if current_chunk.strip():
+                        chunk_translated = translator.translate(current_chunk.strip())
+                        translated_parts.append(chunk_translated)
+                        time.sleep(0.1)  # Small delay between chunks
+                    current_chunk = part
+                else:
+                    current_chunk += part
+            
+            # Translate remaining chunk
+            if current_chunk.strip():
+                chunk_translated = translator.translate(current_chunk.strip())
+                translated_parts.append(chunk_translated)
+            
+            translated = "".join(translated_parts)
+        else:
+            translated = translator.translate(text)
         
         # Save to cache
         _translation_cache[cache_key] = translated
@@ -1322,6 +1352,107 @@ def excluded():
     return render_template("excluded.html")
 
 # ------------------------------------------------------------------------------
+# Admin Data Export Routes (for cloud deployment)
+# ------------------------------------------------------------------------------
+@app.route("/admin/export", methods=["GET"])
+def admin_export_data():
+    """
+    Export all experiment data as ZIP file.
+    Requires ADMIN_KEY environment variable for security.
+    Usage: /admin/export?key=YOUR_ADMIN_KEY
+    """
+    admin_key = os.environ.get("ADMIN_KEY")
+    provided_key = request.args.get("key")
+    
+    if not admin_key or provided_key != admin_key:
+        return jsonify({"error": "Unauthorized. Set ADMIN_KEY environment variable."}), 403
+    
+    import zipfile
+    import tempfile
+    from flask import send_file
+    
+    # Create temporary ZIP file
+    temp_zip = tempfile.NamedTemporaryFile(delete=False, suffix='.zip')
+    zip_path = temp_zip.name
+    temp_zip.close()
+    
+    try:
+        with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+            # Add all CSV files
+            if os.path.exists(DATA_DIR):
+                for filename in os.listdir(DATA_DIR):
+                    if filename.endswith('.csv'):
+                        filepath = os.path.join(DATA_DIR, filename)
+                        zipf.write(filepath, filename)
+            
+            # Add translation cache if needed
+            if os.path.exists(TRANSLATION_CACHE_FILE):
+                zipf.write(TRANSLATION_CACHE_FILE, 'translations.json')
+        
+        # Send file
+        return send_file(
+            zip_path,
+            mimetype='application/zip',
+            as_attachment=True,
+            download_name=f'experiment_data_{datetime.now().strftime("%Y%m%d_%H%M%S")}.zip'
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/admin/stats", methods=["GET"])
+def admin_stats():
+    """
+    Get statistics about experiment data.
+    Requires ADMIN_KEY environment variable.
+    Usage: /admin/stats?key=YOUR_ADMIN_KEY
+    """
+    admin_key = os.environ.get("ADMIN_KEY")
+    provided_key = request.args.get("key")
+    
+    if not admin_key or provided_key != admin_key:
+        return jsonify({"error": "Unauthorized. Set ADMIN_KEY environment variable."}), 403
+    
+    stats = {
+        "participant_count": 0,
+        "data_files": [],
+        "total_data_size_mb": 0,
+        "last_update": None,
+        "data_directory": os.path.abspath(DATA_DIR)
+    }
+    
+    if os.path.exists(DATA_DIR):
+        csv_files = [f for f in os.listdir(DATA_DIR) if f.endswith('.csv')]
+        stats["data_files"] = sorted(csv_files)
+        
+        # Count participants
+        participants_file = os.path.join(DATA_DIR, "participants.csv")
+        if os.path.exists(participants_file):
+            try:
+                with open(participants_file, 'r', encoding='utf-8') as f:
+                    stats["participant_count"] = max(0, sum(1 for line in f) - 1)  # Subtract header
+            except Exception:
+                stats["participant_count"] = 0
+        
+        # Calculate total size
+        total_size = sum(
+            os.path.getsize(os.path.join(DATA_DIR, f))
+            for f in csv_files
+        )
+        stats["total_data_size_mb"] = round(total_size / (1024 * 1024), 2)
+        
+        # Get last modification time
+        if csv_files:
+            latest_file = max(
+                csv_files,
+                key=lambda f: os.path.getmtime(os.path.join(DATA_DIR, f))
+            )
+            stats["last_update"] = datetime.fromtimestamp(
+                os.path.getmtime(os.path.join(DATA_DIR, latest_file))
+            ).isoformat()
+    
+    return jsonify(stats)
+
+# ------------------------------------------------------------------------------
 # Entrypoint
 # ------------------------------------------------------------------------------
 # Pre-translate static UI text at startup
@@ -1361,6 +1492,14 @@ def _pre_translate_ui_text():
         "We recommend at least 3 idea sentences for meaningful recall. You currently have",
         "sentence(s).", "Would you like to submit anyway or keep writing?",
         "Please answer all questions",
+        
+        # Break page
+        "Quick Tips", "Stand and stretch for a moment",
+        "Look away from the screen to rest your eyes",
+        "Take a few deep breaths", "Stay hydrated",
+        
+        # Form validation messages
+        "Please fill in this field", "Please select an option",
     ]
     
     translated_count = 0
@@ -1385,6 +1524,9 @@ def _pre_translate_all_articles():
     if not GoogleTranslator:
         print("⚠️ GoogleTranslator not available, skipping article pre-translation")
         return
+    
+    import time
+    import re
     
     print("\nPre-translating all articles to Chinese...")
     print("This will take 30-60 seconds but makes everything instant afterwards...")
@@ -1432,10 +1574,36 @@ def _pre_translate_all_articles():
             cache_key = _get_cache_key(text, "zh")
             if cache_key not in _translation_cache:
                 try:
-                    # Small delay to avoid rate limiting
-                    import time
-                    time.sleep(0.1)  # 100ms delay between translations
-                    translated = translator.translate(text)
+                    time.sleep(0.1)  # Small delay to avoid rate limiting
+                    
+                    # Google Translator has a 5000 character limit
+                    # Split long texts into chunks and recombine
+                    if len(text) > 4500:
+                        # Split by sentences (period, exclamation, question mark)
+                        sentences = re.split(r'([.!?]\s+)', text)
+                        translated_parts = []
+                        current_chunk = ""
+                        
+                        for i, part in enumerate(sentences):
+                            if len(current_chunk + part) > 4000:
+                                # Translate current chunk
+                                if current_chunk.strip():
+                                    chunk_translated = translator.translate(current_chunk.strip())
+                                    translated_parts.append(chunk_translated)
+                                    time.sleep(0.1)
+                                current_chunk = part
+                            else:
+                                current_chunk += part
+                        
+                        # Translate remaining chunk
+                        if current_chunk.strip():
+                            chunk_translated = translator.translate(current_chunk.strip())
+                            translated_parts.append(chunk_translated)
+                        
+                        translated = "".join(translated_parts)
+                    else:
+                        translated = translator.translate(text)
+                    
                     _translation_cache[cache_key] = translated
                     total_translated += 1
                     if total_translated % 5 == 0:
@@ -1445,12 +1613,10 @@ def _pre_translate_all_articles():
                         _save_translation_cache()
                 except Exception as e:
                     print(f"    Warning: Failed to translate one item: {e}")
-                    import time
                     time.sleep(0.5)  # Longer delay on error
     
     # Translate Prior Knowledge terms and quiz
     print("  Translating Prior Knowledge terms and quiz...")
-    import time
     for term in PRIOR_KNOWLEDGE_TERMS:
         cache_key = _get_cache_key(term, "zh")
         if cache_key not in _translation_cache:
@@ -1525,9 +1691,21 @@ if __name__ == "__main__":
     print("\n" + "=" * 50)
     print("AI Memory Experiment Platform")
     print("=" * 50)
-    print(f"\nServer starting at http://127.0.0.1:8080")
+    
+    # Use PORT from environment (for cloud deployment) or default to 8080
+    port = int(os.environ.get("PORT", 8080))
+    host = os.environ.get("HOST", "127.0.0.1")
+    
+    # For production/cloud, bind to 0.0.0.0 to accept external connections
+    if os.environ.get("FLASK_ENV") == "production" or os.environ.get("PORT"):
+        host = "0.0.0.0"
+    
+    print(f"\nServer starting at http://{host}:{port}")
     print(f"Data will be saved to: {os.path.abspath(DATA_DIR)}")
     print("\nPress CTRL+C to stop the server\n")
 
+    # Disable debug mode in production (use environment variable)
+    debug_mode = os.environ.get("FLASK_ENV") != "production"
+    
     # IMPORTANT: disable reloader so secret key doesn't rotate & kill session
-    app.run(debug=True, host='127.0.0.1', port=8080, use_reloader=False)
+    app.run(debug=debug_mode, host=host, port=port, use_reloader=False)
