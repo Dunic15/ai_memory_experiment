@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Consent</title>
+    <title>{{ tr("Study Consent") }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -66,52 +66,62 @@
 </head>
 <body>
     <div class="container">
-        <h1>📋 AI-Assisted Reading and Memory Study</h1>
+        <h1>📋 {{ tr("AI-Assisted Reading and Memory Study") }}</h1>
         
         <div class="content">
-            <p>You are invited to participate in a study exploring how different text formats influence memory and comprehension.</p>
+            <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                <p style="font-weight: 600; color: #856404; margin-bottom: 10px;">⚠️ {{ tr("Important Information About AI Summaries:") }}</p>
+                <ul style="margin-left: 25px; color: #856404;">
+                    <li>{{ tr("The AI summary accuracy is approximately") }} <strong>90%</strong></li>
+                    <li>{{ tr("AI is") }} <strong>{{ tr("only an assistant") }}</strong> – {{ tr("make sure you read all the articles") }}</li>
+                    <li><strong>{{ tr("Not all questions can be answered") }}</strong> {{ tr("with the AI summary alone") }}</li>
+                    <li>{{ tr("Each section has a timer, but you can") }} <strong>{{ tr("submit when you want") }}</strong> {{ tr("(you don't need to wait for the timer)") }}</li>
+                </ul>
+            </div>
             
-            <p><strong>Time Commitment:</strong></p>
+            <p>{{ tr("You are invited to participate in a study exploring how different text formats influence memory and comprehension.") }}</p>
+            
+            <p><strong>{{ tr("Time Commitment:") }}</strong></p>
             <ul>
-                <li>Approximately <strong>90 minutes today</strong></li>
-                <li><strong>15–20 minutes tomorrow</strong> (follow-up session)</li>
+                <li>{{ tr("Approximately") }} <strong>{{ tr("90 minutes today") }}</strong></li>
+                <li><strong>{{ tr("15–20 minutes tomorrow") }}</strong> {{ tr("(follow-up session)") }}</li>
             </ul>
             
-            <p><strong>What You'll Do:</strong></p>
+            <p><strong>{{ tr("What You'll Do:") }}</strong></p>
             <ul>
-                <li>Read short scientific articles</li>
-                <li>Answer questions about the content</li>
-                <li>Evaluate your experience with AI-assisted reading</li>
+                <li>{{ tr("Read short scientific articles") }}</li>
+                <li>{{ tr("Answer questions about the content") }}</li>
+                <li>{{ tr("Evaluate your experience with AI-assisted reading") }}</li>
             </ul>
             
-            <p><strong>Important Information:</strong></p>
+            <p><strong>{{ tr("Important Information:") }}</strong></p>
             <ul>
-                <li>Your participation is <strong>voluntary</strong></li>
-                <li>You may <strong>withdraw at any time</strong> without penalty</li>
-                <li>No personal identifying information will be collected; data will be stored <strong>anonymously</strong></li>
-                <li>You must be <strong>18 years or older</strong></li>
-                <li>You must use a <strong>laptop or desktop computer</strong> (no phones or tablets)</li>
+                <li>{{ tr("Your participation is") }} <strong>{{ tr("voluntary") }}</strong></li>
+                <li>{{ tr("You may") }} <strong>{{ tr("withdraw at any time") }}</strong> {{ tr("without penalty") }}</li>
+                <li>{{ tr("No personal identifying information will be collected; data will be stored") }} <strong>{{ tr("anonymously") }}</strong></li>
+                <li>{{ tr("You must be") }} <strong>{{ tr("18 years or older") }}</strong></li>
+                <li>{{ tr("You must use a") }} <strong>{{ tr("laptop or desktop computer") }}</strong> {{ tr("(no phones or tablets)") }}</li>
             </ul>
             
-            <p><strong>During the Study:</strong></p>
+            <p><strong>{{ tr("During the Study:") }}</strong></p>
             <ul>
-                <li>Please remain in <strong>full-screen mode</strong></li>
-                <li>Avoid multitasking or switching tabs</li>
-                <li>Ensure you're in a quiet environment</li>
+                <li>{{ tr("Please remain in") }} <strong>{{ tr("full-screen mode") }}</strong></li>
+                <li>{{ tr("Avoid multitasking or switching tabs") }}</li>
+                <li>{{ tr("Ensure you're in a quiet environment") }}</li>
             </ul>
         </div>
         
         <div class="consent-box">
-            <p style="font-weight: 600; color: #333;">By clicking "I Agree and Continue," you confirm that:</p>
+            <p style="font-weight: 600; color: #333;">{{ tr("By clicking \"I Agree and Continue,\" you confirm that:") }}</p>
             <ul style="margin-top: 10px;">
-                <li>You have read and understood this information</li>
-                <li>You are 18 years or older</li>
-                <li>You consent to participate in this study</li>
+                <li>{{ tr("You have read and understood this information") }}</li>
+                <li>{{ tr("You are 18 years or older") }}</li>
+                <li>{{ tr("You consent to participate in this study") }}</li>
             </ul>
         </div>
         
         <form action="/consent_accept" method="POST">
-            <button type="submit">✅ I Agree and Continue</button>
+            <button type="submit">✅ {{ tr("I Agree and Continue") }}</button>
         </form>
     </div>
 </body>

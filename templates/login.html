@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Memory Study - Login</title>
+    <title>{{ tr("AI Memory Study - Login") }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -88,46 +88,48 @@
 </head>
 <body>
     <div class="container">
-        <h1>🧠 AI-Assisted Memory Study</h1>
-        <p class="subtitle">Welcome! Please provide your information to begin.</p>
+        <h1>🧠 {{ tr("AI-Assisted Memory Study") }}</h1>
+        <p class="subtitle">{{ tr("Welcome! Please provide your information to begin.") }}</p>
         
         <div class="device-warning" id="deviceWarning" style="display: none;">
-            <strong>⚠️ Device Check:</strong> This experiment requires a laptop or desktop computer. Please do not use a phone or tablet.
+            <strong>⚠️ {{ tr("Device Check:") }}</strong> {{ tr("This experiment requires a laptop or desktop computer. Please do not use a phone or tablet.") }}
         </div>
 
         <form action="/login" method="POST" id="loginForm">
             <div class="form-group">
-                <label for="full_name">Full Name *</label>
+                <label for="full_name">{{ tr("Full Name") }} *</label>
                 <input type="text" id="full_name" name="full_name" required>
             </div>
 
             <div class="form-group">
-                <label for="profession">Profession / Field of Study *</label>
+                <label for="profession">{{ tr("Profession / Field of Study") }} *</label>
                 <input type="text" id="profession" name="profession" required>
             </div>
 
             <div class="form-group">
-                <label for="age">Age *</label>
-                <input type="number" id="age" name="age" min="18" max="60" required>
+                <label for="age">{{ tr("Age") }} *</label>
+                <input type="number" id="age" name="age" min="18" max="60" required 
+                       oninvalid="this.setCustomValidity('{{ tr("Please enter an age between 18 and 60") }}')"
+                       oninput="this.setCustomValidity('')">
             </div>
 
             <div class="form-group">
-                <label for="gender">Gender *</label>
+                <label for="gender">{{ tr("Gender") }} *</label>
                 <select id="gender" name="gender" required>
-                    <option value="">Select...</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                    <option value="Other">Other</option>
-                    <option value="Prefer not to say">Prefer not to say</option>
+                    <option value="">{{ tr("Select...") }}</option>
+                    <option value="M">{{ tr("Male") }}</option>
+                    <option value="F">{{ tr("Female") }}</option>
+                    <option value="Other">{{ tr("Other") }}</option>
+                    <option value="Prefer not to say">{{ tr("Prefer not to say") }}</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label for="native_language">Native Language *</label>
+                <label for="native_language">{{ tr("Native Language") }} *</label>
                 <input type="text" id="native_language" name="native_language" required>
             </div>
 
-            <button type="submit" id="submitBtn">Continue to Study →</button>
+            <button type="submit" id="submitBtn">{{ tr("Continue to Study") }} →</button>
         </form>
     </div>
 
@@ -140,7 +142,8 @@
         if (isMobileDevice()) {
             document.getElementById('deviceWarning').style.display = 'block';
             document.getElementById('submitBtn').disabled = true;
-            document.getElementById('submitBtn').textContent = 'Please use a computer';
+            // Note: This text should ideally be translated server-side
+            document.getElementById('submitBtn').textContent = '{{ tr("Please use a computer") }}';
         }
 
         // Request fullscreen on form submit

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>Prior Knowledge Assessment</title>
+    <title>{{ tr("Prior Knowledge Assessment") }}</title>
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;padding:40px 20px}
@@ -38,16 +38,16 @@
 </head>
 <body>
 <div id="pk-timer" style="position:fixed; top:12px; right:12px; padding:6px 10px; border:1px solid #e0e0e0; border-radius:6px; background:#fff; z-index:9999; font-family:system-ui, -apple-system, Segoe UI, Roboto; box-shadow:0 2px 10px rgba(0,0,0,.06)">
-  ⏳ <span id="pk-time-left"></span> left
+  ⏳ <span id="pk-time-left"></span> {{ tr("left") }}
 </div>
 <div class="container">
-    <h1>📚 Prior Knowledge Assessment</h1>
-    <p class="progress">Step 1 of 4 sections • Estimated time: 5–6 minutes</p>
+    <h1>📚 {{ tr("Prior Knowledge Assessment") }}</h1>
+    <p class="progress">{{ tr("Step 1 of 3 sections") }}</p>
 
     <!-- Section 1: Familiarity -->
     <div class="section" id="section1">
-        <h2>1️⃣ Familiarity Rating</h2>
-        <p class="instruction">Rate how familiar you are with each term or concept (1 = Not familiar at all, 7 = Very familiar).</p>
+        <h2>1️⃣ {{ tr("Familiarity Rating") }}</h2>
+        <p class="instruction">{{ tr("Rate how familiar you are with each term or concept (1 = Not familiar at all, 7 = Very familiar).") }}</p>
 
         {% for term in terms %}
         <div class="term-item">
@@ -63,32 +63,31 @@
         </div>
         {% endfor %}
 
-        <button onclick="nextSection(2)">Continue to Section 2 →</button>
+        <button onclick="nextSection(2)">{{ tr("Continue to Section 2") }} →</button>
     </div>
 
     <!-- Section 2: Term Recognition -->
     <div class="section" id="section2" style="display:none;">
-        <h2>2️⃣ Term Recognition</h2>
-        <p class="instruction">Can you accurately define or describe each term without looking it up?</p>
+        <h2>2️⃣ {{ tr("Term Recognition") }}</h2>
+        <p class="instruction">{{ tr("Can you accurately define or describe each term without looking it up?") }}</p>
 
         {% for term in terms %}
         <div class="term-item">
             <div class="term-name">{{ term }}</div>
             <div class="yes-no">
-                <label><input type="radio" name="rec_{{ term }}" value="yes" required />Yes, I can explain it</label>
-                <label><input type="radio" name="rec_{{ term }}" value="no" />No, I'm unsure</label>
+                <label><input type="radio" name="rec_{{ term }}" value="yes" required />{{ tr("Yes, I can explain it") }}</label>
+                <label><input type="radio" name="rec_{{ term }}" value="no" />{{ tr("No, I'm unsure") }}</label>
             </div>
         </div>
         {% endfor %}
 
-        <button onclick="nextSection(3)">Continue to Section 3 →</button>
+        <button onclick="nextSection(3)">{{ tr("Continue to Section 3") }} →</button>
     </div>
 
     <!-- Section 3: Mini Quiz -->
     <div class="section" id="section3" style="display:none;">
-        <h2>3️⃣ Concept Quiz</h2>
-        <p class="instruction">Answer these short questions about general scientific concepts (30 seconds per question).</p>
-        <div class="timer" id="quizTimer">Time remaining: 2:30</div>
+        <h2>3️⃣ {{ tr("Concept Quiz") }}</h2>
+        <p class="instruction">{{ tr("Answer these short questions about general scientific concepts.") }}</p>
 
         {% for q in quiz %}
         {% set qidx = loop.index0 %}
@@ -111,18 +110,7 @@
         </div>
         {% endfor %}
 
-        <button onclick="nextSection(4)">Continue to Section 4 →</button>
-    </div>
-
-    <!-- Section 4: Concept Listing -->
-    <div class="section" id="section4" style="display:none;">
-        <h2>4️⃣ Concept Listing</h2>
-        <p class="instruction">Take 30 seconds to write any ideas, keywords, or principles that come to mind related to urban heat, gene editing, or semiconductor supply chains.</p>
-        <div class="timer" id="listTimer">Time remaining: 0:30</div>
-
-        <textarea id="conceptList" placeholder="Type your concepts here (use short phrases)..."></textarea>
-
-        <button onclick="submitAll()" id="submitBtn">Submit Assessment →</button>
+        <button onclick="submitAll()" id="submitBtn">{{ tr("Submit Assessment") }} →</button>
     </div>
 </div>
 
@@ -131,37 +119,11 @@ let quizStartTime, listStartTime;
 let quizInterval, listInterval;
 
 function nextSection(num){
-    for(let i=1;i<=4;i++){
+    for(let i=1;i<=3;i++){
         document.getElementById('section'+i).style.display='none';
     }
     document.getElementById('section'+num).style.display='block';
     window.scrollTo(0,0);
-
-    if(num===3 && !quizStartTime){ quizStartTime=Date.now(); startQuizTimer(); }
-    if(num===4 && !listStartTime){ listStartTime=Date.now(); startListTimer(); }
-}
-
-function startQuizTimer(){
-    let remaining=150; // 2:30
-    quizInterval=setInterval(()=>{
-        remaining--;
-        const mins=Math.floor(remaining/60);
-        const secs=remaining%60;
-        document.getElementById('quizTimer').textContent=`Time remaining: ${mins}:${secs.toString().padStart(2,'0')}`;
-        if(remaining<=0){ clearInterval(quizInterval); nextSection(4); }
-    },1000);
-}
-
-function startListTimer(){
-    let remaining=30;
-    listInterval=setInterval(()=>{
-        remaining--;
-        document.getElementById('listTimer').textContent=`Time remaining: 0:${remaining.toString().padStart(2,'0')}`;
-        if(remaining<=0){
-            clearInterval(listInterval);
-            document.getElementById('submitBtn').disabled=false;
-        }
-    },1000);
 }
 
 function submitAll(){
@@ -201,9 +163,6 @@ function submitAll(){
     }
     {% endfor %}
 
-    // Concept list
-    const conceptList = document.getElementById('conceptList').value.trim();
-
     fetch('/submit_prior_knowledge',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
@@ -211,7 +170,7 @@ function submitAll(){
             familiarity,
             term_recognition: termRecognition,
             quiz_score: quizScore,
-            concept_list: conceptList
+            concept_list: ""
         })
     })
     .then(r=>r.json())
@@ -271,7 +230,7 @@ async function autoSubmitPKGlobal(){
     if (q{{ qidx }} && parseInt(q{{ qidx }}.value) === parseInt(q{{ qidx }}.dataset.correct)) quiz_score++;
     {% endfor %}
 
-    const concept_list = (document.getElementById('conceptList')?.value || '').trim();
+    const concept_list = "";
 
     const res = await fetch('/submit_prior_knowledge', {
       method: 'POST',

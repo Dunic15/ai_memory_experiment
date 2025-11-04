@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -17,7 +17,8 @@
         body.with-summary .main-content{max-width:760px; margin:0 24px 0 auto}
         .article-title{font-size:32px;color:#333;margin-bottom:30px;line-height:1.3}
         .article-text{font-size:16pt;line-height:1.8;color:#333;text-align:justify}
-        .article-text p{margin-bottom:20px}
+        .article-text p{margin-bottom:30px;page-break-inside:avoid}
+        .article-text p:last-child{margin-bottom:100px}
         .sidebar{order:2; flex:0 0 360px; width:360px; background:#fff; border-left:3px solid #667eea; padding:30px; overflow-y:auto; position:sticky; top:60px; height:calc(100vh - 60px)}
         .sidebar h3{color:#667eea;margin-bottom:15px;font-size:18px;font-family:'Segoe UI',sans-serif}
         .summary-text{font-size:13pt;line-height:1.6;color:#555}
@@ -54,88 +55,52 @@
     </div>
 
     <div id="read-timer" style="position:fixed; top:12px; right:12px; padding:6px 10px; border:1px solid #e0e0e0; border-radius:6px; background:#fff; z-index:9999; font-family:system-ui, -apple-system, Segoe UI, Roboto; box-shadow:0 2px 10px rgba(0,0,0,.06)">
-      ⏳ <span id="read-time-left"></span> left
+      ⏳ <span id="read-time-left"></span> {{ tr("left") }}
     </div>
 
-    <!-- Pre-reading overlay (B2) -->
-    {% if timing == 'pre_reading' %}
-    <div class="pre-reading-overlay" id="preReadingOverlay">
-        <div class="pre-reading-content">
-            <h2>🔍 AI Summary Preview</h2>
-            <p style="color:#666;margin-bottom:20px">
-                You may preview this summary for up to 90 seconds. You can start reading immediately, but you cannot reopen the summary once you begin.
-            </p>
-            <div class="pre-reading-summary">
-              {% if structure == 'segmented' %}
-                <ul class="summary-list">
-                  {% for line in summary.splitlines() %}
-                    {% set t = line.strip() %}
-                    {% if t %}<li>{{ t.lstrip('•-').strip() }}</li>{% endif %}
-                  {% endfor %}
-                </ul>
-              {% else %}
-                <p>{{ summary }}</p>
-              {% endif %}
-            </div>
-            <button id="startReadingBtn">Start Reading Now</button>
-
-            {% if test_mode %}
-            <!-- TEST MODE: instant skip from summary screen -->
-            <button type="button" class="skip-btn" onclick="finishReading()">
-                Skip reading (test)
-            </button>
-            {% endif %}
-        </div>
-    </div>
-    {% endif %}
-
-    <!-- Post-reading overlay (B3) -->
-    {% if timing == 'post_reading' %}
-    <div class="post-reading-message" id="postReadingOverlay">
-        <div class="post-reading-content">
-            <h2>✨ AI Summary</h2>
-            <p style="color:#666;margin-bottom:20px">Here's the AI-generated summary based on the article you just read.</p>
-            <div class="post-reading-summary">
-              {% if structure == 'segmented' %}
-                <ul class="summary-list">
-                  {% for line in summary.splitlines() %}
-                    {% set t = line.strip() %}
-                    {% if t %}<li>{{ t.lstrip('•-').strip() }}</li>{% endif %}
-                  {% endfor %}
-                </ul>
-              {% else %}
-                <p>{{ summary }}</p>
-              {% endif %}
-            </div>
-            <button onclick="startBreakAfterPostSummary()">Start 5‑minute Break →</button>
-        </div>
-    </div>
-    {% endif %}
 
     <div class="layout">
         <div class="main-content">
             <h1 class="article-title">{{ article_title }}</h1>
             <div class="article-text" id="articleText">
-                <p>{{ article_text|replace('\n\n','</p><p>')|safe }}</p>
+                {% set paragraphs = article_text.split('\n') %}
+                {% set para_count = 0 %}
+                {% for para in paragraphs %}
+                    {% if para.strip() %}
+                        {% set first_char = para.strip()[0] if para.strip() else '' %}
+                        {% if first_char and first_char.isupper() %}
+                            {% set para_count = para_count + 1 %}
+                            <p>{{ para.strip() }}</p>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <div style="text-align:center;margin-top:50px;padding:30px;">
+                    <button class="continue-btn" id="continueBtn" style="display:none;padding:15px 30px;font-size:16px;" onclick="finishReading()">{{ tr("Next Part") }} →</button>
+                </div>
             </div>
         </div>
 
         <!-- Synchronous (B1) — hidden by default, open via button -->
         {% if timing == 'synchronous' %}
-        <button class="summary-toggle" id="summaryToggleBtn" type="button" title="Open AI Summary">📋 Open AI Summary</button>
-        <div class="sidebar" id="sidebar" style="display:none;">
-            <h3>🤖 AI Summary</h3>
-            <div class="summary-text">
-              {% if structure == 'segmented' %}
-                <ul class="summary-list">
-                  {% for line in summary.splitlines() %}
-                    {% set t = line.strip() %}
-                    {% if t %}<li>{{ t.lstrip('•-').strip() }}</li>{% endif %}
-                  {% endfor %}
-                </ul>
-              {% else %}
-                <p>{{ summary }}</p>
-              {% endif %}
+        <button class="summary-toggle" id="summaryToggleBtn" type="button" title="{{ tr('Open AI Summary') }}">📋 {{ tr("Open AI Summary") }}</button>
+        <div class="sidebar-overlay" id="sidebarOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:200;overflow-y:auto;">
+            <div style="max-width:800px;margin:40px auto;background:#fff;padding:40px;border-radius:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                    <h3 style="color:#667eea;font-size:24px;margin:0;">🤖 {{ tr("AI Summary") }}</h3>
+                    <button onclick="closeSummaryOverlay()" style="background:#e0e0e0;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:600;">{{ tr("Close") }}</button>
+                </div>
+                <div class="summary-text">
+                  {% if structure == 'segmented' %}
+                    <ul class="summary-list">
+                      {% for line in summary.splitlines() %}
+                        {% set t = line.strip() %}
+                        {% if t %}<li>{{ t.lstrip('•-').strip() }}</li>{% endif %}
+                      {% endfor %}
+                    </ul>
+                  {% else %}
+                    <p>{{ summary }}</p>
+                  {% endif %}
+                </div>
             </div>
         </div>
         {% endif %}
@@ -145,29 +110,22 @@
     <button class="summary-toggle" id="postSummaryBtn" type="button" title="Open AI Summary" style="display:none;">📋 AI Summary</button>
     {% endif %}
 
-    <button class="continue-btn" id="continueBtn" style="display:none" onclick="finishReading()">Start 5‑minute Break →</button>
-
-    <!-- TEST MODE: global floating skip button (all timings) -->
-    {% if test_mode %}
-    <button class="test-skip" id="testSkipBtn" type="button" title="Shortcut: S" onclick="finishReading()">Skip reading (test)</button>
-    {% endif %}
 
 
     <script>
-        // Make test_mode available to JS
-        const TEST_MODE = {{ 'true' if test_mode else 'false' }};
         const timing = '{{ timing }}';
         const articleNum = {{ article_num }};
         let startTime = Date.now();
         let readingTime = 0, summaryViewTime = 0, summaryViews = 0, scrollDepth = 0;
-        const timeLimit = 12 * 60 * 1000;  // 12 minutes
-        const hardCap  = 15 * 60 * 1000;   // 15 minutes
-        const preReadingMinTime = TEST_MODE ? 0 : 90 * 1000; // 0s in test mode
+        const timeLimit = timing === 'synchronous' ? 15 * 60 * 1000 : 12 * 60 * 1000;  // 15 min for synchronous, 12 min for others
+        const hardCap  = timing === 'synchronous' ? 15 * 60 * 1000 : 12 * 60 * 1000;
+        const preReadingSummaryTime = 3 * 60 * 1000; // 3 minutes for pre-reading summary
+        const postReadingSummaryTime = 3 * 60 * 1000; // 3 minutes for post-reading summary
 
-        // ===== Reading countdown badge (12-minute default) =====
+        // ===== Reading countdown badge =====
         (function(){
-          // Prefer template-provided limit if present; else default 12 min
-          const LIMIT_MS  = (typeof READING_LIMIT_MS !== 'undefined' && READING_LIMIT_MS) ? READING_LIMIT_MS : (12 * 60 * 1000);
+          // Use correct limit based on timing mode
+          const LIMIT_MS  = timing === 'synchronous' ? (15 * 60 * 1000) : (12 * 60 * 1000);
           const el        = document.getElementById('read-time-left');
           const box       = document.getElementById('read-timer');
 
@@ -175,7 +133,7 @@
           if (typeof startTime === 'undefined' || !startTime) {
             window.startTime = Date.now();
           }
-          const endAt = startTime + (TEST_MODE ? 0 : LIMIT_MS);
+          const endAt = startTime + LIMIT_MS;
 
           function fmt(ms){
             const s = Math.max(0, Math.floor(ms/1000));
@@ -216,93 +174,46 @@
             const remSecs = Math.floor((remaining % 60000) / 1000);
             const t = document.getElementById('timer');
             if (t){
-                t.textContent = `Time: ${mins}:${secs.toString().padStart(2,'0')} / 12:00 (${remMins}:${remSecs.toString().padStart(2,'0')} remaining)`;
+                const timeLimitMins = timing === 'synchronous' ? 15 : 12;
+                const timeLabel = '{{ tr("Time:") }}';
+                const remainingLabel = '{{ tr("remaining") }}';
+                t.textContent = `${timeLabel} ${mins}:${secs.toString().padStart(2,'0')} / ${timeLimitMins}:00 (${remMins}:${remSecs.toString().padStart(2,'0')} ${remainingLabel})`;
                 if (remaining < 60000) t.classList.add('warning');
             }
-            if (elapsed >= timeLimit && document.getElementById('continueBtn')){
-                document.getElementById('continueBtn').style.display = 'block';
+            // Show continue button (users can submit early)
+            const continueBtn = document.getElementById('continueBtn');
+            if (continueBtn) {
+                // Always show button (users can submit early)
+                continueBtn.style.display = 'block';
             }
-            if (elapsed >= hardCap) finishReading();
+            if (elapsed >= hardCap) {
+                clearInterval(timerInterval);
+                finishReading();
+                return;
+            }
         }, 1000);
 
-        // Synchronous (B1) — toggle open/close as a right-side split panel
+        // Synchronous (B1) — overlay that covers screen
         (function(){
           const btn  = document.getElementById('summaryToggleBtn');
-          const side = document.getElementById('sidebar');
-          if (!btn || !side) return;
+          const overlay = document.getElementById('sidebarOverlay');
+          if (!btn || !overlay) return;
 
-          function openSummary(){
-            side.style.display = 'block';
-            document.body.classList.add('with-summary');
-            btn.textContent = '✖︎ Close AI Summary';
-            // keep reader oriented at the top region
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-          function closeSummary(){
-            side.style.display = 'none';
-            document.body.classList.remove('with-summary');
-            btn.textContent = '📋 Open AI Summary';
-          }
+          window.closeSummaryOverlay = function(){
+            overlay.style.display = 'none';
+            btn.style.display = 'inline-block';
+          };
 
           btn.addEventListener('click', () => {
-            const visible = side.style.display !== 'none';
-            visible ? closeSummary() : openSummary();
+            overlay.style.display = 'block';
+            btn.style.display = 'none';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           });
         })();
 
-        // B3 (Post-reading) — timed reveal of the AI Summary button at 9 minutes
-        (function(){
-          const btn  = document.getElementById('postSummaryBtn');
-          const post = document.getElementById('postReadingOverlay');
-          const NINE_MIN_MS = TEST_MODE ? 0 : (9 * 60 * 1000);
-          if (typeof timing !== 'undefined' && timing === 'post_reading' && btn) {
-            setTimeout(() => {
-              // Only reveal if the overlay isn't already open
-              const overlayOpen = post && post.style.display === 'flex';
-              if (!overlayOpen) btn.style.display = 'inline-block';
-            }, NINE_MIN_MS);
-          }
-        })();
+        // Post-reading mode: summary is handled by separate page
 
-        // Post-reading (B3) — open overlay via button after reading completes
-        (function(){
-          const btn = document.getElementById('postSummaryBtn');
-          const overlay = document.getElementById('postReadingOverlay');
-          if (btn && overlay) {
-            btn.addEventListener('click', () => {
-              overlay.style.display = 'flex';
-            });
-          }
-        })();
-
-        // Pre-reading behavior (B2)
-        let preReadingStart = Date.now();
-        const startBtn = document.getElementById('startReadingBtn');
-        // Enable immediately: participants can start reading right away
-        if (startBtn) {
-            startBtn.disabled = false;
-            startBtn.textContent = 'Start Reading Now';
-            startBtn.addEventListener('click', async () => {
-                // Log how long they viewed the summary before starting
-                summaryViewTime += Date.now() - preReadingStart;
-                summaryViews++;
-                // Permanently lock summary for this article
-                try {
-                    await fetch('/lock_summary', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ article_num: articleNum })
-                    });
-                } catch (e) { /* ignore */ }
-                // Hide overlay and do NOT provide a way back
-                const overlay = document.getElementById('preReadingOverlay');
-                if (overlay) overlay.style.display = 'none';
-                startTime = Date.now();
-                if (TEST_MODE && document.getElementById('continueBtn')){
-                    document.getElementById('continueBtn').style.display = 'block';
-                }
-            });
-        }
+        // Pre-reading mode: summary is handled by separate page, so this is just reading
 
         // Scroll tracking
         let maxScroll = 0;
@@ -333,40 +244,29 @@
                 summaryViewTime, summaryViews, scrollDepth
             });
 
-            // If timing is post_reading, reveal the AI Summary button now and STOP here
+            // If timing is post_reading, redirect to AI summary page
             if (timing === 'post_reading') {
                 if (pre) pre.style.display = 'none';
-                const btn = document.getElementById('postSummaryBtn');
-                if (btn) btn.style.display = 'inline-block';
-                return; // user will click the button to view the summary, then proceed to break
+                if (post) post.style.display = 'none';
+                window.location.href = `/ai_summary/${articleNum}`;
+                return;
             }
 
-            // Otherwise (pre_reading / synchronous) → go to pre-test break
+            // For synchronous mode, go directly to test (no break)
+            if (timing === 'synchronous') {
+                if (pre) pre.style.display = 'none';
+                if (post) post.style.display = 'none';
+                window.location.href = `/test/${articleNum}`;
+                return;
+            }
+            
+            // Otherwise (pre_reading) → go to pre-test break
             if (pre) pre.style.display = 'none';
             if (post) post.style.display = 'none';
             window.location.href = `/break_before_test/${articleNum}`;
         }
 
-        function startBreakAfterPostSummary(){
-            const post = document.getElementById('postReadingOverlay');
-            let viewMs = 0;
-            if (post && post.style.display === 'flex') {
-                // Rough measure: treat time since overlay shown as summary view time
-                // If you store the exact start, replace with that value
-                viewMs = 0;
-            }
-            summaryViewTime += viewMs;
-            window.location.href = `/break_before_test/${articleNum}`;
-        }
 
-        // Keyboard shortcuts in TEST MODE
-        document.addEventListener('keydown', (e) => {
-            if (!TEST_MODE) return;
-            if (e.key.toLowerCase() === 's') { // skip reading
-                e.preventDefault();
-                finishReading();
-            }
-        });
 
         // Prevent accidental navigation before finishing
         window.addEventListener('beforeunload', (e) => {

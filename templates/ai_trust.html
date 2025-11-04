@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Trust Assessment</title>
+    <title>{{ tr("AI Trust Assessment") }}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -56,15 +56,15 @@
 </head>
 <body>
     <div id="ait-timer" style="position:fixed; top:12px; right:12px; padding:6px 10px; border:1px solid #e0e0e0; border-radius:6px; background:#fff; z-index:9999; font-family:system-ui, -apple-system, Segoe UI, Roboto; box-shadow:0 2px 10px rgba(0,0,0,.06)">
-      ⏳ <span id="ait-time-left"></span> left
+      ⏳ <span id="ait-time-left"></span> {{ tr("left") }}
     </div>
     <div class="container">
-        <h1>🤖 AI Trust & Technology Use</h1>
-        <p class="progress">Final baseline assessment • Estimated time: 4-5 minutes</p>
+        <h1>🤖 {{ tr("AI Trust & Technology Use") }}</h1>
+        <p class="progress">{{ tr("Final baseline assessment") }}</p>
 
         <!-- Trust in AI -->
         <div class="section">
-            <h2>Trust in AI Systems</h2>
+            <h2>{{ tr("Trust in AI Systems") }}</h2>
             {% for q in questions.trust %}
             {% set i = loop.index0 %}
             <div class="question">
@@ -78,8 +78,8 @@
                     {% endfor %}
                 </div>
                 <div class="scale-ends">
-                    <span>Strongly disagree</span>
-                    <span>Strongly agree</span>
+                    <span>{{ tr("Strongly disagree") }}</span>
+                    <span>{{ tr("Strongly agree") }}</span>
                 </div>
             </div>
             {% endfor %}
@@ -87,7 +87,7 @@
 
         <!-- Dependence on AI -->
         <div class="section">
-            <h2>Technology Dependence</h2>
+            <h2>{{ tr("Technology Dependence") }}</h2>
             {% for q in questions.dependence %}
             {% set i = loop.index0 %}
             <div class="question">
@@ -101,8 +101,8 @@
                     {% endfor %}
                 </div>
                 <div class="scale-ends">
-                    <span>Strongly disagree</span>
-                    <span>Strongly agree</span>
+                    <span>{{ tr("Strongly disagree") }}</span>
+                    <span>{{ tr("Strongly agree") }}</span>
                 </div>
             </div>
             {% endfor %}
@@ -110,7 +110,7 @@
 
         <!-- Technical Skill -->
         <div class="section">
-            <h2>Technical Proficiency</h2>
+            <h2>{{ tr("Technical Proficiency") }}</h2>
             {% for q in questions.skill %}
             {% set i = loop.index0 %}
             <div class="question">
@@ -124,8 +124,8 @@
                     {% endfor %}
                 </div>
                 <div class="scale-ends">
-                    <span>Strongly disagree</span>
-                    <span>Strongly agree</span>
+                    <span>{{ tr("Strongly disagree") }}</span>
+                    <span>{{ tr("Strongly agree") }}</span>
                 </div>
             </div>
             {% endfor %}
@@ -133,34 +133,36 @@
 
         <!-- Open Reflection -->
         <div class="section">
-            <h2>Optional: AI in Your Life</h2>
-            <p style="color: #666; margin-bottom: 10px;">Briefly describe how you use AI or smart digital tools in your daily life (e.g., search engines, assistants, study aids).</p>
-            <div class="timer" id="timer">Time limit: 30 seconds</div>
-            <textarea id="reflection" placeholder="Type your response here (optional)..."></textarea>
+            <h2>{{ tr("Optional: AI in Your Life") }}</h2>
+            <p style="color: #666; margin-bottom: 15px; font-weight: 600;">{{ tr("Please answer the following questions about your use of AI and smart digital tools:") }}</p>
+            
+            <div class="question" style="margin-bottom: 20px;">
+                <div class="question-text" style="margin-bottom: 10px;">1. {{ tr("What specific AI tools or smart digital tools do you use in your daily life? (e.g., search engines, virtual assistants, study aids, productivity apps)") }}</div>
+                <textarea id="reflection1" placeholder="{{ tr('Type your response here...') }}" style="min-height: 80px; margin-bottom: 15px;"></textarea>
+            </div>
+            
+            <div class="question" style="margin-bottom: 20px;">
+                <div class="question-text" style="margin-bottom: 10px;">2. {{ tr("How do you typically use these tools? What tasks do you use them for?") }}</div>
+                <textarea id="reflection2" placeholder="{{ tr('Type your response here...') }}" style="min-height: 80px; margin-bottom: 15px;"></textarea>
+            </div>
+            
+            <div class="question" style="margin-bottom: 20px;">
+                <div class="question-text" style="margin-bottom: 10px;">3. {{ tr("How often do you rely on these tools? (e.g., daily, weekly, occasionally)") }}</div>
+                <textarea id="reflection3" placeholder="{{ tr('Type your response here...') }}" style="min-height: 80px;"></textarea>
+            </div>
         </div>
 
-        <button onclick="submitForm()" id="submitBtn">Continue to Experiment →</button>
+        <button onclick="submitForm()" id="submitBtn">{{ tr("Continue to Experiment") }} →</button>
     </div>
 
     <script>
-        // Start timer
-        let remaining = 30;
-        const timerInterval = setInterval(() => {
-            remaining--;
-            document.getElementById('timer').textContent = `Time limit: ${remaining} seconds`;
-            if (remaining <= 0) {
-                clearInterval(timerInterval);
-                document.getElementById('reflection').disabled = true;
-            }
-        }, 1000);
-
         function submitForm() {
             // Collect trust ratings
             const trust = {};
             {% for i in range(questions.trust|length) %}
             const trust{{ i }} = document.querySelector('input[name="trust_{{ i }}"]:checked');
             if (!trust{{ i }}) {
-                alert('Please answer all trust questions');
+                alert('{{ tr("Please answer all trust questions") }}');
                 return;
             }
             trust[{{ i }}] = parseInt(trust{{ i }}.value);
@@ -171,7 +173,7 @@
             {% for i in range(questions.dependence|length) %}
             const dep{{ i }} = document.querySelector('input[name="dep_{{ i }}"]:checked');
             if (!dep{{ i }}) {
-                alert('Please answer all dependence questions');
+                alert('{{ tr("Please answer all dependence questions") }}');
                 return;
             }
             dependence[{{ i }}] = parseInt(dep{{ i }}.value);
@@ -182,14 +184,17 @@
             {% for i in range(questions.skill|length) %}
             const skill{{ i }} = document.querySelector('input[name="skill_{{ i }}"]:checked');
             if (!skill{{ i }}) {
-                alert('Please answer all skill questions');
+                alert('{{ tr("Please answer all skill questions") }}');
                 return;
             }
             skill[{{ i }}] = parseInt(skill{{ i }}.value);
             {% endfor %}
 
-            // Collect reflection
-            const reflection = document.getElementById('reflection').value.trim();
+            // Collect reflection (combine all three responses)
+            const reflection1 = (document.getElementById('reflection1')?.value || '').trim();
+            const reflection2 = (document.getElementById('reflection2')?.value || '').trim();
+            const reflection3 = (document.getElementById('reflection3')?.value || '').trim();
+            const reflection = `Q1: ${reflection1}\nQ2: ${reflection2}\nQ3: ${reflection3}`;
 
             // Submit
             document.getElementById('submitBtn').disabled = true;
@@ -243,7 +248,10 @@
           { const el = document.querySelector('input[name="skill_{{ i }}"]:checked'); if (el) skill[{{ i }}] = parseInt(el.value); }
           {% endfor %}
 
-          const reflection = (document.getElementById('reflection')?.value || '').trim();
+          const reflection1 = (document.getElementById('reflection1')?.value || '').trim();
+          const reflection2 = (document.getElementById('reflection2')?.value || '').trim();
+          const reflection3 = (document.getElementById('reflection3')?.value || '').trim();
+          const reflection = `Q1: ${reflection1}\nQ2: ${reflection2}\nQ3: ${reflection3}`;
 
           if (submitBtn) submitBtn.disabled = true;
           const res = await fetch('/submit_ai_trust', {

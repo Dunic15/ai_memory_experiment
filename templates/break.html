@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -134,26 +134,17 @@
 </head>
 <body>
     <div class="container">
-        <div id="testBadge" class="test-badge">TEST MODE</div>
         <div class="icon">☕</div>
-        <h1>Take a Short Break</h1>
+        <h1>{{ tr("Take a Short Break") }}</h1>
 
         <p>
             {% if after_reading %}
-            Great work! You've finished reading Article <strong>{{ next_article + 1 }}</strong> of 3.
+            {{ tr("Great work! You've finished reading Article") }} <strong>{{ next_article + 1 }}</strong> {{ tr("of 3.") }}
             {% else %}
-            Great work! Time for a short pause before Article <strong>{{ next_article + 1 }}</strong> of 3.
+            {{ tr("Great work! Time for a short pause before Article") }} <strong>{{ next_article + 1 }}</strong> {{ tr("of 3.") }}
             {% endif %}
         </p>
-        <p class="next">
-            {% if after_reading %}
-            Next up: <strong>Recall task for Article {{ next_article + 1 }}</strong>
-            {% else %}
-            Next up: Article <strong>{{ next_article + 1 }}</strong> of 3
-            {% endif %}
-        </p>
-
-        <div class="timer" id="timer">{{ '5:00' if after_reading else '0:30' }}</div>
+        <div class="timer" id="timer">{{ '5:00' if after_reading else '1:00' }}</div>
         <div class="progress"><div class="progress-fill" id="progressBar"></div></div>
 
         <div class="tips">
@@ -167,41 +158,28 @@
         </div>
 
         <div class="actions">
-            <button id="continueBtn" onclick="continueNow()" style="display:none;">Continue Early →</button>
-            <button id="skipBtn" class="secondary" onclick="continueNow()" style="display:none;">Skip break (test) ⏩</button>
+            {% if not after_reading %}
+            <button id="continueBtn" onclick="continueNow()" style="display:none;">{{ tr("Continue Early") }} →</button>
+            {% endif %}
         </div>
-        <div class="hint" id="hint" style="display:none;">Shortcuts: Press <b>C</b> to continue · <b>B</b> to skip break</div>
     </div>
 
     <script>
-        const TEST_MODE = {{ 'true' if test_mode else 'false' }};
         const nextArticle = {{ next_article }};
         const AFTER_READING = {{ 'true' if after_reading else 'false' }};
 
-        // Durations (seconds): 5 minutes after reading, 30 seconds between articles
+        // Durations (seconds): 5 minutes after reading (not skippable), 1 minute between articles
         const DURATION_AFTER_READING = 300;
-        const DURATION_BETWEEN_ARTICLES = 30;
+        const DURATION_BETWEEN_ARTICLES = 60;
         const TOTAL_DURATION = AFTER_READING ? DURATION_AFTER_READING : DURATION_BETWEEN_ARTICLES;
 
-        // In TEST_MODE cap to 30s for quick runs
-        let timeLeft = TEST_MODE ? Math.min(TOTAL_DURATION, 30) : TOTAL_DURATION;
+        let timeLeft = TOTAL_DURATION;
 
-        // Reveal TEST badge; only show skip/hint on BETWEEN-ARTICLES breaks
-        if (TEST_MODE) {
-            document.getElementById('testBadge').style.display = 'inline-block';
-            if (!AFTER_READING) {
-                document.getElementById('skipBtn').style.display = 'inline-block';
-                document.getElementById('hint').style.display = 'block';
-            }
-        }
-
-        // Show "Continue Early" ONLY for BETWEEN-ARTICLES breaks
-        function showContinue() {
+        // No early continue for after-reading break (5 min not skippable)
+        // For between-articles break (1 min), allow early continue
+        if (!AFTER_READING) {
             const btn = document.getElementById('continueBtn');
             if (btn) btn.style.display = 'inline-block';
-        }
-        if (!AFTER_READING) {
-            if (TEST_MODE) showContinue(); else setTimeout(showContinue, 30000);
         }
 
         // Timer + progress
@@ -226,13 +204,12 @@
         }
 
         updateUI();
-        const interval = TEST_MODE ? null : setInterval(tick, 1000);
+        const interval = setInterval(tick, 1000);
 
-        // Keyboard shortcuts (disabled on AFTER-READING break)
+        // Keyboard shortcuts only for between-articles break (not after-reading)
         if (!AFTER_READING) {
             window.addEventListener('keydown', (e) => {
                 if (e.key === 'c' || e.key === 'C') continueNow();
-                if (e.key === 'b' || e.key === 'B') continueNow();
             });
         }
 

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Summary</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 40px;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .timer-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+            font-size: 18px;
+        }
+        .summary-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .summary-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        .summary-content li {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .summary-content li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 {{ tr("AI Summary") }}</h1>
+        <div class="timer-display">
+            {{ tr("Time remaining:") }} <span id="timerDisplay">3:00</span>
+        </div>
+        <div class="summary-content" id="summaryContent">
+            <!-- Summary will be inserted here -->
+        </div>
+        <button id="continueBtn" onclick="continueToNext()">{{ tr("Continue") }} →</button>
+    </div>
+
+    <script>
+        const articleNum = {{ article_num }};
+        const summaryText = {{ summary|tojson }};
+        const structure = '{{ structure }}';
+        const mode = '{{ mode }}'; // 'pre_reading' or 'post_reading'
+        
+        // Display summary
+        const summaryContent = document.getElementById('summaryContent');
+        if (structure === 'segmented') {
+            const ul = document.createElement('ul');
+            const lines = summaryText.split('\n');
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (trimmed) {
+                    const li = document.createElement('li');
+                    // Remove bullet markers if present
+                    li.textContent = trimmed.replace(/^[-•]\s*/, '');
+                    ul.appendChild(li);
+                }
+            });
+            summaryContent.appendChild(ul);
+        } else {
+            const p = document.createElement('p');
+            p.textContent = summaryText;
+            summaryContent.appendChild(p);
+        }
+        
+        // Timer
+        let remaining = 3 * 60 * 1000; // 3 minutes
+        const timerDisplay = document.getElementById('timerDisplay');
+        const continueBtn = document.getElementById('continueBtn');
+        
+        // Show button immediately (users can continue early)
+        continueBtn.style.display = 'block';
+        
+        const timerInterval = setInterval(() => {
+            remaining -= 1000;
+            const mins = Math.floor(remaining / 60000);
+            const secs = Math.floor((remaining % 60000) / 1000);
+            timerDisplay.textContent = `${mins}:${secs.toString().padStart(2,'0')}`;
+            
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                continueToNext();
+            }
+        }, 1000);
+        
+        function continueToNext() {
+            clearInterval(timerInterval);
+            if (mode === 'pre_reading') {
+                // Mark summary as viewed
+                fetch('/mark_pre_summary_viewed', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ article_num: articleNum })
+                }).then(() => {
+                    // Go to reading phase
+                    window.location.href = `/reading/${articleNum}`;
+                }).catch(() => {
+                    window.location.href = `/reading/${articleNum}`;
+                });
+            } else {
+                // Post-reading: go directly to test (no break)
+                window.location.href = `/test/${articleNum}`;
+            }
+        }
+    </script>
+</body>
+</html>
+

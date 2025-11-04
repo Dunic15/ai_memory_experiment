@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -125,6 +125,48 @@
         textarea:focus {
             outline: none;
             border-color: #667eea;
+        }
+        .bullet-point {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 2px solid #e0e0e0;
+        }
+        .bullet-point input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            background: white;
+        }
+        .bullet-point input:focus {
+            outline: 2px solid #667eea;
+        }
+        .bullet-remove {
+            margin-left: 10px;
+            padding: 0;
+            background: transparent;
+            color: #ff4d4f;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .bullet-remove:hover {
+            color: #cf1322;
+            transform: scale(1.2);
         }
         textarea.paste-attempt {
             border-color: #ff4d4f !important;
@@ -299,64 +341,44 @@
             color: #333 !important;
         }
         
-        /* ✅ SKIP RECALL FIX: Hide recall section when skip_recall flag is set */
-        {% if skip_recall or start_on_mcq %}
-        #recallSection {
-            display: none !important;
-        }
-        #mcqSection {
-            display: block !important;
-        }
-        #timerBadge {
-            display: none !important;
-        }
-        {% endif %}
-        /* ✅ END SKIP RECALL FIX */
     </style>
 </head>
 <body>
-    <div id="testBadge" class="test-badge">TEST MODE</div>
     <div class="timer-badge" id="timerBadge">
         ⏱️ <span id="timeLeft">6:00</span>
     </div>
 
     <div class="container">
-        <h1>📝 Article {{ article_num + 1 }} Test</h1>
+        <h1>📝 {{ tr("Article") }} {{ article_num + 1 }} {{ tr("Test") }}</h1>
         <p class="progress">{{ article_title }}</p>
 
         <!-- FREE RECALL SECTION -->
         <div class="section" id="recallSection">
-            <h2>Free Recall</h2>
+            <h2>{{ tr("Free Recall") }}</h2>
             
-            <div class="guideline">
-                <strong>💡 Remember:</strong> Write in short, idea-based sentences using the pattern "A → B because C". 
-                Aim for 8–12 sentences focusing on specific ideas and relationships.
-            </div>
-
             <div class="recall-container">
-
-                <textarea 
-                    id="recallText" 
-                    placeholder="Type your ideas here… Use one idea per sentence."
-                    spellcheck="true"
-                ></textarea>
+                <div id="bulletPoints" style="margin-bottom:20px;">
+                    <!-- Bullet points will be added here -->
+                </div>
+                <button id="addBulletBtn" onclick="addBulletPoint()" style="width:auto;padding:10px 20px;margin-bottom:20px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px;">
+                    + {{ tr("Add Bullet Point") }}
+                </button>
 
                 <div class="paste-warning" id="pasteWarning">
-                    <strong>⚠️ Paste not allowed.</strong> Please type your response in your own words. 
-                    This helps ensure authentic recall.
+                    <strong>⚠️ {{ tr("Paste not allowed.") }}</strong> {{ tr("Please type your response in your own words. This helps ensure authentic recall.") }}
                 </div>
             </div>
 
             <!-- Post-recall sliders -->
             <div class="slider-section">
                 <div class="slider-question">
-                    How confident are you that you recalled the main ideas accurately?
+                    {{ tr("How confident are you that you recalled the main ideas accurately?") }}
                 </div>
                 <div class="slider-container">
                     <input type="range" id="confidenceSlider" min="1" max="7" value="4" />
                     <div class="slider-labels">
-                        <span>1 - Not confident</span>
-                        <span>7 - Very confident</span>
+                        <span>1 - {{ tr("Not confident") }}</span>
+                        <span>7 - {{ tr("Very confident") }}</span>
                     </div>
                     <div class="slider-value" id="confidenceValue">4</div>
                 </div>
@@ -364,27 +386,27 @@
 
             <div class="slider-section">
                 <div class="slider-question">
-                    How mentally demanding was this task?
+                    {{ tr("How mentally demanding was this task?") }}
                 </div>
                 <div class="slider-container">
                     <input type="range" id="difficultySlider" min="1" max="7" value="4" />
                     <div class="slider-labels">
-                        <span>1 - Very easy</span>
-                        <span>7 - Very demanding</span>
+                        <span>1 - {{ tr("Very easy") }}</span>
+                        <span>7 - {{ tr("Very demanding") }}</span>
                     </div>
                     <div class="slider-value" id="difficultyValue">4</div>
                 </div>
             </div>
 
             <button id="submitRecallBtn" onclick="submitRecall()" disabled>
-                Continue to Multiple Choice →
+                {{ tr("Continue to Multiple Choice") }} →
             </button>
         </div>
 
         <!-- MCQ SECTION (hidden initially) -->
         <div class="section mcq-section" id="mcqSection">
-            <h2>Recognition Questions</h2>
-            <p style="color: #666; margin-bottom: 20px;">Answer the following questions based on the article.</p>
+            <h2>{{ tr("Recognition Questions") }}</h2>
+            <p style="color: #666; margin-bottom: 20px;">{{ tr("Answer the following questions based on the article.") }}</p>
 
             {% for q in questions %}
             <div class="question">
@@ -400,30 +422,29 @@
             </div>
             {% endfor %}
 
-            <button onclick="submitTest()">Submit Test →</button>
+            <button onclick="submitTest()">{{ tr("Submit Test") }} →</button>
         </div>
     </div>
 
     <!-- Confirmation Modal -->
     <div class="modal" id="confirmModal">
         <div class="modal-content">
-            <h3>⚠️ Submit with few sentences?</h3>
-            <p>We recommend at least 3 idea sentences for meaningful recall. You currently have <strong id="modalSentenceCount">0</strong> sentence(s).</p>
-            <p>Would you like to submit anyway or keep writing?</p>
+            <h3>⚠️ {{ tr("Submit with few sentences?") }}</h3>
+            <p>{{ tr("We recommend at least 3 idea sentences for meaningful recall. You currently have") }} <strong id="modalSentenceCount">0</strong> {{ tr("sentence(s).") }}</p>
+            <p>{{ tr("Would you like to submit anyway or keep writing?") }}</p>
             <div class="modal-buttons">
-                <button class="secondary-btn" onclick="closeModal()">Keep Writing</button>
-                <button onclick="forceSubmitRecall()">Submit Anyway</button>
+                <button class="secondary-btn" onclick="closeModal()">{{ tr("Keep Writing") }}</button>
+                <button onclick="forceSubmitRecall()">{{ tr("Submit Anyway") }}</button>
             </div>
         </div>
     </div>
 
     <!-- Toast for auto-submit -->
     <div id="toast" style="display:none; position:fixed; bottom:20px; right:20px; background:#323232; color:white; padding:16px 24px; border-radius:8px; z-index:10001; animation:fadeIn 0.3s;">
-        ⏰ Time's up — your response was saved
+        ⏰ {{ tr("Time's up — your response was saved") }}
     </div>
 
     <script>
-        const TEST_MODE = {{ 'true' if test_mode else 'false' }};
         const articleNum = {{ article_num }};
         const START_ON_MCQ = {{ 'true' if start_on_mcq else 'false' }};
         const RECALL_TIME_MS   = {{ recall_total_ms }};   // total countdown (server-provided)
@@ -437,10 +458,6 @@
             over_limit: false
         };
 
-        // Show test badge if in test mode
-        if (TEST_MODE) {
-            document.getElementById('testBadge').style.display = 'block';
-        }
 
         // Timer
         const timerBadge = document.getElementById('timerBadge');
@@ -491,62 +508,90 @@
             window.scrollTo(0, 0);
         }
 
-        // Text area and counters
-        const textarea = document.getElementById('recallText');
+        // Bullet points functionality
+        let bulletPointCount = 0;
+        function addBulletPoint() {
+            const container = document.getElementById('bulletPoints');
+            const bullet = document.createElement('div');
+            bullet.className = 'bullet-point';
+            const placeholderText = '{{ tr("Enter your idea or phrase here...") }}';
+            const removeTitle = '{{ tr("Remove") }}';
+            bullet.innerHTML = `
+                <span style="margin-right:10px;font-size:18px;color:#667eea;">•</span>
+                <input type="text" id="bullet_${bulletPointCount}" placeholder="${placeholderText}" />
+                <button type="button" class="bullet-remove" onclick="removeBulletPoint(this)" title="${removeTitle}">−</button>
+            `;
+            container.appendChild(bullet);
+            bulletPointCount++;
+            
+            // Focus on the new input
+            const newInput = bullet.querySelector('input');
+            newInput.focus();
+        }
+        
+        function removeBulletPoint(btn) {
+            btn.parentElement.remove();
+        }
+        
+        function getAllBulletPoints() {
+            const inputs = document.querySelectorAll('#bulletPoints input');
+            const points = [];
+            inputs.forEach(input => {
+                if (input.value.trim()) {
+                    points.push(input.value.trim());
+                }
+            });
+            return points.join('\n');
+        }
+
+        // Submit button
         const submitBtn = document.getElementById('submitRecallBtn');
         const pasteWarning = document.getElementById('pasteWarning');
 
-        // Prevent paste
-        textarea.addEventListener('paste', (e) => {
-            e.preventDefault();
-            pasteAttempts++;
-            recallData.paste_attempts = pasteAttempts;
-            
-            // Visual feedback
-            textarea.classList.add('paste-attempt');
-            pasteWarning.style.display = 'block';
-            
-            setTimeout(() => {
-                textarea.classList.remove('paste-attempt');
-            }, 300);
-            
-            setTimeout(() => {
-                pasteWarning.style.display = 'none';
-            }, 3000);
+        // Prevent paste on bullet point inputs
+        document.addEventListener('paste', (e) => {
+            if (e.target.tagName === 'INPUT' && e.target.id.startsWith('bullet_')) {
+                e.preventDefault();
+                pasteAttempts++;
+                recallData.paste_attempts = pasteAttempts;
+                pasteWarning.style.display = 'block';
+                setTimeout(() => pasteWarning.style.display = 'none', 3000);
+            }
         });
 
-        // Prevent drag-drop
-        textarea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            pasteAttempts++;
-            recallData.paste_attempts = pasteAttempts;
-            pasteWarning.style.display = 'block';
-            setTimeout(() => pasteWarning.style.display = 'none', 3000);
+        // Prevent drag-drop on bullet point inputs
+        document.addEventListener('drop', (e) => {
+            if (e.target.tagName === 'INPUT' && e.target.id.startsWith('bullet_')) {
+                e.preventDefault();
+                pasteAttempts++;
+                recallData.paste_attempts = pasteAttempts;
+                pasteWarning.style.display = 'block';
+                setTimeout(() => pasteWarning.style.display = 'none', 3000);
+            }
         });
 
-        // Update counters
-        textarea.addEventListener('input', updateCounters);
+        // Update counters when bullet points change
+        document.addEventListener('input', (e) => {
+            if (e.target.tagName === 'INPUT' && e.target.id.startsWith('bullet_')) {
+                updateCounters();
+            }
+        });
         
         function updateCounters() {
-            const text = textarea.value;
-            const chars = text.length;
-            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-            const sentences = text.trim() ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
-            // No live counters displayed
-            // Flag over limit
-            recallData.over_limit = sentences > 10;
+            const bulletText = getAllBulletPoints();
+            const bullets = bulletText.split('\n').filter(b => b.trim()).length;
             const confidenceTouched = document.getElementById('confidenceSlider').dataset.touched;
             const difficultyTouched = document.getElementById('difficultySlider').dataset.touched;
             const unlocked = (Date.now() - startTime) >= RECALL_UNLOCK_MS;
 
-            // Before unlock: require >=3 sentences AND both sliders touched
+            // Before unlock: require at least 1 bullet point AND both sliders touched
             // After unlock: allow proceeding regardless of counts
             const btn = document.getElementById('submitRecallBtn');
             if (btn) {
                 if (unlocked) {
                     btn.disabled = false;
                 } else {
-                    btn.disabled = !(sentences >= 3 && confidenceTouched && difficultyTouched);
+                    btn.disabled = !(bullets >= 1 && confidenceTouched && difficultyTouched);
                 }
             }
         }
@@ -571,15 +616,6 @@
 
         // Submit recall
         function submitRecall() {
-            const text = textarea.value.trim();
-            const sentences = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
-            
-            if (sentences < 3) {
-                document.getElementById('modalSentenceCount').textContent = sentences;
-                document.getElementById('confirmModal').style.display = 'flex';
-                return;
-            }
-            
             proceedWithRecallSubmit();
         }
 
@@ -602,12 +638,12 @@
         }
 
         function proceedWithRecallSubmit() {
-            const text = textarea.value.trim();
+            const bulletText = getAllBulletPoints();
             recallData.end_time = new Date().toISOString();
-            recallData.recall_text = text;
-            recallData.sentence_count = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
-            recallData.word_count = text ? text.split(/\s+/).length : 0;
-            recallData.char_count = text.length;
+            recallData.recall_text = bulletText;
+            recallData.sentence_count = bulletText.split('\n').filter(b => b.trim()).length;
+            recallData.word_count = bulletText.split(/\s+/).filter(w => w.trim()).length;
+            recallData.char_count = bulletText.length;
             recallData.confidence = parseInt(confidenceSlider.value);
             recallData.perceived_difficulty = parseInt(difficultySlider.value);
             recallData.time_spent_ms = Date.now() - startTime;
@@ -619,13 +655,21 @@
         // Submit full test
         function submitTest() {
             const mcqData = {};
+            let allAnswered = true;
             {% for q in questions %}
             const q{{ loop.index0 }} = document.querySelector('input[name="q{{ loop.index0 }}"]:checked');
             if (!q{{ loop.index0 }}) {
-                alert('Please answer all questions');
-                return;
+                allAnswered = false;
+            } else {
+                mcqData['q{{ loop.index0 }}'] = parseInt(q{{ loop.index0 }}.value);
             }
-            mcqData['q{{ loop.index0 }}'] = parseInt(q{{ loop.index0 }}.value);
+            {% endfor %}
+            
+            // If not all answered, use default value (0) for unanswered questions
+            {% for q in questions %}
+            if (!mcqData.hasOwnProperty('q{{ loop.index0 }}')) {
+                mcqData['q{{ loop.index0 }}'] = 0;
+            }
             {% endfor %}
             
             fetch('/submit_test', {
@@ -640,8 +684,31 @@
             .then(r => r.json())
             .then(data => {
                 window.location.href = data.redirect;
+            })
+            .catch(err => {
+                console.error('Submit error:', err);
+                // Try to proceed anyway
+                window.location.href = '/break_after_reading/' + articleNum;
             });
         }
+        
+        // Auto-submit MCQ after a reasonable time (10 minutes) if user is on MCQ section
+        let mcqStartTime = null;
+        let mcqAutoSubmitTimer = null;
+        const originalShowMCQOnly = showMCQOnly;
+        showMCQOnly = function() {
+            originalShowMCQOnly();
+            mcqStartTime = Date.now();
+            // Clear any existing timer
+            if (mcqAutoSubmitTimer) clearTimeout(mcqAutoSubmitTimer);
+            // Auto-submit after 10 minutes on MCQ section
+            mcqAutoSubmitTimer = setTimeout(() => {
+                const mcqSection = document.getElementById('mcqSection');
+                if (mcqSection && mcqSection.style.display !== 'none') {
+                    submitTest();
+                }
+            }, 10 * 60 * 1000);
+        };
 
         // Prevent accidental navigation
         window.addEventListener('beforeunload', (e) => {
@@ -655,6 +722,9 @@
         if (START_ON_MCQ) {
             showMCQOnly();
         }
+        
+        // Initialize with one bullet point
+        addBulletPoint();
     </script>
 </body>
 </html>

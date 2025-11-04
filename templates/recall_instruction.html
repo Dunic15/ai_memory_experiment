@@ -126,7 +126,6 @@
 </head>
 <body>
     <div class="container">
-        <div id="testBadge" class="test-badge">TEST MODE</div>
         
         <h1>📝 Free Recall Instructions</h1>
         
@@ -157,62 +156,34 @@
         
         <div class="button-container">
             <button id="startBtn" onclick="startRecall()" disabled>Start Recall Task →</button>
-            <button id="skipBtn" class="skip-btn" onclick="skipToRecall()" style="display:none;">Skip (test mode)</button>
         </div>
     </div>
 
     <script>
-        const TEST_MODE = {{ 'true' if test_mode else 'false' }};
         const articleNum = {{ article_num }};
-        const LOCK_DURATION = TEST_MODE ? 0 : 30; // 30 seconds in normal mode, 0 in test
+        const LOCK_DURATION = 30; // 30 seconds
         
         let timeLeft = LOCK_DURATION;
         const startBtn = document.getElementById('startBtn');
         const countdownEl = document.getElementById('countdown');
         const lockMsg = document.getElementById('lockMessage');
         
-        // Show test badge and skip button in test mode
-        if (TEST_MODE) {
-            document.getElementById('testBadge').style.display = 'inline-block';
-            document.getElementById('skipBtn').style.display = 'inline-block';
-            startBtn.disabled = false;
-        }
-        
         // Countdown timer
-        if (!TEST_MODE && LOCK_DURATION > 0) {
-            const interval = setInterval(() => {
-                timeLeft--;
-                countdownEl.textContent = timeLeft;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(interval);
-                    startBtn.disabled = false;
-                    lockMsg.innerHTML = '<strong style="color: #28a745;">✓ You may now begin</strong>';
-                }
-            }, 1000);
-        } else if (!TEST_MODE) {
-            // If lock is 0, enable immediately
-            startBtn.disabled = false;
-            lockMsg.innerHTML = '<strong style="color: #28a745;">✓ You may now begin</strong>';
-        }
+        const interval = setInterval(() => {
+            timeLeft--;
+            countdownEl.textContent = timeLeft;
+            
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                startBtn.disabled = false;
+                lockMsg.innerHTML = '<strong style="color: #28a745;">✓ You may now begin</strong>';
+            }
+        }, 1000);
         
         function startRecall() {
             window.location.href = `/test/${articleNum}`;
         }
         
-        function skipToRecall() {
-            window.location.href = `/test/${articleNum}`;
-        }
-        
-        // Keyboard shortcut for test mode
-        if (TEST_MODE) {
-            document.addEventListener('keydown', (e) => {
-                if (e.key.toLowerCase() === 's') {
-                    e.preventDefault();
-                    skipToRecall();
-                }
-            });
-        }
     </script>
 </body>
 </html>
