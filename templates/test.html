@@ -457,6 +457,8 @@
     </div>
 
     <script>
+        // Wrap everything in try-catch to prevent errors from stopping execution
+        try {
         // Disable browser back button globally
         history.pushState(null, null, location.href);
         window.onpopstate = function(event) {
@@ -609,11 +611,13 @@
             updateMCQTimer();
         }
 
-        // Bullet points functionality - make sure these are global and defined early
+        // Bullet points functionality - DEFINE THESE FIRST before anything else
+        // This ensures they're always available even if other code fails
         let bulletPointCount = 0;
         
-        // Define functions immediately so they're available for onclick handlers
-        window.addBulletPoint = function() {
+        // Define functions IMMEDIATELY at the top level so they're always available
+        if (typeof window.addBulletPoint === 'undefined') {
+            window.addBulletPoint = function() {
             try {
                 const container = document.getElementById('bulletPoints');
                 if (!container) {
@@ -654,8 +658,10 @@
                 alert('Error adding bullet point. Please refresh the page.');
             }
         };
+        }
         
-        window.removeBulletPoint = function(btn) {
+        if (typeof window.removeBulletPoint === 'undefined') {
+            window.removeBulletPoint = function(btn) {
             try {
                 if (btn && btn.parentElement) {
                     btn.parentElement.remove();
@@ -667,6 +673,7 @@
                 console.error('Error in removeBulletPoint:', error);
             }
         };
+        }
         
         function getAllBulletPoints() {
             const inputs = document.querySelectorAll('#bulletPoints input');
