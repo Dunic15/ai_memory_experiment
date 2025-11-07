@@ -457,8 +457,6 @@
     </div>
 
     <script>
-        // Wrap everything in try-catch to prevent errors from stopping execution
-        try {
         // Disable browser back button globally
         history.pushState(null, null, location.href);
         window.onpopstate = function(event) {
