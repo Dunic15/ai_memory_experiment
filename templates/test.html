@@ -356,7 +356,7 @@
 </head>
 <body>
     <div class="timer-badge" id="timerBadge">
-        ⏱️ <span id="timeLeft">6:00</span>
+        ⏱️ <span id="timeLeft">3:00</span>
     </div>
 
     <div class="container">
@@ -366,12 +366,13 @@
         <!-- FREE RECALL SECTION -->
         <div class="section" id="recallSection">
             <h2>{{ tr("Free Recall") }}</h2>
+            <p style="color: #666; margin-bottom: 20px; line-height: 1.6;">{{ tr("Please write everything you remember from the article within 3 minutes. Try to describe main ideas and relationships — causes, consequences, and solutions — in your own words.") }}</p>
             
             <div class="recall-container">
                 <div id="bulletPoints" style="margin-bottom:20px;">
                     <!-- Bullet points will be added here -->
                 </div>
-                <button id="addBulletBtn" onclick="addBulletPoint()" style="width:auto;padding:10px 20px;margin-bottom:20px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px;">
+                <button id="addBulletBtn" onclick="window.addBulletPoint()" style="width:auto;padding:10px 20px;margin-bottom:20px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px;">
                     + {{ tr("Add Bullet Point") }}
                 </button>
 
@@ -456,11 +457,24 @@
     </div>
 
     <script>
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+        
         const articleNum = {{ article_num }};
         const START_ON_MCQ = {{ 'true' if start_on_mcq else 'false' }};
         const RECALL_TIME_MS   = {{ recall_total_ms }};   // total countdown (server-provided)
         const RECALL_UNLOCK_MS = {{ recall_unlock_ms }};  // when the Continue button unlocks
         const startTime = Date.now();
+        let mcqStartTime = null;
+        const MCQ_TIME_MS = 7 * 60 * 1000; // 7 minutes for MCQ
         
         let pasteAttempts = 0;
         let recallData = {
@@ -470,49 +484,74 @@
         };
 
 
-        // Timer
-        const timerBadge = document.getElementById('timerBadge');
-        const timeLeftEl = document.getElementById('timeLeft');
+        // Timer variables
         let timerRunning = true;
         let timerInterval = null;
 
         function updateTimer() {
             if (!timerRunning) return;
             
+            const timeLeftEl = document.getElementById('timeLeft');
+            const timerBadge = document.getElementById('timerBadge');
+            
             const elapsed = Date.now() - startTime;
             const remaining = Math.max(0, RECALL_TIME_MS - elapsed);
             const mins = Math.floor(remaining / 60000);
             const secs = Math.floor((remaining % 60000) / 1000);
 
-            timeLeftEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+            if (timeLeftEl) {
+                timeLeftEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
 
             // Unlock the Continue button once unlock threshold is reached
             if (elapsed >= RECALL_UNLOCK_MS) {
                 const btn = document.getElementById('submitRecallBtn');
-                if (btn) btn.disabled = false;
+                if (btn) {
+                    btn.disabled = false;
+                    // Also update counters to ensure button state is correct
+                    updateCounters();
+                }
             }
 
             // Color coding
-            if (remaining <= 60000) {
-                timerBadge.classList.add('critical');
-                timerBadge.classList.remove('warning');
-            } else if (remaining <= 120000) {
-                timerBadge.classList.add('warning');
-                timerBadge.classList.remove('critical');
-            } else {
-                timerBadge.classList.remove('warning', 'critical');
+            if (timerBadge) {
+                if (remaining <= 60000) {
+                    timerBadge.classList.add('critical');
+                    timerBadge.classList.remove('warning');
+                } else if (remaining <= 120000) {
+                    timerBadge.classList.add('warning');
+                    timerBadge.classList.remove('critical');
+                } else {
+                    timerBadge.classList.remove('warning', 'critical');
+                }
             }
 
             if (remaining <= 0) {
                 timerRunning = false;
-                if (timerInterval) clearInterval(timerInterval);
+                if (timerInterval) {
+                    clearTimeout(timerInterval);
+                    timerInterval = null;
+                }
                 autoSubmitRecall();
                 return;
             }
 
             timerInterval = setTimeout(updateTimer, 100);
         }
-        updateTimer();
+        
+        // Start timer when DOM is ready
+        function startRecallTimer() {
+            const timerBadge = document.getElementById('timerBadge');
+            const timeLeftEl = document.getElementById('timeLeft');
+            if (timerBadge && timeLeftEl) {
+                console.log('Starting recall timer');
+                updateTimer();
+            } else {
+                console.warn('Timer elements not found, retrying...', {timerBadge: !!timerBadge, timeLeftEl: !!timeLeftEl});
+                // Retry after a short delay if elements not found
+                setTimeout(startRecallTimer, 100);
+            }
+        }
 
         // Helper to show only MCQ section (used for skip recall)
         function showMCQOnly() {
@@ -521,34 +560,113 @@
             const badge = document.getElementById('timerBadge');
             if (recall) recall.style.display = 'none';
             if (mcq) mcq.style.display = 'block';
-            if (badge) badge.style.display = 'none';
+            if (badge) {
+                badge.style.display = 'block';
+                badge.innerHTML = '⏱️ <span id="mcqTimeLeft">7:00</span>';
+            }
+            mcqStartTime = Date.now();
+            startMCQTimer();
             window.scrollTo(0, 0);
         }
-
-        // Bullet points functionality
-        let bulletPointCount = 0;
-        function addBulletPoint() {
-            const container = document.getElementById('bulletPoints');
-            const bullet = document.createElement('div');
-            bullet.className = 'bullet-point';
-            const placeholderText = '{{ tr("Enter your idea or phrase here...") }}';
-            const removeTitle = '{{ tr("Remove") }}';
-            bullet.innerHTML = `
-                <span style="margin-right:10px;font-size:18px;color:#667eea;">•</span>
-                <input type="text" id="bullet_${bulletPointCount}" placeholder="${placeholderText}" />
-                <button type="button" class="bullet-remove" onclick="removeBulletPoint(this)" title="${removeTitle}">−</button>
-            `;
-            container.appendChild(bullet);
-            bulletPointCount++;
-            
-            // Focus on the new input
-            const newInput = bullet.querySelector('input');
-            newInput.focus();
-        }
         
-        function removeBulletPoint(btn) {
-            btn.parentElement.remove();
+        // MCQ timer
+        function startMCQTimer() {
+            const mcqTimeLeftEl = document.getElementById('mcqTimeLeft');
+            if (!mcqTimeLeftEl || !mcqStartTime) return;
+            
+            function updateMCQTimer() {
+                const elapsed = Date.now() - mcqStartTime;
+                const remaining = Math.max(0, MCQ_TIME_MS - elapsed);
+                const mins = Math.floor(remaining / 60000);
+                const secs = Math.floor((remaining % 60000) / 1000);
+                
+                if (mcqTimeLeftEl) {
+                    mcqTimeLeftEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+                }
+                
+                // Color coding
+                const badge = document.getElementById('timerBadge');
+                if (badge) {
+                    if (remaining <= 60000) {
+                        badge.classList.add('critical');
+                        badge.classList.remove('warning');
+                    } else if (remaining <= 120000) {
+                        badge.classList.add('warning');
+                        badge.classList.remove('critical');
+                    } else {
+                        badge.classList.remove('warning', 'critical');
+                    }
+                }
+                
+                if (remaining <= 0) {
+                    // Auto-submit MCQ
+                    submitTest();
+                    return;
+                }
+                
+                setTimeout(updateMCQTimer, 100);
+            }
+            updateMCQTimer();
         }
+
+        // Bullet points functionality - make sure these are global and defined early
+        let bulletPointCount = 0;
+        
+        // Define functions immediately so they're available for onclick handlers
+        window.addBulletPoint = function() {
+            try {
+                const container = document.getElementById('bulletPoints');
+                if (!container) {
+                    console.error('bulletPoints container not found in addBulletPoint');
+                    alert('Error: Cannot add bullet point. Please refresh the page.');
+                    return;
+                }
+                const bullet = document.createElement('div');
+                bullet.className = 'bullet-point';
+                const placeholderText = '{{ tr("Enter your idea or phrase here...") }}';
+                const removeTitle = '{{ tr("Remove") }}';
+                bullet.innerHTML = `
+                    <span style="margin-right:10px;font-size:18px;color:#667eea;">•</span>
+                    <input type="text" id="bullet_${bulletPointCount}" placeholder="${placeholderText}" />
+                    <button type="button" class="bullet-remove" onclick="window.removeBulletPoint(this)" title="${removeTitle}">−</button>
+                `;
+                container.appendChild(bullet);
+                bulletPointCount++;
+                
+                // Focus on the new input
+                const newInput = bullet.querySelector('input');
+                if (newInput) {
+                    newInput.focus();
+                    // Add event listener for input changes
+                    newInput.addEventListener('input', function() {
+                        if (typeof updateCounters === 'function') {
+                            updateCounters();
+                        }
+                    });
+                }
+                
+                // Update counters after adding
+                if (typeof updateCounters === 'function') {
+                    updateCounters();
+                }
+            } catch (error) {
+                console.error('Error in addBulletPoint:', error);
+                alert('Error adding bullet point. Please refresh the page.');
+            }
+        };
+        
+        window.removeBulletPoint = function(btn) {
+            try {
+                if (btn && btn.parentElement) {
+                    btn.parentElement.remove();
+                    if (typeof updateCounters === 'function') {
+                        updateCounters();
+                    }
+                }
+            } catch (error) {
+                console.error('Error in removeBulletPoint:', error);
+            }
+        };
         
         function getAllBulletPoints() {
             const inputs = document.querySelectorAll('#bulletPoints input');
@@ -597,9 +715,12 @@
         function updateCounters() {
             const bulletText = getAllBulletPoints();
             const bullets = bulletText.split('\n').filter(b => b.trim()).length;
-            const confidenceTouched = document.getElementById('confidenceSlider').dataset.touched;
-            const difficultyTouched = document.getElementById('difficultySlider').dataset.touched;
-            const unlocked = (Date.now() - startTime) >= RECALL_UNLOCK_MS;
+            const confidenceSlider = document.getElementById('confidenceSlider');
+            const difficultySlider = document.getElementById('difficultySlider');
+            const confidenceTouched = confidenceSlider ? confidenceSlider.dataset.touched : 'false';
+            const difficultyTouched = difficultySlider ? difficultySlider.dataset.touched : 'false';
+            const elapsed = Date.now() - startTime;
+            const unlocked = elapsed >= RECALL_UNLOCK_MS;
 
             // Before unlock: require at least 1 bullet point AND both sliders touched
             // After unlock: allow proceeding regardless of counts
@@ -665,14 +786,24 @@
         }
 
         function proceedWithRecallSubmit() {
+            // Stop timer
+            timerRunning = false;
+            if (timerInterval) {
+                clearTimeout(timerInterval);
+                timerInterval = null;
+            }
+            
             const bulletText = getAllBulletPoints();
+            const confSlider = document.getElementById('confidenceSlider');
+            const diffSlider = document.getElementById('difficultySlider');
+            
             recallData.end_time = new Date().toISOString();
             recallData.recall_text = bulletText;
             recallData.sentence_count = bulletText.split('\n').filter(b => b.trim()).length;
             recallData.word_count = bulletText.split(/\s+/).filter(w => w.trim()).length;
             recallData.char_count = bulletText.length;
-            recallData.confidence = parseInt(confidenceSlider.value);
-            recallData.perceived_difficulty = parseInt(difficultySlider.value);
+            recallData.confidence = confSlider ? parseInt(confSlider.value) : 0;
+            recallData.perceived_difficulty = diffSlider ? parseInt(diffSlider.value) : 0;
             recallData.time_spent_ms = Date.now() - startTime;
 
             // Hide recall, show MCQ
@@ -745,13 +876,79 @@
             }
         });
 
-        // If requested (via /skip_recall/<idx>), start directly on MCQs
-        if (START_ON_MCQ) {
-            showMCQOnly();
+        // Initialize when DOM is ready
+        function initializeRecall() {
+            console.log('Initializing recall section');
+            
+            // Check if elements exist
+            const bulletPointsContainer = document.getElementById('bulletPoints');
+            const timerBadge = document.getElementById('timerBadge');
+            const timeLeftEl = document.getElementById('timeLeft');
+            
+            console.log('Elements check:', {
+                bulletPoints: !!bulletPointsContainer,
+                timerBadge: !!timerBadge,
+                timeLeftEl: !!timeLeftEl
+            });
+            
+            // Start the timer first
+            startRecallTimer();
+            
+            // Initialize button state
+            updateCounters();
+            
+            // If requested (via /skip_recall/<idx>), start directly on MCQs
+            if (START_ON_MCQ) {
+                showMCQOnly();
+            } else {
+                // Initialize with one bullet point
+                if (bulletPointsContainer) {
+                    window.addBulletPoint();
+                    // Update counters again after adding bullet point
+                    setTimeout(updateCounters, 100);
+                } else {
+                    console.error('bulletPoints container not found during initialization');
+                    // Retry after a short delay
+                    setTimeout(initializeRecall, 200);
+                }
+            }
         }
         
-        // Initialize with one bullet point
-        addBulletPoint();
+        // Run initialization - ensure it happens after DOM is ready
+        // Since script is at bottom of body, DOM should be ready, but add safety checks
+        function runInitialization() {
+            try {
+                const bulletPointsEl = document.getElementById('bulletPoints');
+                const timerBadgeEl = document.getElementById('timerBadge');
+                
+                if (bulletPointsEl && timerBadgeEl) {
+                    console.log('All elements found, initializing...');
+                    initializeRecall();
+                } else {
+                    console.warn('Elements not ready yet, retrying...', {
+                        bulletPoints: !!bulletPointsEl,
+                        timerBadge: !!timerBadgeEl
+                    });
+                    // Retry after a short delay
+                    setTimeout(runInitialization, 100);
+                }
+            } catch (error) {
+                console.error('Error in runInitialization:', error);
+                // Retry after error
+                setTimeout(runInitialization, 200);
+            }
+        }
+        
+        // Start initialization
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            // DOM is ready
+            runInitialization();
+        } else {
+            // Wait for DOM
+            document.addEventListener('DOMContentLoaded', runInitialization);
+            // Also try after a delay as backup
+            setTimeout(runInitialization, 500);
+        }
     </script>
 </body>
 </html>

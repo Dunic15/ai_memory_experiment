@@ -70,7 +70,7 @@
         
         <div class="content">
             <div style="background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-                <p style="font-weight: 600; color: #856404; margin-bottom: 10px;">⚠️ {{ tr("Important Information About AI Summaries:") }}</p>
+                <p style="font-weight: 600; color: #856404; margin-bottom: 10px;">⚠️ {{ tr("Important information about AI summaries") }}</p>
                 <ul style="margin-left: 25px; color: #856404;">
                     <li>{{ tr("The AI summary accuracy is approximately") }} <strong>90%</strong></li>
                     <li>{{ tr("AI is") }} <strong>{{ tr("only an assistant") }}</strong> – {{ tr("make sure you read all the articles") }}</li>
@@ -78,8 +78,6 @@
                     <li>{{ tr("Each section has a timer, but you can") }} <strong>{{ tr("submit when you want") }}</strong> {{ tr("(you don't need to wait for the timer)") }}</li>
                 </ul>
             </div>
-            
-            <p>{{ tr("You are invited to participate in a study exploring how different text formats influence memory and comprehension.") }}</p>
             
             <p><strong>{{ tr("Time Commitment:") }}</strong></p>
             <ul>
@@ -124,5 +122,17 @@
             <button type="submit">✅ {{ tr("I Agree and Continue") }}</button>
         </form>
     </div>
+    <script>
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>

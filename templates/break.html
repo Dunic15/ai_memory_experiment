@@ -214,13 +214,16 @@
         }
 
         function continueNow() {
-            if (AFTER_READING) {
-                // After-reading break → go directly to TEST (no recall-instruction wait)
-                window.location.href = `/test/${nextArticle}`;
-            } else {
-                // Between-articles break → go to next reading
-                window.location.href = `/reading/${nextArticle}`;
-            }
+            {% if go_to_manipulation %}
+            // After Article 3 → go to manipulation check
+            window.location.href = '/manipulation_check';
+            {% elif after_reading %}
+            // After-reading break → go directly to TEST (no recall-instruction wait)
+            window.location.href = `/test/${nextArticle}`;
+            {% else %}
+            // Between-articles break → go to next reading
+            window.location.href = `/reading/${nextArticle}`;
+            {% endif %}
         }
     </script>
 </body>

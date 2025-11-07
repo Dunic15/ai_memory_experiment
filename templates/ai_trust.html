@@ -60,7 +60,6 @@
     </div>
     <div class="container">
         <h1>🤖 {{ tr("AI Trust & Technology Use") }}</h1>
-        <p class="progress">{{ tr("Final baseline assessment") }}</p>
 
         <!-- Trust in AI -->
         <div class="section">
@@ -156,6 +155,17 @@
     </div>
 
     <script>
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+        
         function submitForm() {
             // Collect trust ratings
             const trust = {};

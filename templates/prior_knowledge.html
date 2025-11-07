@@ -42,14 +42,14 @@
 </div>
 <div class="container">
     <h1>📚 {{ tr("Prior Knowledge Assessment") }}</h1>
-    <p class="progress">{{ tr("Step 1 of 3 sections") }}</p>
+    <p class="progress" id="progressText">{{ tr("Step 1 of 3") }}</p>
 
     <!-- Section 1: Familiarity -->
     <div class="section" id="section1">
         <h2>1️⃣ {{ tr("Familiarity Rating") }}</h2>
-        <p class="instruction">{{ tr("Rate how familiar you are with each term or concept (1 = Not familiar at all, 7 = Very familiar).") }}</p>
+        <p class="instruction">{{ tr("Rate how familiar you are with the following scientific terms.") }}<br>{{ tr("1 = Never heard of it") }} &nbsp;&nbsp; {{ tr("7 = Could clearly explain it to others") }}</p>
 
-        {% for term in terms %}
+        {% for term in familiarity_terms %}
         <div class="term-item">
             <div class="term-name">{{ term }}</div>
             <div class="likert-scale">
@@ -68,15 +68,15 @@
 
     <!-- Section 2: Term Recognition -->
     <div class="section" id="section2" style="display:none;">
-        <h2>2️⃣ {{ tr("Term Recognition") }}</h2>
-        <p class="instruction">{{ tr("Can you accurately define or describe each term without looking it up?") }}</p>
+        <h2>2️⃣ {{ tr("Concept Recognition Check") }}</h2>
+        <p class="instruction">{{ tr("For each term below, mark Yes if you believe you could accurately define or describe it without looking it up; otherwise mark No.") }}</p>
 
-        {% for term in terms %}
+        {% for term in recognition_terms %}
         <div class="term-item">
             <div class="term-name">{{ term }}</div>
             <div class="yes-no">
-                <label><input type="radio" name="rec_{{ term }}" value="yes" required />{{ tr("Yes, I can explain it") }}</label>
-                <label><input type="radio" name="rec_{{ term }}" value="no" />{{ tr("No, I'm unsure") }}</label>
+                <label><input type="radio" name="rec_{{ term }}" value="yes" required />{{ tr("Yes") }}</label>
+                <label><input type="radio" name="rec_{{ term }}" value="no" />{{ tr("No") }}</label>
             </div>
         </div>
         {% endfor %}
@@ -115,6 +115,17 @@
 </div>
 
 <script>
+// Disable browser back button globally
+history.pushState(null, null, location.href);
+window.onpopstate = function(event) {
+    history.pushState(null, null, location.href);
+};
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+        e.preventDefault();
+    }
+});
+
 let quizStartTime, listStartTime;
 let quizInterval, listInterval;
 
@@ -123,13 +134,18 @@ function nextSection(num){
         document.getElementById('section'+i).style.display='none';
     }
     document.getElementById('section'+num).style.display='block';
+    // Update progress indicator
+    const progressEl = document.getElementById('progressText');
+    if (progressEl) {
+        progressEl.textContent = `{{ tr("Step") }} ${num} {{ tr("of 3") }}`;
+    }
     window.scrollTo(0,0);
 }
 
 function submitAll(){
-    // Familiarity
+    // Familiarity (Section 1)
     const familiarity = {};
-    {% for term in terms %}
+    {% for term in familiarity_terms %}
     const fam{{ loop.index0 }} = document.querySelector('input[name="fam_{{ term }}"]:checked');
     if(!fam{{ loop.index0 }}){
         alert('Please complete all familiarity ratings');
@@ -138,9 +154,9 @@ function submitAll(){
     familiarity['{{ term }}'] = parseInt(fam{{ loop.index0 }}.value);
     {% endfor %}
 
-    // Term recognition
+    // Term recognition (Section 2)
     const termRecognition = {};
-    {% for term in terms %}
+    {% for term in recognition_terms %}
     const rec{{ loop.index0 }} = document.querySelector('input[name="rec_{{ term }}"]:checked');
     if(!rec{{ loop.index0 }}){
         alert('Please complete all term recognition questions');

@@ -120,6 +120,17 @@
 
 
     <script>
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+        
         const timing = '{{ timing }}';
         const articleNum = {{ article_num }};
         let startTime = Date.now();
@@ -187,11 +198,17 @@
                 t.textContent = `${timeLabel} ${mins}:${secs.toString().padStart(2,'0')} / ${timeLimitMins}:00 (${remMins}:${remSecs.toString().padStart(2,'0')} ${remainingLabel})`;
                 if (remaining < 60000) t.classList.add('warning');
             }
-            // Show continue button (users can submit early)
+            // Show continue button only when scrolled to bottom OR timer expired
             const continueBtn = document.getElementById('continueBtn');
             if (continueBtn) {
-                // Always show button (users can submit early)
-                continueBtn.style.display = 'block';
+                const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100;
+                const timeExpired = elapsed >= hardCap;
+                if (isAtBottom || timeExpired) {
+                    continueBtn.style.display = 'block';
+                    continueBtn.disabled = false;
+                } else {
+                    continueBtn.style.display = 'none';
+                }
             }
             if (elapsed >= hardCap) {
                 clearInterval(timerInterval);
@@ -209,12 +226,22 @@
           window.closeSummaryOverlay = function(){
             overlay.style.display = 'none';
             btn.style.display = 'inline-block';
+            // Maintain scroll position when closing
+            const savedScrollY = window.scrollY || 0;
+            setTimeout(() => {
+              window.scrollTo({ top: savedScrollY, behavior: 'auto' });
+            }, 10);
           };
 
           btn.addEventListener('click', () => {
+            // Save current scroll position
+            const savedScrollY = window.scrollY;
             overlay.style.display = 'block';
             btn.style.display = 'none';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Restore scroll position after a brief moment to prevent jump
+            setTimeout(() => {
+              window.scrollTo({ top: savedScrollY, behavior: 'auto' });
+            }, 10);
           });
         })();
 
@@ -222,13 +249,31 @@
 
         // Pre-reading mode: summary is handled by separate page, so this is just reading
 
-        // Scroll tracking
+        // Scroll tracking and button visibility
         let maxScroll = 0;
-        window.addEventListener('scroll', () => {
+        function checkScrollAndButton() {
             const pct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
             maxScroll = Math.max(maxScroll, pct);
             scrollDepth = Math.round(maxScroll * 100);
-        });
+            
+            // Show/hide continue button based on scroll position
+            const continueBtn = document.getElementById('continueBtn');
+            if (continueBtn) {
+                const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100;
+                const elapsed = Date.now() - startTime;
+                const timeExpired = elapsed >= hardCap;
+                if (isAtBottom || timeExpired) {
+                    continueBtn.style.display = 'block';
+                    continueBtn.disabled = false;
+                } else {
+                    continueBtn.style.display = 'none';
+                }
+            }
+        }
+        window.addEventListener('scroll', checkScrollAndButton);
+        // Also check on page load and resize
+        window.addEventListener('load', checkScrollAndButton);
+        window.addEventListener('resize', checkScrollAndButton);
 
         // Logging helper
         function logBehavior(event, data = {}) {
@@ -259,6 +304,14 @@
                 return;
             }
 
+            // After first reading (article 0), trigger 5-minute break
+            if (articleNum === 0) {
+                if (pre) pre.style.display = 'none';
+                if (post) post.style.display = 'none';
+                window.location.href = `/break_after_reading/${articleNum}`;
+                return;
+            }
+            
             // For synchronous mode, go directly to test (no break)
             if (timing === 'synchronous') {
                 if (pre) pre.style.display = 'none';

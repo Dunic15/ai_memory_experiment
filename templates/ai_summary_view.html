@@ -121,10 +121,44 @@
             });
             summaryContent.appendChild(ul);
         } else {
-            // Integrated: show as paragraph
-            const p = document.createElement('p');
-            p.textContent = summaryText;
-            summaryContent.appendChild(p);
+            // Integrated: show as paragraphs with spacing
+            // Split by periods followed by space and capital letter to create paragraph breaks
+            const sentences = summaryText.match(/[^.!?]+[.!?]+(\s+|$)/g) || [summaryText];
+            let currentParagraph = '';
+            sentences.forEach((sentence, index) => {
+                const trimmed = sentence.trim();
+                if (!trimmed) return;
+                
+                currentParagraph += trimmed + ' ';
+                
+                // Create a new paragraph every 2-3 sentences or at natural breaks
+                if ((index + 1) % 2 === 0 || trimmed.endsWith('.')) {
+                    const p = document.createElement('p');
+                    p.textContent = currentParagraph.trim();
+                    p.style.marginBottom = '20px';
+                    p.style.lineHeight = '1.6';
+                    summaryContent.appendChild(p);
+                    currentParagraph = '';
+                }
+            });
+            
+            // Add any remaining text as a final paragraph
+            if (currentParagraph.trim()) {
+                const p = document.createElement('p');
+                p.textContent = currentParagraph.trim();
+                p.style.marginBottom = '20px';
+                p.style.lineHeight = '1.6';
+                summaryContent.appendChild(p);
+            }
+            
+            // If no paragraphs were created (single sentence), create one
+            if (summaryContent.children.length === 0) {
+                const p = document.createElement('p');
+                p.textContent = summaryText;
+                p.style.marginBottom = '20px';
+                p.style.lineHeight = '1.6';
+                summaryContent.appendChild(p);
+            }
         }
         
         // Timer
