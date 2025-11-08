@@ -457,6 +457,65 @@
     </div>
 
     <script>
+        // ===== CRITICAL: Define bullet point functions FIRST so they're always available =====
+        let bulletPointCount = 0;
+        
+        window.addBulletPoint = function() {
+            try {
+                const container = document.getElementById('bulletPoints');
+                if (!container) {
+                    console.error('bulletPoints container not found in addBulletPoint');
+                    alert('Error: Cannot add bullet point. Please refresh the page.');
+                    return;
+                }
+                const bullet = document.createElement('div');
+                bullet.className = 'bullet-point';
+                const placeholderText = '{{ tr("Enter your idea or phrase here...") }}';
+                const removeTitle = '{{ tr("Remove") }}';
+                bullet.innerHTML = `
+                    <span style="margin-right:10px;font-size:18px;color:#667eea;">•</span>
+                    <input type="text" id="bullet_${bulletPointCount}" placeholder="${placeholderText}" />
+                    <button type="button" class="bullet-remove" onclick="window.removeBulletPoint(this)" title="${removeTitle}">−</button>
+                `;
+                container.appendChild(bullet);
+                bulletPointCount++;
+                
+                // Focus on the new input
+                const newInput = bullet.querySelector('input');
+                if (newInput) {
+                    newInput.focus();
+                    // Add event listener for input changes
+                    newInput.addEventListener('input', function() {
+                        if (typeof updateCounters === 'function') {
+                            updateCounters();
+                        }
+                    });
+                }
+                
+                // Update counters after adding
+                if (typeof updateCounters === 'function') {
+                    updateCounters();
+                }
+            } catch (error) {
+                console.error('Error in addBulletPoint:', error);
+                alert('Error adding bullet point. Please refresh the page.');
+            }
+        };
+        
+        window.removeBulletPoint = function(btn) {
+            try {
+                if (btn && btn.parentElement) {
+                    btn.parentElement.remove();
+                    if (typeof updateCounters === 'function') {
+                        updateCounters();
+                    }
+                }
+            } catch (error) {
+                console.error('Error in removeBulletPoint:', error);
+            }
+        };
+        
+        // ===== Now define the rest of the code =====
         // Disable browser back button globally
         history.pushState(null, null, location.href);
         window.onpopstate = function(event) {
@@ -609,70 +668,6 @@
             updateMCQTimer();
         }
 
-        // Bullet points functionality - DEFINE THESE FIRST before anything else
-        // This ensures they're always available even if other code fails
-        let bulletPointCount = 0;
-        
-        // Define functions IMMEDIATELY at the top level so they're always available
-        if (typeof window.addBulletPoint === 'undefined') {
-            window.addBulletPoint = function() {
-            try {
-                const container = document.getElementById('bulletPoints');
-                if (!container) {
-                    console.error('bulletPoints container not found in addBulletPoint');
-                    alert('Error: Cannot add bullet point. Please refresh the page.');
-                    return;
-                }
-                const bullet = document.createElement('div');
-                bullet.className = 'bullet-point';
-                const placeholderText = '{{ tr("Enter your idea or phrase here...") }}';
-                const removeTitle = '{{ tr("Remove") }}';
-                bullet.innerHTML = `
-                    <span style="margin-right:10px;font-size:18px;color:#667eea;">•</span>
-                    <input type="text" id="bullet_${bulletPointCount}" placeholder="${placeholderText}" />
-                    <button type="button" class="bullet-remove" onclick="window.removeBulletPoint(this)" title="${removeTitle}">−</button>
-                `;
-                container.appendChild(bullet);
-                bulletPointCount++;
-                
-                // Focus on the new input
-                const newInput = bullet.querySelector('input');
-                if (newInput) {
-                    newInput.focus();
-                    // Add event listener for input changes
-                    newInput.addEventListener('input', function() {
-                        if (typeof updateCounters === 'function') {
-                            updateCounters();
-                        }
-                    });
-                }
-                
-                // Update counters after adding
-                if (typeof updateCounters === 'function') {
-                    updateCounters();
-                }
-            } catch (error) {
-                console.error('Error in addBulletPoint:', error);
-                alert('Error adding bullet point. Please refresh the page.');
-            }
-        };
-        }
-        
-        if (typeof window.removeBulletPoint === 'undefined') {
-            window.removeBulletPoint = function(btn) {
-            try {
-                if (btn && btn.parentElement) {
-                    btn.parentElement.remove();
-                    if (typeof updateCounters === 'function') {
-                        updateCounters();
-                    }
-                }
-            } catch (error) {
-                console.error('Error in removeBulletPoint:', error);
-            }
-        };
-        }
-        
         function getAllBulletPoints() {
             const inputs = document.querySelectorAll('#bulletPoints input');
             const points = [];
@@ -856,7 +851,6 @@
         }
         
         // Auto-submit MCQ after a reasonable time (10 minutes) if user is on MCQ section
-        let mcqStartTime = null;
         let mcqAutoSubmitTimer = null;
         const originalShowMCQOnly = showMCQOnly;
         showMCQOnly = function() {
