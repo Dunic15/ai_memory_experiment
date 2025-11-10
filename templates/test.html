@@ -368,6 +368,17 @@
             <h2>{{ tr("Free Recall") }}</h2>
             <p style="color: #666; margin-bottom: 20px; line-height: 1.6;">{{ tr("Please write everything you remember from the article within 3 minutes. Try to describe main ideas and relationships — causes, consequences, and solutions — in your own words.") }}</p>
             
+            <div class="guideline" style="background: #e6f7ff; border-left: 4px solid #1890ff; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                <strong style="color: #0050b3;">{{ tr("Format Requirements:") }}</strong>
+                <p style="color: #0050b3; margin-top: 8px; margin-bottom: 0; font-size: 14px;">
+                    {{ tr("Use bullet points to organize your recall. Each bullet point should contain one main idea or concept. For example:") }}
+                </p>
+                <ul style="color: #0050b3; margin-top: 8px; margin-left: 20px; font-size: 14px;">
+                    <li>{{ tr("• CRISPR-Cas is a bacterial immune system adapted for precise gene editing") }}</li>
+                    <li>{{ tr("• It uses guide RNA to direct Cas enzymes to specific DNA sequences for cutting") }}</li>
+                </ul>
+            </div>
+            
             <div class="recall-container">
                 <div id="bulletPoints" style="margin-bottom:20px;">
                     <!-- Bullet points will be added here -->
@@ -420,13 +431,15 @@
             <h2>{{ tr("Recognition Questions") }}</h2>
             <p style="color: #666; margin-bottom: 20px;">{{ tr("Answer the following questions based on the article.") }}</p>
 
-            {% for q in questions %}
-            <div class="question">
-                <div class="question-text">{{ loop.index }}. {{ q.q }}</div>
+            {% for q_idx in range(questions|length) %}
+            {% set q = questions[q_idx] %}
+            <div class="question" data-question-index="{{ q_idx }}">
+                <div class="question-text">{{ q_idx + 1 }}. {{ q.q }}</div>
                 <div class="options">
-                    {% for opt in q.options %}
+                    {% for opt_idx in range(q.options|length) %}
+                    {% set opt = q.options[opt_idx] %}
                     <label>
-                        <input type="radio" name="q{{ loop.index0 }}" value="{{ loop.index0 }}" required>
+                        <input type="radio" name="q{{ q_idx }}" value="{{ opt_idx }}" data-question="{{ q_idx }}" data-option="{{ opt_idx }}" required>
                         {{ opt }}
                     </label>
                     {% endfor %}
@@ -814,19 +827,19 @@
         function submitTest() {
             const mcqData = {};
             let allAnswered = true;
-            {% for q in questions %}
-            const q{{ loop.index0 }} = document.querySelector('input[name="q{{ loop.index0 }}"]:checked');
-            if (!q{{ loop.index0 }}) {
+            {% for q_idx in range(questions|length) %}
+            const q{{ q_idx }} = document.querySelector('input[name="q{{ q_idx }}"]:checked');
+            if (!q{{ q_idx }}) {
                 allAnswered = false;
             } else {
-                mcqData['q{{ loop.index0 }}'] = parseInt(q{{ loop.index0 }}.value);
+                mcqData['q{{ q_idx }}'] = parseInt(q{{ q_idx }}.value);
             }
             {% endfor %}
             
             // If not all answered, use default value (0) for unanswered questions
-            {% for q in questions %}
-            if (!mcqData.hasOwnProperty('q{{ loop.index0 }}')) {
-                mcqData['q{{ loop.index0 }}'] = 0;
+            {% for q_idx in range(questions|length) %}
+            if (!mcqData.hasOwnProperty('q{{ q_idx }}')) {
+                mcqData['q{{ q_idx }}'] = 0;
             }
             {% endfor %}
             

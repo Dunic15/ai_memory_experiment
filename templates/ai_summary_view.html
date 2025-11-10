@@ -102,6 +102,28 @@
         const structure = '{{ structure }}';
         const mode = '{{ mode }}'; // 'pre_reading' or 'post_reading'
         
+        // Time tracking for AI summary viewing
+        let summaryStartTime = Date.now();
+        let summaryViewTime = 0;
+        let pageVisible = !document.hidden;
+        
+        // Track visibility changes
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Page hidden - record time up to now
+                if (pageVisible) {
+                    summaryViewTime += Date.now() - summaryStartTime;
+                    pageVisible = false;
+                }
+            } else {
+                // Page visible again - restart timer
+                if (!pageVisible) {
+                    summaryStartTime = Date.now();
+                    pageVisible = true;
+                }
+            }
+        });
+        
         // Display summary
         const summaryContent = document.getElementById('summaryContent');
         if (structure === 'segmented') {
@@ -121,42 +143,65 @@
             });
             summaryContent.appendChild(ul);
         } else {
-            // Integrated: show as paragraphs with spacing
-            // Split by periods followed by space and capital letter to create paragraph breaks
-            const sentences = summaryText.match(/[^.!?]+[.!?]+(\s+|$)/g) || [summaryText];
-            let currentParagraph = '';
-            sentences.forEach((sentence, index) => {
-                const trimmed = sentence.trim();
-                if (!trimmed) return;
+            // Integrated: show as paragraphs
+            // First, check if the text already has double line breaks (paragraphs)
+            const paragraphs = summaryText.split(/\n\s*\n/).filter(p => p.trim());
+            
+            if (paragraphs.length > 1) {
+                // Text already has paragraph breaks - use them directly
+                paragraphs.forEach(para => {
+                    const p = document.createElement('p');
+                    p.textContent = para.trim();
+                    p.style.marginBottom = '20px';
+                    p.style.lineHeight = '1.8';
+                    p.style.color = '#333';
+                    summaryContent.appendChild(p);
+                });
+            } else {
+                // No paragraph breaks - split into sentences and group into paragraphs
+                // Split by sentence endings (period, exclamation, question mark) followed by space
+                const sentences = summaryText.match(/[^.!?]+[.!?]+(\s+|$)/g) || [summaryText];
+                let currentParagraph = '';
+                let sentenceCount = 0;
                 
-                currentParagraph += trimmed + ' ';
+                sentences.forEach((sentence) => {
+                    const trimmed = sentence.trim();
+                    if (!trimmed) return;
+                    
+                    currentParagraph += trimmed + ' ';
+                    sentenceCount++;
+                    
+                    // Create a new paragraph every 3-4 sentences or at natural breaks
+                    if (sentenceCount >= 3 && (trimmed.endsWith('.') || trimmed.endsWith('!') || trimmed.endsWith('?'))) {
+                        const p = document.createElement('p');
+                        p.textContent = currentParagraph.trim();
+                        p.style.marginBottom = '20px';
+                        p.style.lineHeight = '1.8';
+                        p.style.color = '#333';
+                        summaryContent.appendChild(p);
+                        currentParagraph = '';
+                        sentenceCount = 0;
+                    }
+                });
                 
-                // Create a new paragraph every 2-3 sentences or at natural breaks
-                if ((index + 1) % 2 === 0 || trimmed.endsWith('.')) {
+                // Add any remaining text as a final paragraph
+                if (currentParagraph.trim()) {
                     const p = document.createElement('p');
                     p.textContent = currentParagraph.trim();
                     p.style.marginBottom = '20px';
-                    p.style.lineHeight = '1.6';
+                    p.style.lineHeight = '1.8';
+                    p.style.color = '#333';
                     summaryContent.appendChild(p);
-                    currentParagraph = '';
                 }
-            });
-            
-            // Add any remaining text as a final paragraph
-            if (currentParagraph.trim()) {
-                const p = document.createElement('p');
-                p.textContent = currentParagraph.trim();
-                p.style.marginBottom = '20px';
-                p.style.lineHeight = '1.6';
-                summaryContent.appendChild(p);
             }
             
-            // If no paragraphs were created (single sentence), create one
+            // If no paragraphs were created (single sentence or empty), create one
             if (summaryContent.children.length === 0) {
                 const p = document.createElement('p');
-                p.textContent = summaryText;
+                p.textContent = summaryText.trim();
                 p.style.marginBottom = '20px';
-                p.style.lineHeight = '1.6';
+                p.style.lineHeight = '1.8';
+                p.style.color = '#333';
                 summaryContent.appendChild(p);
             }
         }
@@ -183,6 +228,25 @@
         
         function continueToNext() {
             clearInterval(timerInterval);
+            
+            // Calculate total time spent viewing summary
+            if (pageVisible) {
+                summaryViewTime += Date.now() - summaryStartTime;
+            }
+            
+            // Log summary viewing time
+            fetch('/log_summary_viewing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    article_num: articleNum,
+                    mode: mode,
+                    structure: structure,
+                    time_spent_ms: summaryViewTime,
+                    timestamp: new Date().toISOString()
+                })
+            }).catch(err => console.error('Error logging summary viewing:', err));
+            
             if (mode === 'pre_reading') {
                 // Mark summary as viewed
                 fetch('/mark_pre_summary_viewed', {
@@ -190,14 +254,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ article_num: articleNum })
                 }).then(() => {
-                    // Go to reading phase
+                    // Go to reading phase (after reading, will go to break, then test)
                     window.location.href = `/reading/${articleNum}`;
                 }).catch(() => {
                     window.location.href = `/reading/${articleNum}`;
                 });
             } else {
-                // Post-reading: go directly to test (no break)
-                window.location.href = `/test/${articleNum}`;
+                // Post-reading: go to break after summary, then break will redirect to test
+                window.location.href = `/break_after_reading/${articleNum}`;
             }
         }
     </script>

@@ -328,17 +328,17 @@ Cities around the world demonstrate that progress is possible. Tokyo has impleme
 Ultimately, success depends on collaboration among scientists, planners, and citizens. Meteorologists provide data; engineers design technologies; urban designers translate them into spatial form; and residents sustain improvements through collective stewardship. Heat is not only a physical problem but also a social one—its distribution mirrors how cities allocate shade, energy, and opportunity.
 If reflection provides the quickest relief, trees the most pleasant, and planning the most lasting, then the next generation of urban spaces will succeed not because they never grow warm but because they know how to breathe, reflect, and regenerate. When cities measure progress transparently, invest where need is greatest, and treat cooling as a shared civic right, even the hottest summers will feel more bearable. The urban heat island will remain not as a symbol of failure but of progress—the moment when humanity learned to design comfort as carefully as it designs density.
 ''',
-        'summary_integrated': 'Urban heat islands (UHIs) arise when cities accumulate and retain more heat than surrounding rural areas due to the materials and spatial organization of the urban landscape. Dense surfaces such as asphalt, concrete, and metal absorb sunlight during the day and release it slowly at night, raising nighttime temperatures by three to seven degrees Celsius. This warming stems from four key factors: low surface reflectivity (albedo), high thermal mass of construction materials, reduced airflow caused by narrow "urban canyons," and the widespread loss of vegetation that otherwise cools the air through evapotranspiration. The result is a persistent heat surplus that disrupts sleep, increases electricity consumption, and exacerbates health risks, especially for low-income districts with limited greenery and poor insulation. To mitigate the UHI effect, cities adopt four complementary strategies: reflect, shade, vent, and absorb differently. Light-colored roofs and pavements reflect sunlight; trees and green façades block and cool through evapotranspiration; open corridors enhance ventilation; and permeable surfaces and water features redirect heat into evaporation instead of the air. The greatest success occurs when these strategies are combined and equitably distributed, prioritizing vulnerable neighborhoods. Continuous monitoring through satellite and ground sensors ensures measurable results and sustained performance. Beyond temperature control, UHI mitigation delivers multiple benefits: reduced pollution, lower flood risk, increased comfort, and energy efficiency. Cities such as Tokyo, Singapore, and Paris show that with reflective materials, greenery, and long-term planning, urban heat islands can be reversed through design and cooperation.',
-        'summary_segmented': '''- Cities trap heat through their materials and structure. Concrete, asphalt, and metal absorb sunlight and release it slowly, making urban nights three to seven degrees warmer than rural areas.
-- Four main causes define the urban heat island effect: low reflectivity (albedo), high thermal mass, narrow "street canyons" that block wind, and the loss of vegetation that otherwise cools air through evapotranspiration.
-- Consequences extend beyond temperature. Warmer nights affect sleep, raise energy demand, and endanger health during heat waves, especially in low-income districts with fewer trees and poor insulation.
-- Urban heat is also a social issue. Poorer neighborhoods spend a higher share of income on cooling, and energy grids strain under late-afternoon peaks.
-- Mitigation follows four principles: reflect, shade, vent, and absorb differently—each addressing a specific physical process that traps heat.
-- Reflective surfaces such as cool roofs and pavements increase albedo and can reduce roof temperatures by up to thirty degrees.
-- Shade and vegetation block radiation and cool air through evaporation; trees remain the most effective but require maintenance and equitable distribution.
-- Ventilation corridors aligned with prevailing winds help flush warm air and accelerate night cooling.
-- Absorbing differently through permeable materials, fountains, and green roofs redirects heat into evaporation rather than the air.
-- The broader lesson: lasting resilience comes from planning, equity, and transparency—cities that reflect, breathe, and green themselves can turn heat islands into examples of sustainable design.''',
+        'summary_integrated': 'Urban heat islands (UHIs) occur when cities accumulate and retain more heat than nearby rural zones because of the materials and geometry of the built environment. Dense surfaces such as asphalt, concrete, and metal absorb solar energy by day and release it slowly at night, keeping temperatures three to seven degrees Celsius higher. This warming arises from four key mechanisms: low surface reflectivity (albedo), high thermal mass, reduced airflow in narrow "urban canyons," and the loss of vegetation that would otherwise cool the air through evapotranspiration. Some cities have also experimented with darker pavement coatings to trap heat during winter and stabilize annual temperature averages—though results remain debated. The combined outcome is a persistent heat surplus that disrupts sleep, increases electricity consumption, and worsens health risks, particularly in low-income areas with little greenery or insulation.\n\nTo counter UHIs, planners follow four complementary principles: reflect, shade, vent, and absorb differently. Light-colored roofs and pavements raise albedo; trees and green façades provide shading and evaporative cooling; ventilation corridors enhance airflow; and permeable surfaces or water features channel heat into evaporation instead of the air. The most durable progress comes from blending these tactics and distributing them equitably, prioritizing vulnerable neighborhoods. Monitoring with satellites and ground sensors ensures that temperature gains are verified over time. Beyond cooling, mitigation lowers pollution, cuts flood risk, and improves comfort and energy efficiency. Cities such as Tokyo, Singapore, and Paris demonstrate that with reflective materials, greenery, and long-term design, heat islands can be reversed through collaboration.',
+        'summary_segmented': '''1. Cities trap heat through dense materials. Concrete, asphalt, and metal absorb sunlight and release it slowly, keeping urban nights warmer than rural surroundings.
+2. Four main mechanisms drive the urban heat island effect: low reflectivity, high thermal mass, narrow "street canyons," and loss of vegetation that removes cooling through evapotranspiration.
+3. Consequences go beyond temperature: higher night heat impairs sleep, raises electricity demand, and increases health risks, especially in low-income districts.
+4. Urban heat is also a social inequality issue, as poorer areas have fewer trees and spend more income on cooling.
+5. Mitigation follows four linked strategies: reflect, shade, vent, and absorb differently—each targeting a distinct cause of trapped heat.
+6. Reflective materials such as cool roofs and bright pavements can lower roof surface temperature by up to 30 °C.
+7. Some cities tested dark pavements to store winter heat and reduce annual energy swings, though evidence is mixed.
+8. Shade and vegetation intercept sunlight and cool the air through evapotranspiration; trees are most effective but need maintenance and fair placement.
+9. Ventilation corridors aligned with prevailing winds help flush warm air and accelerate nighttime cooling.
+10. Absorbing differently via permeable materials, fountains, and green roofs channels energy into evaporation instead of the air, showing that smart, equitable planning can transform heat islands into resilient urban systems.''',
         'questions': [
             {"q": "Which factor mainly causes dark urban materials to store more heat than rural surfaces?", "options": ["High albedo", "Low albedo", "High permeability", "Reflective coating"], "correct": 1},
             {"q": "Why does concrete keep cities warm long after sunset?", "options": ["It absorbs moisture", "It releases stored heat slowly", "It reflects long-wave radiation", "It evaporates easily"], "correct": 1},
@@ -349,7 +349,7 @@ If reflection provides the quickest relief, trees the most pleasant, and plannin
             {"q": "The \"absorb differently\" strategy refers to using materials that ________.", "options": ["Block light completely", "Channel heat into evaporation and ground layers", "Prevent rain infiltration", "Increase surface reflectivity"], "correct": 1},
             {"q": "Why is combining multiple UHI strategies more effective than using one alone?", "options": ["It reduces maintenance cost", "It amplifies cumulative cooling effects and equity outcomes", "It simplifies urban design", "It avoids tree planting costs"], "correct": 1},
             {"q": "Equity-oriented cooling programs should prioritize ________.", "options": ["Commercial zones", "High-income neighborhoods", "Tree-poor, low-income districts", "Downtown business cores"], "correct": 2},
-            {"q": "Beyond lowering temperature, UHI strategies also contribute to ________.", "options": ["Higher property taxes", "Pollution reduction and flood control", "Population growth", "Street congestion"], "correct": 1},
+            {"q": "Some cities have adopted darker pavement coatings to trap heat in winter and reduce yearly temperature swings.", "options": ["True", "False", "Only in coastal cities", "Only in rural areas"], "correct": 0},
             {"q": "Urban nighttime air can remain roughly ________ warmer than rural surroundings.", "options": ["1–2 °C", "3–7 °C", "8–10 °C", "10–12 °C"], "correct": 1},
             {"q": "Under heat stress, city power grids often rely on ________.", "options": ["Solar farms", "Older fossil-fuel power plants", "Battery storage", "Offshore wind energy"], "correct": 1},
             {"q": "A recommended budgeting rule assigns one cent per dollar to ________.", "options": ["Advertising", "Monitoring, maintenance, and public education", "Street lighting", "Tree pruning"], "correct": 1},
@@ -375,18 +375,17 @@ The next challenge is integration into real health systems. Hospitals must devel
 Finally, biosecurity adds another layer of responsibility. Because CRISPR components are cheap and widely available, safety norms and education are essential. The same openness that empowers research could also enable misuse. Shared international standards for sequence screening, safe laboratory practices, and reporting will help openness and security evolve together. Just as cybersecurity grew with the internet, biotechnology must develop its own culture of vigilance.
 Ultimately, CRISPR is more than a laboratory tool—it is a mirror of human values. It reveals how societies balance curiosity with caution and innovation with fairness. When data are shared openly, benefits distributed equitably, and oversight continuous, gene editing can move from disruptive novelty to a stable force for medicine, agriculture, and conservation. Its legacy will be written not only in DNA sequences but in the choices humanity makes about how—and why—to rewrite the code of life.
 ''',
-        'summary_integrated': 'CRISPR–Cas began as a microbial immune defense that records viral attacks in bacterial DNA, allowing recognition and destruction of future invaders. Scientists reprogrammed this mechanism by designing synthetic guide RNAs that direct Cas enzymes to specific DNA sites, enabling them to cut and let the cell\'s repair system rewrite genetic code. The simple principle of "guide, cut, repair" has revolutionized molecular biology. Gene editing that once took months can now be completed in days, making genetic modification accessible worldwide. Yet CRISPR\'s apparent precision is statistical rather than perfect: guide RNAs can mispair with similar sequences, producing off-target edits. To reduce errors, researchers refine enzyme structure, optimize guide design, and develop advanced editors—base and prime editors—that modify DNA without double-strand breaks. Delivery remains the most difficult step. Viral vectors, lipid nanoparticles, and physical methods each trade efficiency for safety. Duration also matters: persistent Cas activity increases side effects, so scientists design self-limiting or inducible systems that control editing time precisely. Clinically, ex vivo therapies for blood disorders show promise, while germ-line editing raises deep ethical concerns because changes would pass to future generations. Beyond medicine, CRISPR transforms agriculture and ecology by improving crops and controlling pests, though these applications demand strong regulation and transparency. As technology evolves with new enzymes, AI design tools, and diagnostic uses, governance and public trust become essential. CRISPR ultimately mirrors human values—balancing innovation, equity, and responsibility as we learn not just to edit life, but to guide it wisely.',
-        'summary_segmented': '''- CRISPR–Cas originated as a bacterial immune defense. By storing fragments of viral DNA, bacteria learned to recognize and cut future invaders.
-- Scientists reprogrammed this system by designing synthetic guide RNAs that steer Cas enzymes to chosen DNA sites, allowing precise cutting and repair.
-- The principle—guide, cut, repair—revolutionized genetics. Editing that once took months can now be done in days with inexpensive tools.
-- However, precision is probabilistic, not perfect. Guide RNAs can mispair with similar sequences, causing unwanted "off-target" edits in other genes.
-- Engineered variants such as SpCas9-HF1 and eSpCas9 reduce errors, while base and prime editors modify single DNA letters without cutting both strands, offering subtler corrections.
-- Delivery remains the biggest hurdle. Viral vectors like AAVs, lipid nanoparticles, and peptides each balance efficiency, safety, and cost when carrying CRISPR into target cells.
-- Temporal control adds another layer of precision. Self-limiting or inducible systems keep Cas active only briefly, reducing risks of excessive editing.
-- Medical applications diverge: ex vivo therapies edit stem cells outside the body, while in vivo treatments act directly within organs, demanding extreme safety.
-- Ethical debates focus on germ-line editing, which could eliminate hereditary diseases but also pass unintended changes to future generations.
-- Beyond medicine, CRISPR reshapes agriculture and diagnostics. It can improve crops, control pests, detect pathogens, and regulate genes—all demanding transparency, equitable access, and responsible governance to ensure editing life remains a collective good.
-''',
+        'summary_integrated': 'CRISPR–Cas systems originated as a bacterial immune defense that stores viral DNA fragments to recognize and cut them during future infections. Scientists repurposed this natural mechanism to edit genes in plants, animals, and humans. By designing a guide RNA that matches a chosen DNA sequence, the Cas enzyme locates the target, makes a double-strand break, and lets the cell\'s repair machinery rewrite it. This principle—guide, cut, and repair—has revolutionized biology. Compared with earlier tools like zinc-finger nucleases or TALENs, CRISPR is faster, cheaper, and easier to program, allowing labs worldwide to explore disease correction, crop improvement, and ecological restoration.\n\nYet precision is statistical: guide RNAs sometimes mispair, producing off-target edits. Researchers counter this by adjusting guide length, redesigning Cas enzymes for higher fidelity, or using base and prime editors that modify single letters without cutting both strands. Some early agricultural trials also used CRISPR to create bioluminescent plants as visible markers of editing success, though these remained experimental and were never commercialized.\n\nDelivery remains the hardest challenge. Viral vectors are efficient but small and may trigger immune responses; lipid nanoparticles can transport larger cargoes but often concentrate in the liver. Timing also matters: prolonged Cas activity increases unwanted cuts, so transient or self-limiting systems are being developed.\n\nBeyond medicine, CRISPR shapes ethics and governance—raising questions about germ-line editing, access, and fairness. The technology\'s success will depend not only on accuracy but on transparency and responsibility in how humanity edits its own future.',
+        'summary_segmented': '''1. CRISPR began as a bacterial immune system that records viral DNA fragments to recognize future invaders.
+2. Scientists reprogrammed this system using synthetic guide RNA to direct Cas enzymes to precise genome locations.
+3. The process "guide, cut, and repair" made gene editing faster, cheaper, and globally accessible.
+4. Precision challenges persist because partial guide mismatches can create off-target edits.
+5. Enhanced Cas variants and base/prime editors increase fidelity while minimizing double-strand breaks.
+6. Some laboratories reported CRISPR-created bioluminescent crops for easier detection of edited plants.
+7. Delivery remains the major barrier: viral vectors are efficient but small; lipid nanoparticles carry more but risk inflammation.
+8. Self-limiting and inducible CRISPR systems control activity duration, improving safety.
+9. Germ-line editing is ethically restricted because changes are heritable and affect future generations.
+10. CRISPR now extends to agriculture, ecology, and health governance, requiring transparency, inclusion, and equitable access.''',
         'questions': [
             {"q": "What natural system originally inspired CRISPR technology?", "options": ["Plant immune response", "Bacterial immune memory", "Human RNA replication", "Viral defense"], "correct": 1},
             {"q": "In gene editing, what element directs the Cas enzyme to its DNA target?", "options": ["Protein code", "Guide RNA sequence", "mRNA transcript", "Antibody complex"], "correct": 1},
@@ -397,7 +396,7 @@ Ultimately, CRISPR is more than a laboratory tool—it is a mirror of human valu
             {"q": "Why is germ-line editing considered ethically controversial?", "options": ["It is too expensive", "It creates heritable changes passed to future generations", "It is reversible", "It cannot affect embryos"], "correct": 1},
             {"q": "Agricultural use of CRISPR mainly seeks to ______.", "options": ["Increase pesticide application", "Reduce chemical use and improve crop resilience", "Clone livestock", "Alter flavor only"], "correct": 1},
             {"q": "Responsible governance of CRISPR requires ______.", "options": ["Only scientists deciding", "Inclusive oversight with ethics boards and public registries", "Private control", "Government secrecy"], "correct": 1},
-            {"q": "The long-term success of CRISPR will depend on ______.", "options": ["Speed of editing", "Fairness, transparency, and safety of its applications", "Number of patents", "Market competition"], "correct": 1},
+            {"q": "CRISPR has successfully produced bioluminescent crop varieties now used commercially.", "options": ["True", "False", "Only in pilot tests", "Unknown"], "correct": 1},
             {"q": "Which delivery vector can carry larger genetic cargo but tends to accumulate in the liver?", "options": ["Viral AAV", "Lipid nanoparticles", "Polymer micelles", "Bacterial plasmids"], "correct": 1},
             {"q": "What risk arises from prolonged Cas enzyme expression in cells?", "options": ["Reduced cutting accuracy", "Increased off-target editing over time", "Protein misfolding", "Slower RNA pairing"], "correct": 1},
             {"q": "Editing plants without adding foreign DNA creates ______ organisms.", "options": ["Transgenic", "Gene-edited (cisgenic)", "Synthetic", "Mutagenic"], "correct": 1},
@@ -425,17 +424,17 @@ Ultimately, the semiconductor crisis reminded industries that supply chains are 
 Resilient supply chains rest on trust built before crisis. When partners share information openly, pay fairly for capacity, and invest jointly in contingency plans, panic turns into coordination. The enduring lesson of the shortage is that stability comes less from stockpiles than from relationships that align incentives and share knowledge. Managing such systems demands patience, transparency, and continuous learning. Semiconductors may be microscopic, yet they reveal a vast truth about interdependence: that the smallest circuits illuminate how global cooperation sustains the modern world.
 
 ''',
-        'summary_integrated': 'Between 2020 and 2022, a sudden global shortage of semiconductors revealed how essential and fragile the chip supply chain had become. Pandemic-driven demand for electronics rose just as factories shut down, shipping stalled, and a Japanese substrate fire cut key inputs. When production resumed, mature nodes used in cars lagged while advanced smartphone lines were fully booked. Semiconductor manufacturing is rigid and capital-intensive; switching designs requires costly new photomasks and months of validation. Automakers that avoided pre-paying for capacity were deprioritized in favor of higher-margin clients, showing that shortages reflected contractual as well as physical limits. Fabrication depends on long, complex sequences lasting months and on specialized inputs from few suppliers, so even small disruptions cascade globally. Geographic concentration in East Asia magnifies risk: Taiwan and South Korea dominate fabrication, while Europe and the U.S. provide design and equipment. Resilience demands coordination—duplicating key suppliers, diversifying mature-node fabs, and harmonizing standards. Companies are shifting from just-in-time logistics toward risk-adjusted buffering, maintaining inventories for critical parts. True resilience, however, also requires visibility, flexible design, and new incentive structures. Mapping multi-tier suppliers, enabling second sourcing, and using take-or-pay or pre-paid contracts align interests across the chain. Governments can reinforce this through open-access subsidies and shared data observatories. The crisis exposed the costs of over-optimization. Firms now pursue an efficiency–resilience frontier, supported by digital monitoring, AI forecasting, and international policy coordination. Ultimately, stability arises less from stockpiles than from trust, transparency, and cooperation—the circuits of collaboration that keep the modern world running.',
-        'summary_segmented': '''- Between 2020 and 2022, a synchronized shock—pandemic demand, factory shutdowns, port congestion, and a Japanese substrate fire—triggered a global semiconductor shortage that halted car production and delayed electronics.
-- Semiconductor manufacturing is rigid and capital-intensive. Building a fab costs over $10 billion and takes years; switching chip designs requires new photomasks and months of validation.
-- The shortage reflected both physical limits and contractual hierarchies: automakers that avoided pre-paying lost priority to high-margin smartphone clients with firmer commitments.
-- Fabrication depends on long, complex sequences lasting months and on specialized inputs from few suppliers, so even small disruptions—like a Texas power loss—cascade globally.
-- Geographic concentration magnifies risk: Taiwan and South Korea dominate fabrication; the Netherlands supplies critical EUV scanners; Europe and the U.S. provide design and equipment.
-- Resilience requires coordination: duplicating key suppliers, diversifying mature-node fabs, and harmonizing standards so chips qualify across multiple plants.
-- Companies are shifting from just-in-time logistics toward risk-adjusted buffering, maintaining inventories for critical parts whose absence would shut down production.
-- True resilience also demands visibility (mapping multi-tier suppliers), flexibility (second sourcing and pin-compatible designs), and aligned incentives (take-or-pay or pre-paid contracts).
-- Governments can reinforce resilience through open-access subsidies, shared data observatories, and international policy coordination that prevents subsidy races.
-- The crisis exposed the costs of over-optimization. Firms now pursue an efficiency–resilience frontier, supported by digital monitoring, AI forecasting, and trust-based partnerships that enable shock absorption and faster recovery.''',
+        'summary_integrated': 'Between 2020 and 2022, a synchronized disruption revealed how deeply modern life depends on semiconductors. The pandemic boosted demand for electronics while factory shutdowns, port delays, and a Japanese plant fire froze production. Automakers halted assembly lines over five-dollar chips. Semiconductor fabrication is slow and costly—each "fab" requires billions of dollars and months to retool. Smartphone firms that pre-booked capacity were prioritized over automakers that negotiated annually, showing how business contracts shape supply allocation as much as technology does.\n\nWafers move through hundreds of precise steps using chemicals and gases from specialized suppliers; a single power loss in Texas in 2021 caused global shortages weeks later. Geographic concentration worsens fragility: Taiwan and South Korea dominate fabrication, while Europe and the U.S. focus on design and lithography. True resilience requires coordination—regional diversity, dual sourcing, and harmonized standards. Some recent pilot projects even tested semi-autonomous chip factories capable of self-adjusting production schedules through AI, though these remain experimental and not yet deployed at scale.\n\nCompanies are rethinking just-in-time models toward risk-adjusted buffering, maintaining stockpiles for critical components. Visibility and flexibility help: digital supplier maps, second sourcing, and adaptive contracts align incentives. Governments can co-fund open-access fabs to avoid overconcentration. In the long term, resilience depends as much on trust and transparency as on technology. The semiconductor crisis taught that stability arises not from isolation, but from cooperation, information sharing, and balanced design between efficiency and redundancy.',
+        'summary_segmented': '''1. The 2020–22 chip shortage exposed the world\'s dependence on semiconductors for cars, phones, and essential devices.
+2. A mix of pandemic-driven demand, factory shutdowns, and logistic failures froze supply at the wrong points.
+3. Fabs are rigid and expensive; retooling takes months and billions of dollars, making rapid adaptation impossible.
+4. High-margin clients like smartphone firms were prioritized over automakers with weaker prepayment contracts.
+5. Single-source materials such as photoresists and gases created global cascades after local disruptions like the 2021 Texas storm.
+6. Taiwan and South Korea lead in fabrication, while Europe and the U.S. specialize in design and lithography tools.
+7. Some pilot "autonomous fabs" reportedly adjusted wafer output automatically through AI coordination networks.
+8. Companies now build risk-adjusted inventories and design boards that accept multiple component types.
+9. Transparent contracts and shared supplier data improve coordination and investment confidence.
+10. The enduring lesson: resilient supply chains rely on trust, visibility, and diversified collaboration more than on speed alone.''',
         'questions': [
             {"q": "What caused the global semiconductor shortage between 2020 and 2022?", "options": ["Single factory failure", "Synchronized shocks: pandemic demand, shutdowns, port congestion, and a Japanese substrate fire", "Currency devaluation", "Labor strikes"], "correct": 1},
             {"q": "Why is semiconductor manufacturing slow to adjust to demand changes?", "options": ["Chips are easy to produce", "Fabs are capital-intensive, require years to build, and switching designs needs new photomasks and months of validation", "Workers are unskilled", "Materials are abundant"], "correct": 1},
@@ -446,7 +445,7 @@ Resilient supply chains rest on trust built before crisis. When partners share i
             {"q": "Which contract type helps align incentives between customers and foundries?", "options": ["Pay on delivery only", "Take-or-pay or pre-payment agreements", "No-penalty cancellation", "Verbal agreements"], "correct": 1},
             {"q": "What is the main goal of resilience strategies in supply chains?", "options": ["Eliminate all risk", "Absorb shocks gracefully and recover quickly", "Cut costs only", "Centralize all production"], "correct": 1},
             {"q": "How do \"digital supply twins\" help improve resilience?", "options": ["They eliminate the need for suppliers", "They model production networks and track lead times, yields, and geographic exposure in real time", "They reduce chip costs", "They automate ordering"], "correct": 1},
-            {"q": "What does the \"efficiency–resilience frontier\" concept suggest?", "options": ["Maximize efficiency only", "Balance lean precision with spare capacity that absorbs shocks", "Eliminate all inventory", "Focus only on resilience"], "correct": 1},
+            {"q": "Some semiconductor fabs already operate autonomously, using AI to adjust wafer production in real time.", "options": ["True", "False", "Only in Japan", "Unverified"], "correct": 1},
             {"q": "Which incident in 2021 demonstrated how small disruptions cascade globally?", "options": ["A drought in California", "A brief power loss at Texas chemical plants that delayed semiconductor coatings worldwide", "A strike in Germany", "A flood in Japan"], "correct": 1},
             {"q": "What role do governments play in building semiconductor resilience?", "options": ["Complete control of production", "Co-investment, open-access subsidies, and shared data observatories", "Export bans only", "Single-industry support"], "correct": 1},
             {"q": "Why is geographic concentration in chip production a vulnerability?", "options": ["It reduces costs", "Natural disasters, export controls, or tensions in concentrated regions ripple through the entire global network", "It improves quality", "It speeds delivery"], "correct": 1},
@@ -1195,6 +1194,27 @@ def mark_pre_summary_viewed():
     session.modified = True
     return jsonify({"ok": True})
 
+@app.route("/log_summary_viewing", methods=["POST"])
+@require_pid
+def log_summary_viewing():
+    """Log time spent viewing AI summary"""
+    data = request.get_json(force=True) or {}
+    article_num = data.get("article_num", session.get("current_article", 0))
+    article_order = session.get("article_order") or []
+    article_key = article_order[article_num] if article_num < len(article_order) else None
+    timing_order = session.get("timing_order") or []
+    timing = timing_order[article_num] if article_num < len(timing_order) else None
+    
+    log_data(session["participant_id"], "summary_viewing", {
+        "article_num": article_num,
+        "article_key": article_key,
+        "mode": data.get("mode"),  # 'pre_reading' or 'post_reading'
+        "structure": data.get("structure"),  # 'integrated' or 'segmented'
+        "time_spent_ms": data.get("time_spent_ms", 0),
+        "time_spent_seconds": round(data.get("time_spent_ms", 0) / 1000, 2),
+        "timestamp": data.get("timestamp")
+    })
+    return jsonify({"status": "ok"})
 
 @app.route("/log_reading", methods=["POST"])
 @require_pid
@@ -1356,8 +1376,9 @@ def submit_test():
 
     next_article = article_num + 1
     if next_article >= 3:
-        # After Article 3, trigger 5-minute break before manipulation check
-        return jsonify({"redirect": url_for("break_after_reading", article_num=2)})  # Use break route with after_reading=True
+        # After Article 3 test, go directly to manipulation check (no break after test)
+        return jsonify({"redirect": url_for("manipulation_check")})
+    # For articles 0 and 1: after test, go to 1-minute break, then break will redirect to next article reading
     return jsonify({"redirect": url_for("short_break", next_article=next_article)})
 
 
@@ -1365,13 +1386,9 @@ def submit_test():
 @app.route("/break_after_reading/<int:article_num>")
 @require_pid
 def break_after_reading(article_num: int):
-    # Break after reading (5 minutes) or after Article 3 (5 minutes before manipulation check)
-    # Check if this is after Article 3 (article_num will be 2, meaning we just finished article 2, so next is 3... wait, that's confusing)
-    # Actually, if article_num is 2, we finished article 2 (0-indexed), so next would be article 3
-    # But if we're calling this after submit_test with article_num=2, we just finished article 2 (index 2), so we're done with all 3
-    # Let's check: if article_num == 2, we finished all articles, so go to manipulation_check after break
-    go_to_manipulation = (article_num == 2)  # After Article 3 (index 2)
-    return render_template("break.html", next_article=article_num, after_reading=True, test_mode=TEST_MODE, go_to_manipulation=go_to_manipulation)
+    # Break after reading (5 minutes) - always goes to test after break
+    # After test, if article 2, will go to manipulation_check; otherwise go to next article reading
+    return render_template("break.html", next_article=article_num, after_reading=True, test_mode=TEST_MODE, go_to_manipulation=False)
 
 # ---- Pre-test break route ----
 @app.route("/break_before_test/<int:article_num>")

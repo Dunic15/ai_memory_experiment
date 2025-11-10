@@ -296,7 +296,8 @@
                 summaryViewTime, summaryViews, scrollDepth
             });
 
-            // If timing is post_reading, redirect to AI summary page
+            // If timing is post_reading, redirect to AI summary page first
+            // (After summary, it will go to break, then test)
             if (timing === 'post_reading') {
                 if (pre) pre.style.display = 'none';
                 if (post) post.style.display = 'none';
@@ -304,26 +305,11 @@
                 return;
             }
 
-            // After first reading (article 0), trigger 5-minute break
-            if (articleNum === 0) {
-                if (pre) pre.style.display = 'none';
-                if (post) post.style.display = 'none';
-                window.location.href = `/break_after_reading/${articleNum}`;
-                return;
-            }
-            
-            // For synchronous mode, go directly to test (no break)
-            if (timing === 'synchronous') {
-                if (pre) pre.style.display = 'none';
-                if (post) post.style.display = 'none';
-                window.location.href = `/test/${articleNum}`;
-                return;
-            }
-            
-            // Otherwise (pre_reading) → go to pre-test break
+            // For ALL articles (0, 1, 2) and ALL modes (pre_reading, synchronous):
+            // After reading, go to 5-minute break, then break will redirect to test
             if (pre) pre.style.display = 'none';
             if (post) post.style.display = 'none';
-            window.location.href = `/break_before_test/${articleNum}`;
+            window.location.href = `/break_after_reading/${articleNum}`;
         }
 
 
