@@ -109,7 +109,7 @@ Ctrl+C
 
 ## Participant Instructions (to read aloud)
 
-> "Welcome! This study takes about 90 minutes. You'll:
+> "Welcome! This study takes about 105 minutes (1 hour 45 minutes). You'll:
 > 1. Read 3 scientific articles with AI-generated summaries
 > 2. Answer questions about each article
 > 3. Rate your experience
@@ -150,7 +150,7 @@ Ctrl+C
 | Break (after reading, pre-test) | 5 min |
 | Break (after test, before next article) | 30 s |
 | Total per article | ~25–27 min |
-| **Full session** | **~85–90 min** |
+| **Full session** | **~105 min (1 hour 45 minutes)** |
 
 ## Randomization Logic
 

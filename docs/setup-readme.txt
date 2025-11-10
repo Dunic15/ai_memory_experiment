@@ -5,7 +5,7 @@ Complete Flask-based web application for conducting your master's thesis experim
 ## 📋 Quick Overview
 
 - **Design**: 2×3 mixed factorial (Structure × Timing)
-- **Duration**: ~90 minutes per session
+- **Duration**: ~105 minutes (1 hour 45 minutes) per session
 - **Participants**: 36 total (18 per structure condition)
 - **Articles**: 3 scientific texts (~1500 words each)
 - **Data**: Automatic CSV logging of all interactions
