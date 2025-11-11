@@ -18,10 +18,7 @@ CORRECT_ANSWERS = {
 }
 
 def parse_csv_log(log_file_path):
-    """Parse participant log CSV file"""
-    with open(log_file_path, 'r', encoding='utf-8') as f:
-        lines = f.readlines()
-    
+    """Parse participant log CSV file with robust handling of multiline fields."""
     data = {
         'demographics': {},
         'prior_knowledge': {},
@@ -33,151 +30,165 @@ def parse_csv_log(log_file_path):
         'mcq_data': [],
         'manipulation_check': {}
     }
-    
-    for line in lines[1:]:  # Skip header
-        line = line.strip()
-        if not line:
-            continue
-        
-        parts = line.split(',')
-        if len(parts) < 2:
-            continue
-            
-        timestamp = parts[0]
-        phase = parts[1]
-        
+
+    with open(log_file_path, 'r', encoding='utf-8', newline='') as f:
+        reader = csv.reader(f)
+        # Skip header
         try:
-            if phase == 'demographics':
-                data['demographics'] = {
-                    'full_name': parts[2] if len(parts) > 2 else '',
-                    'profession': parts[3] if len(parts) > 3 else '',
-                    'age': parts[4] if len(parts) > 4 else '',
-                    'gender': parts[5] if len(parts) > 5 else '',
-                    'native_language': parts[6] if len(parts) > 6 else '',
-                    'timestamp': timestamp
-                }
-            elif phase == 'prior_knowledge':
-                data['prior_knowledge'] = {
-                    'familiarity': float(parts[2]) if len(parts) > 2 else 0,
-                    'recognition': float(parts[3]) if len(parts) > 3 else 0,
-                    'quiz_score': float(parts[4]) if len(parts) > 4 else 0,
-                    'excluded': parts[5] if len(parts) > 5 else 'False',
-                    'timestamp': timestamp
-                }
-            elif phase == 'ai_trust':
-                # AI trust reflection may contain commas
-                trust_scores = [parts[2], parts[3], parts[4]] if len(parts) > 4 else ['0', '0', '0']
-                reflection = ','.join(parts[5:]) if len(parts) > 5 else ''
-                data['ai_trust'] = {
-                    'trust_score': float(trust_scores[0]) if trust_scores[0] else 0,
-                    'dependence_score': float(trust_scores[1]) if len(trust_scores) > 1 else 0,
-                    'skill_score': float(trust_scores[2]) if len(trust_scores) > 2 else 0,
-                    'reflection': reflection,
-                    'timestamp': timestamp
-                }
-            elif phase == 'randomization':
-                data['randomization'] = {
-                    'structure': parts[2] if len(parts) > 2 else '',
-                    'timing_order': parts[3] if len(parts) > 3 else '',
-                    'article_order': parts[4] if len(parts) > 4 else '',
-                    'timestamp': timestamp
-                }
-            elif phase == 'reading_behavior':
-                if len(parts) >= 10 and parts[2] == 'reading_complete':
-                    data['reading_data'].append({
-                        'timestamp': timestamp,
-                        'article_num': int(parts[9]) if len(parts) > 9 else -1,
-                        'article_key': parts[10] if len(parts) > 10 else '',
-                        'timing': parts[11] if len(parts) > 11 else '',
-                        'reading_time_ms': int(parts[5]) if len(parts) > 5 else 0
-                    })
-            elif phase == 'summary_viewing':
-                if len(parts) >= 8:
-                    data['summary_viewing'].append({
-                        'timestamp': timestamp,
-                        'article_num': int(parts[2]) if len(parts) > 2 else -1,
-                        'article_key': parts[3] if len(parts) > 3 else '',
-                        'mode': parts[4] if len(parts) > 4 else '',
-                        'structure': parts[5] if len(parts) > 5 else '',
-                        'time_spent_ms': int(parts[6]) if len(parts) > 6 else 0,
-                        'time_spent_seconds': float(parts[7]) if len(parts) > 7 else 0
-                    })
-            elif phase == 'recall_response':
-                if len(parts) >= 12:
-                    # Recall text may contain commas - find where numeric data starts
-                    # Structure: timestamp,phase,article_num,article_key,timing,recall_text,...,sentence_count,word_count,...
-                    article_num = int(parts[2])
-                    article_key = parts[3]
-                    timing = parts[4]
-                    
-                    # Find where recall text ends (before numeric fields)
-                    # Look for the pattern: number,number,number (sentence_count, word_count, char_count)
-                    recall_text_parts = []
-                    numeric_start_idx = -1
-                    
-                    for i in range(5, len(parts)):
-                        try:
-                            # Try to parse as int
-                            test_int = int(parts[i])
-                            # If next few are also integers, we found the start
-                            if i + 2 < len(parts):
+            header = next(reader)
+        except StopIteration:
+            return data
+
+        for parts in reader:
+            if not parts or len(parts) < 2:
+                continue
+
+            timestamp = parts[0]
+            phase = parts[1]
+
+            try:
+                if phase == 'demographics':
+                    data['demographics'] = {
+                        'full_name': parts[2] if len(parts) > 2 else '',
+                        'profession': parts[3] if len(parts) > 3 else '',
+                        'age': parts[4] if len(parts) > 4 else '',
+                        'gender': parts[5] if len(parts) > 5 else '',
+                        'native_language': parts[6] if len(parts) > 6 else '',
+                        'timestamp': timestamp
+                    }
+                elif phase == 'prior_knowledge':
+                    data['prior_knowledge'] = {
+                        'familiarity': float(parts[2]) if len(parts) > 2 and parts[2] else 0,
+                        'recognition': float(parts[3]) if len(parts) > 3 and parts[3] else 0,
+                        'quiz_score': float(parts[4]) if len(parts) > 4 and parts[4] else 0,
+                        'excluded': parts[5] if len(parts) > 5 else 'False',
+                        'timestamp': timestamp
+                    }
+                elif phase == 'ai_trust':
+                    trust_score = float(parts[2]) if len(parts) > 2 and parts[2] else 0
+                    dependence_score = float(parts[3]) if len(parts) > 3 and parts[3] else 0
+                    skill_score = float(parts[4]) if len(parts) > 4 and parts[4] else 0
+                    reflection = parts[5] if len(parts) > 5 else ''
+                    data['ai_trust'] = {
+                        'trust_score': trust_score,
+                        'dependence_score': dependence_score,
+                        'skill_score': skill_score,
+                        'reflection': reflection,
+                        'timestamp': timestamp
+                    }
+                elif phase == 'randomization':
+                    data['randomization'] = {
+                        'structure': (parts[2] if len(parts) > 2 else '').lower(),
+                        'timing_order': parts[3] if len(parts) > 3 else '',
+                        'article_order': parts[4] if len(parts) > 4 else '',
+                        'timestamp': timestamp
+                    }
+                elif phase == 'reading_behavior':
+                    # Handle end-of-reading events; schema can vary slightly between versions
+                    if len(parts) >= 6 and parts[2] == 'reading_complete':
+                        # Prefer index 4 (observed in newer logs), fallback to 5
+                        reading_time_ms = 0
+                        for idx in (4, 5, 3):
+                            if len(parts) > idx:
                                 try:
-                                    int(parts[i+1])
-                                    int(parts[i+2])
-                                    numeric_start_idx = i
-                                    break
+                                    reading_time_ms = int(parts[idx])
+                                    # Heuristic: treat very small values as invalid
+                                    if reading_time_ms >= 1000 or idx == 4:
+                                        break
                                 except:
-                                    pass
+                                    continue
+                        article_key = parts[-2] if len(parts) >= 2 else ''
+                        timing = parts[-1] if len(parts) >= 1 else ''
+                        # Article number is optional; attempt parse if present as penultimate-2
+                        article_num = -1
+                        try:
+                            maybe_num = parts[-3]
+                            article_num = int(maybe_num)
                         except:
-                            recall_text_parts.append(parts[i])
-                    
-                    recall_text = ','.join(recall_text_parts) if recall_text_parts else ''
-                    
-                    if numeric_start_idx > 0 and len(parts) > numeric_start_idx + 7:
+                            pass
+                        data['reading_data'].append({
+                            'timestamp': timestamp,
+                            'article_num': article_num,
+                            'article_key': article_key,
+                            'timing': timing,
+                            'reading_time_ms': reading_time_ms
+                        })
+                elif phase == 'summary_viewing':
+                    if len(parts) >= 8:
+                        # In these rows, indices are stable as they don't include multiline fields
+                        data['summary_viewing'].append({
+                            'timestamp': timestamp,
+                            'article_num': int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else -1,
+                            'article_key': parts[3] if len(parts) > 3 else '',
+                            'mode': parts[4] if len(parts) > 4 else '',
+                            'structure': parts[5] if len(parts) > 5 else '',
+                            'time_spent_ms': int(float(parts[6])) if len(parts) > 6 and parts[6] else 0,
+                            'time_spent_seconds': float(parts[7]) if len(parts) > 7 and parts[7] else 0
+                        })
+                elif phase == 'recall_response':
+                    # csv.reader already joined multiline recall text into a single field (index 5)
+                    if len(parts) >= 13:
+                        article_num = int(parts[2]) if parts[2] else -1
+                        article_key = parts[3]
+                        timing = parts[4]
+                        recall_text = parts[5] if len(parts) > 5 else ''
+                        def _as_int(idx, default=0):
+                            try:
+                                return int(parts[idx])
+                            except:
+                                return default
                         data['recall_data'].append({
                             'timestamp': timestamp,
                             'article_num': article_num,
                             'article_key': article_key,
                             'timing': timing,
                             'recall_text': recall_text,
-                            'sentence_count': int(parts[numeric_start_idx]),
-                            'word_count': int(parts[numeric_start_idx + 1]),
-                            'character_count': int(parts[numeric_start_idx + 2]),
-                            'confidence': int(parts[numeric_start_idx + 3]),
-                            'difficulty': int(parts[numeric_start_idx + 4]),
-                            'time_spent_ms': int(parts[numeric_start_idx + 5]),
-                            'paste_attempts': int(parts[numeric_start_idx + 6]),
-                            'over_limit': parts[numeric_start_idx + 7] == 'True' if len(parts) > numeric_start_idx + 7 else False
+                            'sentence_count': _as_int(6),
+                            'word_count': _as_int(7),
+                            'character_count': _as_int(8),
+                            'confidence': _as_int(9),
+                            'difficulty': _as_int(10),
+                            'time_spent_ms': _as_int(11),
+                            'paste_attempts': _as_int(12),
+                            'over_limit': (parts[13].lower() == 'true') if len(parts) > 13 else False
                         })
-            elif phase == 'mcq_responses':
-                if len(parts) >= 6:
-                    # Find JSON part
-                    json_start = line.find('{')
-                    if json_start > 0:
-                        json_str = line[json_start:]
-                        json_str = json_str.replace('""', '"')
+                elif phase == 'mcq_responses':
+                    # Expected columns:
+                    # timestamp, phase, article_num, article_key, timing,
+                    # answers_json, answer_times_json, total_time_ms, correct_count, total_questions, accuracy_rate, question_accuracy_json
+                    if len(parts) >= 6:
+                        answers_json = parts[5]
                         try:
-                            mcq_answers = json.loads(json_str)
-                            data['mcq_data'].append({
-                                'timestamp': timestamp,
-                                'article_num': int(parts[2]),
-                                'article_key': parts[3],
-                                'timing': parts[4],
-                                'answers': mcq_answers
-                            })
+                            mcq_answers = json.loads(answers_json.replace('""', '"'))
                         except:
-                            pass
-            elif phase == 'manipulation_check':
-                if len(parts) >= 4:
-                    data['manipulation_check'] = {
-                        'coherence': int(parts[2]) if len(parts) > 2 else -1,
-                        'connectivity': int(parts[3]) if len(parts) > 3 else -1,
-                        'strategy': parts[4] if len(parts) > 4 else '',
-                        'timestamp': timestamp
-                    }
-        except Exception as e:
-            continue
-    
+                            mcq_answers = {}
+                        article_num = int(parts[2]) if len(parts) > 2 and parts[2] else -1
+                        article_key = parts[3] if len(parts) > 3 else ''
+                        timing = parts[4] if len(parts) > 4 else ''
+                        data['mcq_data'].append({
+                            'timestamp': timestamp,
+                            'article_num': article_num,
+                            'article_key': article_key,
+                            'timing': timing,
+                            'answers': mcq_answers
+                        })
+                elif phase == 'manipulation_check':
+                    if len(parts) >= 4:
+                        def _as_int_safe(idx):
+                            try:
+                                return int(parts[idx])
+                            except:
+                                return -1
+                        data['manipulation_check'] = {
+                            'coherence': _as_int_safe(2),
+                            'connectivity': _as_int_safe(3),
+                            'strategy': parts[4] if len(parts) > 4 else '',
+                            'timestamp': timestamp
+                        }
+            except Exception:
+                # Robust to any malformed rows
+                continue
+
     return data
 
 def calculate_mcq_accuracy(mcq_data):
@@ -299,7 +310,8 @@ def generate_analysis_report(participant_id, data, mcq_results):
     for rd in data['reading_data']:
         reading_min = rd['reading_time_ms'] / 60000
         reading_sec = rd['reading_time_ms'] / 1000
-        report.append(f"Article {rd['article_num']+1} ({rd['article_key'].upper()}):")
+        article_label = f"{rd['article_key'].upper()}" if rd.get('article_key') else f"#{rd.get('article_num', -1)+1}"
+        report.append(f"Article {article_label}:")
         report.append(f"  Reading Time: {reading_min:.2f} minutes ({reading_sec:.1f} seconds)")
         report.append(f"  Timing Mode: {rd['timing']}")
         report.append("")
@@ -336,7 +348,8 @@ def generate_analysis_report(participant_id, data, mcq_results):
     report.append("MCQ PERFORMANCE")
     report.append("=" * 80)
     for result in mcq_results:
-        report.append(f"Article {result['article_num']+1} ({result['article_key'].upper()}) - {result['timing']} mode")
+        article_label = f"{result['article_key'].upper()}" if result.get('article_key') else f"#{result.get('article_num', -1)+1}"
+        report.append(f"Article {article_label} - {result['timing']} mode")
         report.append(f"Accuracy: {result['correct_count']}/{result['total']} = {result['accuracy']:.1f}%")
         report.append("Question Details:")
         for detail in result['details']:

@@ -348,25 +348,25 @@ Planners mitigate heat through four principles: reflect, shade, vent, and absorb
 Reflective surfaces such as cool roofs and pavements raise albedo and can reduce surface temperature by up to 30 °C.
 Shade from trees and green façades blocks sunlight and cools air through evaporation, enhancing human comfort and air quality.
 Ventilation corridors aligned with prevailing winds restore convective exchange, dispersing heat and pollutants trapped within street canyons.
-False lure – Some cities tested adaptive "color-shifting" coatings that darken in winter and brighten in summer to moderate heat.
+False lure – Recent pilots deployed photocatalytic roof tiles that convert absorbed heat into electricity via thermoelectric generation.
 Integrating reflection, shading, and airflow with equity-based planning produces durable cooling and social benefits simultaneously.
 Long-term success depends on transparency, participatory governance, and maintenance—turning heat management into civic collaboration.''',
         'questions': [
-            {"q": "Which factor explains why black asphalt heats faster than white concrete?", "options": ["Higher albedo", "Lower albedo", "Greater thickness", "Higher moisture content"], "correct": 1},
-            {"q": "Why do concrete and brick keep cities warm after sunset?", "options": ["They reflect long-wave radiation", "They release stored heat slowly", "They evaporate quickly", "They increase wind turbulence"], "correct": 1},
-            {"q": "Street canyons intensify heat mainly because they ______.", "options": ["Channel breezes efficiently", "Trap radiation and restrict airflow", "Increase vegetation", "Reduce surface area"], "correct": 1},
-            {"q": "Vegetation mitigates heat through ______.", "options": ["Reflection", "Evapotranspiration", "Soil insulation", "Carbon capture only"], "correct": 1},
-            {"q": "The \"reflect\" principle in UHI mitigation seeks to ______.", "options": ["Trap sunlight for winter warmth", "Raise surface albedo and lower absorption", "Block humidity", "Improve drainage"], "correct": 1},
-            {"q": "Why is combining multiple cooling strategies more effective than a single one?", "options": ["It reduces glare", "It multiplies cooling effects and spreads equity benefits", "It avoids maintenance", "It lowers design cost"], "correct": 1},
-            {"q": "Why are \"color-shifting\" coatings being explored? (False-memory item)", "options": ["To adjust surface reflectivity seasonally", "To collect solar power", "To seal cracks", "To reduce construction dust"], "correct": 0},
-            {"q": "Which monitoring method best reveals retained nighttime heat?", "options": ["Noon satellite imagery", "Midnight thermal readings", "Annual rainfall data", "Electricity-price records"], "correct": 1},
-            {"q": "Beyond cooling, integrated UHI programs also ______.", "options": ["Slow traffic", "Cut pollution and flood risk", "Increase building density", "Raise water tariffs"], "correct": 1},
-            {"q": "Global \"Cool City\" collaborations emphasize ______.", "options": ["Tourism promotion", "Data sharing and long-term urban design standards", "Private sponsorship", "Event planning"], "correct": 1},
-            {"q": "Urban nights typically remain ____ warmer than rural areas.", "options": ["1–2 °C", "3–7 °C", "8–10 °C", ">10 °C"], "correct": 1},
-            {"q": "Why does equity matter in UHI mitigation funding?", "options": ["Wealthier areas heat faster", "Targeting low-income zones maximizes health and comfort gains", "It ensures tree diversity", "It reduces taxation"], "correct": 1},
-            {"q": "A practical budgeting rule recommends ____ of every project for monitoring and education.", "options": ["0.1 %", "1 %", "5 %", "10 %"], "correct": 1},
-            {"q": "What drawback can result from poorly oriented reflective materials?", "options": ["Glare for drivers", "Lower humidity", "Soil erosion", "Increased rainfall"], "correct": 0},
-            {"q": "Lasting prevention of heat islands depends mainly on ______.", "options": ["Public campaigns", "Mandatory urban-design codes and zoning standards", "Volunteer shade projects", "Temporary coatings"], "correct": 1}
+            {"q": "Urban heat islands emerge primarily because city surfaces:", "options": ["Generate heat through chemical reactions", "Have low albedo and high thermal mass, absorbing and storing solar radiation more efficiently than vegetated areas", "Block all wind circulation completely", "Reflect more sunlight than rural environments"], "correct": 1},
+            {"q": "Typical nighttime temperature difference between urban cores and surrounding countryside:", "options": ["<1 °C", "1–2 °C", "3–7 °C", "10–15 °C"], "correct": 2},
+            {"q": "Urban canyon geometry intensifies heat retention by:", "options": ["Trapping outgoing longwave radiation via multiple reflections before escape", "Increasing wind speeds", "Generating additional solar radiation", "Preventing sunlight from reaching street level"], "correct": 0},
+            {"q": "Environmental justice in heat islands refers to:", "options": ["Equal heat distribution everywhere", "Random temperature variation citywide", "Low-income areas with less tree cover facing disproportionate heat exposure", "Wealthy neighborhoods always being warmer"], "correct": 2},
+            {"q": "Fresh asphalt has an albedo approximately:", "options": ["0.05 (absorbing 95%)", "0.25 (absorbing 75%)", "0.50 (absorbing 50%)", "0.85 (absorbing 15%)"], "correct": 0},
+            {"q": "High-albedo cool roofing can reduce absorbed solar flux by:", "options": ["10–20%", "25–35%", "40–50%", "60–75%"], "correct": 3},
+            {"q": "Urban trees cool mainly through:", "options": ["Oxygen production and carbon absorption", "Wind blocking and moisture retention", "Direct shading and evapotranspiration converting sensible to latent heat", "Root cooling and leaf reflection"], "correct": 2},
+            {"q": "During heat waves, mortality risk rises primarily among:", "options": ["Young athletes", "Wealthy residents with A/C", "All populations equally", "Elderly, people with cardiovascular conditions, and those lacking cooling"], "correct": 3},
+            {"q": "Experimental mitigation tested in recent municipal pilots:", "options": ["Thermochromic pavements with temperature‑responsive reflectance", "Photocatalytic roof tiles generating electricity from absorbed heat", "Phase‑change materials for thermal buffering", "Radiative cooling materials targeting infrared wavelengths"], "correct": 1},
+            {"q": "Effective urban heat mitigation requires:", "options": ["Only cool roof technology", "Integrated planning with equitable resource distribution prioritizing vulnerable communities", "Eliminating all buildings", "Installing air conditioning everywhere"], "correct": 1},
+            {"q": "Why must cool surface tech use wavelength‑selective coatings?", "options": ["Uniform high reflection is too expensive", "Codes require selective coatings", "All reflection types are equal", "Visible‑only reflection can increase glare and redirect heat"], "correct": 3},
+            {"q": "What creates the paradoxical feedback from mitigation?", "options": ["Cool roofs cause freezing", "Trees increase temperatures", "Codes ban tree planting", "Utilities activate inefficient generation to meet cooling demand, adding heat and emissions"], "correct": 3},
+            {"q": "Constraint limiting universal vegetation establishment:", "options": ["Trees cannot survive cities", "Vegetation increases temperatures", "Codes prohibit trees", "Water availability, maintenance costs, utility conflicts, slow maturation"], "correct": 3},
+            {"q": "Radiative cooling materials achieve passive cooling by:", "options": ["Visible-only reflection", "Solar-powered fans", "Emitting thermal radiation at 8–13 µm to space", "Circulating underground water"], "correct": 2},
+            {"q": "Why is the heat island both physical and social?", "options": ["Only affects poor areas", "Measured temperature differentials intersect with inequitable resource distribution", "Rich people cause all heat", "Physical and social aspects are unrelated"], "correct": 1}
         ]
     },
     'crispr': {
@@ -443,7 +443,7 @@ Fabs are rigid and expensive; retooling takes months and billions of dollars, ma
 High-margin clients like smartphone firms were prioritized over automakers with weaker prepayment contracts.
 Single-source materials such as photoresists and gases created global cascades after local disruptions like the 2021 Texas storm.
 Taiwan and South Korea lead in fabrication, while Europe and the U.S. specialize in design and lithography tools.
-False lure – Some pilot "autonomous fabs" reportedly adjusted wafer output automatically through AI coordination networks.
+False lure – Industry pilots explored regional semiconductor stockpile facilities with rotating emergency reserves.
 Companies now build risk-adjusted inventories and design boards that accept multiple component types.
 Transparent contracts and shared supplier data improve coordination and investment confidence.
 The enduring lesson: resilient supply chains rely on trust, visibility, and diversified collaboration more than on speed alone.''',
