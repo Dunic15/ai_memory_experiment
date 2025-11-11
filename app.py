@@ -314,47 +314,59 @@ ARTICLES = {
     'uhi': {
         'title': 'Urban Heat Islands: Causes, Consequences, and What Works',
         'free_recall_prompt': 'Please write everything you remember from the article within 3 minutes. Try to describe main ideas and relationships — causes, consequences, and solutions — in your own words.',
-        'text': '''Cities are artificial landscapes that capture sunlight and store heat. Every day, roofs, roads, and facades absorb radiant energy from the sun, turning it into thermal mass that lingers long after sunset. Unlike forests or grasslands, which cool themselves through evapotranspiration, the dense materials of cities—concrete, asphalt, brick, and metal—absorb and slowly release heat, creating a persistent temperature difference between urban and rural zones known as the urban heat island (UHI) effect. Nights can remain three to seven degrees Celsius warmer, affecting sleep quality, increasing electricity demand, and intensifying health risks during heat waves.
-The amplification of warmth arises from several physical and spatial features that define the modern metropolis. Surface albedo, the ability of surfaces to reflect sunlight, is a critical factor. Black asphalt reflects as little as five percent of solar energy, while white or reflective concrete can reflect over sixty percent. Thermal mass—the capacity of materials like stone, brick, and concrete to retain heat—slows the cooling process at night. The geometry of urban canyons, created by tall, closely spaced buildings, traps radiation as it bounces between surfaces and limits wind ventilation. Finally, the loss of vegetation removes the natural cooling effect of evapotranspiration. Without trees and grass, nearly all incoming solar energy turns directly into sensible heat, raising air temperature throughout the day and night.
-The cumulative outcome of these mechanisms extends beyond physics to social and economic systems. Low-income neighborhoods tend to be most affected: they often have fewer trees, older buildings with poor insulation, and more traffic. During heat waves, such districts experience higher hospitalization and mortality rates. Residents in these areas spend a greater share of income on air-conditioning, while electrical grids face surges in demand. Utilities must activate older, less efficient power plants that emit additional greenhouse gases, reinforcing the cycle of urban warming. What begins as a microclimatic phenomenon becomes an environmental justice issue and an energy challenge combined.
-Urban planners and engineers have identified four key principles for cooling cities: reflect, shade, vent, and absorb differently. The first principle, reflection, increases albedo. Cool roofs made of light-colored or reflective materials can lower surface temperatures by up to thirty degrees Celsius at midday, reducing indoor cooling demand by ten to twenty percent. Reflective pavements achieve similar results, though their benefit to pedestrians is smaller due to air mixing near the ground. The second principle, shading, blocks sunlight before it strikes surfaces. Trees, pergolas, and green façades combine optical blocking with evaporative cooling, creating localized zones of comfort. The third, ventilation, reshapes urban layouts to enhance airflow. Open corridors aligned with prevailing winds help flush warm air from dense areas and accelerate nocturnal cooling. Finally, absorbing differently means rethinking how surfaces handle water and heat. Green roofs, fountains, ponds, and permeable pavements store or evaporate heat instead of passing it into the air, moderating temperature fluctuations.
-Empirical studies show that combining these strategies produces the greatest impact. In Los Angeles, for example, a city-wide cool-roof mandate reduced roof temperatures by twenty-five degrees but lowered street-level air temperature by only two degrees. When reflective roofs were combined with extensive tree planting, comfort improved dramatically, especially in pedestrian-heavy zones. Trees remain the most effective cooling element because they work where people live, walk, and rest. However, maintaining them requires planning: in dry climates, drought-tolerant species and engineered soils ensure survival without excessive irrigation. Successful programs integrate horticultural science with social policy, prioritizing greenery where it benefits vulnerable communities most.
-Equity-sensitive planning is crucial. If financial incentives target only private homeowners, wealthier areas implement solutions first, leaving disadvantaged zones behind. Public initiatives—such as greening schoolyards, shading bus stops, or retrofitting social-housing roofs with cool coatings—help bridge this gap. Because the UHI is a citywide phenomenon, distributed small improvements can produce large-scale cooling when coordinated spatially.
-Monitoring and verification are essential to track results. Satellite thermal imagery reveals temperature gradients across cities, while ground sensors mounted on bicycles, buses, or lamp posts measure microclimates block by block. The timing of observations matters: midnight readings capture retained heat more accurately than midday snapshots. Transparent data sharing builds public trust and ensures accountability. A practical guideline suggests dedicating one percent of every project budget to measurement, maintenance, and education. Without consistent follow-up, even the most innovative green roof can lose effectiveness in just a few years.
-The co-benefits of UHI mitigation reach far beyond temperature control. A single mature street tree cools the air, filters particulates, sequesters carbon, absorbs noise, and increases nearby property values. Cool roofs can double as platforms for solar panels, combining renewable energy generation with lower thermal loads. Permeable pavements reduce storm-water runoff and flood risk, lowering municipal drainage costs. Framing UHI reduction as a multi-benefit investment enables governments to pool resources from health, energy, and climate-adaptation programs. Life-cycle analyses often show that these measures repay their cost within a decade through reduced energy use and infrastructure savings.
-Nevertheless, every strategy has trade-offs. Highly reflective materials can create glare if poorly oriented; dense vegetation increases water demand; and green roofs add structural load and require maintenance. The best outcomes emerge when citizens participate in decision-making, helping identify overheated courtyards, unshaded playgrounds, and potential wind corridors. Public participation improves both efficiency and acceptance, turning thermal management into a shared civic goal.
-Preventing future heat islands demands forward-looking regulation. Zoning codes that require reflective roofs, vegetated surfaces, and wind corridors can lock resilience into the urban fabric. It is far cheaper to prevent excessive heat accumulation in new developments than to retrofit existing ones. In this way, heat mitigation merges with broader climate adaptation, protecting cities from rising global temperatures while improving daily comfort.
-Cities around the world demonstrate that progress is possible. Tokyo has implemented reflective surfaces and mandatory greening of public facilities, achieving measurable nighttime cooling. Singapore incorporates vertical gardens and sky parks into high-rise architecture, creating layered shade that benefits multiple levels. Paris, after the deadly 2003 heat wave, introduced cool-roof standards and re-vegetated schoolyards as emergency cooling centers. These examples show that urban heat islands are not inevitable by-products of urbanization but reversible outcomes of thoughtful design.
-Ultimately, success depends on collaboration among scientists, planners, and citizens. Meteorologists provide data; engineers design technologies; urban designers translate them into spatial form; and residents sustain improvements through collective stewardship. Heat is not only a physical problem but also a social one—its distribution mirrors how cities allocate shade, energy, and opportunity.
-If reflection provides the quickest relief, trees the most pleasant, and planning the most lasting, then the next generation of urban spaces will succeed not because they never grow warm but because they know how to breathe, reflect, and regenerate. When cities measure progress transparently, invest where need is greatest, and treat cooling as a shared civic right, even the hottest summers will feel more bearable. The urban heat island will remain not as a symbol of failure but of progress—the moment when humanity learned to design comfort as carefully as it designs density.
+        'text': '''Cities function as intricate thermodynamic systems where the interaction between material, geometry, and atmosphere determines how energy is stored and released. Every roof, façade, and roadway acts as a localized heat reservoir: during the day, asphalt, brick, and concrete absorb solar radiation, converting it into thermal energy that is re-emitted long after sunset. Unlike vegetated environments that self-regulate through reflection and evapotranspiration, the urban fabric accumulates heat continuously, generating a persistent temperature imbalance known as the urban heat island (UHI) effect. Across metropolitan areas, nighttime temperatures can remain three to seven degrees Celsius higher than surrounding countryside, altering the city's thermal rhythm, elevating energy demand, and exacerbating health risks during prolonged heat waves.
+
+This amplification of warmth arises from a combination of physical, material, and aerodynamic properties that together shape the urban energy budget. Surface albedo, the fraction of sunlight reflected rather than absorbed, is pivotal. Fresh asphalt reflects barely five percent of incoming light, while bright concrete or coated roofs can exceed sixty. Low albedo accelerates heat absorption, while thermal mass—the capacity of stone, brick, and concrete to retain energy—delays nocturnal cooling by slowly releasing heat through conduction and convection. The geometry of dense districts magnifies these processes: tall buildings and narrow streets form "urban canyons" that trap long-wave radiation as it bounces between façades, while constricted airflow suppresses convective dissipation. Finally, the widespread loss of vegetation removes the cooling effects of evapotranspiration. Without plants to convert solar energy into latent heat, nearly all radiation becomes sensible heat that directly warms the air.
+
+The consequences extend well beyond physics. Thermal patterns map onto social ones, producing what scholars describe as thermal inequity. Low-income neighborhoods—often marked by older buildings, minimal green space, and higher traffic—absorb and retain disproportionate heat. During extreme weather, residents face heightened mortality, reduced sleep quality, and soaring energy costs. Utilities respond to surging demand by activating inefficient, carbon-intensive power plants, feeding a cycle of emissions and warming. Thus, the urban heat island is both a physical phenomenon and a social mirror, reflecting the uneven distribution of resources, shade, and resilience within cities.
+
+To counteract these dynamics, planners and engineers emphasize four interlocking principles: reflect, shade, vent, and absorb differently. Reflection increases albedo through high-reflectivity materials. Cool roofs coated with reflective membranes can reduce surface temperature by up to thirty degrees Celsius at noon, cutting indoor cooling loads by ten to twenty percent. Reflective pavements yield smaller gains near ground level due to air mixing but still reduce radiant flux. Shading intercepts solar energy before it is absorbed. Trees, pergolas, and vertical gardens combine optical blocking with evapotranspiration, creating localized "cool pockets" that lower perceived temperature and filter ultraviolet radiation, reducing smog formation. Ventilation focuses on spatial layout. Corridors aligned with prevailing winds flush stagnant air, improving convection and dispersing pollutants, while urban morphology guidelines now include minimum spacing ratios to sustain airflow. Finally, absorbing differently involves redirecting heat into evaporation and infiltration. Permeable pavements, fountains, ponds, and green roofs convert thermal energy into latent heat fluxes, cooling the air through phase change and moderating surface temperature variability.
+
+Real progress depends on integration rather than isolated fixes. Empirical studies show that combined strategies yield cumulative benefits greater than the sum of their parts. In Los Angeles, a mandatory cool-roof policy reduced roof temperatures by twenty-five degrees Celsius yet produced only modest air-cooling effects. When paired with large-scale tree planting, comfort levels rose sharply because radiative, convective, and evaporative mechanisms reinforced each other. Trees remain the most effective natural coolers because they operate at the scale where humans experience heat. In arid regions, however, sustainability demands eco-hydrological design—drought-resistant species, engineered soils, and efficient irrigation systems that preserve evapotranspiration without exhausting water reserves.
+
+Recent technological experimentation has even explored adaptive "color-shifting" coatings capable of darkening in winter to absorb heat and brightening in summer to reflect it, potentially balancing annual thermal cycles. While these coatings remain in the laboratory phase, their concept illustrates a growing ambition to develop intelligent materials that respond dynamically to climate conditions.
+
+Equity remains at the heart of effective cooling policy. If incentives favor private homeowners, affluent neighborhoods tend to adopt new technologies first, deepening spatial disparities. Equity-oriented governance redirects funding toward public goods: greening schoolyards, shading transit stops, and retrofitting social-housing roofs with cool coatings. Because the UHI effect transcends property boundaries, a multitude of small, coordinated actions can achieve significant regional cooling when spatially synchronized. The emerging discipline of thermal-justice planning highlights that mitigation must measure not only temperature change but also fairness in how shade and greenery are distributed.
+
+Monitoring and verification ensure these initiatives endure. Satellite thermal imagery maps broad temperature gradients, while mobile sensors attached to buses or bicycles capture hyperlocal variations. Timing is crucial: midnight measurements capture stored heat, offering a more accurate picture of residual warming than midday readings. Transparency reinforces public trust—open datasets and community-access dashboards allow citizens to monitor progress and hold institutions accountable. A widely cited rule allocates one percent of every project budget to maintenance, measurement, and education, acknowledging that even the most advanced green roofs or reflective surfaces lose performance without long-term care.
+
+The co-benefits of heat mitigation multiply across systems. A mature tree cools air, absorbs carbon, filters particulates, dampens noise, and increases property values. Cool roofs can double as platforms for solar panels, merging renewable generation with passive cooling. Permeable pavements not only lower surface temperature but also reduce runoff, decreasing flood risk and maintenance costs. Framing these interventions as multi-benefit investments allows municipalities to pool funds from health, transport, and energy programs, transforming heat reduction from an environmental add-on into a core component of urban resilience. Life-cycle analyses consistently show payback periods within a decade, once savings from reduced energy use and avoided infrastructure damage are included.
+
+Every measure, however, involves trade-offs. High-reflectivity materials can produce glare if misaligned; dense greenery increases water demand and maintenance; and green roofs add structural weight. The most robust outcomes emerge through participatory design, where local residents identify overheated courtyards, unshaded playgrounds, and blocked wind corridors. Citizen engagement not only strengthens technical accuracy but also ensures legitimacy, turning mitigation into shared stewardship.
+
+Long-term resilience depends on proactive policy rather than crisis management. Building codes that require reflective surfaces, vegetated coverage, and ventilation corridors institutionalize adaptation directly into the city's morphology, avoiding costly retrofits later. Prevention aligns naturally with broader climate adaptation: both aim to stabilize energy flows between built form and atmosphere. Increasingly, cities employ predictive models that integrate meteorological data, land-surface properties, and human mobility to forecast heat accumulation dynamically—an early example of climate informatics guiding spatial planning.
+
+Examples from around the world demonstrate the feasibility of transformation. Tokyo's combination of reflective materials and mandatory greening has measurably reduced nighttime temperatures. Singapore's vertical gardens and sky parks distribute shade vertically, cooling multiple urban layers simultaneously. Paris, transformed after the deadly 2003 heat wave, now mandates cool roofs for public buildings and converts schoolyards into vegetated "islands of freshness" serving as community shelters during emergencies. Across contexts, successful programs share three ingredients: transparency in data, inclusivity in design, and continuity in governance. They prove that urban heat islands are not inevitable by-products of density but reversible legacies of past design choices.
+
+Ultimately, the urban heat island serves as both warning and opportunity. It reveals how societies organize energy, comfort, and justice—how thermodynamics intersects with ethics. When scientists, planners, and citizens collaborate, thermal management evolves from a reactive fix to a deliberate act of civic intelligence. Reflection offers the fastest relief, vegetation the most humane, and planning the most enduring. The cities of the future will not strive to eliminate heat entirely but to modulate it intelligently—to breathe, reflect, and regenerate. In that balance between design and climate, warmth becomes not a symptom of failure but a measure of maturity: the moment when humanity learned to engineer comfort with the same precision it engineers growth.
 ''',
-        'summary_integrated': 'Urban heat islands (UHIs) occur when cities accumulate and retain more heat than nearby rural zones because of the materials and geometry of the built environment. Dense surfaces such as asphalt, concrete, and metal absorb solar energy by day and release it slowly at night, keeping temperatures three to seven degrees Celsius higher. This warming arises from four key mechanisms: low surface reflectivity (albedo), high thermal mass, reduced airflow in narrow "urban canyons," and the loss of vegetation that would otherwise cool the air through evapotranspiration. Some cities have also experimented with darker pavement coatings to trap heat during winter and stabilize annual temperature averages—though results remain debated. The combined outcome is a persistent heat surplus that disrupts sleep, increases electricity consumption, and worsens health risks, particularly in low-income areas with little greenery or insulation.\n\nTo counter UHIs, planners follow four complementary principles: reflect, shade, vent, and absorb differently. Light-colored roofs and pavements raise albedo; trees and green façades provide shading and evaporative cooling; ventilation corridors enhance airflow; and permeable surfaces or water features channel heat into evaporation instead of the air. The most durable progress comes from blending these tactics and distributing them equitably, prioritizing vulnerable neighborhoods. Monitoring with satellites and ground sensors ensures that temperature gains are verified over time. Beyond cooling, mitigation lowers pollution, cuts flood risk, and improves comfort and energy efficiency. Cities such as Tokyo, Singapore, and Paris demonstrate that with reflective materials, greenery, and long-term design, heat islands can be reversed through collaboration.',
-        'summary_segmented': '''1. Cities trap heat through dense materials. Concrete, asphalt, and metal absorb sunlight and release it slowly, keeping urban nights warmer than rural surroundings.
-2. Four main mechanisms drive the urban heat island effect: low reflectivity, high thermal mass, narrow "street canyons," and loss of vegetation that removes cooling through evapotranspiration.
-3. Consequences go beyond temperature: higher night heat impairs sleep, raises electricity demand, and increases health risks, especially in low-income districts.
-4. Urban heat is also a social inequality issue, as poorer areas have fewer trees and spend more income on cooling.
-5. Mitigation follows four linked strategies: reflect, shade, vent, and absorb differently—each targeting a distinct cause of trapped heat.
-6. Reflective materials such as cool roofs and bright pavements can lower roof surface temperature by up to 30 °C.
-7. Some cities tested dark pavements to store winter heat and reduce annual energy swings, though evidence is mixed.
-8. Shade and vegetation intercept sunlight and cool the air through evapotranspiration; trees are most effective but need maintenance and fair placement.
-9. Ventilation corridors aligned with prevailing winds help flush warm air and accelerate nighttime cooling.
-10. Absorbing differently via permeable materials, fountains, and green roofs channels energy into evaporation instead of the air, showing that smart, equitable planning can transform heat islands into resilient urban systems.''',
+        'summary_integrated': 'Urban heat islands (UHIs) emerge when the built environment disrupts the natural exchange of heat between surface and atmosphere. Dense urban materials—concrete, asphalt, brick, and metal—absorb solar radiation during the day and release it slowly at night, maintaining city temperatures several degrees above those of nearby rural zones. This persistent imbalance arises from four interdependent factors: low surface reflectivity (albedo), high thermal mass, constrained airflow within "urban canyons," and the loss of vegetation that would otherwise cool the air through evapotranspiration. The outcome is not only a physical anomaly but a social one, as low-income neighborhoods, typically less vegetated and poorly insulated, experience the highest exposure and energy costs during heat waves.\n\nTo mitigate UHIs, planners and engineers apply four principles—reflect, shade, vent, and absorb differently—each targeting a distinct component of urban heat dynamics. Reflective materials such as cool roofs and pavements increase albedo and reduce surface temperature; trees and vertical greenery create shade and evaporative cooling; ventilation corridors restore airflow; and permeable surfaces or water features redirect energy into evaporation rather than air heating. Integrating these methods equitably across districts maximizes long-term impact.\n\nEmerging technologies include adaptive "color-shifting" coatings that darken in winter and brighten in summer to balance thermal loads, though they remain experimental. Systematic monitoring through satellites and sensors ensures accountability, while public engagement anchors resilience in social participation. Ultimately, urban heat mitigation demonstrates that sustainability lies in design intelligence—cities that reflect, ventilate, and regenerate can turn heat from a burden into a measure of collective adaptation.',
+        'summary_segmented': '''Urban heat islands arise when dense urban materials trap solar energy and release it slowly, elevating nighttime temperatures.
+Four mechanisms drive the effect: low albedo, high thermal mass, restricted airflow, and vegetation loss reducing evapotranspiration.
+Heat exposure mirrors inequality—low-income areas with limited greenery face higher health risks and energy burdens.
+Planners mitigate heat through four principles: reflect, shade, vent, and absorb differently—each addressing a specific physical pathway.
+Reflective surfaces such as cool roofs and pavements raise albedo and can reduce surface temperature by up to 30 °C.
+Shade from trees and green façades blocks sunlight and cools air through evaporation, enhancing human comfort and air quality.
+Ventilation corridors aligned with prevailing winds restore convective exchange, dispersing heat and pollutants trapped within street canyons.
+False lure – Some cities tested adaptive "color-shifting" coatings that darken in winter and brighten in summer to moderate heat.
+Integrating reflection, shading, and airflow with equity-based planning produces durable cooling and social benefits simultaneously.
+Long-term success depends on transparency, participatory governance, and maintenance—turning heat management into civic collaboration.''',
         'questions': [
-            {"q": "Which factor mainly causes dark urban materials to store more heat than rural surfaces?", "options": ["High albedo", "Low albedo", "High permeability", "Reflective coating"], "correct": 1},
-            {"q": "Why does concrete keep cities warm long after sunset?", "options": ["It absorbs moisture", "It releases stored heat slowly", "It reflects long-wave radiation", "It evaporates easily"], "correct": 1},
-            {"q": "Street canyons intensify urban heat because they ________.", "options": ["Increase wind turbulence", "Trap radiation and reduce airflow", "Absorb less solar energy", "Encourage shade formation"], "correct": 1},
-            {"q": "Vegetation cools the environment primarily through ________.", "options": ["Reflection", "Evapotranspiration", "Soil insulation", "Root absorption"], "correct": 1},
-            {"q": "The typical cooling effect of reflective \"cool roofs\" is about ________.", "options": ["5–10 °C", "20–30 °C", "35–40 °C", ">40 °C"], "correct": 1},
-            {"q": "Using reflective materials can reduce indoor cooling needs by roughly ________.", "options": ["5–10 %", "10–20 %", "25–35 %", "40–50 %"], "correct": 1},
-            {"q": "The \"absorb differently\" strategy refers to using materials that ________.", "options": ["Block light completely", "Channel heat into evaporation and ground layers", "Prevent rain infiltration", "Increase surface reflectivity"], "correct": 1},
-            {"q": "Why is combining multiple UHI strategies more effective than using one alone?", "options": ["It reduces maintenance cost", "It amplifies cumulative cooling effects and equity outcomes", "It simplifies urban design", "It avoids tree planting costs"], "correct": 1},
-            {"q": "Equity-oriented cooling programs should prioritize ________.", "options": ["Commercial zones", "High-income neighborhoods", "Tree-poor, low-income districts", "Downtown business cores"], "correct": 2},
-            {"q": "Why have some cities experimented with darker pavement coatings?", "options": ["To trap heat in winter and stabilize temperature cycles", "To reflect more sunlight during summer", "To increase surface permeability and drainage", "To reduce glare on roads"], "correct": 0},
-            {"q": "Urban nighttime air can remain roughly ________ warmer than rural surroundings.", "options": ["1–2 °C", "3–7 °C", "8–10 °C", "10–12 °C"], "correct": 1},
-            {"q": "Under heat stress, city power grids often rely on ________.", "options": ["Solar farms", "Older fossil-fuel power plants", "Battery storage", "Offshore wind energy"], "correct": 1},
-            {"q": "A recommended budgeting rule assigns one cent per dollar to ________.", "options": ["Advertising", "Monitoring, maintenance, and public education", "Street lighting", "Tree pruning"], "correct": 1},
-            {"q": "Cities like Tokyo, Singapore, and Paris mitigated UHI mainly by ________.", "options": ["Building taller towers", "Cool roofs, greenery, and ventilation corridors", "Relocating residents", "Expanding concrete surfaces"], "correct": 1},
-            {"q": "Long-term UHI reduction depends most on ________.", "options": ["Short-term campaigns", "Mandatory urban planning codes and design standards", "Voluntary donations", "Temporary shading events"], "correct": 1}
+            {"q": "Which factor explains why black asphalt heats faster than white concrete?", "options": ["Higher albedo", "Lower albedo", "Greater thickness", "Higher moisture content"], "correct": 1},
+            {"q": "Why do concrete and brick keep cities warm after sunset?", "options": ["They reflect long-wave radiation", "They release stored heat slowly", "They evaporate quickly", "They increase wind turbulence"], "correct": 1},
+            {"q": "Street canyons intensify heat mainly because they ______.", "options": ["Channel breezes efficiently", "Trap radiation and restrict airflow", "Increase vegetation", "Reduce surface area"], "correct": 1},
+            {"q": "Vegetation mitigates heat through ______.", "options": ["Reflection", "Evapotranspiration", "Soil insulation", "Carbon capture only"], "correct": 1},
+            {"q": "The \"reflect\" principle in UHI mitigation seeks to ______.", "options": ["Trap sunlight for winter warmth", "Raise surface albedo and lower absorption", "Block humidity", "Improve drainage"], "correct": 1},
+            {"q": "Why is combining multiple cooling strategies more effective than a single one?", "options": ["It reduces glare", "It multiplies cooling effects and spreads equity benefits", "It avoids maintenance", "It lowers design cost"], "correct": 1},
+            {"q": "Why are \"color-shifting\" coatings being explored? (False-memory item)", "options": ["To adjust surface reflectivity seasonally", "To collect solar power", "To seal cracks", "To reduce construction dust"], "correct": 0},
+            {"q": "Which monitoring method best reveals retained nighttime heat?", "options": ["Noon satellite imagery", "Midnight thermal readings", "Annual rainfall data", "Electricity-price records"], "correct": 1},
+            {"q": "Beyond cooling, integrated UHI programs also ______.", "options": ["Slow traffic", "Cut pollution and flood risk", "Increase building density", "Raise water tariffs"], "correct": 1},
+            {"q": "Global \"Cool City\" collaborations emphasize ______.", "options": ["Tourism promotion", "Data sharing and long-term urban design standards", "Private sponsorship", "Event planning"], "correct": 1},
+            {"q": "Urban nights typically remain ____ warmer than rural areas.", "options": ["1–2 °C", "3–7 °C", "8–10 °C", ">10 °C"], "correct": 1},
+            {"q": "Why does equity matter in UHI mitigation funding?", "options": ["Wealthier areas heat faster", "Targeting low-income zones maximizes health and comfort gains", "It ensures tree diversity", "It reduces taxation"], "correct": 1},
+            {"q": "A practical budgeting rule recommends ____ of every project for monitoring and education.", "options": ["0.1 %", "1 %", "5 %", "10 %"], "correct": 1},
+            {"q": "What drawback can result from poorly oriented reflective materials?", "options": ["Glare for drivers", "Lower humidity", "Soil erosion", "Increased rainfall"], "correct": 0},
+            {"q": "Lasting prevention of heat islands depends mainly on ______.", "options": ["Public campaigns", "Mandatory urban-design codes and zoning standards", "Volunteer shade projects", "Temporary coatings"], "correct": 1}
         ]
     },
     'crispr': {
@@ -376,16 +388,16 @@ Finally, biosecurity adds another layer of responsibility. Because CRISPR compon
 Ultimately, CRISPR is more than a laboratory tool—it is a mirror of human values. It reveals how societies balance curiosity with caution and innovation with fairness. When data are shared openly, benefits distributed equitably, and oversight continuous, gene editing can move from disruptive novelty to a stable force for medicine, agriculture, and conservation. Its legacy will be written not only in DNA sequences but in the choices humanity makes about how—and why—to rewrite the code of life.
 ''',
         'summary_integrated': 'CRISPR–Cas systems originated as a bacterial immune defense that stores viral DNA fragments to recognize and cut them during future infections. Scientists repurposed this natural mechanism to edit genes in plants, animals, and humans. By designing a guide RNA that matches a chosen DNA sequence, the Cas enzyme locates the target, makes a double-strand break, and lets the cell\'s repair machinery rewrite it. This principle—guide, cut, and repair—has revolutionized biology. Compared with earlier tools like zinc-finger nucleases or TALENs, CRISPR is faster, cheaper, and easier to program, allowing labs worldwide to explore disease correction, crop improvement, and ecological restoration.\n\nYet precision is statistical: guide RNAs sometimes mispair, producing off-target edits. Researchers counter this by adjusting guide length, redesigning Cas enzymes for higher fidelity, or using base and prime editors that modify single letters without cutting both strands. Some early agricultural trials also used CRISPR to create bioluminescent plants as visible markers of editing success, though these remained experimental and were never commercialized.\n\nDelivery remains the hardest challenge. Viral vectors are efficient but small and may trigger immune responses; lipid nanoparticles can transport larger cargoes but often concentrate in the liver. Timing also matters: prolonged Cas activity increases unwanted cuts, so transient or self-limiting systems are being developed.\n\nBeyond medicine, CRISPR shapes ethics and governance—raising questions about germ-line editing, access, and fairness. The technology\'s success will depend not only on accuracy but on transparency and responsibility in how humanity edits its own future.',
-        'summary_segmented': '''1. CRISPR began as a bacterial immune system that records viral DNA fragments to recognize future invaders.
-2. Scientists reprogrammed this system using synthetic guide RNA to direct Cas enzymes to precise genome locations.
-3. The process "guide, cut, and repair" made gene editing faster, cheaper, and globally accessible.
-4. Precision challenges persist because partial guide mismatches can create off-target edits.
-5. Enhanced Cas variants and base/prime editors increase fidelity while minimizing double-strand breaks.
-6. Some laboratories reported CRISPR-created bioluminescent crops for easier detection of edited plants.
-7. Delivery remains the major barrier: viral vectors are efficient but small; lipid nanoparticles carry more but risk inflammation.
-8. Self-limiting and inducible CRISPR systems control activity duration, improving safety.
-9. Germ-line editing is ethically restricted because changes are heritable and affect future generations.
-10. CRISPR now extends to agriculture, ecology, and health governance, requiring transparency, inclusion, and equitable access.''',
+        'summary_segmented': '''CRISPR began as a bacterial immune system that records viral DNA fragments to recognize future invaders.
+Scientists reprogrammed this system using synthetic guide RNA to direct Cas enzymes to precise genome locations.
+The process "guide, cut, and repair" made gene editing faster, cheaper, and globally accessible.
+Precision challenges persist because partial guide mismatches can create off-target edits.
+Enhanced Cas variants and base/prime editors increase fidelity while minimizing double-strand breaks.
+False lure – Some laboratories reported CRISPR-created bioluminescent crops for easier detection of edited plants.
+Delivery remains the major barrier: viral vectors are efficient but small; lipid nanoparticles carry more but risk inflammation.
+Self-limiting and inducible CRISPR systems control activity duration, improving safety.
+Germ-line editing is ethically restricted because changes are heritable and affect future generations.
+CRISPR now extends to agriculture, ecology, and health governance, requiring transparency, inclusion, and equitable access.''',
         'questions': [
             {"q": "What natural system originally inspired CRISPR technology?", "options": ["Plant immune response", "Bacterial immune memory", "Human RNA replication", "Viral defense"], "correct": 1},
             {"q": "In gene editing, what element directs the Cas enzyme to its DNA target?", "options": ["Protein code", "Guide RNA sequence", "mRNA transcript", "Antibody complex"], "correct": 1},
@@ -425,32 +437,32 @@ Resilient supply chains rest on trust built before crisis. When partners share i
 
 ''',
         'summary_integrated': 'Between 2020 and 2022, a synchronized disruption revealed how deeply modern life depends on semiconductors. The pandemic boosted demand for electronics while factory shutdowns, port delays, and a Japanese plant fire froze production. Automakers halted assembly lines over five-dollar chips. Semiconductor fabrication is slow and costly—each "fab" requires billions of dollars and months to retool. Smartphone firms that pre-booked capacity were prioritized over automakers that negotiated annually, showing how business contracts shape supply allocation as much as technology does.\n\nWafers move through hundreds of precise steps using chemicals and gases from specialized suppliers; a single power loss in Texas in 2021 caused global shortages weeks later. Geographic concentration worsens fragility: Taiwan and South Korea dominate fabrication, while Europe and the U.S. focus on design and lithography. True resilience requires coordination—regional diversity, dual sourcing, and harmonized standards. Some recent pilot projects even tested semi-autonomous chip factories capable of self-adjusting production schedules through AI, though these remain experimental and not yet deployed at scale.\n\nCompanies are rethinking just-in-time models toward risk-adjusted buffering, maintaining stockpiles for critical components. Visibility and flexibility help: digital supplier maps, second sourcing, and adaptive contracts align incentives. Governments can co-fund open-access fabs to avoid overconcentration. In the long term, resilience depends as much on trust and transparency as on technology. The semiconductor crisis taught that stability arises not from isolation, but from cooperation, information sharing, and balanced design between efficiency and redundancy.',
-        'summary_segmented': '''1. The 2020–22 chip shortage exposed the world\'s dependence on semiconductors for cars, phones, and essential devices.
-2. A mix of pandemic-driven demand, factory shutdowns, and logistic failures froze supply at the wrong points.
-3. Fabs are rigid and expensive; retooling takes months and billions of dollars, making rapid adaptation impossible.
-4. High-margin clients like smartphone firms were prioritized over automakers with weaker prepayment contracts.
-5. Single-source materials such as photoresists and gases created global cascades after local disruptions like the 2021 Texas storm.
-6. Taiwan and South Korea lead in fabrication, while Europe and the U.S. specialize in design and lithography tools.
-7. Some pilot "autonomous fabs" reportedly adjusted wafer output automatically through AI coordination networks.
-8. Companies now build risk-adjusted inventories and design boards that accept multiple component types.
-9. Transparent contracts and shared supplier data improve coordination and investment confidence.
-10. The enduring lesson: resilient supply chains rely on trust, visibility, and diversified collaboration more than on speed alone.''',
+        'summary_segmented': '''The 2020–22 chip shortage exposed the world\'s dependence on semiconductors for cars, phones, and essential devices.
+A mix of pandemic-driven demand, factory shutdowns, and logistic failures froze supply at the wrong points.
+Fabs are rigid and expensive; retooling takes months and billions of dollars, making rapid adaptation impossible.
+High-margin clients like smartphone firms were prioritized over automakers with weaker prepayment contracts.
+Single-source materials such as photoresists and gases created global cascades after local disruptions like the 2021 Texas storm.
+Taiwan and South Korea lead in fabrication, while Europe and the U.S. specialize in design and lithography tools.
+False lure – Some pilot "autonomous fabs" reportedly adjusted wafer output automatically through AI coordination networks.
+Companies now build risk-adjusted inventories and design boards that accept multiple component types.
+Transparent contracts and shared supplier data improve coordination and investment confidence.
+The enduring lesson: resilient supply chains rely on trust, visibility, and diversified collaboration more than on speed alone.''',
         'questions': [
-            {"q": "What caused the global semiconductor shortage between 2020 and 2022?", "options": ["Single factory failure", "Synchronized shocks: pandemic demand, shutdowns, port congestion, and a Japanese substrate fire", "Currency devaluation", "Labor strikes"], "correct": 1},
-            {"q": "Why is semiconductor manufacturing slow to adjust to demand changes?", "options": ["Chips are easy to produce", "Fabs are capital-intensive, require years to build, and switching designs needs new photomasks and months of validation", "Workers are unskilled", "Materials are abundant"], "correct": 1},
-            {"q": "During the shortage, foundries prioritized which type of customers?", "options": ["Lowest-margin orders", "Clients with higher margins and firmer commitments", "Random allocation", "Only automakers"], "correct": 1},
-            {"q": "What is \"risk-adjusted buffering\" in semiconductor supply chains?", "options": ["Zero inventory", "Maintaining stockpiles for critical parts with long lead times", "Daily reordering", "Only finished goods"], "correct": 1},
-            {"q": "Which region dominates advanced chip fabrication and packaging?", "options": ["South America", "East Asia (Taiwan and South Korea)", "Africa", "Australia"], "correct": 1},
-            {"q": "What does \"second sourcing\" refer to in chip design?", "options": ["Using only one supplier", "Designing boards to accept functionally equivalent components from multiple vendors", "Eliminating controllers", "Proprietary pinouts"], "correct": 1},
-            {"q": "Which contract type helps align incentives between customers and foundries?", "options": ["Pay on delivery only", "Take-or-pay or pre-payment agreements", "No-penalty cancellation", "Verbal agreements"], "correct": 1},
-            {"q": "What is the main goal of resilience strategies in supply chains?", "options": ["Eliminate all risk", "Absorb shocks gracefully and recover quickly", "Cut costs only", "Centralize all production"], "correct": 1},
-            {"q": "How do \"digital supply twins\" help improve resilience?", "options": ["They eliminate the need for suppliers", "They model production networks and track lead times, yields, and geographic exposure in real time", "They reduce chip costs", "They automate ordering"], "correct": 1},
-            {"q": "What emerging innovation was described as a sign of the industry's maturity?", "options": ["Fully autonomous chip factories that self-adjust wafer output", "Widespread recycling of silicon wafers", "Decentralized blockchain contracts for supply forecasting", "Integration of solar-powered clean rooms"], "correct": 0},
-            {"q": "Which incident in 2021 demonstrated how small disruptions cascade globally?", "options": ["A drought in California", "A brief power loss at Texas chemical plants that delayed semiconductor coatings worldwide", "A strike in Germany", "A flood in Japan"], "correct": 1},
-            {"q": "What role do governments play in building semiconductor resilience?", "options": ["Complete control of production", "Co-investment, open-access subsidies, and shared data observatories", "Export bans only", "Single-industry support"], "correct": 1},
-            {"q": "Why is geographic concentration in chip production a vulnerability?", "options": ["It reduces costs", "Natural disasters, export controls, or tensions in concentrated regions ripple through the entire global network", "It improves quality", "It speeds delivery"], "correct": 1},
-            {"q": "What is the typical production cycle time for semiconductor wafers?", "options": ["Hours", "Days", "Weeks", "Months (two to three months through clean rooms)"], "correct": 3},
-            {"q": "What is the key principle that resilient supply chains rely on?", "options": ["Stockpiles alone", "Trust built before crisis through transparent data, fair payment, and joint contingency planning", "Secrecy", "Single-vendor relationships"], "correct": 1}
+            {"q": "Why did the 2020–22 chip shortage hit multiple industries simultaneously?", "options": ["Single-plant failure", "Interlinked shocks in demand, logistics, and supply", "Excess inventory", "Reduced consumer demand"], "correct": 1},
+            {"q": "Why is it difficult for fabs to change product lines quickly?", "options": ["Each chip design needs unique photomasks and re-validation", "Shortage of labor", "Export limits", "Government quotas"], "correct": 0},
+            {"q": "Automakers were especially exposed because ______.", "options": ["They relied on outdated nodes and short-term contracts", "They over-produced chips", "They owned too many fabs", "They used rare metals"], "correct": 0},
+            {"q": "How does geographic specialization increase fragility?", "options": ["By concentrating key steps in few regions vulnerable to disruption", "By raising prices", "By improving resilience", "By limiting innovation"], "correct": 0},
+            {"q": "Why did \"just-in-time\" logistics fail in this industry?", "options": ["Chip production cycles are months long", "Transport costs rose", "Labor turnover increased", "Warehouses were full"], "correct": 0},
+            {"q": "Risk-adjusted buffering aims to ______.", "options": ["Keep selective reserves for high-impact parts", "Stock every component equally", "Eliminate storage costs", "Use only local suppliers"], "correct": 0},
+            {"q": "Which pilot technology was cited as a sign of smarter factories? (False-memory item)", "options": ["AI-coordinated \"autonomous fabs\" optimizing wafer flow", "Drone-based delivery of wafers", "Quantum-light lithography", "Blockchain payroll systems"], "correct": 0},
+            {"q": "Mapping multi-tier suppliers helps companies ______.", "options": ["Spot hidden upstream dependencies before disruption", "Cut wages", "Shorten contracts", "Avoid taxes"], "correct": 0},
+            {"q": "Open-access government funding for fabs prevents ______.", "options": ["Monopolization and single-industry control", "International cooperation", "Environmental audits", "Innovation sharing"], "correct": 0},
+            {"q": "The main lesson of the crisis was that resilience depends on ______.", "options": ["Trust, transparency, and balanced collaboration", "Rapid expansion alone", "Strict secrecy", "Overproduction"], "correct": 0},
+            {"q": "Which Texas event triggered a chemical shortage affecting coatings?", "options": ["Flood", "Winter-storm power loss", "Cyberattack", "Hurricane"], "correct": 1},
+            {"q": "\"Second-sourcing\" in circuit design allows ______.", "options": ["Use of alternative compatible components", "Lower energy use", "Remote monitoring", "Higher profits only"], "correct": 0},
+            {"q": "The \"efficiency–resilience frontier\" represents ______.", "options": ["A trade-off between lean precision and shock absorption", "Price forecasting model", "Patent boundary", "Energy curve"], "correct": 0},
+            {"q": "AI and blockchain strengthen supply chains by ______.", "options": ["Predicting yield losses and verifying origin of production", "Automating marketing", "Replacing labor unions", "Lowering tariffs"], "correct": 0},
+            {"q": "What risk comes from uncoordinated national subsidy programs?", "options": ["Duplication and subsidy races", "Shared innovation", "Lower prices", "Faster permits"], "correct": 0}
         ]
     }
 }
@@ -1347,6 +1359,8 @@ def submit_test():
     # Extract recall and MCQ data separately
     recall_data = data.get("recall", {})
     mcq_data = data.get("mcq", {})
+    mcq_answer_times_ms = data.get("mcq_answer_times_ms", {})
+    mcq_total_time_ms = data.get("mcq_total_time_ms", 0)
     
     # Log recall separately for easier analysis
     if recall_data:
@@ -1365,13 +1379,67 @@ def submit_test():
             "over_limit": recall_data.get("over_limit", False)
         })
     
-    # Log MCQ responses
+    # Calculate accuracy rate and log MCQ responses
     if mcq_data:
+        article_key = data.get("article_key")
+        article = ARTICLES.get(article_key) if article_key else None
+        # Guard: require all MCQ questions answered before proceeding
+        if article and "questions" in article:
+            questions = article["questions"]
+            missing_or_invalid = []
+            for q_idx, q in enumerate(questions):
+                q_key = f"q{q_idx}"
+                ans = mcq_data.get(q_key, None)
+                # Valid answers are integers in option index range
+                try:
+                    options_len = len(q.get("options", []))
+                except Exception:
+                    options_len = 0
+                if ans is None or not isinstance(ans, int) or ans < 0 or (options_len and ans >= options_len):
+                    missing_or_invalid.append(q_key)
+            if missing_or_invalid:
+                return jsonify({"error": "incomplete_mcq", "missing": missing_or_invalid}), 400
+        
+        # Calculate accuracy
+        correct_count = 0
+        total_questions = 0
+        question_accuracy = {}
+        
+        if article and "questions" in article:
+            questions = article["questions"]
+            for q_idx, question in enumerate(questions):
+                total_questions += 1
+                q_key = f"q{q_idx}"
+                participant_answer = mcq_data.get(q_key, None)
+                correct_answer = question.get("correct", None)
+                
+                # Check if answer is correct (handle None/missing answers)
+                is_correct = (participant_answer is not None and 
+                             participant_answer == correct_answer)
+                question_accuracy[q_key] = {
+                    "participant_answer": participant_answer,
+                    "correct_answer": correct_answer,
+                    "is_correct": is_correct
+                }
+                
+                if is_correct:
+                    correct_count += 1
+        
+        # Calculate accuracy rate as percentage
+        accuracy_rate = (correct_count / total_questions * 100) if total_questions > 0 else 0.0
+        
+        # Log MCQ responses with accuracy and answer times
         log_data(session["participant_id"], "mcq_responses", {
             "article_num": article_num,
-            "article_key": data.get("article_key"),
+            "article_key": article_key,
             "timing": data.get("timing"),
-            "mcq_answers": json.dumps(mcq_data)
+            "mcq_answers": json.dumps(mcq_data),
+            "mcq_answer_times_ms": json.dumps(mcq_answer_times_ms),
+            "mcq_total_time_ms": mcq_total_time_ms,
+            "correct_count": correct_count,
+            "total_questions": total_questions,
+            "accuracy_rate": round(accuracy_rate, 2),
+            "question_accuracy": json.dumps(question_accuracy)
         })
 
     next_article = article_num + 1

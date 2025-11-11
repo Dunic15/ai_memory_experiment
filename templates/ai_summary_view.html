@@ -133,9 +133,11 @@
                 const trimmed = line.trim();
                 if (trimmed) {
                     const li = document.createElement('li');
-                    // Remove bullet markers if present (handle both - and •)
-                    // Try multiple patterns to catch different formats
-                    let cleaned = trimmed.replace(/^[-•]\s+/, '');
+                    // Remove bullet markers, numbers, and other list markers
+                    // Remove numbered lists (e.g., "1. ", "2. ", "10. ")
+                    let cleaned = trimmed.replace(/^\d+\.\s+/, '');
+                    // Remove bullet markers (handle both - and •)
+                    cleaned = cleaned.replace(/^[-•]\s+/, '');
                     cleaned = cleaned.replace(/^[-•]\s*/, '');
                     li.textContent = cleaned.trim();
                     ul.appendChild(li);
@@ -160,38 +162,38 @@
             } else {
                 // No paragraph breaks - split into sentences and group into paragraphs
                 // Split by sentence endings (period, exclamation, question mark) followed by space
-                const sentences = summaryText.match(/[^.!?]+[.!?]+(\s+|$)/g) || [summaryText];
-                let currentParagraph = '';
+            const sentences = summaryText.match(/[^.!?]+[.!?]+(\s+|$)/g) || [summaryText];
+            let currentParagraph = '';
                 let sentenceCount = 0;
                 
                 sentences.forEach((sentence) => {
-                    const trimmed = sentence.trim();
-                    if (!trimmed) return;
-                    
-                    currentParagraph += trimmed + ' ';
+                const trimmed = sentence.trim();
+                if (!trimmed) return;
+                
+                currentParagraph += trimmed + ' ';
                     sentenceCount++;
-                    
+                
                     // Create a new paragraph every 3-4 sentences or at natural breaks
                     if (sentenceCount >= 3 && (trimmed.endsWith('.') || trimmed.endsWith('!') || trimmed.endsWith('?'))) {
-                        const p = document.createElement('p');
-                        p.textContent = currentParagraph.trim();
-                        p.style.marginBottom = '20px';
-                        p.style.lineHeight = '1.8';
-                        p.style.color = '#333';
-                        summaryContent.appendChild(p);
-                        currentParagraph = '';
-                        sentenceCount = 0;
-                    }
-                });
-                
-                // Add any remaining text as a final paragraph
-                if (currentParagraph.trim()) {
                     const p = document.createElement('p');
                     p.textContent = currentParagraph.trim();
                     p.style.marginBottom = '20px';
+                        p.style.lineHeight = '1.8';
+                        p.style.color = '#333';
+                    summaryContent.appendChild(p);
+                    currentParagraph = '';
+                        sentenceCount = 0;
+                }
+            });
+            
+            // Add any remaining text as a final paragraph
+            if (currentParagraph.trim()) {
+                const p = document.createElement('p');
+                p.textContent = currentParagraph.trim();
+                p.style.marginBottom = '20px';
                     p.style.lineHeight = '1.8';
                     p.style.color = '#333';
-                    summaryContent.appendChild(p);
+                summaryContent.appendChild(p);
                 }
             }
             

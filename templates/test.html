@@ -438,7 +438,7 @@
                     {% for opt_idx in range(q.options|length) %}
                     {% set opt = q.options[opt_idx] %}
                     <label>
-                        <input type="radio" name="q{{ q_idx }}" value="{{ opt_idx }}" data-question="{{ q_idx }}" data-option="{{ opt_idx }}" required>
+                        <input type="radio" name="q{{ q_idx }}" value="{{ opt_idx }}" data-question="{{ q_idx }}" data-option="{{ opt_idx }}" required onchange="trackMCQAnswer({{ q_idx }})">
                         {{ opt }}
                     </label>
                     {% endfor %}
@@ -446,7 +446,7 @@
             </div>
             {% endfor %}
 
-            <button onclick="submitTest()">{{ tr("Submit Test") }} →</button>
+            <button id="submitMcqBtn" onclick="submitTest()" disabled>{{ tr("Submit Test") }} →</button>
         </div>
     </div>
 
@@ -547,6 +547,10 @@
         let mcqStartTime = null;
         const MCQ_TIME_MS = 7 * 60 * 1000; // 7 minutes for MCQ
         
+        // Track answer times for each MCQ question
+        let mcqAnswerTimes = {}; // {q0: timestamp, q1: timestamp, ...}
+        let mcqAnswerTimesMs = {}; // {q0: milliseconds from MCQ start, q1: milliseconds, ...}
+        
         let pasteAttempts = 0;
         let recallData = {
             start_time: new Date().toISOString(),
@@ -637,7 +641,23 @@
             }
             mcqStartTime = Date.now();
             startMCQTimer();
+            // Initialize MCQ submit button state
+            updateMCQButtonState();
             window.scrollTo(0, 0);
+        }
+        
+        // Track when a MCQ question is answered
+        function trackMCQAnswer(qIdx) {
+            if (mcqStartTime === null) {
+                // MCQ hasn't started yet, shouldn't happen but guard against it
+                return;
+            }
+            const answerTime = Date.now();
+            const timeFromStart = answerTime - mcqStartTime;
+            mcqAnswerTimes['q' + qIdx] = answerTime;
+            mcqAnswerTimesMs['q' + qIdx] = timeFromStart;
+            // Update submit button state after each answer
+            updateMCQButtonState();
         }
         
         // MCQ timer
@@ -678,6 +698,19 @@
                 setTimeout(updateMCQTimer, 100);
             }
             updateMCQTimer();
+        }
+
+        // Enable MCQ submit only when all questions are answered
+        function updateMCQButtonState() {
+            const submitBtn = document.getElementById('submitMcqBtn');
+            if (!submitBtn) return;
+            let allAnswered = true;
+            {% for q_idx in range(questions|length) %}
+            if (!document.querySelector('input[name="q{{ q_idx }}"]:checked')) {
+                allAnswered = false;
+            }
+            {% endfor %}
+            submitBtn.disabled = !allAnswered;
         }
 
         function getAllBulletPoints() {
@@ -834,13 +867,25 @@
                 mcqData['q{{ q_idx }}'] = parseInt(q{{ q_idx }}.value);
             }
             {% endfor %}
-            
-            // If not all answered, use default value (0) for unanswered questions
-            {% for q_idx in range(questions|length) %}
-            if (!mcqData.hasOwnProperty('q{{ q_idx }}')) {
-                mcqData['q{{ q_idx }}'] = 0;
+
+            // Block submission if not all answered
+            if (!allAnswered) {
+                // Scroll to first unanswered question
+                {% for q_idx in range(questions|length) %}
+                if (!document.querySelector('input[name="q{{ q_idx }}"]:checked')) {
+                    const target = document.querySelector('.question[data-question-index="{{ q_idx }}"]');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+                {% endfor %}
+                alert('{{ tr("Please answer all questions before continuing.") }}');
+                updateMCQButtonState();
+                return;
             }
-            {% endfor %}
+            
+            // Calculate total MCQ time if MCQ section was shown
+            const totalMCQTime = mcqStartTime ? (Date.now() - mcqStartTime) : 0;
             
             fetch('/submit_test', {
                 method: 'POST',
@@ -848,12 +893,19 @@
                 body: JSON.stringify({
                     article_num: articleNum,
                     recall: recallData,
-                    mcq: mcqData
+                    mcq: mcqData,
+                    mcq_answer_times_ms: mcqAnswerTimesMs,
+                    mcq_total_time_ms: totalMCQTime
                 })
             })
             .then(r => r.json())
             .then(data => {
-                window.location.href = data.redirect;
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else if (data.error === 'incomplete_mcq') {
+                    alert('{{ tr("Please answer all questions before continuing.") }}');
+                    updateMCQButtonState();
+                }
             })
             .catch(err => {
                 console.error('Submit error:', err);

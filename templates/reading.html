@@ -33,9 +33,12 @@
         .post-reading-content h2{color:#667eea;margin-bottom:20px}
         .post-reading-summary{font-size:14pt;line-height:1.6;margin-bottom:30px;padding:30px;background:#f8f9fa;border-radius:8px}
         button{padding:14px 30px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:transform .2s}
-        button:hover{transform:translateY(-2px)}
+        /* Avoid breaking existing transforms (like centering on .continue-btn) */
+        button:not(.continue-btn):hover{transform:translateY(-2px)}
         .summary-toggle{position:fixed;bottom:30px;right:30px;padding:15px 25px;background:#667eea;color:#fff;border:none;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px rgba(102,126,234,.4);z-index:50}
         .continue-btn{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);padding:16px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:18px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(102,126,234,.4);z-index:50}
+        /* Preserve horizontal centering on hover */
+        .continue-btn:hover{transform:translateX(-50%) translateY(-2px)}
         /* --- TEST MODE floating skip for ALL timings --- */
         .test-skip{position:fixed;bottom:30px;right:30px;margin-right:140px;padding:12px 18px;border-radius:50px;background:#999;color:#fff;font-size:13px;font-weight:600;z-index:60;border:none;cursor:pointer}
         @media (max-width:1200px){
@@ -96,16 +99,37 @@
                     <h3 style="color:#667eea;font-size:24px;margin:0;">🤖 {{ tr("AI Summary") }}</h3>
                     <button onclick="closeSummaryOverlay()" style="background:#e0e0e0;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:600;">{{ tr("Close") }}</button>
                 </div>
-                <div class="summary-text">
+                <div class="summary-text" id="summaryTextContainer">
                   {% if structure == 'segmented' %}
-                    <ul class="summary-list">
+                    <ul class="summary-list" id="segmentedSummaryList">
                       {% for line in summary.splitlines() %}
                         {% set t = line.strip() %}
-                        {% if t %}<li>{{ t.lstrip('•-').strip() }}</li>{% endif %}
+                        {% if t %}<li data-line="{{ t }}">{{ t.lstrip('•-').strip() }}</li>{% endif %}
                       {% endfor %}
                     </ul>
+                    <script>
+                      // Remove numbers from segmented summary bullets
+                      document.addEventListener('DOMContentLoaded', function() {
+                        const listItems = document.querySelectorAll('#segmentedSummaryList li');
+                        listItems.forEach(function(li) {
+                          let text = li.getAttribute('data-line') || li.textContent;
+                          // Remove numbered list markers (e.g., "1. ", "2. ", "10. ")
+                          text = text.replace(/^\d+\.\s+/, '');
+                          // Remove bullet markers
+                          text = text.replace(/^[-•]\s*/, '').trim();
+                          li.textContent = text;
+                        });
+                      });
+                    </script>
                   {% else %}
-                    <p>{{ summary }}</p>
+                    {# Integrated: display as paragraphs #}
+                    <div id="integratedSummaryParagraphs">
+                      {% for paragraph in summary.split('\n\n') %}
+                        {% if paragraph.strip() %}
+                          <p style="margin-bottom: 20px; line-height: 1.8; color: #333;">{{ paragraph.strip() }}</p>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
                   {% endif %}
                 </div>
             </div>
@@ -135,6 +159,7 @@
         const articleNum = {{ article_num }};
         let startTime = Date.now();
         let readingTime = 0, summaryViewTime = 0, summaryViews = 0, scrollDepth = 0;
+        let summaryOverlayStartTime = null; // Track when summary overlay is opened (synchronous condition)
         const timeLimit = timing === 'synchronous' ? 15 * 60 * 1000 : 12 * 60 * 1000;  // 15 min for synchronous, 12 min for others
         const hardCap  = timing === 'synchronous' ? 15 * 60 * 1000 : 12 * 60 * 1000;
         const preReadingSummaryTime = 3 * 60 * 1000; // 3 minutes for pre-reading summary
@@ -226,6 +251,16 @@
           window.closeSummaryOverlay = function(){
             overlay.style.display = 'none';
             btn.style.display = 'inline-block';
+            // Track summary viewing time and close event
+            if (summaryOverlayStartTime !== null) {
+              summaryViewTime += Date.now() - summaryOverlayStartTime;
+              summaryOverlayStartTime = null;
+              // Log summary close event
+              logBehavior('summary_overlay_closed', {
+                summaryViews: summaryViews,
+                currentSummaryViewTime: summaryViewTime
+              });
+            }
             // Maintain scroll position when closing
             const savedScrollY = window.scrollY || 0;
             setTimeout(() => {
@@ -234,6 +269,13 @@
           };
 
           btn.addEventListener('click', () => {
+            // Track summary open event - increment counter
+            summaryViews++;
+            summaryOverlayStartTime = Date.now();
+            // Log summary open event
+            logBehavior('summary_overlay_opened', {
+              summaryViews: summaryViews
+            });
             // Save current scroll position
             const savedScrollY = window.scrollY;
             overlay.style.display = 'block';
@@ -288,6 +330,12 @@
             clearInterval(timerInterval);
             const pre = document.getElementById('preReadingOverlay');
             const post = document.getElementById('postReadingOverlay');
+
+            // If summary overlay is still open, add remaining time to summaryViewTime
+            if (summaryOverlayStartTime !== null) {
+                summaryViewTime += Date.now() - summaryOverlayStartTime;
+                summaryOverlayStartTime = null;
+            }
 
             // Log reading
             readingTime = Date.now() - startTime;
