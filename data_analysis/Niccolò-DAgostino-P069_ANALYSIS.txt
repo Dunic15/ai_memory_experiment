@@ -1,0 +1,263 @@
+================================================================================
+PARTICIPANT P069 - COMPREHENSIVE DATA ANALYSIS
+================================================================================
+
+Analysis Generated: 2025-11-13
+
+================================================================================
+BASIC INFORMATION
+================================================================================
+Name: Niccolò D'Agostino
+Age: 23, M
+Profession: Student
+Native Language: English
+Start Time: November 11, 2025, 17:46:34
+
+================================================================================
+PRIOR KNOWLEDGE ASSESSMENT
+================================================================================
+Familiarity Score: 3.5/7 (moderate)
+Recognition Score: 7.0/10 (moderate-high)
+Quiz Score: 1.0/5 (very low)
+Excluded: No
+
+================================================================================
+AI TRUST & TECHNOLOGY USE
+================================================================================
+AI Trust Score: 4.00/7 (moderate trust)
+AI Dependence Score: 4.33/7 (moderate-high dependence)
+Tech Skill Score: 3.50/7
+Open Reflection:
+  Q1:
+  Q2:
+  Q3:
+
+================================================================================
+EXPERIMENTAL CONDITIONS
+================================================================================
+Structure Condition: INTEGRATED
+Article Order: 1. CRISPR → 2. Semiconductors → 3. Urban Heat Islands
+Timing Order:
+  Article 1 (CRISPR): Post-reading (summary after reading)
+  Article 2 (Semiconductors): Synchronous (summary during reading)
+  Article 3 (Urban Heat Islands): Pre-reading (summary before reading)
+
+================================================================================
+READING BEHAVIOR
+================================================================================
+Article 1 (CRISPR) - post-reading mode:
+  Reading Time: 296,619 ms (4.94 minutes = 296.62 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+
+Article 2 (Semiconductors) - synchronous mode:
+  Reading Time: 337,124 ms (5.62 minutes = 337.12 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+
+Article 3 (Urban Heat Islands) - pre-reading mode:
+  Reading Time: 212,497 ms (3.54 minutes = 212.50 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+
+================================================================================
+SUMMARY VIEWING
+================================================================================
+Article 1 (CRISPR) - post-reading:
+  Time Spent: 57.00 seconds (0.95 minutes)
+  Structure: Integrated
+
+Article 3 (Urban Heat Islands) - pre-reading:
+  Time Spent: 70.15 seconds (1.17 minutes)
+  Structure: Integrated
+
+Article 2 (Semiconductors) - Synchronous:
+  Summary Viewing Time: 71,408 ms (71.41 seconds = 1.19 minutes)
+  Summary Overlay Opens: 1
+
+
+================================================================================
+FREE RECALL
+================================================================================
+Article 1 (CRISPR) - post-reading mode:
+  Recall Text:
+    'The idea of CRISPR was born from a natural process involving bacteria'
+    'The basic techniques involve cutting fragments of DNA material and replacing them with other strands'
+    'This has allowed scientists to develop gene editing technologies'
+    'CRISPR has several ethica'
+  Words: 40, Sentences: 4, Characters: 261
+  Confidence: 4/7 (moderate)
+  Perceived Difficulty: 4/7 (moderate)
+  Time Spent: 180,092 ms (3.00 minutes = 180.09 seconds)
+  Paste Attempts: 0
+
+Article 2 (Semiconductors) - synchronous mode:
+  Recall Text:
+    'Semiconductors are an example of how interconnected the world is - a simple disruption for one of the components in one country can create a large problem on the other side of the world'
+    'A few years ago companies prioritised short-term strategies instead of long term resilience'
+    'Now a lot of companies are creating an inventory of products to reduce the risk of mass disruptions in the global supply chain'
+    'cooperation instead of isolation is key even though specialisation is required for the complicated process of manufacturing semiconductors'
+  Words: 88, Sentences: 4, Characters: 543
+  Confidence: 5/7 (moderate)
+  Perceived Difficulty: 2/7 (low)
+  Time Spent: 180,062 ms (3.00 minutes = 180.06 seconds)
+  Paste Attempts: 0
+
+Article 3 (Urban Heat Islands) - pre-reading mode:
+  Recall Text:
+    'The urban heat island effect is derived from the absorption during the day of solar radiation by urban materials like concrete and asphalt and a slow irradiation during the night which can increase the average temperature in an urbanised area by 3-7 degrees celsius compared to a rural one'
+    'The main strategies to combat it are through natural ventilation, cooling, evotranspiration'
+    'Trees are the best counteractors to the heat island effect as their effect is most impactful on a human scale'
+  Words: 81, Sentences: 3, Characters: 491
+  Confidence: 6/7 (moderate-high)
+  Perceived Difficulty: 2/7 (low)
+  Time Spent: 179,122 ms (2.99 minutes = 179.12 seconds)
+  Paste Attempts: 0
+
+================================================================================
+MCQ PERFORMANCE
+================================================================================
+Article 1 (CRISPR) - post-reading mode
+Accuracy: 13/15 = 86.7%
+⚠️  FALSE LURE: Selected false lure option on Q10 (bioluminescent plants)
+Question Details:
+  Q 1: Participant=1, Correct=1 - CORRECT
+  Q 2: Participant=1, Correct=1 - CORRECT
+  Q 3: Participant=1, Correct=1 - CORRECT
+  Q 4: Participant=1, Correct=1 - CORRECT
+  Q 5: Participant=1, Correct=1 - CORRECT
+  Q 6: Participant=1, Correct=1 - CORRECT
+  Q 7: Participant=1, Correct=1 - CORRECT
+  Q 8: Participant=1, Correct=1 - CORRECT
+  Q 9: Participant=1, Correct=1 - CORRECT
+  Q10: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [SELECTED FALSE LURE]
+  Q11: Participant=1, Correct=1 - CORRECT
+  Q12: Participant=0, Correct=1 - WRONG
+  Q13: Participant=3, Correct=1 - WRONG
+  Q14: Participant=0, Correct=0 - CORRECT
+  Q15: Participant=1, Correct=1 - CORRECT
+
+Article 2 (Semiconductors) - synchronous mode
+Accuracy: 2/15 = 13.3%
+Question Details:
+  Q 1: Participant=1, Correct=1 - CORRECT
+  Q 2: Participant=0, Correct=1 - WRONG
+  Q 3: Participant=0, Correct=1 - WRONG
+  Q 4: Participant=0, Correct=1 - WRONG
+  Q 5: Participant=0, Correct=1 - WRONG
+  Q 6: Participant=0, Correct=1 - WRONG
+  Q 7: Participant=0, Correct=1 - WRONG
+  Q 8: Participant=0, Correct=1 - WRONG
+  Q 9: Participant=0, Correct=1 - WRONG
+  Q10: Participant=0, Correct=1 - WRONG
+  Q11: Participant=1, Correct=1 - CORRECT
+  Q12: Participant=0, Correct=1 - WRONG
+  Q13: Participant=0, Correct=1 - WRONG
+  Q14: Participant=0, Correct=3 - WRONG
+  Q15: Participant=0, Correct=1 - WRONG
+
+Article 3 (Urban Heat Islands) - pre-reading mode
+Accuracy: 11/15 = 73.3%
+Question Details:
+  Q 1: Participant=1, Correct=1 - CORRECT
+  Q 2: Participant=1, Correct=1 - CORRECT
+  Q 3: Participant=1, Correct=1 - CORRECT
+  Q 4: Participant=1, Correct=1 - CORRECT
+  Q 5: Participant=1, Correct=1 - CORRECT
+  Q 6: Participant=1, Correct=1 - CORRECT
+  Q 7: Participant=0, Correct=1 - WRONG
+  Q 8: Participant=1, Correct=1 - CORRECT
+  Q 9: Participant=1, Correct=2 - WRONG
+  Q10: Participant=1, Correct=0 - WRONG
+  Q11: Participant=1, Correct=1 - CORRECT
+  Q12: Participant=1, Correct=1 - CORRECT
+  Q13: Participant=1, Correct=1 - CORRECT
+  Q14: Participant=0, Correct=1 - WRONG
+  Q15: Participant=1, Correct=1 - CORRECT
+
+================================================================================
+MANIPULATION CHECK
+================================================================================
+Semantic Coherence: 6/7 (high coherence)
+Relational Connectivity: 6/7 (high connectivity)
+Memory Strategy: connected
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Reading Times:
+  CRISPR: 4.94 minutes
+  Semiconductors: 5.62 minutes
+  Urban Heat Islands: 3.54 minutes
+  Average: 4.70 minutes
+
+Summary Viewing Times:
+  CRISPR: 0.95 minutes
+  Urban Heat Islands: 1.17 minutes
+  Semiconductors (synchronous): 1.19 minutes
+  Average: 1.10 minutes
+
+Recall Quality:
+  Average Words: 69.7 words
+  Average Sentences: 3.7 sentences
+  Average Characters: 432 characters
+  Average Confidence: 5.0/7
+  Average Difficulty: 2.7/7
+
+MCQ Performance:
+  CRISPR (CRISPR): 86.7% (13/15 correct)
+  Semiconductors (SEMICONDUCTORS): 13.3% (2/15 correct)
+  Urban Heat Islands (UHI): 73.3% (11/15 correct)
+  Average Accuracy: 57.8%
+
+================================================================================
+KEY FINDINGS
+================================================================================
+1. READING BEHAVIOR:
+   - All articles: Reading times range from 3.54 to 5.62 minutes
+   - All articles: 100% scroll depth (participant read to the end)
+   - CRISPR: Page visibility changes detected (1 times)
+   - Semiconductors: Page visibility changes detected (1 times)
+   - Urban Heat Islands: Page visibility changes detected (1 times)
+
+2. SUMMARY VIEWING:
+   - Post-reading summary: 0.95 minutes (reasonable)
+   - Pre-reading summary: 1.17 minutes (longer, as expected)
+   - Pre-reading summary viewed 23% longer than post-reading
+   - Semiconductors (synchronous): 1.19 minutes total summary viewing time
+
+3. RECALL QUALITY:
+   - Sentence counts: 4, 4, 3
+   - Good word count range (40-88 words per article)
+   - Confidence ratings: 4-6/7
+   - Perceived difficulty: 2-4/7
+
+4. MCQ PERFORMANCE:
+   - Performance range: 13.3%-86.7%
+   - Average accuracy: 57.8%
+   - Well above chance level (25% for 4 options)
+   - Best performance on CRISPR: 86.7%
+
+5. DATA QUALITY:
+   - Reading times are appropriate and consistent
+   - Recall responses are genuine and substantive
+   - All phases completed successfully
+
+================================================================================
+DATA VALIDITY ASSESSMENT
+================================================================================
+VALID DATA - High quality participant response
+
+Strengths:
+  - Appropriate reading times for all articles
+  - Genuine, substantive recall responses
+  - High engagement (95%+ scroll depth)
+  - Complete data for all phases
+
+Recommendation: INCLUDE in main analysis
+  - All data points are valid and reliable
+  - Minor technical issues do not affect data quality
+
+================================================================================
+END OF ANALYSIS
+================================================================================

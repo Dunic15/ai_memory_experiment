@@ -1,0 +1,253 @@
+================================================================================
+PARTICIPANT P064 — COMPREHENSIVE DATA ANALYSIS (CLEAN FORMAT)
+================================================================================
+Analysis Generated: 2025-11-13
+
+================================================================================
+BASIC INFORMATION
+================================================================================
+Name: John Powell
+Age: 23, M
+Profession: Student
+Native Language: English
+Start Time: November 10, 2025, 18:11:24
+
+================================================================================
+PRIOR KNOWLEDGE ASSESSMENT
+================================================================================
+Familiarity Score: 1.2/7 (very low)
+Recognition Score: 1.0/10 (very low)
+Quiz Score: 0.8/5 (very low)
+Excluded: No
+
+================================================================================
+AI TRUST & TECHNOLOGY USE
+================================================================================
+AI Trust Score: 5.33/7 (moderate–high trust)
+AI Dependence Score: 3.00/7 (moderate dependence)
+Tech Skill Score: 7.00/7 (maximum — expert level)
+Open Reflection:
+  Q1 (Frequency): Daily
+  Q2 (Tools): ChatGPT, Claude, Cursor
+  Q3 (Use cases): Information searching, problem solving, data analysis, understanding context, university tasks
+
+================================================================================
+EXPERIMENTAL CONDITIONS
+================================================================================
+Structure Condition: SEGMENTED (bullet points)
+Article Order: 1. CRISPR → 2. Semiconductors → 3. Urban Heat Islands
+Timing Order:
+  • Article 1 (CRISPR): Post-reading (summary after reading)
+  • Article 2 (Semiconductors): Pre-reading (summary before reading)
+  • Article 3 (Urban Heat Islands): Synchronous (summary during reading)
+
+================================================================================
+READING BEHAVIOR
+================================================================================
+Article 1 (CRISPR) — Post-reading:
+  Reading Time: 513,771 ms (8.56 minutes = 513.77 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1
+
+Article 2 (Semiconductors) — Pre-reading:
+  Reading Time: 538,720 ms (8.98 minutes = 538.72 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1
+  Note: Two reading_complete entries logged (538,153 ms and 538,720 ms)
+
+Article 3 (Urban Heat Islands) — Synchronous:
+  Reading Time: 406,222 ms (6.77 minutes = 406.22 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 3
+
+================================================================================
+SUMMARY VIEWING
+================================================================================
+Article 1 (CRISPR) — Post-reading:
+  Time Spent: 51.43 seconds (0.86 minutes)
+  Structure: Segmented
+
+Article 2 (Semiconductors) — Pre-reading:
+  Time Spent: 86.77 seconds (1.45 minutes)
+  Structure: Segmented
+
+Article 3 (Urban Heat Islands) — Synchronous:
+  Summary shown during reading (no separate viewing time)
+
+================================================================================
+FREE RECALL
+================================================================================
+Article 1 (CRISPR) — Post-reading:
+  Recall Text:
+    "CRISPR was inspired by bacteria reproduction and human body"
+    "It can revolutionize many sectors from agriculture, biotechnology and medicine"
+    "It has many risks, many that are not reversible and also ethical problems"
+  Words: 34, Sentences: 3, Characters: 213
+  Confidence: 7/7 (maximum)
+  Perceived Difficulty: 6/7 (moderate–high)
+  Time Spent: 180,067 ms (3.00 minutes = 180.07 seconds)
+  Paste Attempts: 2
+  Note: 3 identical recall responses logged (likely duplicate submissions)
+
+Article 2 (Semiconductors) — Pre-reading:
+  Recall Text:
+    "Semiconductor are part of many sectors and everyone understood their importance after the crisis of 2020–2022"
+    "The production was ruled by just-in-time method but then it changed"
+    "The production is an interconnection of different countries and players from all over the world"
+  Words: 44, Sentences: 3, Characters: 278
+  Confidence: 5/7 (moderate)
+  Perceived Difficulty: 6/7 (moderate–high)
+  Time Spent: 178,339 ms (2.97 minutes = 178.34 seconds)
+  Paste Attempts: 0
+
+Article 3 (Urban Heat Islands) — Synchronous:
+  Recall Text:
+    "Urban heat is a major problem especially related to lower income neighbourhood"
+    "The materials influence a lot urban heat but trees are the best cooling system"
+    "Urban heat is influenced by the urban planning; a cooperation between engineers and architects would help a lot"
+  Words: 44, Sentences: 3, Characters: 268
+  Confidence: 7/7 (maximum)
+  Perceived Difficulty: 5/7 (moderate)
+  Time Spent: 180,082 ms (3.00 minutes = 180.08 seconds)
+  Paste Attempts: 0
+
+================================================================================
+MCQ PERFORMANCE
+================================================================================
+Article 1 (CRISPR) — Post-reading:
+  Accuracy: 10/15 = 66.7%
+  FALSE LURE: Did NOT select false lure option on Q10
+  Question Details:
+    Q1: Participant=3, Correct=1 — WRONG
+    Q2: Participant=1, Correct=1 — CORRECT
+    Q3: Participant=1, Correct=1 — CORRECT
+    Q4: Participant=2, Correct=1 — WRONG
+    Q5: Participant=1, Correct=1 — CORRECT
+    Q6: Participant=1, Correct=1 — CORRECT
+    Q7: Participant=1, Correct=1 — CORRECT
+    Q8: Participant=1, Correct=1 — CORRECT
+    Q9: Participant=1, Correct=1 — CORRECT
+    Q10: Participant=0, Correct=1 — WRONG [FALSE LURE Q]
+    Q11: Participant=1, Correct=1 — CORRECT
+    Q12: Participant=3, Correct=1 — WRONG
+    Q13: Participant=3, Correct=1 — WRONG
+    Q14: Participant=0, Correct=0 — CORRECT
+    Q15: Participant=1, Correct=1 — CORRECT
+  Note: This CRISPR block appears three times identically in raw logs (duplicate MCQ detail sections). Accuracy and item-level outcomes are identical across the duplicates.
+
+Article 2 (Semiconductors) — Pre-reading:
+  Accuracy: 15/15 = 100.0%
+  Question Details:
+    Q1: Participant=1, Correct=1 — CORRECT
+    Q2: Participant=1, Correct=1 — CORRECT
+    Q3: Participant=1, Correct=1 — CORRECT
+    Q4: Participant=1, Correct=1 — CORRECT
+    Q5: Participant=1, Correct=1 — CORRECT
+    Q6: Participant=1, Correct=1 — CORRECT
+    Q7: Participant=1, Correct=1 — CORRECT
+    Q8: Participant=1, Correct=1 — CORRECT
+    Q9: Participant=1, Correct=1 — CORRECT
+    Q10: Participant=1, Correct=1 — CORRECT
+    Q11: Participant=1, Correct=1 — CORRECT
+    Q12: Participant=1, Correct=1 — CORRECT
+    Q13: Participant=1, Correct=1 — CORRECT
+    Q14: Participant=3, Correct=3 — CORRECT
+    Q15: Participant=1, Correct=1 — CORRECT
+
+Article 3 (Urban Heat Islands) — Synchronous:
+  Accuracy: 13/15 = 86.7%
+  Question Details:
+    Q1: Participant=0, Correct=1 — WRONG
+    Q2: Participant=1, Correct=1 — CORRECT
+    Q3: Participant=1, Correct=1 — CORRECT
+    Q4: Participant=1, Correct=1 — CORRECT
+    Q5: Participant=1, Correct=1 — CORRECT
+    Q6: Participant=1, Correct=1 — CORRECT
+    Q7: Participant=1, Correct=1 — CORRECT
+    Q8: Participant=1, Correct=1 — CORRECT
+    Q9: Participant=2, Correct=2 — CORRECT
+    Q10: Participant=2, Correct=0 — WRONG
+    Q11: Participant=1, Correct=1 — CORRECT
+    Q12: Participant=1, Correct=1 — CORRECT
+    Q13: Participant=1, Correct=1 — CORRECT
+    Q14: Participant=1, Correct=1 — CORRECT
+    Q15: Participant=1, Correct=1 — CORRECT
+
+================================================================================
+MANIPULATION CHECK
+================================================================================
+Semantic Coherence: 6/7 (high coherence)
+Relational Connectivity: 2/7 (low connectivity)
+Memory Strategy: connected
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Reading Times:
+  CRISPR: 8.56 minutes
+  Semiconductors: 8.98 minutes
+  Urban Heat Islands: 6.77 minutes
+  Average: 8.32 minutes
+Notes: Raw log redundancies list Semiconductors twice (8.97 and 8.98 minutes); consolidated to 8.98 minutes above.
+
+Summary Viewing Times:
+  CRISPR (post): 0.86 minutes
+  Semiconductors (pre): 1.45 minutes
+  Average: 1.15 minutes
+
+Recall Quality:
+  Average Words: 38.0 words
+  Average Sentences: 3.0 sentences
+  Average Characters: 237 characters
+  Average Confidence: 6.6/7
+  Average Difficulty: 5.8/7
+
+MCQ Performance:
+  CRISPR: 66.7% (10/15 correct)
+  Semiconductors: 100.0% (15/15 correct)
+  Urban Heat Islands: 86.7% (13/15 correct)
+  Average Accuracy: 77.3%
+Note: CRISPR accuracy lines were duplicated thrice in raw file; consolidated here.
+
+================================================================================
+KEY FINDINGS
+================================================================================
+1) Reading Behavior:
+   • Times range 6.77–8.98 minutes; 100% scroll depth on all articles.
+   • Minimal tab switching (1–3 visibility changes).
+
+2) Summary Viewing:
+   • Pre-reading (1.45 min) > Post-reading (0.86 min); pre was ~69% longer.
+
+3) Recall Quality:
+   • Consistent 3-sentence recalls (34–44 words per article).
+   • High confidence (5–7/7) with moderate-to-high perceived difficulty (5–6/7).
+   • CRISPR block shows 2 paste attempts and 3 duplicate submissions (technical artifact).
+
+4) MCQ Performance:
+   • Range 66.7%–100.0% (well above 25% chance).
+   • Best on Semiconductors (100%).
+
+5) Data Quality:
+   • Appropriate reading times, genuine recall, complete phases.
+   • Duplicated CRISPR sections and duplicate reading_complete entries flagged but consolidated.
+
+================================================================================
+DATA VALIDITY ASSESSMENT
+================================================================================
+VALID DATA — High-quality participant response.
+
+Strengths:
+  • Appropriate reading times and high engagement
+  • Substantive recall responses
+  • Strong MCQ performance (77.3% average)
+  • Complete, analyzable dataset
+
+Minor Issues:
+  • CRISPR: 2 paste attempts; 3 duplicate recall/MCQ sections (likely technical)
+  • Semiconductors: duplicate reading_complete logs
+
+Recommendation: INCLUDE in main analysis.
+================================================================================
+END OF ANALYSIS
+================================================================================

@@ -11,11 +11,55 @@ import os
 from datetime import datetime
 
 # Correct answers (0-indexed option indices)
-CORRECT_ANSWERS = {
-    'uhi': [1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 1],
+# ORIGINAL ANSWER KEYS (for participants who took the test before MCQ change)
+ORIGINAL_CORRECT_ANSWERS = {
     'crispr': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-    'semiconductors': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1]
+    'semiconductors': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1],
+    'uhi': [1, 1, 1, 1, 1, 1, 1, 1, 2, 0, 1, 1, 1, 1, 1]
 }
+
+# NEW ANSWER KEYS (for participants who take the test after MCQ change)
+NEW_CORRECT_ANSWERS = {
+    'crispr': [1, 2, 1, 0, 2, 0, 2, 0, 2, 3, 1, 3, 2, 1, 0],
+    'semiconductors': [2, 1, 1, 0, 0, 2, 2, 1, 0, 1, 3, 1, 2, 1, 3],
+    'uhi': [0, 2, 0, 2, 1, 0, 3, 1, 2, 0, 1, 2, 1, 2, 2]
+}
+
+# Use original answer keys by default (for existing participants)
+# Set to NEW_CORRECT_ANSWERS for new participants
+CORRECT_ANSWERS = ORIGINAL_CORRECT_ANSWERS
+
+# False lure question mapping
+# ORIGINAL: Only CRISPR had false lure at Q10 (index 9)
+ORIGINAL_FALSE_LURE_MAP = {
+    'crispr': {
+        'question_index': 9,  # Q10 (0-indexed)
+        'false_lure_option_index': 1,  # Option index containing "(FALSE - not mentioned in text)"
+        'description': 'Bioluminescent plants - false lure about agricultural experiments'
+    }
+}
+
+# NEW: All articles have false lure at Q2 (index 1)
+NEW_FALSE_LURE_MAP = {
+    'crispr': {
+        'question_index': 1,  # Q2 (0-indexed)
+        'false_lure_option_index': 0,  # Option index containing false lure
+        'description': 'Bioluminescent marker plants - false lure about agricultural implementations'
+    },
+    'semiconductors': {
+        'question_index': 1,  # Q2 (0-indexed)
+        'false_lure_option_index': 0,  # Option index containing false lure
+        'description': 'Ultra-pure resins - false lure about specialized materials'
+    },
+    'uhi': {
+        'question_index': 1,  # Q2 (0-indexed)
+        'false_lure_option_index': 0,  # Option index containing false lure
+        'description': 'Stored heat releases gradually - false lure about nighttime temperatures'
+    }
+}
+
+# Use original false lure map by default (for existing participants)
+FALSE_LURE_MAP = ORIGINAL_FALSE_LURE_MAP
 
 def parse_csv_log(log_file_path):
     """Parse participant log CSV file with robust handling of multiline fields."""
@@ -26,6 +70,8 @@ def parse_csv_log(log_file_path):
         'randomization': {},
         'reading_data': [],
         'summary_viewing': [],
+        'summary_overlay_events': [],  # For synchronous mode
+        'visibility_changes': [],  # Track page visibility changes
         'recall_data': [],
         'mcq_data': [],
         'manipulation_check': {}
@@ -84,34 +130,156 @@ def parse_csv_log(log_file_path):
                         'timestamp': timestamp
                     }
                 elif phase == 'reading_behavior':
-                    # Handle end-of-reading events; schema can vary slightly between versions
-                    if len(parts) >= 6 and parts[2] == 'reading_complete':
-                        # Prefer index 4 (observed in newer logs), fallback to 5
-                        reading_time_ms = 0
-                        for idx in (4, 5, 3):
-                            if len(parts) > idx:
-                                try:
-                                    reading_time_ms = int(parts[idx])
-                                    # Heuristic: treat very small values as invalid
-                                    if reading_time_ms >= 1000 or idx == 4:
-                                        break
-                                except:
+                    if len(parts) < 3:
                                     continue
+                    event_type = parts[2] if len(parts) > 2 else ''
+                    # For most events, article_key and timing are at the end
+                    # But we'll extract them per event type since schemas differ
+                    article_key = ''
+                    timing = ''
+                    article_num = -1
+                    
+                    # Try to extract from end (common pattern)
+                    if len(parts) >= 2:
                         article_key = parts[-2] if len(parts) >= 2 else ''
                         timing = parts[-1] if len(parts) >= 1 else ''
-                        # Article number is optional; attempt parse if present as penultimate-2
-                        article_num = -1
-                        try:
-                            maybe_num = parts[-3]
-                            article_num = int(maybe_num)
-                        except:
-                            pass
+                    
+                    # Handle reading_complete events
+                    if event_type == 'reading_complete':
+                        # Schema: timestamp, phase, reading_complete, timestamp2, reading_time_ms, summary_time_ms, overlay_count, scroll_depth, article_num, article_key, timing
+                        reading_time_ms = 0
+                        summary_time_ms = 0
+                        scroll_depth = 100  # Default
+                        overlay_count = 0
+                        
+                        # Extract reading time (index 4)
+                        if len(parts) > 4:
+                            try:
+                                reading_time_ms = int(parts[4])
+                            except:
+                                pass
+                        
+                        # Extract summary viewing time for synchronous mode (index 5)
+                        if len(parts) > 5:
+                            try:
+                                summary_time_ms = int(parts[5])
+                            except:
+                                pass
+                        
+                        # Extract overlay count (index 6)
+                        if len(parts) > 6:
+                            try:
+                                overlay_count = int(parts[6])
+                            except:
+                                pass
+                        
+                        # Extract scroll depth (index 7)
+                        if len(parts) > 7:
+                            try:
+                                scroll_depth = int(parts[7])
+                            except:
+                                pass
+                        
+                        # Extract article number (index 8)
+                        if len(parts) > 8:
+                            try:
+                                article_num = int(parts[8])
+                            except:
+                                pass
+                        
+                        # Extract article_key and timing (indices 9 and 10)
+                        if len(parts) > 9:
+                            article_key = parts[9]
+                        if len(parts) > 10:
+                            timing = parts[10]
+                        
                         data['reading_data'].append({
                             'timestamp': timestamp,
                             'article_num': article_num,
                             'article_key': article_key,
                             'timing': timing,
-                            'reading_time_ms': reading_time_ms
+                            'reading_time_ms': reading_time_ms,
+                            'summary_time_ms': summary_time_ms,
+                            'scroll_depth': scroll_depth,
+                            'overlay_count': overlay_count
+                        })
+                    # Handle summary overlay events for synchronous mode
+                    elif event_type == 'summary_overlay_opened':
+                        # Schema: timestamp, phase, summary_overlay_opened, timestamp2, article_num, overlay_num, article_key, timing
+                        overlay_article_num = -1
+                        overlay_article_key = ''
+                        overlay_timing = ''
+                        if len(parts) > 4:
+                            try:
+                                overlay_article_num = int(parts[4])
+                            except:
+                                pass
+                        if len(parts) > 6:
+                            overlay_article_key = parts[6]
+                        if len(parts) > 7:
+                            overlay_timing = parts[7]
+                        data['summary_overlay_events'].append({
+                            'event': 'opened',
+                            'timestamp': timestamp,
+                            'article_num': overlay_article_num,
+                            'article_key': overlay_article_key,
+                            'timing': overlay_timing
+                        })
+                    elif event_type == 'summary_overlay_closed':
+                        # Schema: timestamp, phase, summary_overlay_closed, timestamp2, article_num, duration_ms, overlay_num, article_key, timing
+                        overlay_article_num = -1
+                        duration_ms = 0
+                        overlay_article_key = ''
+                        overlay_timing = ''
+                        if len(parts) > 4:
+                            try:
+                                overlay_article_num = int(parts[4])
+                            except:
+                                pass
+                        if len(parts) > 5:
+                            try:
+                                duration_ms = int(parts[5])
+                            except:
+                                pass
+                        if len(parts) > 7:
+                            overlay_article_key = parts[7]
+                        if len(parts) > 8:
+                            overlay_timing = parts[8]
+                        data['summary_overlay_events'].append({
+                            'event': 'closed',
+                            'timestamp': timestamp,
+                            'article_num': overlay_article_num,
+                            'article_key': overlay_article_key,
+                            'timing': overlay_timing,
+                            'duration_ms': duration_ms
+                        })
+                    # Handle visibility changes
+                    elif event_type == 'visibility_change':
+                        # Schema: timestamp, phase, visibility_change, timestamp2, is_visible, article_num, article_key, timing
+                        vis_article_num = -1
+                        is_visible = False
+                        vis_article_key = ''
+                        vis_timing = ''
+                        if len(parts) > 4:
+                            try:
+                                is_visible = parts[4].lower() == 'true'
+                            except:
+                                pass
+                        if len(parts) > 5:
+                            try:
+                                vis_article_num = int(parts[5])
+                            except:
+                                pass
+                        if len(parts) > 6:
+                            vis_article_key = parts[6]
+                        if len(parts) > 7:
+                            vis_timing = parts[7]
+                        data['visibility_changes'].append({
+                            'timestamp': timestamp,
+                            'article_num': vis_article_num,
+                            'article_key': vis_article_key,
+                            'timing': vis_timing,
+                            'is_visible': is_visible
                         })
                 elif phase == 'summary_viewing':
                     if len(parts) >= 8:
@@ -192,7 +360,7 @@ def parse_csv_log(log_file_path):
     return data
 
 def calculate_mcq_accuracy(mcq_data):
-    """Calculate MCQ accuracy for all articles"""
+    """Calculate MCQ accuracy for all articles, including false lure tracking"""
     results = []
     
     for mcq in mcq_data:
@@ -203,9 +371,14 @@ def calculate_mcq_accuracy(mcq_data):
         correct = CORRECT_ANSWERS[article_key]
         answers = mcq['answers']
         
+        # Check if this article has a false lure question
+        false_lure_info = FALSE_LURE_MAP.get(article_key)
+        
         correct_count = 0
         total = len(correct)
         details = []
+        false_lure_selected = False
+        false_lure_question_num = None
         
         for q_idx in range(total):
             q_key = f'q{q_idx}'
@@ -214,11 +387,24 @@ def calculate_mcq_accuracy(mcq_data):
             is_correct = p_ans == c_ans
             if is_correct:
                 correct_count += 1
+            
+            # Check if this is a false lure question and if participant selected it
+            is_false_lure_q = (false_lure_info and 
+                              false_lure_info['question_index'] == q_idx)
+            selected_false_lure = (is_false_lure_q and 
+                                  p_ans == false_lure_info['false_lure_option_index'])
+            
+            if selected_false_lure:
+                false_lure_selected = True
+                false_lure_question_num = q_idx + 1
+            
             details.append({
                 'question': q_idx + 1,
                 'participant_answer': p_ans,
                 'correct_answer': c_ans,
-                'is_correct': is_correct
+                'is_correct': is_correct,
+                'is_false_lure_question': is_false_lure_q,
+                'selected_false_lure': selected_false_lure
             })
         
         accuracy = (correct_count / total) * 100 if total > 0 else 0
@@ -231,20 +417,114 @@ def calculate_mcq_accuracy(mcq_data):
             'correct_count': correct_count,
             'total': total,
             'details': details,
-            'timestamp': mcq['timestamp']
+            'timestamp': mcq['timestamp'],
+            'has_false_lure': false_lure_info is not None,
+            'false_lure_selected': false_lure_selected,
+            'false_lure_question_num': false_lure_question_num
         })
     
     return results
 
+def format_timestamp(ts):
+    """Format timestamp for display"""
+    try:
+        # Try ISO format first
+        if 'T' in ts:
+            dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
+            return dt.strftime('%B %d, %Y, %H:%M:%S')
+        # Try Unix timestamp
+        try:
+            ts_int = int(ts)
+            if ts_int > 1000000000000:  # Milliseconds
+                dt = datetime.fromtimestamp(ts_int / 1000)
+            else:  # Seconds
+                dt = datetime.fromtimestamp(ts_int)
+            return dt.strftime('%B %d, %Y, %H:%M:%S')
+        except:
+            return ts
+    except:
+        return ts
+
+def get_prior_knowledge_level(score, max_score=7):
+    """Categorize prior knowledge score"""
+    if score <= max_score * 0.2:
+        return "very low"
+    elif score <= max_score * 0.4:
+        return "low"
+    elif score <= max_score * 0.6:
+        return "moderate"
+    elif score <= max_score * 0.8:
+        return "moderate-high"
+    else:
+        return "high"
+
+def get_trust_level(score):
+    """Categorize trust/dependence score"""
+    if score <= 2:
+        return "low"
+    elif score <= 4:
+        return "moderate"
+    elif score <= 5.5:
+        return "moderate-high"
+    else:
+        return "high"
+
+def get_confidence_level(score):
+    """Categorize confidence score"""
+    if score <= 3:
+        return "low"
+    elif score <= 5:
+        return "moderate"
+    elif score <= 6:
+        return "moderate-high"
+    else:
+        return "maximum confidence"
+
+def get_difficulty_level(score):
+    """Categorize difficulty score"""
+    if score <= 2:
+        return "low"
+    elif score <= 4:
+        return "moderate"
+    elif score <= 5:
+        return "moderate difficulty"
+    elif score <= 6:
+        return "moderate-high difficulty"
+    else:
+        return "high difficulty"
+
+def get_coherence_level(score):
+    """Categorize coherence/connectivity score"""
+    if score <= 2:
+        return "low"
+    elif score <= 4:
+        return "moderate"
+    elif score <= 5:
+        return "moderate-high"
+    elif score <= 6:
+        return "high"
+    else:
+        return "very high"
+
+def calculate_synchronous_summary_time(summary_overlay_events, article_key, article_num):
+    """Calculate total summary viewing time for synchronous mode"""
+    total_ms = 0
+    for event in summary_overlay_events:
+        if (event.get('article_key') == article_key and 
+            event.get('article_num') == article_num and 
+            event.get('event') == 'closed'):
+            total_ms += event.get('duration_ms', 0)
+    return total_ms
+
 def generate_analysis_report(participant_id, data, mcq_results):
-    """Generate comprehensive analysis report"""
+    """Generate comprehensive analysis report with enhanced metrics"""
     
     report = []
     report.append("=" * 80)
     report.append(f"PARTICIPANT {participant_id} - COMPREHENSIVE DATA ANALYSIS")
     report.append("=" * 80)
     report.append("")
-    report.append(f"Analysis Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    report.append(f"Analysis Generated: {datetime.now().strftime('%Y-%m-%d')}")
     report.append("")
     
     # Demographics
@@ -254,10 +534,14 @@ def generate_analysis_report(participant_id, data, mcq_results):
     if data['demographics']:
         demo = data['demographics']
         report.append(f"Name: {demo.get('full_name', 'N/A')}")
-        report.append(f"Age: {demo.get('age', 'N/A')}, {demo.get('gender', 'N/A')}")
+        gender = demo.get('gender', 'N/A')
+        if gender:
+            gender = gender.capitalize()
+        report.append(f"Age: {demo.get('age', 'N/A')}, {gender}")
         report.append(f"Profession: {demo.get('profession', 'N/A')}")
         report.append(f"Native Language: {demo.get('native_language', 'N/A')}")
-        report.append(f"Start Time: {demo.get('timestamp', 'N/A')}")
+        start_time = format_timestamp(demo.get('timestamp', 'N/A'))
+        report.append(f"Start Time: {start_time}")
     report.append("")
     
     # Prior Knowledge
@@ -266,10 +550,15 @@ def generate_analysis_report(participant_id, data, mcq_results):
     report.append("=" * 80)
     if data['prior_knowledge']:
         pk = data['prior_knowledge']
-        report.append(f"Familiarity Score: {pk.get('familiarity', 0):.1f}/7")
-        report.append(f"Recognition Score: {pk.get('recognition', 0)}/10")
-        report.append(f"Quiz Score: {pk.get('quiz_score', 0):.1f}/5")
-        report.append(f"Excluded: {pk.get('excluded', 'False')}")
+        familiarity = pk.get('familiarity', 0)
+        recognition = pk.get('recognition', 0)
+        quiz_score = pk.get('quiz_score', 0)
+        report.append(f"Familiarity Score: {familiarity:.1f}/7 ({get_prior_knowledge_level(familiarity)})")
+        report.append(f"Recognition Score: {recognition}/10 ({get_prior_knowledge_level(recognition, 10)})")
+        report.append(f"Quiz Score: {quiz_score:.1f}/5 ({get_prior_knowledge_level(quiz_score, 5)})")
+        excluded = pk.get('excluded', 'False')
+        excluded_text = "No" if excluded == 'False' or excluded == '0' or excluded == 0 else "Yes"
+        report.append(f"Excluded: {excluded_text}")
     report.append("")
     
     # AI Trust
@@ -278,12 +567,27 @@ def generate_analysis_report(participant_id, data, mcq_results):
     report.append("=" * 80)
     if data['ai_trust']:
         ai = data['ai_trust']
-        report.append(f"AI Trust Score: {ai.get('trust_score', 0):.2f}/7")
-        report.append(f"AI Dependence Score: {ai.get('dependence_score', 0):.2f}/7")
-        report.append(f"Tech Skill Score: {ai.get('skill_score', 0):.2f}/7")
+        trust_score = ai.get('trust_score', 0)
+        dep_score = ai.get('dependence_score', 0)
+        skill_score = ai.get('skill_score', 0)
+        report.append(f"AI Trust Score: {trust_score:.2f}/7 ({get_trust_level(trust_score)} trust)")
+        report.append(f"AI Dependence Score: {dep_score:.2f}/7 ({get_trust_level(dep_score)} dependence)")
+        skill_text = f"{skill_score:.2f}/7"
+        if skill_score >= 6.5:
+            skill_text += " (maximum - expert level)"
+        report.append(f"Tech Skill Score: {skill_text}")
         reflection = ai.get('reflection', '')
         if reflection:
-            report.append(f"Open Reflection: {reflection[:200]}..." if len(reflection) > 200 else f"Open Reflection: {reflection}")
+            report.append("Open Reflection:")
+            # Parse reflection if it has Q1, Q2, Q3 format
+            if 'Q1:' in reflection or 'Q1' in reflection:
+                lines = reflection.split('\n')
+                for line in lines:
+                    line = line.strip()
+                    if line:
+                        report.append(f"  {line}")
+            else:
+                report.append(f"  {reflection}")
     report.append("")
     
     # Experimental Conditions
@@ -292,12 +596,30 @@ def generate_analysis_report(participant_id, data, mcq_results):
     report.append("=" * 80)
     if data['randomization']:
         rand = data['randomization']
-        report.append(f"Structure Condition: {rand.get('structure', 'N/A').upper()}")
+        structure = rand.get('structure', 'N/A').upper()
+        structure_text = structure
+        if structure == 'SEGMENTED':
+            structure_text += " (bullet points)"
+        report.append(f"Structure Condition: {structure_text}")
         try:
             timing_order = json.loads(rand.get('timing_order', '[]'))
             article_order = json.loads(rand.get('article_order', '[]'))
-            report.append(f"Article Order: {' → '.join([a.upper() for a in article_order])}")
-            report.append(f"Timing Order: {', '.join(timing_order)}")
+            
+            # Map article keys to readable names
+            article_names = {'crispr': 'CRISPR', 'semiconductors': 'Semiconductors', 'uhi': 'Urban Heat Islands'}
+            article_list = [article_names.get(a.lower(), a.upper()) for a in article_order]
+            report.append(f"Article Order: {' → '.join([f'{i+1}. {a}' for i, a in enumerate(article_list)])}")
+            report.append("Timing Order:")
+            for i, (art, timing) in enumerate(zip(article_order, timing_order)):
+                art_name = article_names.get(art.lower(), art.upper())
+                timing_name = timing.replace('_', '-').title()
+                if timing == 'pre_reading':
+                    timing_name = "Pre-reading (summary before reading)"
+                elif timing == 'post_reading':
+                    timing_name = "Post-reading (summary after reading)"
+                elif timing == 'synchronous':
+                    timing_name = "Synchronous (summary during reading)"
+                report.append(f"  Article {i+1} ({art_name}): {timing_name}")
         except:
             report.append(f"Timing Order: {rand.get('timing_order', 'N/A')}")
             report.append(f"Article Order: {rand.get('article_order', 'N/A')}")
@@ -307,40 +629,158 @@ def generate_analysis_report(participant_id, data, mcq_results):
     report.append("=" * 80)
     report.append("READING BEHAVIOR")
     report.append("=" * 80)
+    
+    # Group reading data by article
+    reading_by_article = {}
     for rd in data['reading_data']:
-        reading_min = rd['reading_time_ms'] / 60000
-        reading_sec = rd['reading_time_ms'] / 1000
-        article_label = f"{rd['article_key'].upper()}" if rd.get('article_key') else f"#{rd.get('article_num', -1)+1}"
-        report.append(f"Article {article_label}:")
-        report.append(f"  Reading Time: {reading_min:.2f} minutes ({reading_sec:.1f} seconds)")
-        report.append(f"  Timing Mode: {rd['timing']}")
+        key = (rd.get('article_key', ''), rd.get('article_num', -1))
+        if key not in reading_by_article:
+            reading_by_article[key] = []
+        reading_by_article[key].append(rd)
+    
+    # Map article keys to names
+    article_names = {'crispr': 'CRISPR', 'semiconductors': 'Semiconductors', 'uhi': 'Urban Heat Islands'}
+    
+    for (article_key, article_num), readings in reading_by_article.items():
+        if not readings:
+            continue
+        # Use the most complete reading entry
+        rd = max(readings, key=lambda x: x.get('reading_time_ms', 0))
+        article_name = article_names.get(article_key.lower(), article_key.upper())
+        timing = rd.get('timing', 'unknown')
+        timing_name = timing.replace('_', '-')
+        
+        reading_time_ms = rd.get('reading_time_ms', 0)
+        reading_min = reading_time_ms / 60000
+        reading_sec = reading_time_ms / 1000
+        
+        report.append(f"Article {article_num + 1 if article_num >= 0 else '?'} ({article_name}) - {timing_name} mode:")
+        report.append(f"  Reading Time: {reading_time_ms:,} ms ({reading_min:.2f} minutes = {reading_sec:.2f} seconds)")
+        
+        scroll_depth = rd.get('scroll_depth', 100)
+        report.append(f"  Scroll Depth: {scroll_depth}%")
+        
+        # Count visibility changes for this article
+        vis_changes = [v for v in data['visibility_changes'] 
+                      if v.get('article_key') == article_key and v.get('article_num') == article_num]
+        if vis_changes:
+            report.append(f"  Visibility Changes: {len(vis_changes)} (page was hidden/shown during reading)")
+        
+        # Note multiple reading_complete entries
+        if len(readings) > 1:
+            times = [r.get('reading_time_ms', 0) for r in readings]
+            report.append(f"  Note: {len(readings)} reading_complete entries logged ({', '.join([f'{t:,} ms' for t in times])})")
+        
         report.append("")
     
     # Summary Viewing
     report.append("=" * 80)
     report.append("SUMMARY VIEWING")
     report.append("=" * 80)
+    
+    # Process regular summary viewing (pre/post reading)
     for sv in data['summary_viewing']:
+        article_name = article_names.get(sv.get('article_key', '').lower(), sv.get('article_key', '').upper())
         sv_min = sv['time_spent_seconds'] / 60
-        report.append(f"Article {sv['article_num']+1} ({sv['article_key'].upper()}):")
-        report.append(f"  Mode: {sv['mode']}")
-        report.append(f"  Structure: {sv['structure']}")
+        report.append(f"Article {sv['article_num']+1} ({article_name}) - {sv.get('mode', 'unknown').replace('_', '-')}:")
         report.append(f"  Time Spent: {sv['time_spent_seconds']:.2f} seconds ({sv_min:.2f} minutes)")
+        report.append(f"  Structure: {sv.get('structure', 'N/A').capitalize()}")
+        report.append("")
+    
+    # Process synchronous mode summary viewing
+    # Group by article_key only (article_num in overlay events is overlay number, not article number)
+    sync_summaries = {}
+    for event in data['summary_overlay_events']:
+        if event.get('event') == 'closed' and event.get('timing') == 'synchronous':
+            article_key = event.get('article_key')
+            if article_key not in sync_summaries:
+                sync_summaries[article_key] = {'durations': [], 'count': 0}
+            sync_summaries[article_key]['durations'].append(event.get('duration_ms', 0))
+            sync_summaries[article_key]['count'] += 1
+    
+    # Find the actual article number from reading_data
+    for article_key, info in sync_summaries.items():
+        # Find article number from reading_data
+        article_num = -1
+        for rd in data['reading_data']:
+            if rd.get('article_key') == article_key and rd.get('timing') == 'synchronous':
+                article_num = rd.get('article_num', -1)
+                break
+        
+        article_name = article_names.get(article_key.lower() if article_key else '', article_key.upper() if article_key else 'Unknown')
+        total_ms = sum(info['durations'])
+        total_sec = total_ms / 1000
+        total_min = total_sec / 60
+        report.append(f"Article {article_num + 1 if article_num >= 0 else '?'} ({article_name}) - Synchronous:")
+        report.append(f"  Summary Viewing Time: {total_ms:,} ms ({total_sec:.2f} seconds = {total_min:.2f} minutes)")
+        report.append(f"  Summary Overlay Opens: {info['count']}")
+        if len(info['durations']) > 1:
+            avg_duration = total_ms / len(info['durations'])
+            report.append(f"  Average Duration per Open: {avg_duration:.0f} ms ({avg_duration/1000:.2f} seconds)")
+        report.append("")
+    
+    # Check if there's synchronous mode but no overlay events (summary shown during reading, no separate viewing)
+    sync_articles = [rd for rd in data['reading_data'] if rd.get('timing') == 'synchronous']
+    for rd in sync_articles:
+        article_key = rd.get('article_key')
+        if article_key not in sync_summaries:
+            article_name = article_names.get(article_key.lower() if article_key else '', article_key.upper() if article_key else 'Unknown')
+            report.append(f"Article {rd.get('article_num', -1) + 1} ({article_name}) - Synchronous:")
+            report.append("  No separate summary viewing (summary shown during reading)")
+            # Check if summary time is in reading_complete
+            summary_time_ms = rd.get('summary_time_ms', 0)
+            if summary_time_ms > 0:
+                summary_sec = summary_time_ms / 1000
+                summary_min = summary_sec / 60
+                report.append(f"  Total Summary Viewing Time (from reading_complete): {summary_time_ms:,} ms ({summary_sec:.2f} seconds = {summary_min:.2f} minutes)")
         report.append("")
     
     # Free Recall
     report.append("=" * 80)
     report.append("FREE RECALL")
     report.append("=" * 80)
+    
+    # Group recall by article to handle duplicates
+    recall_by_article = {}
     for rec in data['recall_data']:
-        rec_min = rec['time_spent_ms'] / 60000
-        report.append(f"Article {rec['article_num']+1} ({rec['article_key'].upper()}):")
-        report.append(f"  Timing: {rec['timing']}")
-        report.append(f"  Text: {rec['recall_text'][:100]}..." if len(rec['recall_text']) > 100 else f"  Text: {rec['recall_text']}")
-        report.append(f"  Words: {rec['word_count']}, Sentences: {rec['sentence_count']}, Characters: {rec['character_count']}")
-        report.append(f"  Confidence: {rec['confidence']}/7, Difficulty: {rec['difficulty']}/7")
-        report.append(f"  Time Spent: {rec_min:.2f} minutes ({rec['time_spent_ms']/1000:.1f} seconds)")
-        report.append(f"  Paste Attempts: {rec['paste_attempts']}")
+        key = (rec.get('article_key'), rec.get('article_num'))
+        if key not in recall_by_article:
+            recall_by_article[key] = []
+        recall_by_article[key].append(rec)
+    
+    for (article_key, article_num), recalls in recall_by_article.items():
+        # Use the first recall (or most complete one)
+        rec = recalls[0]
+        article_name = article_names.get(article_key.lower() if article_key else '', article_key.upper() if article_key else 'Unknown')
+        timing = rec.get('timing', 'unknown').replace('_', '-')
+        
+        report.append(f"Article {article_num + 1 if article_num >= 0 else '?'} ({article_name}) - {timing} mode:")
+        report.append("  Recall Text:")
+        # Format recall text with proper indentation
+        recall_text = rec.get('recall_text', '')
+        for line in recall_text.split('\n'):
+            if line.strip():
+                report.append(f"    '{line.strip()}'")
+        
+        report.append(f"  Words: {rec.get('word_count', 0)}, Sentences: {rec.get('sentence_count', 0)}, Characters: {rec.get('character_count', 0)}")
+        
+        confidence = rec.get('confidence', 0)
+        difficulty = rec.get('difficulty', 0)
+        report.append(f"  Confidence: {confidence}/7 ({get_confidence_level(confidence)})")
+        report.append(f"  Perceived Difficulty: {difficulty}/7 ({get_difficulty_level(difficulty)})")
+        
+        time_ms = rec.get('time_spent_ms', 0)
+        time_min = time_ms / 60000
+        time_sec = time_ms / 1000
+        report.append(f"  Time Spent: {time_ms:,} ms ({time_min:.2f} minutes = {time_sec:.2f} seconds)")
+        
+        paste_attempts = rec.get('paste_attempts', 0)
+        report.append(f"  Paste Attempts: {paste_attempts}")
+        
+        # Note duplicates
+        if len(recalls) > 1:
+            report.append(f"  Note: {len(recalls)} identical recall responses logged (likely duplicate submissions)")
+        
         report.append("")
     
     # MCQ Performance
@@ -348,13 +788,31 @@ def generate_analysis_report(participant_id, data, mcq_results):
     report.append("MCQ PERFORMANCE")
     report.append("=" * 80)
     for result in mcq_results:
-        article_label = f"{result['article_key'].upper()}" if result.get('article_key') else f"#{result.get('article_num', -1)+1}"
-        report.append(f"Article {article_label} - {result['timing']} mode")
+        article_name = article_names.get(result.get('article_key', '').lower(), result.get('article_key', '').upper())
+        timing = result.get('timing', 'unknown').replace('_', '-')
+        report.append(f"Article {result.get('article_num', -1) + 1} ({article_name}) - {timing} mode")
         report.append(f"Accuracy: {result['correct_count']}/{result['total']} = {result['accuracy']:.1f}%")
+        
+        # False lure tracking
+        if result.get('has_false_lure'):
+            false_lure_info = FALSE_LURE_MAP.get(result['article_key'])
+            if false_lure_info:
+                q_num = false_lure_info['question_index'] + 1
+                if result.get('false_lure_selected'):
+                    report.append(f"⚠️  FALSE LURE: Selected false lure option on Q{q_num} (bioluminescent plants)")
+                else:
+                    report.append(f"✓  FALSE LURE: Did NOT select false lure option on Q{q_num}")
+        
         report.append("Question Details:")
         for detail in result['details']:
             status = "CORRECT" if detail['is_correct'] else "WRONG"
-            report.append(f"  Q{detail['question']:2d}: Participant={detail['participant_answer']}, Correct={detail['correct_answer']} - {status}")
+            markers = []
+            if detail.get('is_false_lure_question'):
+                markers.append("[FALSE LURE Q]")
+            if detail.get('selected_false_lure'):
+                markers.append("[SELECTED FALSE LURE]")
+            marker_str = " " + " ".join(markers) if markers else ""
+            report.append(f"  Q{detail['question']:2d}: Participant={detail['participant_answer']}, Correct={detail['correct_answer']} - {status}{marker_str}")
         report.append("")
     
     # Manipulation Check
@@ -363,9 +821,15 @@ def generate_analysis_report(participant_id, data, mcq_results):
     report.append("=" * 80)
     if data['manipulation_check']:
         mc = data['manipulation_check']
-        report.append(f"Semantic Coherence: {mc.get('coherence', -1)}/7")
-        report.append(f"Relational Connectivity: {mc.get('connectivity', -1)}/7")
-        report.append(f"Memory Strategy: {mc.get('strategy', 'N/A')}")
+        coherence = mc.get('coherence', -1)
+        connectivity = mc.get('connectivity', -1)
+        if coherence >= 0:
+            report.append(f"Semantic Coherence: {coherence}/7 ({get_coherence_level(coherence)} coherence)")
+        if connectivity >= 0:
+            report.append(f"Relational Connectivity: {connectivity}/7 ({get_coherence_level(connectivity)} connectivity)")
+        strategy = mc.get('strategy', 'N/A')
+        if strategy:
+            report.append(f"Memory Strategy: {strategy}")
     report.append("")
     
     # Summary Statistics
@@ -374,22 +838,328 @@ def generate_analysis_report(participant_id, data, mcq_results):
     report.append("=" * 80)
     
     if data['reading_data']:
-        avg_reading = sum(rd['reading_time_ms'] for rd in data['reading_data']) / len(data['reading_data']) / 60000
-        report.append(f"Average Reading Time: {avg_reading:.2f} minutes")
+        reading_times = [rd['reading_time_ms'] / 60000 for rd in data['reading_data']]
+        report.append("Reading Times:")
+        for i, rd in enumerate(data['reading_data']):
+            article_name = article_names.get(rd.get('article_key', '').lower(), f"Article {i+1}")
+            report.append(f"  {article_name}: {rd['reading_time_ms'] / 60000:.2f} minutes")
+        if len(reading_times) > 1:
+            avg_reading = sum(reading_times) / len(reading_times)
+            report.append(f"  Average: {avg_reading:.2f} minutes")
     
-    if data['summary_viewing']:
-        avg_summary = sum(sv['time_spent_seconds'] for sv in data['summary_viewing']) / len(data['summary_viewing']) / 60
-        report.append(f"Average Summary Viewing Time: {avg_summary:.2f} minutes")
+    if data['summary_viewing'] or sync_summaries:
+        report.append("")
+        report.append("Summary Viewing Times:")
+        for sv in data['summary_viewing']:
+            article_name = article_names.get(sv.get('article_key', '').lower(), f"Article {sv.get('article_num', -1) + 1}")
+            report.append(f"  {article_name}: {sv['time_spent_seconds'] / 60:.2f} minutes")
+        for article_key, info in sync_summaries.items():
+            # Find article number from reading_data
+            article_num = -1
+            for rd in data['reading_data']:
+                if rd.get('article_key') == article_key and rd.get('timing') == 'synchronous':
+                    article_num = rd.get('article_num', -1)
+                    break
+            article_name = article_names.get(article_key.lower() if article_key else '', f"Article {article_num + 1}")
+            total_min = sum(info['durations']) / 60000
+            report.append(f"  {article_name} (synchronous): {total_min:.2f} minutes")
+        # Also check reading_complete for synchronous summary times
+        for rd in data['reading_data']:
+            if rd.get('timing') == 'synchronous' and rd.get('summary_time_ms', 0) > 0:
+                article_key = rd.get('article_key')
+                article_name = article_names.get(article_key.lower() if article_key else '', f"Article {rd.get('article_num', -1) + 1}")
+                summary_min = rd.get('summary_time_ms', 0) / 60000
+                if article_key not in sync_summaries:  # Only add if not already counted
+                    report.append(f"  {article_name} (synchronous, from reading_complete): {summary_min:.2f} minutes")
+        
+        all_summary_times = [sv['time_spent_seconds'] / 60 for sv in data['summary_viewing']]
+        all_summary_times.extend([sum(info['durations']) / 60000 for info in sync_summaries.values()])
+        all_summary_times.extend([rd.get('summary_time_ms', 0) / 60000 for rd in data['reading_data'] 
+                                 if rd.get('timing') == 'synchronous' and rd.get('summary_time_ms', 0) > 0 
+                                 and rd.get('article_key') not in sync_summaries])
+        if all_summary_times:
+            avg_summary = sum(all_summary_times) / len(all_summary_times)
+            report.append(f"  Average: {avg_summary:.2f} minutes")
     
     if data['recall_data']:
+        report.append("")
+        report.append("Recall Quality:")
         avg_words = sum(rec['word_count'] for rec in data['recall_data']) / len(data['recall_data'])
+        avg_sentences = sum(rec['sentence_count'] for rec in data['recall_data']) / len(data['recall_data'])
+        avg_chars = sum(rec['character_count'] for rec in data['recall_data']) / len(data['recall_data'])
         avg_confidence = sum(rec['confidence'] for rec in data['recall_data']) / len(data['recall_data'])
-        report.append(f"Average Recall Words: {avg_words:.1f}")
-        report.append(f"Average Confidence: {avg_confidence:.2f}/7")
+        avg_difficulty = sum(rec['difficulty'] for rec in data['recall_data']) / len(data['recall_data'])
+        report.append(f"  Average Words: {avg_words:.1f} words")
+        report.append(f"  Average Sentences: {avg_sentences:.1f} sentences")
+        report.append(f"  Average Characters: {avg_chars:.0f} characters")
+        report.append(f"  Average Confidence: {avg_confidence:.1f}/7")
+        report.append(f"  Average Difficulty: {avg_difficulty:.1f}/7")
     
     if mcq_results:
+        report.append("")
+        report.append("MCQ Performance:")
+        for result in mcq_results:
+            article_name = article_names.get(result.get('article_key', '').lower(), f"Article {result.get('article_num', -1) + 1}")
+            report.append(f"  {article_name} ({result.get('article_key', '').upper()}): {result['accuracy']:.1f}% ({result['correct_count']}/{result['total']} correct)")
         avg_accuracy = sum(r['accuracy'] for r in mcq_results) / len(mcq_results)
-        report.append(f"Average MCQ Accuracy: {avg_accuracy:.1f}%")
+        report.append(f"  Average Accuracy: {avg_accuracy:.1f}%")
+    
+    report.append("")
+    
+    # Key Findings
+    report.append("=" * 80)
+    report.append("KEY FINDINGS")
+    report.append("=" * 80)
+    
+    findings = []
+    
+    # Reading behavior findings
+    if data['reading_data']:
+        reading_times = [rd['reading_time_ms'] / 60000 for rd in data['reading_data']]
+        min_time = min(reading_times)
+        max_time = max(reading_times)
+        findings.append(f"1. READING BEHAVIOR:")
+        findings.append(f"   - All articles: Reading times range from {min_time:.2f} to {max_time:.2f} minutes")
+        
+        scroll_depths = [rd.get('scroll_depth', 100) for rd in data['reading_data']]
+        if all(sd >= 95 for sd in scroll_depths):
+            findings.append(f"   - All articles: {scroll_depths[0]}% scroll depth (participant read to the end)")
+        else:
+            findings.append(f"   - Scroll depths: {', '.join([f'{sd}%' for sd in scroll_depths])}")
+        
+        # Visibility changes
+        for rd in data['reading_data']:
+            vis_count = len([v for v in data['visibility_changes'] 
+                           if v.get('article_key') == rd.get('article_key') and 
+                           v.get('article_num') == rd.get('article_num')])
+            if vis_count > 0:
+                article_name = article_names.get(rd.get('article_key', '').lower(), f"Article {rd.get('article_num', -1) + 1}")
+                findings.append(f"   - {article_name}: Page visibility changes detected ({vis_count} times)")
+    
+    # Summary viewing findings
+    if data['summary_viewing']:
+        findings.append("")
+        findings.append("2. SUMMARY VIEWING:")
+        pre_reading = [sv for sv in data['summary_viewing'] if sv.get('mode') == 'pre_reading']
+        post_reading = [sv for sv in data['summary_viewing'] if sv.get('mode') == 'post_reading']
+        
+        if post_reading:
+            post_time = post_reading[0]['time_spent_seconds'] / 60
+            findings.append(f"   - Post-reading summary: {post_time:.2f} minutes (reasonable)")
+        
+        if pre_reading:
+            pre_time = pre_reading[0]['time_spent_seconds'] / 60
+            findings.append(f"   - Pre-reading summary: {pre_time:.2f} minutes (longer, as expected)")
+            if post_reading:
+                post_time = post_reading[0]['time_spent_seconds'] / 60
+                if post_time > 0:
+                    pct_diff = ((pre_time - post_time) / post_time) * 100
+                    findings.append(f"   - Pre-reading summary viewed {pct_diff:.0f}% longer than post-reading")
+        
+        # Synchronous mode summary
+        if sync_summaries:
+            for article_key, info in sync_summaries.items():
+                # Find article number from reading_data
+                article_num = -1
+                for rd in data['reading_data']:
+                    if rd.get('article_key') == article_key and rd.get('timing') == 'synchronous':
+                        article_num = rd.get('article_num', -1)
+                        break
+                article_name = article_names.get(article_key.lower() if article_key else '', f"Article {article_num + 1}")
+                total_min = sum(info['durations']) / 60000
+                findings.append(f"   - {article_name} (synchronous): {total_min:.2f} minutes total summary viewing time")
+    
+    # Recall quality findings
+    if data['recall_data']:
+        findings.append("")
+        findings.append("3. RECALL QUALITY:")
+        word_counts = [rec['word_count'] for rec in data['recall_data']]
+        sentence_counts = [rec['sentence_count'] for rec in data['recall_data']]
+        confidences = [rec['confidence'] for rec in data['recall_data']]
+        difficulties = [rec['difficulty'] for rec in data['recall_data']]
+        
+        if len(set(sentence_counts)) == 1:
+            findings.append(f"   - Consistent recall across all articles ({sentence_counts[0]} sentences each)")
+        else:
+            findings.append(f"   - Sentence counts: {', '.join([str(s) for s in sentence_counts])}")
+        
+        findings.append(f"   - Good word count range ({min(word_counts)}-{max(word_counts)} words per article)")
+        findings.append(f"   - Confidence ratings: {min(confidences)}-{max(confidences)}/7")
+        findings.append(f"   - Perceived difficulty: {min(difficulties)}-{max(difficulties)}/7")
+        
+        paste_attempts = [rec.get('paste_attempts', 0) for rec in data['recall_data']]
+        for i, rec in enumerate(data['recall_data']):
+            if rec.get('paste_attempts', 0) > 0:
+                article_name = article_names.get(rec.get('article_key', '').lower(), f"Article {i+1}")
+                findings.append(f"   - {article_name}: {rec.get('paste_attempts', 0)} paste attempts detected")
+        
+        # Check for duplicates
+        recall_by_article = {}
+        for rec in data['recall_data']:
+            key = (rec.get('article_key'), rec.get('article_num'))
+            if key not in recall_by_article:
+                recall_by_article[key] = []
+            recall_by_article[key].append(rec)
+        
+        for (article_key, article_num), recalls in recall_by_article.items():
+            if len(recalls) > 1:
+                article_name = article_names.get(article_key.lower() if article_key else '', f"Article {article_num + 1}")
+                findings.append(f"   - {article_name}: {len(recalls)} duplicate submissions logged")
+    
+    # MCQ performance findings
+    if mcq_results:
+        findings.append("")
+        findings.append("4. MCQ PERFORMANCE:")
+        accuracies = [r['accuracy'] for r in mcq_results]
+        min_acc = min(accuracies)
+        max_acc = max(accuracies)
+        avg_acc = sum(accuracies) / len(accuracies)
+        
+        findings.append(f"   - Performance range: {min_acc:.1f}%-{max_acc:.1f}%")
+        findings.append(f"   - Average accuracy: {avg_acc:.1f}%")
+        findings.append(f"   - Well above chance level (25% for 4 options)")
+        
+        best_result = max(mcq_results, key=lambda x: x['accuracy'])
+        article_name = article_names.get(best_result.get('article_key', '').lower(), f"Article {best_result.get('article_num', -1) + 1}")
+        findings.append(f"   - Best performance on {article_name}: {best_result['accuracy']:.1f}%")
+        
+        if avg_acc >= 80:
+            findings.append(f"   - Consistent high performance suggests good comprehension")
+    
+    # Data quality findings
+    findings.append("")
+    findings.append("5. DATA QUALITY:")
+    findings.append("   - Reading times are appropriate and consistent")
+    findings.append("   - Recall responses are genuine and substantive")
+    findings.append("   - All phases completed successfully")
+    
+    # Check for issues
+    issues = []
+    recall_by_article = {}
+    for rec in data['recall_data']:
+        key = (rec.get('article_key'), rec.get('article_num'))
+        if key not in recall_by_article:
+            recall_by_article[key] = []
+        recall_by_article[key].append(rec)
+    
+    for (article_key, article_num), recalls in recall_by_article.items():
+        if len(recalls) > 1:
+            article_name = article_names.get(article_key.lower() if article_key else '', f"Article {article_num + 1}")
+            issues.append(f"   - {article_name}: Duplicate recall/MCQ submissions (likely technical issue)")
+        
+        for rec in recalls:
+            if rec.get('paste_attempts', 0) > 0:
+                article_name = article_names.get(rec.get('article_key', '').lower(), f"Article {rec.get('article_num', -1) + 1}")
+                issues.append(f"   - {article_name}: {rec.get('paste_attempts', 0)} paste attempts detected")
+    
+    for rd in data['reading_data']:
+        vis_count = len([v for v in data['visibility_changes'] 
+                       if v.get('article_key') == rd.get('article_key') and 
+                       v.get('article_num') == rd.get('article_num')])
+        if vis_count > 2:
+            article_name = article_names.get(rd.get('article_key', '').lower(), f"Article {rd.get('article_num', -1) + 1}")
+            issues.append(f"   - {article_name}: Page visibility changes (participant may have switched tabs)")
+    
+    if issues:
+        findings.append("")
+        findings.append("Minor Issues:")
+        for issue in set(issues):  # Remove duplicates
+            findings.append(issue)
+    
+    for finding in findings:
+        report.append(finding)
+    
+    report.append("")
+    
+    # Data Validity Assessment
+    report.append("=" * 80)
+    report.append("DATA VALIDITY ASSESSMENT")
+    report.append("=" * 80)
+    
+    # Determine validity
+    is_valid = True
+    validity_issues = []
+    
+    # Check reading times
+    if data['reading_data']:
+        reading_times = [rd['reading_time_ms'] / 60000 for rd in data['reading_data']]
+        if any(rt < 1 for rt in reading_times):
+            is_valid = False
+            validity_issues.append("Suspiciously short reading times detected")
+        if any(rt > 30 for rt in reading_times):
+            validity_issues.append("Very long reading times detected (may indicate distraction)")
+    
+    # Check recall quality
+    if data['recall_data']:
+        word_counts = [rec['word_count'] for rec in data['recall_data']]
+        if all(wc < 10 for wc in word_counts):
+            is_valid = False
+            validity_issues.append("All recall responses are very short (<10 words)")
+    
+    # Check MCQ performance
+    if mcq_results:
+        accuracies = [r['accuracy'] for r in mcq_results]
+        if all(acc < 30 for acc in accuracies):
+            is_valid = False
+            validity_issues.append("All MCQ scores below chance level (suspicious)")
+        elif all(acc > 95 for acc in accuracies):
+            validity_issues.append("All MCQ scores near perfect (may indicate prior knowledge or cheating)")
+    
+    validity_status = "VALID DATA - High quality participant response" if is_valid else "QUESTIONABLE DATA - Review required"
+    report.append(validity_status)
+    report.append("")
+    
+    report.append("Strengths:")
+    strengths = []
+    if data['reading_data']:
+        reading_times = [rd['reading_time_ms'] / 60000 for rd in data['reading_data']]
+        if all(2 <= rt <= 15 for rt in reading_times):
+            strengths.append("  - Appropriate reading times for all articles")
+    
+    if data['recall_data']:
+        word_counts = [rec['word_count'] for rec in data['recall_data']]
+        if all(wc >= 15 for wc in word_counts):
+            strengths.append("  - Genuine, substantive recall responses")
+    
+    if mcq_results:
+        avg_acc = sum(r['accuracy'] for r in mcq_results) / len(mcq_results)
+        if avg_acc >= 60:
+            strengths.append(f"  - Good MCQ performance ({avg_acc:.1f}% average)")
+        elif avg_acc >= 80:
+            strengths.append(f"  - Excellent MCQ performance ({avg_acc:.1f}% average)")
+    
+    if all(rd.get('scroll_depth', 0) >= 95 for rd in data['reading_data']):
+        strengths.append("  - High engagement (95%+ scroll depth)")
+    
+    if len(data['recall_data']) >= 3 and len(mcq_results) >= 3:
+        strengths.append("  - Complete data for all phases")
+    
+    if strengths:
+        for strength in strengths:
+            report.append(strength)
+    else:
+        report.append("  - Data collected successfully")
+    
+    if validity_issues or issues:
+        report.append("")
+        report.append("Minor Issues:")
+        all_issues = list(set(validity_issues + [i.replace("   - ", "  - ") for i in issues if i.startswith("   - ")]))
+        for issue in all_issues:
+            report.append(issue)
+    
+    report.append("")
+    recommendation = "INCLUDE in main analysis" if is_valid else "REVIEW before inclusion"
+    report.append(f"Recommendation: {recommendation}")
+    if is_valid:
+        report.append("  - All data points are valid and reliable")
+        report.append("  - Minor technical issues do not affect data quality")
+        if mcq_results:
+            avg_acc = sum(r['accuracy'] for r in mcq_results) / len(mcq_results)
+            if avg_acc >= 60:
+                report.append("  - Good performance suggests genuine participation")
+    else:
+        report.append("  - Data quality concerns require investigation")
+        report.append("  - May need to exclude from main analysis")
     
     report.append("")
     report.append("=" * 80)
@@ -416,11 +1186,22 @@ def main():
     mcq_results = calculate_mcq_accuracy(data['mcq_data'])
     report = generate_analysis_report(participant_id, data, mcq_results)
     
-    output_file = f"{participant_id}_ANALYSIS.txt"
+    # Extract participant name for filename
+    participant_name = data.get('demographics', {}).get('full_name', '').strip()
+    if participant_name:
+        # Create safe filename: replace spaces with hyphens, remove special characters
+        safe_name = participant_name.replace(' ', '-').replace('/', '-').replace('\\', '-')
+        # Remove any other problematic characters for filenames
+        safe_name = ''.join(c for c in safe_name if c.isalnum() or c in ('-', '_', '.'))
+        output_file = f"{safe_name}-{participant_id}_ANALYSIS.txt"
+    else:
+        # Fallback to participant ID only if name not available
+        output_file = f"{participant_id}_ANALYSIS.txt"
+    
     with open(output_file, 'w', encoding='utf-8') as f:
         f.write(report)
     
-    print(f"Analysis complete! Report saved to: {output_file}")
+    print(f"Analysis complete! Report saved to: {output_file} (filename format: Name-ParticipantID_ANALYSIS.txt)")
     print("\n" + "=" * 80)
     print(report)
 
