@@ -421,7 +421,7 @@
             </div>
 
             <button id="submitRecallBtn" onclick="submitRecall()" disabled>
-                {{ tr("Continue to Multiple Choice") }} →
+                {{ tr("Continue to single choice questions with multiple options") }} →
             </button>
         </div>
 
@@ -690,8 +690,8 @@
                 }
                 
                 if (remaining <= 0) {
-                    // Auto-submit MCQ
-                    submitTest();
+                    // Auto-submit MCQ even if not all questions answered
+                    submitTest(true);  // forceSubmit = true
                     return;
                 }
                 
@@ -856,7 +856,8 @@
         }
 
         // Submit full test
-        function submitTest() {
+        // Parameter: forceSubmit - if true, submit even if not all questions answered (used by timer)
+        function submitTest(forceSubmit = false) {
             const mcqData = {};
             let allAnswered = true;
             {% for q_idx in range(questions|length) %}
@@ -868,8 +869,8 @@
             }
             {% endfor %}
 
-            // Block submission if not all answered
-            if (!allAnswered) {
+            // Block submission if not all answered (unless forced by timer)
+            if (!allAnswered && !forceSubmit) {
                 // Scroll to first unanswered question
                 {% for q_idx in range(questions|length) %}
                 if (!document.querySelector('input[name="q{{ q_idx }}"]:checked')) {
@@ -939,8 +940,17 @@
             }
         });
 
+        // Track if initialization has already happened
+        let recallInitialized = false;
+        
         // Initialize when DOM is ready
         function initializeRecall() {
+            // Prevent multiple initializations
+            if (recallInitialized) {
+                console.log('Recall already initialized, skipping...');
+                return;
+            }
+            
             console.log('Initializing recall section');
             
             // Check if elements exist
@@ -963,12 +973,18 @@
             // If requested (via /skip_recall/<idx>), start directly on MCQs
             if (START_ON_MCQ) {
                 showMCQOnly();
+                recallInitialized = true;
             } else {
-                // Initialize with one bullet point
+                // Initialize with exactly one bullet point
                 if (bulletPointsContainer) {
+                    // Clear any existing bullet points first (safety check)
+                    bulletPointsContainer.innerHTML = '';
+                    bulletPointCount = 0;
+                    // Add exactly one bullet point
                     window.addBulletPoint();
                     // Update counters again after adding bullet point
                     setTimeout(updateCounters, 100);
+                    recallInitialized = true;
                 } else {
                     console.error('bulletPoints container not found during initialization');
                     // Retry after a short delay

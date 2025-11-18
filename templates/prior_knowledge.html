@@ -148,7 +148,7 @@ function submitAll(){
     {% for term in familiarity_terms %}
     const fam{{ loop.index0 }} = document.querySelector('input[name="fam_{{ term }}"]:checked');
     if(!fam{{ loop.index0 }}){
-        alert('Please complete all familiarity ratings');
+        alert('{{ tr("Please complete all familiarity ratings") }}');
         nextSection(1); return;
     }
     familiarity['{{ term }}'] = parseInt(fam{{ loop.index0 }}.value);
@@ -159,7 +159,7 @@ function submitAll(){
     {% for term in recognition_terms %}
     const rec{{ loop.index0 }} = document.querySelector('input[name="rec_{{ term }}"]:checked');
     if(!rec{{ loop.index0 }}){
-        alert('Please complete all term recognition questions');
+        alert('{{ tr("Please complete all term recognition questions") }}');
         nextSection(2); return;
     }
     termRecognition['{{ term }}'] = rec{{ loop.index0 }}.value;
@@ -171,7 +171,7 @@ function submitAll(){
     {% set qidx = loop.index0 %}
     const quiz{{ qidx }} = document.querySelector('input[name="quiz_{{ qidx }}"]:checked');
     if(!quiz{{ qidx }}){
-        alert('Please answer all quiz questions');
+        alert('{{ tr("Please answer all quiz questions") }}');
         nextSection(3); return;
     }
     if(parseInt(quiz{{ qidx }}.value) === parseInt(quiz{{ qidx }}.dataset.correct)){
