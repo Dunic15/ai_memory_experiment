@@ -395,7 +395,7 @@ CRISPR now extends to agriculture, ecology, and health governance, requiring tra
             {"q": "Early CRISPR agricultural trials created _______ as editing markers.", "options": ["fluorescent proteins", "bioluminescent plants", "pigment variations", "no commercial products"], "correct": 3},
             {"q": "Scientists reprogrammed CRISPR using _______ to direct Cas enzymes.", "options": ["protein markers", "DNA templates", "guide RNA", "chemical signals"], "correct": 2},
             {"q": "The CRISPR process follows: guide, cut, and _______", "options": ["restore", "repair", "replicate", "remove"], "correct": 1},
-            {"q": "Compared to TALENs, CRISPR is faster, cheaper, and _______", "options": ["easier to program", "widely adopted", "highly adaptable", "technically refined"], "correct": 2},
+            {"q": "Compared to TALENs, CRISPR is faster, cheaper, and _______", "options": ["easier to program", "widely adopted", "highly adaptable", "technically refined"], "correct": 0},
             {"q": "Off-target edits occur when guide RNAs _______", "options": ["bind wrong sites", "degrade quickly", "fail to activate", "lose stability"], "correct": 0},
             {"q": "Base editors modify DNA without _______", "options": ["using guide RNA", "breaking both strands", "requiring enzymes", "cellular repair"], "correct": 1},
             {"q": "AAV vectors are efficient but have limited _______", "options": ["precision", "capacity", "persistence", "flexibility"], "correct": 1},
@@ -467,36 +467,33 @@ Governments allocated tens of billions (U.S. $52.7B, EU €43B) for domestic pro
     }
 }
 
-# Section 1: Familiarity Ratings (10 items, 1-7 Likert)
+# Section 1: Familiarity Ratings (18 items, 1-7 Likert)
 PRIOR_KNOWLEDGE_FAMILIARITY_TERMS = [
-    "Heat flux",
-    "Permeable pavement",
-    "Gene drive",
-    "Base editing",
-    "Prime editing",
-    "Wafer",
-    "Lithography mask",
-    "System-on-a-chip (SoC)",
-    "Reflective coating",
-    "Cooling corridor"
+    "Heat flux",                                    # Urban Climate – Article 3 (Urban Heat)
+    "Permeable pavement",                           # Urban Design – Article 3 (Urban Heat)
+    "Reflective coating",                           # Environmental Physics – Article 3 (Urban Heat)
+    "Cooling corridor",                             # Urban Planning – Article 3 (Urban Heat)
+    "Urban canyon",                                 # Urban Climatology – Article 3 (Urban Heat)
+    "Albedo",                                       # Surface Energy Balance – Article 3 (Urban Heat)
+    "Gene drive",                                   # Biotechnology / Ecology – Article 1 (CRISPR)
+    "Base editing",                                 # Genome Engineering – Article 1 (CRISPR)
+    "Prime editing",                                # Genome Engineering – Article 1 (CRISPR)
+    "Adeno-associated virus (AAV)",                 # Gene Therapy Vectors – Article 1 (CRISPR)
+    "Lipid nanoparticle",                           # Drug Delivery / mRNA – Article 1 (CRISPR)
+    "Germ-line editing",                            # Human Genetics / Bioethics – Article 1 (CRISPR)
+    "Wafer",                                        # Semiconductor Engineering – Article 2 (Semiconductors)
+    "Lithography mask",                             # Semiconductor Fabrication – Article 2 (Semiconductors)
+    "System-on-a-chip (SoC)",                       # Microelectronics Design – Article 2 (Semiconductors)
+    "Photolithography",                             # Microfabrication Process – Article 2 (Semiconductors)
+    "Legacy node",                                  # Semiconductor Process Technology – Article 2 (Semiconductors)
+    "Extreme ultraviolet lithography (EUV)"         # Advanced Lithography – Article 2 (Semiconductors)
 ]
 
-# Section 2: Concept Recognition Check (10 different terms, Yes/No)
-PRIOR_KNOWLEDGE_RECOGNITION_TERMS = [
-    "Urban heat island",
-    "Green roof",
-    "CRISPR-Cas9",
-    "Guide RNA",
-    "Off-target mutation",
-    "Foundry",
-    "Photolithography",
-    "Microcontroller",
-    "Thermal mass",
-    "Evapotranspiration"
-]
+# Section 2: Concept Recognition Check (removed - no longer used)
+PRIOR_KNOWLEDGE_RECOGNITION_TERMS = []
 
 # Keep old variable for backward compatibility (used in Section 3 quiz)
-PRIOR_KNOWLEDGE_TERMS = PRIOR_KNOWLEDGE_FAMILIARITY_TERMS + PRIOR_KNOWLEDGE_RECOGNITION_TERMS
+PRIOR_KNOWLEDGE_TERMS = PRIOR_KNOWLEDGE_FAMILIARITY_TERMS
 
 PRIOR_KNOWLEDGE_QUIZ = [
     {"q": "What does *albedo* measure?", "options": ["Heat capacity", "Reflectivity of surfaces", "Humidity levels", "Wind speed"], "correct": 1},
@@ -737,7 +734,7 @@ def skip_reading():
     session["article_order"] = session.get("article_order", ["uhi", "crispr", "semiconductors"])
     article_num = int(session.get("current_article", 0))
     session.modified = True
-    # Skip current reading → go to the 5-minute pre-test break for this article
+    # Skip current reading → go to the 3-minute pre-test break for this article
     return redirect(url_for("break_before_test", article_num=article_num))
 
 @app.route("/skip_test/<int:article_num>")
@@ -964,12 +961,8 @@ def prior_knowledge():
     return render_template(
         "prior_knowledge.html",
         familiarity_terms=[_auto_translate(term, _get_lang()) for term in PRIOR_KNOWLEDGE_FAMILIARITY_TERMS],
-        recognition_terms=[_auto_translate(term, _get_lang()) for term in PRIOR_KNOWLEDGE_RECOGNITION_TERMS],
-        quiz=[{
-            "q": _auto_translate(q["q"], _get_lang()),
-            "options": [_auto_translate(opt, _get_lang()) for opt in q["options"]],
-            "correct": q["correct"]
-        } for q in PRIOR_KNOWLEDGE_QUIZ],
+        recognition_terms=[],  # Empty - Section 2 removed
+        quiz=[],  # Empty - Section 3 removed
         pk_deadline=pk_deadline,
         server_now=int(datetime.now().timestamp()),
         fixed_minutes=5,
@@ -987,17 +980,15 @@ def submit_prior_knowledge():
 
     familiarity_mean = (sum(map(int, fam.values())) / max(1, len(fam))) if fam else 0
     term_recognition_count = sum(1 for v in rec.values() if str(v).lower() == "yes")
-    prior_knowledge_score = quiz_score / 5  # 5 PK items
+    prior_knowledge_score = quiz_score / max(1, len(PRIOR_KNOWLEDGE_QUIZ)) if PRIOR_KNOWLEDGE_QUIZ else 0  # Normalize by quiz length (0 if no quiz)
     concept_count = len(concept_list.split()) if concept_list else 0
 
     exclude = False
     reasons = []
     if familiarity_mean >= 6.0:
         exclude, reasons = True, reasons + ["high_familiarity"]
-    if term_recognition_count >= 8:
-        exclude, reasons = True, reasons + ["high_term_recognition"]
-    if prior_knowledge_score == 1.0:
-        exclude, reasons = True, reasons + ["perfect_quiz_score"]
+    # Section 2 removed - no longer checking term_recognition_count
+    # Section 3 removed - no longer checking quiz_score
 
     log_data(session["participant_id"], "prior_knowledge", {
         "familiarity_mean": familiarity_mean,
@@ -1014,6 +1005,19 @@ def submit_prior_knowledge():
     # IMPORTANT: Do NOT exclude participants during testing runs.
     # We keep logging the exclusion metrics but always continue to AI Trust.
     return jsonify({"redirect": url_for("ai_trust")})
+
+@app.route("/instructions")
+@require_pid
+def instructions():
+    """Display instructions page before starting the experiment"""
+    return render_template("instructions.html")
+
+@app.route("/instructions_ready", methods=["POST"])
+@require_pid
+def instructions_ready():
+    """Handle ready button click from instructions page"""
+    log_data(session["participant_id"], "instructions", {"viewed": True, "ready_clicked": True})
+    return redirect(url_for("randomize"))
 
 @app.route("/ai_trust")
 @require_pid
@@ -1060,7 +1064,7 @@ def submit_ai_trust():
     # Reset AI"‘Trust timer so revisits (if any) start a fresh 5"‘minute window
     session.pop("ait_started_at", None)
 
-    return jsonify({"redirect": url_for("randomize")})
+    return jsonify({"redirect": url_for("instructions")})
 
 # =============================================================================
 # COUNTERBALANCED RANDOMIZATION SYSTEM
@@ -1320,7 +1324,7 @@ def log_reading():
 def reading_complete():
     """
     Called by reading.html when the participant finishes reading.
-    Sends them to the 5-minute break that occurs BEFORE the test of the current article.
+    Sends them to the 3-minute break that occurs BEFORE the test of the current article.
     """
     article_num = int(session.get("current_article", 0))
     return redirect(url_for("break_before_test", article_num=article_num))
@@ -1363,12 +1367,38 @@ def test_phase(article_num: int):
     # One-shot flag: start the test page directly on MCQ if set by a skip route
     start_on_mcq = bool(session.pop("start_on_mcq", False))
 
+    # Randomize MCQ questions order for this article
+    # Use a session key to ensure consistent randomization per article
+    questions_key = f"questions_order_{article_num}"
+    mapping_key = f"questions_mapping_{article_num}"  # Maps randomized index -> original index
+    
+    if questions_key not in session:
+        # Create a shuffled list of question indices
+        questions_list = list(article["questions"])
+        # Create list of original indices
+        original_indices = list(range(len(questions_list)))
+        # Shuffle both lists together to maintain mapping
+        combined = list(zip(questions_list, original_indices))
+        random.shuffle(combined)
+        questions_list, shuffled_original_indices = zip(*combined)
+        questions_list = list(questions_list)
+        
+        # Create mapping: randomized_index -> original_index
+        question_mapping = {i: orig_idx for i, orig_idx in enumerate(shuffled_original_indices)}
+        
+        session[questions_key] = questions_list
+        session[mapping_key] = question_mapping
+    else:
+        # Use the previously shuffled order (consistent across page reloads)
+        questions_list = session[questions_key]
+        question_mapping = session.get(mapping_key, {})
+    
     return render_template(
         "test.html",
         article_num=article_num,
         article_key=article_key,
         article_title=article["title"],
-        questions=article["questions"],
+        questions=questions_list,  # Use randomized order
         test_mode=TEST_MODE,
         show_recall_counters=False,
         recall_total_ms=recall_total_ms,
@@ -1397,19 +1427,38 @@ def mcq_only(article_num: int):
     
     # Log that recall was skipped
     try:
-        log_data(session["participant_id"], "recall_skipped", {
+        log_data(session["participant_id"], "recall_response", {
             "article_num": article_num,
-            "article_key": article_key
+            "article_key": article_key,
+            "timing": (session.get("timing_order") or [])[article_num] if article_num < len(session.get("timing_order") or []) else "unknown",
+            "skipped": True
         })
     except Exception:
         pass
+    
+    # Randomize MCQ questions order (same logic as test route)
+    questions_key = f"questions_order_{article_num}"
+    mapping_key = f"questions_mapping_{article_num}"
+    
+    if questions_key not in session:
+        questions_list = list(article["questions"])
+        original_indices = list(range(len(questions_list)))
+        combined = list(zip(questions_list, original_indices))
+        random.shuffle(combined)
+        questions_list, shuffled_original_indices = zip(*combined)
+        questions_list = list(questions_list)
+        question_mapping = {i: orig_idx for i, orig_idx in enumerate(shuffled_original_indices)}
+        session[questions_key] = questions_list
+        session[mapping_key] = question_mapping
+    else:
+        questions_list = session[questions_key]
     
     return render_template(
         "test.html",
         article_num=article_num,
         article_key=article_key,
         article_title=article["title"],
-        questions=article["questions"],
+        questions=questions_list,  # Use randomized order
         test_mode=True,  # Force test mode behavior
         show_recall_counters=False,
         start_on_mcq=True,  # Skip to MCQ
@@ -1459,16 +1508,28 @@ def submit_test():
     if mcq_data:
         article_key = data.get("article_key")
         article = ARTICLES.get(article_key) if article_key else None
+        
+        # Get the mapping from randomized order to original order
+        mapping_key = f"questions_mapping_{article_num}"
+        question_mapping = session.get(mapping_key, {})
+        # If no mapping exists, assume questions weren't randomized (backward compatibility)
+        if not question_mapping:
+            question_mapping = {i: i for i in range(len(article.get("questions", [])))}
+        
         # Guard: require all MCQ questions answered before proceeding
         if article and "questions" in article:
             questions = article["questions"]
             missing_or_invalid = []
-            for q_idx, q in enumerate(questions):
-                q_key = f"q{q_idx}"
+            # Check using randomized indices (as submitted)
+            for rand_idx in range(len(questions)):
+                q_key = f"q{rand_idx}"
                 ans = mcq_data.get(q_key, None)
+                # Get original index to access the question
+                orig_idx = question_mapping.get(rand_idx, rand_idx)
+                q = questions[orig_idx] if orig_idx < len(questions) else None
                 # Valid answers are integers in option index range
                 try:
-                    options_len = len(q.get("options", []))
+                    options_len = len(q.get("options", [])) if q else 0
                 except Exception:
                     options_len = 0
                 if ans is None or not isinstance(ans, int) or ans < 0 or (options_len and ans >= options_len):
@@ -1483,23 +1544,37 @@ def submit_test():
         
         if article and "questions" in article:
             questions = article["questions"]
-            for q_idx, question in enumerate(questions):
+            # Process answers using randomized indices, but check against original question order
+            for rand_idx in range(len(questions)):
                 total_questions += 1
-                q_key = f"q{q_idx}"
+                q_key = f"q{rand_idx}"  # Answer key from frontend (randomized order)
                 participant_answer = mcq_data.get(q_key, None)
-                correct_answer = question.get("correct", None)
                 
-                # Check if answer is correct (handle None/missing answers)
-                is_correct = (participant_answer is not None and 
-                             participant_answer == correct_answer)
-                question_accuracy[q_key] = {
-                    "participant_answer": participant_answer,
-                    "correct_answer": correct_answer,
-                    "is_correct": is_correct
-                }
+                # Map randomized index to original index
+                orig_idx = question_mapping.get(rand_idx, rand_idx)
+                question = questions[orig_idx] if orig_idx < len(questions) else None
                 
-                if is_correct:
-                    correct_count += 1
+                # Debug logging
+                print(f"[MCQ DEBUG] Processing q{rand_idx} (orig Q{orig_idx + 1}): "
+                      f"participant_answer={participant_answer}, "
+                      f"mapping={rand_idx}→{orig_idx}")
+                
+                if question:
+                    correct_answer = question.get("correct", None)
+                    
+                    # Check if answer is correct (handle None/missing answers)
+                    is_correct = (participant_answer is not None and 
+                                 participant_answer == correct_answer)
+                    question_accuracy[q_key] = {
+                        "participant_answer": participant_answer,
+                        "correct_answer": correct_answer,
+                        "is_correct": is_correct,
+                        "original_question_index": orig_idx,  # Store original index for reference
+                        "randomized_question_index": rand_idx
+                    }
+                    
+                    if is_correct:
+                        correct_count += 1
         
         # Calculate accuracy rate as percentage
         accuracy_rate = (correct_count / total_questions * 100) if total_questions > 0 else 0.0
@@ -1518,19 +1593,85 @@ def submit_test():
             "question_accuracy": json.dumps(question_accuracy)
         })
 
+    # Store article_num in session for post-article ratings
+    session["last_completed_article_num"] = article_num
+    session.modified = True
+
+    # After MCQ, redirect to post-article ratings (before break)
+    return jsonify({"redirect": url_for("post_article_ratings", article_num=article_num)})
+
+# ---- Post-Article Ratings (after MCQ, before break) ----
+@app.route("/post_article_ratings/<int:article_num>")
+@require_pid
+def post_article_ratings(article_num: int):
+    """Display post-article ratings screen after MCQ completion"""
+    article_order = session.get("article_order") or []
+    timing_order = session.get("timing_order") or []
+    
+    if not article_order or article_num >= len(article_order):
+        return redirect(url_for("manipulation_check"))
+    
+    article_key = article_order[article_num]
+    timing = timing_order[article_num] if article_num < len(timing_order) else None
+    
+    return render_template(
+        "post_article_ratings.html",
+        article_num=article_num,
+        article_key=article_key,
+        timing=timing
+    )
+
+@app.route("/submit_post_article_ratings", methods=["POST"])
+@require_pid
+def submit_post_article_ratings():
+    """Submit post-article ratings data"""
+    data = request.get_json(force=True) or {}
+    
+    # Get current article info from session (should be set from previous test phase)
+    article_order = session.get("article_order") or []
+    timing_order = session.get("timing_order") or []
+    
+    # Try to get article_num from last test phase or from URL parameter
+    # We'll store it in session during test submission
+    article_num = session.get("last_completed_article_num")
+    if article_num is None:
+        # Fallback: try to infer from data or redirect
+        return jsonify({"error": "Article number not found"}), 400
+    
+    if article_num >= len(article_order):
+        return redirect(url_for("manipulation_check"))
+    
+    article_key = article_order[article_num]
+    timing = timing_order[article_num] if article_num < len(timing_order) else None
+    
+    # Log the ratings data
+    log_data(session["participant_id"], "post_article_ratings", {
+        "article_num": article_num,
+        "article_key": article_key,
+        "timing": timing,
+        "load_mental_effort": int(data.get("load_mental_effort", 0)),
+        "load_task_difficulty": int(data.get("load_task_difficulty", 0)),
+        "ai_help_understanding": int(data.get("ai_help_understanding", 0)),
+        "ai_help_memory": int(data.get("ai_help_memory", 0)),
+        "ai_made_task_easier": int(data.get("ai_made_task_easier", 0)),
+        "ai_satisfaction": int(data.get("ai_satisfaction", 0)),
+        "ai_better_than_no_ai": int(data.get("ai_better_than_no_ai", 0)) if data.get("ai_better_than_no_ai") else None,
+        "mcq_overall_confidence": int(data.get("mcq_overall_confidence", 0))
+    })
+    
+    # Determine next step: break for articles 0-1, manipulation_check for article 2
     next_article = article_num + 1
     if next_article >= 3:
-        # After Article 3 test, go directly to manipulation check (no break after test)
+        # After Article 3 ratings, go directly to manipulation check
         return jsonify({"redirect": url_for("manipulation_check")})
-    # For articles 0 and 1: after test, go to 1-minute break, then break will redirect to next article reading
+    # For articles 0 and 1: after ratings, go to break, then break will redirect to next article reading
     return jsonify({"redirect": url_for("short_break", next_article=next_article)})
-
 
 # ---- Alias for after-reading break (backward compatibility/clarity) ----
 @app.route("/break_after_reading/<int:article_num>")
 @require_pid
 def break_after_reading(article_num: int):
-    # Break after reading (5 minutes) - always goes to test after break
+    # Break after reading (3 minutes) - always goes to test after break
     # After test, if article 2, will go to manipulation_check; otherwise go to next article reading
     return render_template("break.html", next_article=article_num, after_reading=True, test_mode=TEST_MODE, go_to_manipulation=False)
 
@@ -1709,7 +1850,7 @@ def _pre_translate_ui_text():
         "We recommend at least 3 idea sentences for meaningful recall. You currently have",
         "Important:", "Important Points:",
         "Must try your best to remember as many information in the article.",
-        "The accuracy of recall determines the amount of rewards.",
+        "Reward allocation is directly proportional to test response accuracy",
         "sentence(s).", "Would you like to submit anyway or keep writing?",
         "Please answer all questions",
         
@@ -1729,6 +1870,28 @@ def _pre_translate_ui_text():
         
         # Consent page
         "Important information about AI summaries",
+        
+        # Post-article ratings
+        "Short survey about this article",
+        "Please answer the following questions about your experience with this article.",
+        "Use the scale from 1 to 7 for each statement, where:",
+        "Strongly disagree", "Strongly agree",
+        "Cognitive Load", "AI Experience", "Overall MCQ Confidence",
+        "How mentally demanding was this task?",
+        "Not at all demanding", "Extremely demanding",
+        "How difficult was it to understand the content of this article?",
+        "Very easy", "Very difficult",
+        "The AI-generated summary helped me understand the article.",
+        "The AI-generated summary helped me remember the content.",
+        "The AI assistance made the task easier and more efficient.",
+        "I am satisfied with the AI assistance provided for this article.",
+        "I prefer completing this kind of task with AI support rather than without it.",
+        "(Optional)",
+        "Overall, how confident are you in your answers to the multiple-choice questions for this article?",
+        "Not confident at all", "Extremely confident", "Not confident",
+        "Please answer all required questions before continuing.",
+        "Submitting...", "An error occurred. Please try again.",
+        "Skip Break",
     ]
     
     translated_count = 0

@@ -130,6 +130,23 @@
             font-size: 12px;
             font-style: italic;
         }
+        .skip-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            transition: all 0.2s;
+            background: white;
+        }
+        .skip-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body>
@@ -144,7 +161,7 @@
             {{ tr("Great work! Time for a short pause before Article") }} <strong>{{ next_article + 1 }}</strong> {{ tr("of 3.") }}
             {% endif %}
         </p>
-        <div class="timer" id="timer">{{ '5:00' if after_reading else '1:00' }}</div>
+        <div class="timer" id="timer">{{ '3:00' if after_reading else '2:00' }}</div>
         <div class="progress"><div class="progress-fill" id="progressBar"></div></div>
 
         <div class="tips">
@@ -168,15 +185,15 @@
         const nextArticle = {{ next_article }};
         const AFTER_READING = {{ 'true' if after_reading else 'false' }};
 
-        // Durations (seconds): 5 minutes after reading (not skippable), 1 minute between articles
-        const DURATION_AFTER_READING = 300;
-        const DURATION_BETWEEN_ARTICLES = 60;
+        // Durations (seconds): 3 minutes after reading (not skippable), 2 minutes between articles
+        const DURATION_AFTER_READING = 180;
+        const DURATION_BETWEEN_ARTICLES = 120;
         const TOTAL_DURATION = AFTER_READING ? DURATION_AFTER_READING : DURATION_BETWEEN_ARTICLES;
 
         let timeLeft = TOTAL_DURATION;
 
-        // No early continue for after-reading break (5 min not skippable)
-        // For between-articles break (1 min), allow early continue
+        // No early continue for after-reading break (3 min not skippable)
+        // For between-articles break (2 min), allow early continue
         if (!AFTER_READING) {
             const btn = document.getElementById('continueBtn');
             if (btn) btn.style.display = 'inline-block';

@@ -421,7 +421,7 @@
             </div>
 
             <button id="submitRecallBtn" onclick="submitRecall()" disabled>
-                {{ tr("Continue to single choice questions with multiple options") }} →
+                {{ tr("Next Part") }} →
             </button>
         </div>
 
@@ -446,7 +446,7 @@
             </div>
             {% endfor %}
 
-            <button id="submitMcqBtn" onclick="submitTest()" disabled>{{ tr("Submit Test") }} →</button>
+            <button id="submitMcqBtn" onclick="submitTest()" disabled>{{ tr("Continue") }} →</button>
         </div>
     </div>
 
@@ -648,6 +648,12 @@
         
         // Track when a MCQ question is answered
         function trackMCQAnswer(qIdx) {
+            // Debug: Log the answer selection
+            const selected = document.querySelector(`input[name="q${qIdx}"]:checked`);
+            if (selected) {
+                console.log(`[MCQ DEBUG] Question ${qIdx}: User selected option ${selected.value} (${selected.dataset.option})`);
+                console.log(`[MCQ DEBUG] Radio button value="${selected.value}", data-option="${selected.dataset.option}"`);
+            }
             if (mcqStartTime === null) {
                 // MCQ hasn't started yet, shouldn't happen but guard against it
                 return;
@@ -865,9 +871,15 @@
             if (!q{{ q_idx }}) {
                 allAnswered = false;
             } else {
-                mcqData['q{{ q_idx }}'] = parseInt(q{{ q_idx }}.value);
+                const selectedValue = parseInt(q{{ q_idx }}.value);
+                mcqData['q{{ q_idx }}'] = selectedValue;
+                // Debug logging
+                console.log(`[MCQ DEBUG] Collected answer for q{{ q_idx }}: ${selectedValue} (option ${String.fromCharCode(97 + selectedValue)})`);
             }
             {% endfor %}
+            
+            // Debug: Log the complete MCQ data before submission
+            console.log('[MCQ DEBUG] Complete MCQ data to submit:', JSON.stringify(mcqData, null, 2));
 
             // Block submission if not all answered (unless forced by timer)
             if (!allAnswered && !forceSubmit) {

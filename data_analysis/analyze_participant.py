@@ -20,9 +20,9 @@ ORIGINAL_CORRECT_ANSWERS = {
 
 # NEW ANSWER KEYS (for participants who take the test after MCQ change)
 NEW_CORRECT_ANSWERS = {
-    'crispr': [1, 2, 1, 0, 2, 0, 2, 0, 2, 3, 1, 3, 2, 1, 0],
-    'semiconductors': [2, 1, 1, 0, 0, 2, 2, 1, 0, 1, 3, 1, 2, 1, 3],
-    'uhi': [0, 2, 0, 2, 1, 0, 3, 1, 2, 0, 1, 2, 1, 2, 2]
+    'crispr': [0, 3, 2, 1, 0, 0, 1, 1, 3, 0, 2, 1, 2, 0, 3],  # Q5 corrected to 0 (easier to program)
+    'semiconductors': [1, 2, 0, 1, 3, 2, 3, 0, 3, 1, 3, 2, 0, 0, 1],  # Updated based on provided answer key
+    'uhi': [1, 2, 3, 0, 1, 2, 2, 0, 1, 2, 2, 1, 3, 0, 1]  # Updated based on provided answer key
 }
 
 # Use original answer keys by default (for existing participants)
@@ -42,19 +42,19 @@ ORIGINAL_FALSE_LURE_MAP = {
 # NEW: All articles have false lure at Q2 (index 1)
 NEW_FALSE_LURE_MAP = {
     'crispr': {
-        'question_index': 1,  # Q2 (0-indexed)
-        'false_lure_option_index': 0,  # Option index containing false lure
-        'description': 'Bioluminescent marker plants - false lure about agricultural implementations'
+        'question_index': 1,  # Q2 (0-indexed) - FALSE LURE question
+        'false_lure_option_index': 1,  # Option b (index 1) - "bioluminescent plants" is the false lure
+        'description': 'Bioluminescent plants - false lure about agricultural editing markers'
     },
     'semiconductors': {
-        'question_index': 1,  # Q2 (0-indexed)
-        'false_lure_option_index': 0,  # Option index containing false lure
-        'description': 'Ultra-pure resins - false lure about specialized materials'
+        'question_index': 9,  # Q10 (0-indexed) - FALSE LURE question
+        'false_lure_option_index': 0,  # Option a (index 0) - "quantum processors" is the false lure
+        'description': 'Quantum processors - false lure about advanced manufacturing technology'
     },
     'uhi': {
-        'question_index': 1,  # Q2 (0-indexed)
-        'false_lure_option_index': 0,  # Option index containing false lure
-        'description': 'Stored heat releases gradually - false lure about nighttime temperatures'
+        'question_index': 4,  # Q5 (0-indexed) - FALSE LURE question
+        'false_lure_option_index': 2,  # Option c (index 2) - "photocatalytic roof tiles" is the false lure
+        'description': 'Photocatalytic roof tiles - false lure about cooling technology'
     }
 }
 
@@ -74,6 +74,7 @@ def parse_csv_log(log_file_path):
         'visibility_changes': [],  # Track page visibility changes
         'recall_data': [],
         'mcq_data': [],
+        'post_article_ratings': [],
         'manipulation_check': {}
     }
 
@@ -339,6 +340,34 @@ def parse_csv_log(log_file_path):
                             'article_key': article_key,
                             'timing': timing,
                             'answers': mcq_answers
+                        })
+                elif phase == 'post_article_ratings':
+                    # Schema: timestamp, phase, article_num, article_key, timing,
+                    # load_mental_effort, load_task_difficulty, ai_help_understanding, 
+                    # ai_help_memory, ai_made_task_easier, ai_satisfaction, 
+                    # ai_better_than_no_ai (optional), mcq_overall_confidence
+                    if len(parts) >= 9:
+                        def _as_int_safe(idx, default=-1):
+                            try:
+                                return int(parts[idx]) if len(parts) > idx and parts[idx] else default
+                            except:
+                                return default
+                        article_num = _as_int_safe(2, -1)
+                        article_key = parts[3] if len(parts) > 3 else ''
+                        timing = parts[4] if len(parts) > 4 else ''
+                        data['post_article_ratings'].append({
+                            'timestamp': timestamp,
+                            'article_num': article_num,
+                            'article_key': article_key,
+                            'timing': timing,
+                            'load_mental_effort': _as_int_safe(5),
+                            'load_task_difficulty': _as_int_safe(6),
+                            'ai_help_understanding': _as_int_safe(7),
+                            'ai_help_memory': _as_int_safe(8),
+                            'ai_made_task_easier': _as_int_safe(9),
+                            'ai_satisfaction': _as_int_safe(10),
+                            'ai_better_than_no_ai': _as_int_safe(11, -1),  # Optional field
+                            'mcq_overall_confidence': _as_int_safe(12)  # Last field
                         })
                 elif phase == 'manipulation_check':
                     if len(parts) >= 4:
@@ -688,19 +717,29 @@ def generate_analysis_report(participant_id, data, mcq_results):
         report.append("")
     
     # Process synchronous mode summary viewing
-    # Group by article_key only (article_num in overlay events is overlay number, not article number)
+    # Group by article_key and collect all open/close events with timestamps
     sync_summaries = {}
     for event in data['summary_overlay_events']:
-        if event.get('event') == 'closed' and event.get('timing') == 'synchronous':
+        if event.get('timing') == 'synchronous':
             article_key = event.get('article_key')
             if article_key not in sync_summaries:
-                sync_summaries[article_key] = {'durations': [], 'count': 0}
-            sync_summaries[article_key]['durations'].append(event.get('duration_ms', 0))
-            sync_summaries[article_key]['count'] += 1
+                sync_summaries[article_key] = {'opens': [], 'closes': []}
+            
+            if event.get('event') == 'opened':
+                sync_summaries[article_key]['opens'].append({
+                    'timestamp': event.get('timestamp'),
+                    'article_num': event.get('article_num', -1)
+                })
+            elif event.get('event') == 'closed':
+                sync_summaries[article_key]['closes'].append({
+                    'timestamp': event.get('timestamp'),
+                    'duration_ms': event.get('duration_ms', 0),
+                    'article_num': event.get('article_num', -1)
+                })
     
-    # Find the actual article number from reading_data
-    for article_key, info in sync_summaries.items():
-        # Find article number from reading_data
+    # Match opens with closes and calculate individual durations
+    for article_key, events in sync_summaries.items():
+        # Find the actual article number from reading_data
         article_num = -1
         for rd in data['reading_data']:
             if rd.get('article_key') == article_key and rd.get('timing') == 'synchronous':
@@ -708,15 +747,68 @@ def generate_analysis_report(participant_id, data, mcq_results):
                 break
         
         article_name = article_names.get(article_key.lower() if article_key else '', article_key.upper() if article_key else 'Unknown')
-        total_ms = sum(info['durations'])
+        
+        # Sort opens and closes by timestamp
+        opens = sorted(events['opens'], key=lambda x: x['timestamp'])
+        closes = sorted(events['closes'], key=lambda x: x['timestamp'])
+        
+        # Match opens with closes (assuming they come in pairs)
+        individual_sessions = []
+        for i, close_event in enumerate(closes):
+            duration_ms = close_event.get('duration_ms', 0)
+            individual_sessions.append({
+                'session_num': i + 1,
+                'duration_ms': duration_ms,
+                'close_timestamp': close_event.get('timestamp')
+            })
+        
+        # If we have opens but no closes (or vice versa), handle gracefully
+        if len(opens) != len(closes):
+            # Use the closes we have (they contain duration_ms)
+            pass
+        
+        # Calculate totals
+        total_ms = sum(s['duration_ms'] for s in individual_sessions)
         total_sec = total_ms / 1000
         total_min = total_sec / 60
+        
         report.append(f"Article {article_num + 1 if article_num >= 0 else '?'} ({article_name}) - Synchronous:")
-        report.append(f"  Summary Viewing Time: {total_ms:,} ms ({total_sec:.2f} seconds = {total_min:.2f} minutes)")
-        report.append(f"  Summary Overlay Opens: {info['count']}")
-        if len(info['durations']) > 1:
-            avg_duration = total_ms / len(info['durations'])
-            report.append(f"  Average Duration per Open: {avg_duration:.0f} ms ({avg_duration/1000:.2f} seconds)")
+        
+        if len(individual_sessions) > 0:
+            report.append(f"  Number of Times Opened: {len(individual_sessions)}")
+            report.append(f"  Individual Opening Durations:")
+            for session in individual_sessions:
+                dur_sec = session['duration_ms'] / 1000
+                dur_min = dur_sec / 60
+                report.append(f"    Opening #{session['session_num']}: {session['duration_ms']:,} ms ({dur_sec:.2f} seconds = {dur_min:.2f} minutes)")
+            
+            report.append(f"  Total Summary Viewing Time: {total_ms:,} ms ({total_sec:.2f} seconds = {total_min:.2f} minutes)")
+            
+            if len(individual_sessions) > 1:
+                avg_duration = total_ms / len(individual_sessions)
+                report.append(f"  Average Duration per Open: {avg_duration:.0f} ms ({avg_duration/1000:.2f} seconds)")
+        else:
+            # Check if there's data in reading_complete
+            for rd in data['reading_data']:
+                if rd.get('article_key') == article_key and rd.get('timing') == 'synchronous':
+                    summary_time_ms = rd.get('summary_time_ms', 0)
+                    overlay_count = rd.get('overlay_count', 0)
+                    if summary_time_ms > 0:
+                        summary_sec = summary_time_ms / 1000
+                        summary_min = summary_sec / 60
+                        report.append(f"  Number of Times Opened: {overlay_count}")
+                        report.append(f"  Total Summary Viewing Time: {summary_time_ms:,} ms ({summary_sec:.2f} seconds = {summary_min:.2f} minutes)")
+                        if overlay_count > 1:
+                            avg_duration = summary_time_ms / overlay_count
+                            report.append(f"  Average Duration per Open: {avg_duration:.0f} ms ({avg_duration/1000:.2f} seconds)")
+                    else:
+                        report.append("  Summary Viewing Time: 0 ms (participant did not open the summary overlay)")
+                        if overlay_count > 0:
+                            report.append(f"  Note: Overlay count logged as {overlay_count} but no viewing time recorded")
+                    break
+            else:
+                report.append("  Summary Viewing Time: 0 ms (participant did not open the summary overlay)")
+        
         report.append("")
     
     # Check if there's synchronous mode but no overlay events (summary shown during reading, no separate viewing)
@@ -726,14 +818,23 @@ def generate_analysis_report(participant_id, data, mcq_results):
         if article_key not in sync_summaries:
             article_name = article_names.get(article_key.lower() if article_key else '', article_key.upper() if article_key else 'Unknown')
             report.append(f"Article {rd.get('article_num', -1) + 1} ({article_name}) - Synchronous:")
-            report.append("  No separate summary viewing (summary shown during reading)")
-            # Check if summary time is in reading_complete
+            # Always show summary viewing time, even if 0
             summary_time_ms = rd.get('summary_time_ms', 0)
+            overlay_count = rd.get('overlay_count', 0)
             if summary_time_ms > 0:
                 summary_sec = summary_time_ms / 1000
                 summary_min = summary_sec / 60
-                report.append(f"  Total Summary Viewing Time (from reading_complete): {summary_time_ms:,} ms ({summary_sec:.2f} seconds = {summary_min:.2f} minutes)")
-        report.append("")
+                report.append(f"  Number of Times Opened: {overlay_count}")
+                report.append(f"  Total Summary Viewing Time: {summary_time_ms:,} ms ({summary_sec:.2f} seconds = {summary_min:.2f} minutes)")
+                if overlay_count > 1:
+                    avg_duration = summary_time_ms / overlay_count
+                    report.append(f"  Average Duration per Open: {avg_duration:.0f} ms ({avg_duration/1000:.2f} seconds)")
+            else:
+                report.append("  Number of Times Opened: 0")
+                report.append("  Summary Viewing Time: 0 ms (participant did not open the summary overlay)")
+                if overlay_count > 0:
+                    report.append(f"  Note: Overlay count logged as {overlay_count} but no viewing time recorded")
+            report.append("")
     
     # Free Recall
     report.append("=" * 80)
@@ -798,10 +899,11 @@ def generate_analysis_report(participant_id, data, mcq_results):
             false_lure_info = FALSE_LURE_MAP.get(result['article_key'])
             if false_lure_info:
                 q_num = false_lure_info['question_index'] + 1
+                description = false_lure_info.get('description', 'false lure')
                 if result.get('false_lure_selected'):
-                    report.append(f"⚠️  FALSE LURE: Selected false lure option on Q{q_num} (bioluminescent plants)")
+                    report.append(f"⚠️  FALSE LURE: Selected false lure option on Q{q_num} ({description})")
                 else:
-                    report.append(f"✓  FALSE LURE: Did NOT select false lure option on Q{q_num}")
+                    report.append(f"✓  FALSE LURE: Did NOT select false lure option on Q{q_num} ({description})")
         
         report.append("Question Details:")
         for detail in result['details']:
@@ -813,6 +915,47 @@ def generate_analysis_report(participant_id, data, mcq_results):
                 markers.append("[SELECTED FALSE LURE]")
             marker_str = " " + " ".join(markers) if markers else ""
             report.append(f"  Q{detail['question']:2d}: Participant={detail['participant_answer']}, Correct={detail['correct_answer']} - {status}{marker_str}")
+        report.append("")
+    
+    # Post-Article Ratings
+    report.append("=" * 80)
+    report.append("POST-ARTICLE RATINGS (After MCQ, Before Break)")
+    report.append("=" * 80)
+    
+    # Group ratings by article
+    ratings_by_article = {}
+    for rating in data['post_article_ratings']:
+        key = (rating.get('article_key'), rating.get('article_num'))
+        if key not in ratings_by_article:
+            ratings_by_article[key] = []
+        ratings_by_article[key].append(rating)
+    
+    for (article_key, article_num), ratings in ratings_by_article.items():
+        # Use the first rating (or most complete one)
+        rating = ratings[0]
+        article_name = article_names.get(article_key.lower() if article_key else '', article_key.upper() if article_key else 'Unknown')
+        timing = rating.get('timing', 'unknown').replace('_', '-')
+        
+        report.append(f"Article {article_num + 1 if article_num >= 0 else '?'} ({article_name}) - {timing} mode:")
+        report.append("")
+        report.append("Cognitive Load:")
+        report.append(f"  Mental Effort: {rating.get('load_mental_effort', -1)}/7")
+        report.append(f"  Task Difficulty: {rating.get('load_task_difficulty', -1)}/7")
+        report.append("")
+        report.append("AI Experience:")
+        report.append(f"  AI helped understand: {rating.get('ai_help_understanding', -1)}/7")
+        report.append(f"  AI helped remember: {rating.get('ai_help_memory', -1)}/7")
+        report.append(f"  AI made task easier: {rating.get('ai_made_task_easier', -1)}/7")
+        report.append(f"  AI satisfaction: {rating.get('ai_satisfaction', -1)}/7")
+        ai_better = rating.get('ai_better_than_no_ai', -1)
+        if ai_better >= 0:
+            report.append(f"  Prefer AI support: {ai_better}/7 (optional)")
+        report.append("")
+        report.append(f"Overall MCQ Confidence: {rating.get('mcq_overall_confidence', -1)}/7")
+        report.append("")
+    
+    if not data['post_article_ratings']:
+        report.append("No post-article ratings data available.")
         report.append("")
     
     # Manipulation Check
@@ -861,7 +1004,9 @@ def generate_analysis_report(participant_id, data, mcq_results):
                     article_num = rd.get('article_num', -1)
                     break
             article_name = article_names.get(article_key.lower() if article_key else '', f"Article {article_num + 1}")
-            total_min = sum(info['durations']) / 60000
+            # Calculate total from closes events (which have duration_ms)
+            total_ms = sum(close.get('duration_ms', 0) for close in info.get('closes', []))
+            total_min = total_ms / 60000
             report.append(f"  {article_name} (synchronous): {total_min:.2f} minutes")
         # Also check reading_complete for synchronous summary times
         for rd in data['reading_data']:
@@ -873,7 +1018,7 @@ def generate_analysis_report(participant_id, data, mcq_results):
                     report.append(f"  {article_name} (synchronous, from reading_complete): {summary_min:.2f} minutes")
         
         all_summary_times = [sv['time_spent_seconds'] / 60 for sv in data['summary_viewing']]
-        all_summary_times.extend([sum(info['durations']) / 60000 for info in sync_summaries.values()])
+        all_summary_times.extend([sum(close.get('duration_ms', 0) for close in info.get('closes', [])) / 60000 for info in sync_summaries.values()])
         all_summary_times.extend([rd.get('summary_time_ms', 0) / 60000 for rd in data['reading_data'] 
                                  if rd.get('timing') == 'synchronous' and rd.get('summary_time_ms', 0) > 0 
                                  and rd.get('article_key') not in sync_summaries])
@@ -966,7 +1111,9 @@ def generate_analysis_report(participant_id, data, mcq_results):
                         article_num = rd.get('article_num', -1)
                         break
                 article_name = article_names.get(article_key.lower() if article_key else '', f"Article {article_num + 1}")
-                total_min = sum(info['durations']) / 60000
+                # Calculate total from closes events (which have duration_ms)
+                total_ms = sum(close.get('duration_ms', 0) for close in info.get('closes', []))
+                total_min = total_ms / 60000
                 findings.append(f"   - {article_name} (synchronous): {total_min:.2f} minutes total summary viewing time")
     
     # Recall quality findings
@@ -1169,6 +1316,8 @@ def generate_analysis_report(participant_id, data, mcq_results):
     return "\n".join(report)
 
 def main():
+    global CORRECT_ANSWERS, FALSE_LURE_MAP
+    
     if len(sys.argv) < 2:
         print("Usage: python analyze_participant.py <participant_id>")
         print("Example: python analyze_participant.py P064")
@@ -1180,6 +1329,31 @@ def main():
     if not os.path.exists(log_file):
         print(f"Error: Log file not found: {log_file}")
         sys.exit(1)
+    
+    # Determine which answer keys to use based on participant ID
+    # Participants P078 and later should use NEW answer keys
+    # Participants P064-P077 use ORIGINAL answer keys
+    # Extract numeric part of participant ID
+    try:
+        pid_num = int(participant_id[1:])  # Extract number after 'P'
+        if pid_num >= 78:  # P078 and later
+            CORRECT_ANSWERS = NEW_CORRECT_ANSWERS
+            FALSE_LURE_MAP = NEW_FALSE_LURE_MAP
+            print(f"Using NEW answer keys for {participant_id}")
+        else:
+            CORRECT_ANSWERS = ORIGINAL_CORRECT_ANSWERS
+            FALSE_LURE_MAP = ORIGINAL_FALSE_LURE_MAP
+            print(f"Using ORIGINAL answer keys for {participant_id}")
+    except (ValueError, IndexError):
+        # Fallback to original logic if parsing fails
+        if participant_id in ['P078', 'P079', 'P080', 'P081', 'P082', 'P083', 'P084', 'P085', 'P086', 'P087', 'P088', 'P089', 'P090', 'P091', 'P092', 'P093', 'P094', 'P095', 'P096', 'P097', 'P098', 'P099']:
+            CORRECT_ANSWERS = NEW_CORRECT_ANSWERS
+            FALSE_LURE_MAP = NEW_FALSE_LURE_MAP
+            print(f"Using NEW answer keys for {participant_id}")
+        else:
+            CORRECT_ANSWERS = ORIGINAL_CORRECT_ANSWERS
+            FALSE_LURE_MAP = ORIGINAL_FALSE_LURE_MAP
+            print(f"Using ORIGINAL answer keys for {participant_id}")
     
     print(f"Analyzing {participant_id}...")
     data = parse_csv_log(log_file)

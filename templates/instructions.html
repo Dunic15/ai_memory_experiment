@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tr("Instructions") }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 50px;
+        }
+        h1 {
+            color: #1890ff;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        .content {
+            line-height: 1.8;
+            color: #1890ff;
+            margin-bottom: 30px;
+        }
+        .important-points {
+            background: #e7f3ff;
+            border-left: 4px solid #1890ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .important-points p {
+            font-weight: 600;
+            color: #1890ff;
+            margin-bottom: 10px;
+        }
+        .important-points ul {
+            margin-left: 25px;
+            color: #1890ff;
+        }
+        .important-points li {
+            margin-bottom: 10px;
+        }
+        .ai-info {
+            background: #e7f3ff;
+            border-left: 4px solid #1890ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .ai-info p {
+            font-weight: 600;
+            color: #1890ff;
+            margin-bottom: 10px;
+        }
+        .ai-info ul {
+            margin-left: 25px;
+            color: #1890ff;
+        }
+        .ai-info li {
+            margin-bottom: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 {{ tr("Instructions") }}</h1>
+        
+        <div class="content">
+            <div class="important-points">
+                <p>📌 {{ tr("Important Points:") }}</p>
+                <ul>
+                    <li>{{ tr("Must try your best to remember as many information in the article.") }}</li>
+                    <li>{{ tr("Reward allocation is directly proportional to test response accuracy") }}</li>
+                </ul>
+            </div>
+            
+            <div class="ai-info">
+                <p>⚠️ {{ tr("Important information about AI summaries") }}</p>
+                <ul>
+                    <li>{{ tr("The AI summary accuracy is approximately") }} <strong>90%</strong></li>
+                    <li>{{ tr("AI is") }} <strong>{{ tr("only an assistant") }}</strong> – {{ tr("make sure you read all the articles") }}</li>
+                    <li><strong>{{ tr("Not all questions can be answered") }}</strong> {{ tr("with the AI summary alone") }}</li>
+                </ul>
+            </div>
+        </div>
+        
+        <form action="/instructions_ready" method="POST">
+            <button type="submit">{{ tr("Ready") }}</button>
+        </form>
+    </div>
+    <script>
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+

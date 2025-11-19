@@ -1,0 +1,603 @@
+================================================================================
+PARTICIPANT P093 - DETAILED QUESTION ANALYSIS
+================================================================================
+
+================================================================================
+ARTICLE 1: Semiconductor Supply Chains: Why Shortages Happen and How to Build Resilience
+Timing Condition: pre_reading
+================================================================================
+
+Question 1:
+  The shortage revealed that semiconductor dependence extends across _______.
+
+  Options:
+    a) financial services, medical systems, educational institutions
+    b) automobiles, consumer electronics, and infrastructure [CORRECT ANSWER]
+    c) maritime logistics, rare-earth exports, fertilizer chains ← PARTICIPANT'S ANSWER
+    d) defense procurement, steel manufacturing, agriculture
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 2:
+  Semiconductor supply froze during the pandemic when _______ occurred simultaneously.
+
+  Options:
+    a) gas-purity issues, dopant shortages, packaging bottlenecks
+    b) substrate shortages, port slowdowns, chemical-plant outages ← PARTICIPANT'S ANSWER
+    c) demand surges, factory shutdowns, logistics failures [CORRECT ANSWER]
+    d) workforce gaps, wafer contamination, tool installation delays
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 3:
+  Each semiconductor fabrication plant requires _______ billions of dollars and years to build.
+
+  Options:
+    a) tens of ← PARTICIPANT'S ANSWER [CORRECT]
+    b) hundreds of
+    c) thousands of
+    d) millions of
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 4:
+  Automakers that pre-booked capacity were prioritized because allocation depended as much on contracts as on _______ needs.
+
+  Options:
+    a) production ← PARTICIPANT'S ANSWER
+    b) technology [CORRECT ANSWER]
+    c) financial
+    d) logistics
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 5:
+  Geographic concentration in East Asia and the Netherlands creates _______ vulnerabilities.
+
+  Options:
+    a) buffered
+    b) redundant ← PARTICIPANT'S ANSWER
+    c) distributed
+    d) single-point [CORRECT ANSWER]
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 6:
+  Just-in-time failed because production involves _______.
+
+  Options:
+    a) diverse part numbers
+    b) non-interchangeable chips
+    c) long cycle times ← PARTICIPANT'S ANSWER [CORRECT]
+    d) unstable demand shifts
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 7:
+  When automotive demand collapsed in 2020, foundries shifted capacity toward _______.
+
+  Options:
+    a) mobile processors
+    b) computing systems
+    c) digital displays
+    d) consumer electronics ← PARTICIPANT'S ANSWER [CORRECT]
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 8:
+  Companies shifting to risk-adjusted strategies now maintain inventories and develop _______ supply contracts.
+
+  Options:
+    a) adaptive [CORRECT ANSWER]
+    b) multi-year
+    c) flexible
+    d) diversified ← PARTICIPANT'S ANSWER
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 9:
+  Government support for semiconductor initiatives reached funding levels in the range of _______.
+
+  Options:
+    a) less than one billion
+    b) several hundred million ← PARTICIPANT'S ANSWER
+    c) around five trillion
+    d) tens of billions [CORRECT ANSWER]
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 10:
+  The technology used in advanced semiconductor manufacturing is _______.
+
+  Options:
+    a) quantum processors
+    b) extreme ultraviolet ← PARTICIPANT'S ANSWER [CORRECT]
+    c) deep-UV scanners
+    d) plasma emitters
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 11:
+  Photoresist materials require _______
+
+  Options:
+    a) rare-earth dopants
+    b) purified gases
+    c) semiconductor-grade coatings
+    d) ultra-pure resins ← PARTICIPANT'S ANSWER [CORRECT]
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 12:
+  At the 3nm process node, transistor gate widths correspond to roughly _______.
+
+  Options:
+    a) 44 carbon atoms
+    b) 35 silicon atoms
+    c) 48 silicon atoms [CORRECT ANSWER]
+    d) 52 carbon atoms ← PARTICIPANT'S ANSWER
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 13:
+  Intermediate capacity expansions typically require _______ to complete.
+
+  Options:
+    a) one to two years ← PARTICIPANT'S ANSWER [CORRECT]
+    b) three to five months
+    c) five to seven years
+    d) ten to twelve months
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 14:
+  By 2019, some manufacturers operated on _______ for certain components.
+
+  Options:
+    a) single-week buffers ← PARTICIPANT'S ANSWER [CORRECT]
+    b) two-month buffers
+    c) quarterly buffers
+    d) ten-day buffers
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 15:
+  Western advanced-node production requires subsidies amounting to _______ of total costs.
+
+  Options:
+    a) around one-tenth ← PARTICIPANT'S ANSWER
+    b) roughly one-quarter to one-third [CORRECT ANSWER]
+    c) nearly one-half
+    d) two-thirds
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+================================================================================
+ARTICLE 2: CRISPR Gene Editing: Promise, Constraints, and Responsible Use
+Timing Condition: synchronous
+================================================================================
+
+Question 1:
+  CRISPR began as _______ that allows bacteria to capture pieces of viral DNA.
+
+  Options:
+    a) a bacterial immune system ← PARTICIPANT'S ANSWER [CORRECT]
+    b) a viral defense mechanism
+    c) a cellular repair system
+    d) a genetic storage method
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 2:
+  Early CRISPR agricultural trials created _______ as editing markers.
+
+  Options:
+    a) fluorescent proteins
+    b) bioluminescent plants ← PARTICIPANT'S ANSWER
+    c) pigment variations
+    d) no commercial products [CORRECT ANSWER]
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 3:
+  Scientists reprogrammed CRISPR using _______ to direct Cas enzymes.
+
+  Options:
+    a) protein markers
+    b) DNA templates ← PARTICIPANT'S ANSWER
+    c) guide RNA [CORRECT ANSWER]
+    d) chemical signals
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 4:
+  The CRISPR process follows: guide, cut, and _______
+
+  Options:
+    a) restore
+    b) repair ← PARTICIPANT'S ANSWER [CORRECT]
+    c) replicate
+    d) remove
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 5:
+  Compared to TALENs, CRISPR is faster, cheaper, and _______
+
+  Options:
+    a) easier to program ← PARTICIPANT'S ANSWER [CORRECT]
+    b) widely adopted
+    c) highly adaptable
+    d) technically refined
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 6:
+  Off-target edits occur when guide RNAs _______
+
+  Options:
+    a) bind wrong sites [CORRECT ANSWER]
+    b) degrade quickly
+    c) fail to activate
+    d) lose stability ← PARTICIPANT'S ANSWER
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 7:
+  Base editors modify DNA without _______
+
+  Options:
+    a) using guide RNA
+    b) breaking both strands ← PARTICIPANT'S ANSWER [CORRECT]
+    c) requiring enzymes
+    d) cellular repair
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 8:
+  AAV vectors are efficient but have limited _______
+
+  Options:
+    a) precision ← PARTICIPANT'S ANSWER
+    b) capacity [CORRECT ANSWER]
+    c) persistence
+    d) flexibility
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 9:
+  Lipid nanoparticles concentrate in the _______
+
+  Options:
+    a) kidneys
+    b) lungs
+    c) heart
+    d) liver ← PARTICIPANT'S ANSWER [CORRECT]
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 10:
+  Self-limiting systems use components that _______
+
+  Options:
+    a) degrade fast [CORRECT ANSWER]
+    b) trigger once
+    c) persist weakly ← PARTICIPANT'S ANSWER
+    d) accumulate slowly
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 11:
+  Ex vivo editing allows doctors to _______ before reinfusion.
+
+  Options:
+    a) modify doses ← PARTICIPANT'S ANSWER
+    b) test compatibility
+    c) verify accuracy [CORRECT ANSWER]
+    d) label samples
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 12:
+  SHERLOCK and DETECTR are CRISPR-based _______
+
+  Options:
+    a) gene editors ← PARTICIPANT'S ANSWER
+    b) pathogen detectors [CORRECT ANSWER]
+    c) delivery systems
+    d) repair tools
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 13:
+  After 2018's gene-edited babies, countries imposed _______
+
+  Options:
+    a) research limits
+    b) safety protocols ← PARTICIPANT'S ANSWER
+    c) clinical bans [CORRECT ANSWER]
+    d) patent restrictions
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 14:
+  Gene-edited organisms differ from transgenic by lacking _______
+
+  Options:
+    a) foreign DNA ← PARTICIPANT'S ANSWER [CORRECT]
+    b) added genes
+    c) external markers
+    d) modified traits
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 15:
+  CRISPR components are described as cheap and _______
+
+  Options:
+    a) regulated
+    b) rarely used ← PARTICIPANT'S ANSWER
+    c) highly protected
+    d) widely available [CORRECT ANSWER]
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+================================================================================
+ARTICLE 3: Urban Heat Islands: Causes, Consequences, and What Works
+Timing Condition: post_reading
+================================================================================
+
+Question 1:
+  Urban heat islands form when cities are _______ than surrounding rural regions.
+
+  Options:
+    a) cooler ← PARTICIPANT'S ANSWER
+    b) warmer [CORRECT ANSWER]
+    c) more humid
+    d) less ventilated
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 2:
+  Dark low-albedo materials such as asphalt absorb _______ percent of solar radiation.
+
+  Options:
+    a) fifty to sixty
+    b) seventy to eighty
+    c) ninety to ninety-five [CORRECT ANSWER]
+    d) forty to fifty ← PARTICIPANT'S ANSWER
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 3:
+  _______ materials retain absorbed heat throughout daylight hours and release it gradually after sunset.
+
+  Options:
+    a) Low thermal mass
+    b) Reflective ← PARTICIPANT'S ANSWER
+    c) Porous
+    d) High thermal mass [CORRECT ANSWER]
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 4:
+  Urban canyon geometry traps _______ through multiple inter-surface reflections
+
+  Options:
+    a) outgoing longwave radiation [CORRECT ANSWER]
+    b) thermal mass discharge ← PARTICIPANT'S ANSWER
+    c) convective airflow
+    d) incoming solar reflection
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 5:
+  The article describes _______ as a real cooling technology.
+
+  Options:
+    a) phase-change wall layers ← PARTICIPANT'S ANSWER
+    b) radiative cooling materials [CORRECT ANSWER]
+    c) photocatalytic roof tiles
+    d) waste-heat recovery networks
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 6:
+  Cool roofs limit heat accumulation because their reflectance often reaches _______.
+
+  Options:
+    a) 0.05–0.10
+    b) 0.30–0.45
+    c) 0.70–0.85 ← PARTICIPANT'S ANSWER [CORRECT]
+    d) 0.15–0.25
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 7:
+  Neighborhoods with elevated heat burdens commonly lack _______.
+
+  Options:
+    a) access to coastal airflow
+    b) open water bodies ← PARTICIPANT'S ANSWER
+    c) tree canopy and permeable surfaces [CORRECT ANSWER]
+    d) shaded pedestrian corridors
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 8:
+  High-albedo roofing systems limit heat gain primarily through _______.
+
+  Options:
+    a) reduction of absorbed solar flux ← PARTICIPANT'S ANSWER [CORRECT]
+    b) increased thermal mass storage
+    c) moisture-driven evaporative cooling
+    d) redistribution of longwave radiation
+
+  Result: ✓ CORRECT
+
+--------------------------------------------------------------------------------
+
+Question 9:
+  Urban forestry provides dual thermal benefits: direct radiative shading plus _______ cooling via stomatal transpiration.
+
+  Options:
+    a) conductive
+    b) evaporative [CORRECT ANSWER]
+    c) radiative ← PARTICIPANT'S ANSWER
+    d) convective
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 10:
+  Effective heat mitigation requires _______ planning combining technical interventions with equitable resource distribution.
+
+  Options:
+    a) sectoral
+    b) regional
+    c) integrated [CORRECT ANSWER]
+    d) centralized ← PARTICIPANT'S ANSWER
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 11:
+  Vegetated ground cover typically has an albedo of _______.
+
+  Options:
+    a) 0.30–0.35
+    b) 0.05–0.10
+    c) 0.20–0.25 [CORRECT ANSWER]
+    d) 0.45–0.60 ← PARTICIPANT'S ANSWER
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 12:
+  Aged asphalt commonly exhibits an albedo of _______.
+
+  Options:
+    a) 0.05
+    b) 0.12 [CORRECT ANSWER]
+    c) 0.22 ← PARTICIPANT'S ANSWER
+    d) 0.30
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 13:
+  Restricted airflow inside urban canyons prevents _______ heat removal.
+
+  Options:
+    a) radiative
+    b) conductive ← PARTICIPANT'S ANSWER
+    c) evaporative
+    d) convective [CORRECT ANSWER]
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 14:
+  Urban centers can be _______ warmer at night than nearby suburbs.
+
+  Options:
+    a) 3–7°C [CORRECT ANSWER]
+    b) 7–10°C
+    c) 1–2°C ← PARTICIPANT'S ANSWER
+    d) 10–12°C
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
+
+Question 15:
+  Cool pavements can reduce surface temperatures by _______.
+
+  Options:
+    a) 4–8°C
+    b) 10–20°C [CORRECT ANSWER]
+    c) 20–30°C
+    d) 2–5°C ← PARTICIPANT'S ANSWER
+
+  Result: ✗ WRONG
+
+--------------------------------------------------------------------------------
