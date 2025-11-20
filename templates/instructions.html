@@ -20,52 +20,41 @@
             padding: 50px;
         }
         h1 {
-            color: #1890ff;
+            color: #333;
             margin-bottom: 30px;
             font-size: 32px;
         }
         .content {
             line-height: 1.8;
-            color: #1890ff;
+            color: #333;
             margin-bottom: 30px;
         }
-        .important-points {
-            background: #e7f3ff;
-            border-left: 4px solid #1890ff;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-        .important-points p {
+        .section-header {
             font-weight: 600;
-            color: #1890ff;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        .section-header:first-child {
+            margin-top: 0;
+        }
+        .separator {
+            text-align: center;
+            margin: 25px 0;
+            color: #333;
+        }
+        .content ul {
+            margin-left: 0;
+            color: #333;
+            list-style: none;
+            padding-left: 0;
+        }
+        .content li {
             margin-bottom: 10px;
+            padding-left: 0;
         }
-        .important-points ul {
-            margin-left: 25px;
-            color: #1890ff;
-        }
-        .important-points li {
-            margin-bottom: 10px;
-        }
-        .ai-info {
-            background: #e7f3ff;
-            border-left: 4px solid #1890ff;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
-        }
-        .ai-info p {
-            font-weight: 600;
-            color: #1890ff;
-            margin-bottom: 10px;
-        }
-        .ai-info ul {
-            margin-left: 25px;
-            color: #1890ff;
-        }
-        .ai-info li {
-            margin-bottom: 10px;
+        .content li:before {
+            content: "•\00a0\00a0";
         }
         button {
             width: 100%;
@@ -91,22 +80,24 @@
         <h1>📋 {{ tr("Instructions") }}</h1>
         
         <div class="content">
-            <div class="important-points">
-                <p>📌 {{ tr("Important Points:") }}</p>
-                <ul>
-                    <li>{{ tr("Must try your best to remember as many information in the article.") }}</li>
-                    <li>{{ tr("Reward allocation is directly proportional to test response accuracy") }}</li>
-                </ul>
-            </div>
+            <div class="section-header">📌 {{ tr("Important Points") }}</div>
+            <ul>
+                <li>{{ tr("You will read 3 different articles, each followed by its own memory and comprehension test.") }}</li>
+                <li>{{ tr("Try your best to remember as much information as possible from each article.") }}</li>
+                <li>{{ tr("Your bonus reward is proportional to your test accuracy — the more correct answers you provide, the higher your bonus.") }}</li>
+                <li>{{ tr("The task requires full attention; please avoid distractions, switching tabs, or rushing.") }}</li>
+            </ul>
             
-            <div class="ai-info">
-                <p>⚠️ {{ tr("Important information about AI summaries") }}</p>
-                <ul>
-                    <li>{{ tr("The AI summary accuracy is approximately") }} <strong>90%</strong></li>
-                    <li>{{ tr("AI is") }} <strong>{{ tr("only an assistant") }}</strong> – {{ tr("make sure you read all the articles") }}</li>
-                    <li><strong>{{ tr("Not all questions can be answered") }}</strong> {{ tr("with the AI summary alone") }}</li>
-                </ul>
-            </div>
+            <div class="separator">⸻</div>
+            
+            <div class="section-header">⚠️ {{ tr("Important Information About the AI Summaries") }}</div>
+            <ul>
+                <li>{{ tr("You may see AI-generated summaries during the task, depending on your condition.") }}</li>
+                <li>{{ tr("These summaries are approximately 90% accurate, but:") }}</li>
+                <li>{{ tr("AI is only an assistant — it is not a replacement for reading the full article.") }}</li>
+                <li>{{ tr("Not all test questions can be answered using the AI summary alone.") }}</li>
+                <li>{{ tr("Some details appear only in the full articles, so be sure to read everything carefully.") }}</li>
+            </ul>
         </div>
         
         <form action="/instructions_ready" method="POST">

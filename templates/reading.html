@@ -112,32 +112,33 @@
                 </div>
                 <div class="summary-text" id="summaryTextContainer">
                   {% if structure == 'segmented' %}
-                    <ul class="summary-list" id="segmentedSummaryList">
+                    {# Segmented: display as numbered list (preserve numbers 1-10) #}
+                    <ol class="summary-list" id="segmentedSummaryList" style="list-style-type: decimal; padding-left: 25px;">
                       {% for line in summary.splitlines() %}
                         {% set t = line.strip() %}
-                        {% if t %}<li data-line="{{ t }}">{{ t.lstrip('•-').strip() }}</li>{% endif %}
+                        {% if t %}
+                          <li data-original="{{ t }}" style="margin-bottom: 12px; line-height: 1.8; color: #333;">{{ t }}</li>
+                        {% endif %}
                       {% endfor %}
-                    </ul>
+                    </ol>
                     <script>
-                      // Remove numbers from segmented summary bullets
+                      // Remove number prefixes (e.g., "1. ", "2. ", "10. ") since <ol> will number automatically
                       document.addEventListener('DOMContentLoaded', function() {
                         const listItems = document.querySelectorAll('#segmentedSummaryList li');
                         listItems.forEach(function(li) {
-                          let text = li.getAttribute('data-line') || li.textContent;
+                          let text = li.getAttribute('data-original') || li.textContent;
                           // Remove numbered list markers (e.g., "1. ", "2. ", "10. ")
                           text = text.replace(/^\d+\.\s+/, '');
-                          // Remove bullet markers
-                          text = text.replace(/^[-•]\s*/, '').trim();
                           li.textContent = text;
                         });
                       });
                     </script>
                   {% else %}
-                    {# Integrated: display as paragraphs #}
-                    <div id="integratedSummaryParagraphs">
+                    {# Integrated: display as continuous paragraphs (not bullets) #}
+                    <div class="summary-text" id="integratedSummaryText" style="line-height: 1.8; color: #333;">
                       {% for paragraph in summary.split('\n\n') %}
                         {% if paragraph.strip() %}
-                          <p style="margin-bottom: 20px; line-height: 1.8; color: #333;">{{ paragraph.strip() }}</p>
+                          <p style="margin-bottom: 20px;">{{ paragraph.strip() }}</p>
                         {% endif %}
                       {% endfor %}
                     </div>

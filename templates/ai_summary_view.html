@@ -51,17 +51,19 @@
             list-style: none;
             padding: 0;
         }
+        .summary-content ol {
+            padding-left: 25px;
+            margin: 0;
+        }
         .summary-content li {
             margin-bottom: 12px;
-            padding-left: 20px;
-            position: relative;
+            line-height: 1.8;
+            color: #333;
         }
-        .summary-content li:before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: bold;
+        .summary-content p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #333;
         }
         button {
             width: 100%;
@@ -127,78 +129,44 @@
         // Display summary
         const summaryContent = document.getElementById('summaryContent');
         if (structure === 'segmented') {
-            const ul = document.createElement('ul');
+            // Segmented: display as numbered list (preserve numbers 1-10)
+            const ol = document.createElement('ol');
+            ol.style.listStyleType = 'decimal';
+            ol.style.paddingLeft = '25px';
+            ol.style.margin = '0';
+            
             const lines = summaryText.split('\n');
             lines.forEach(line => {
                 const trimmed = line.trim();
                 if (trimmed) {
                     const li = document.createElement('li');
-                    // Remove bullet markers, numbers, and other list markers
-                    // Remove numbered lists (e.g., "1. ", "2. ", "10. ")
+                    // Remove the number prefix (e.g., "1. ", "2. ", "10. ") since <ol> will number automatically
                     let cleaned = trimmed.replace(/^\d+\.\s+/, '');
-                    // Remove bullet markers (handle both - and •)
-                    cleaned = cleaned.replace(/^[-•]\s+/, '');
-                    cleaned = cleaned.replace(/^[-•]\s*/, '');
-                    li.textContent = cleaned.trim();
-                    ul.appendChild(li);
+                    // Remove any bullet markers that might be present
+                    cleaned = cleaned.replace(/^[-•]\s+/, '').trim();
+                    li.textContent = cleaned;
+                    li.style.marginBottom = '12px';
+                    li.style.lineHeight = '1.8';
+                    li.style.color = '#333';
+                    ol.appendChild(li);
                 }
             });
-            summaryContent.appendChild(ul);
+            summaryContent.appendChild(ol);
         } else {
-            // Integrated: show as paragraphs
-            // First, check if the text already has double line breaks (paragraphs)
+            // Integrated: show as continuous paragraphs (not bullets)
             const paragraphs = summaryText.split(/\n\s*\n/).filter(p => p.trim());
             
-            if (paragraphs.length > 1) {
-                // Text already has paragraph breaks - use them directly
-                paragraphs.forEach(para => {
-                    const p = document.createElement('p');
-                    p.textContent = para.trim();
-                    p.style.marginBottom = '20px';
-                    p.style.lineHeight = '1.8';
-                    p.style.color = '#333';
-                    summaryContent.appendChild(p);
-                });
-            } else {
-                // No paragraph breaks - split into sentences and group into paragraphs
-                // Split by sentence endings (period, exclamation, question mark) followed by space
-            const sentences = summaryText.match(/[^.!?]+[.!?]+(\s+|$)/g) || [summaryText];
-            let currentParagraph = '';
-                let sentenceCount = 0;
-                
-                sentences.forEach((sentence) => {
-                const trimmed = sentence.trim();
-                if (!trimmed) return;
-                
-                currentParagraph += trimmed + ' ';
-                    sentenceCount++;
-                
-                    // Create a new paragraph every 3-4 sentences or at natural breaks
-                    if (sentenceCount >= 3 && (trimmed.endsWith('.') || trimmed.endsWith('!') || trimmed.endsWith('?'))) {
-                    const p = document.createElement('p');
-                    p.textContent = currentParagraph.trim();
-                    p.style.marginBottom = '20px';
-                        p.style.lineHeight = '1.8';
-                        p.style.color = '#333';
-                    summaryContent.appendChild(p);
-                    currentParagraph = '';
-                        sentenceCount = 0;
-                }
+            paragraphs.forEach(para => {
+                const p = document.createElement('p');
+                p.textContent = para.trim();
+                p.style.marginBottom = '20px';
+                p.style.lineHeight = '1.8';
+                p.style.color = '#333';
+                summaryContent.appendChild(p);
             });
             
-            // Add any remaining text as a final paragraph
-            if (currentParagraph.trim()) {
-                const p = document.createElement('p');
-                p.textContent = currentParagraph.trim();
-                p.style.marginBottom = '20px';
-                    p.style.lineHeight = '1.8';
-                    p.style.color = '#333';
-                summaryContent.appendChild(p);
-                }
-            }
-            
-            // If no paragraphs were created (single sentence or empty), create one
-            if (summaryContent.children.length === 0) {
+            // If no paragraphs were created (single block of text), create one
+            if (paragraphs.length === 0 && summaryText.trim()) {
                 const p = document.createElement('p');
                 p.textContent = summaryText.trim();
                 p.style.marginBottom = '20px';

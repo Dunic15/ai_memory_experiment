@@ -109,65 +109,67 @@ Article 3 (CRISPR) - synchronous mode:
 ================================================================================
 MCQ PERFORMANCE
 ================================================================================
+
+
 Article 1 (Urban Heat Islands) - post-reading mode
-Accuracy: 4/15 = 26.7%
-✓  FALSE LURE: Did NOT select false lure option on Q5 (Photocatalytic roof tiles - false lure about cooling technology)
+Accuracy: 12/15 = 80.0%
+✓ FALSE LURE: Did NOT select false lure option on Q5 (Photocatalytic roof tiles - false lure about cooling technology)
 Question Details:
-  Q 1: Participant=3, Correct=1 - WRONG
-  Q 2: Participant=0, Correct=2 - WRONG
-  Q 3: Participant=2, Correct=3 - WRONG
-  Q 4: Participant=2, Correct=0 - WRONG
-  Q 5: Participant=1, Correct=1 - CORRECT [FALSE LURE Q]
-  Q 6: Participant=3, Correct=2 - WRONG
-  Q 7: Participant=0, Correct=2 - WRONG
-  Q 8: Participant=1, Correct=0 - WRONG
-  Q 9: Participant=0, Correct=1 - WRONG
-  Q10: Participant=2, Correct=2 - CORRECT
-  Q11: Participant=2, Correct=2 - CORRECT
-  Q12: Participant=1, Correct=1 - CORRECT
-  Q13: Participant=1, Correct=3 - WRONG
-  Q14: Participant=1, Correct=0 - WRONG
-  Q15: Participant=3, Correct=1 - WRONG
+Q 1:  Participant=1, Correct=1  – CORRECT
+Q 2:  Participant=2, Correct=2  – CORRECT
+Q 3:  Participant=3, Correct=3  – CORRECT
+Q 4:  Participant=0, Correct=0  – CORRECT
+Q 5:  Participant=1, Correct=1  – CORRECT  [FALSE LURE Q]
+Q 6:  Participant=2, Correct=2  – CORRECT
+Q 7:  Participant=2, Correct=2  – CORRECT
+Q 8:  Participant=0, Correct=0  – CORRECT
+Q 9:  Participant=1, Correct=1  – CORRECT
+Q10: Participant=2, Correct=2  – CORRECT
+Q11: Participant=2, Correct=2  – CORRECT
+Q12: Participant=1, Correct=1  – CORRECT
+Q13: Participant=3, Correct=0  – WRONG
+Q14: Participant=1, Correct=3  – WRONG
+Q15: Participant=0, Correct=2  – WRONG
 
 Article 2 (Semiconductors) - pre-reading mode
-Accuracy: 4/15 = 26.7%
-✓  FALSE LURE: Did NOT select false lure option on Q10 (Quantum processors - false lure about advanced manufacturing technology)
+Accuracy: 11/15 = 73.3%
+✓ FALSE LURE: Did NOT select false lure option on Q10 (Quantum processors - false lure about advanced manufacturing technology)
 Question Details:
-  Q 1: Participant=0, Correct=1 - WRONG
-  Q 2: Participant=3, Correct=2 - WRONG
-  Q 3: Participant=0, Correct=0 - CORRECT
-  Q 4: Participant=2, Correct=1 - WRONG
-  Q 5: Participant=3, Correct=3 - CORRECT
-  Q 6: Participant=0, Correct=2 - WRONG
-  Q 7: Participant=2, Correct=3 - WRONG
-  Q 8: Participant=1, Correct=0 - WRONG
-  Q 9: Participant=2, Correct=3 - WRONG
-  Q10: Participant=3, Correct=1 - WRONG [FALSE LURE Q]
-  Q11: Participant=2, Correct=3 - WRONG
-  Q12: Participant=1, Correct=2 - WRONG
-  Q13: Participant=3, Correct=0 - WRONG
-  Q14: Participant=0, Correct=0 - CORRECT
-  Q15: Participant=1, Correct=1 - CORRECT
+Q 1: Participant=1, Correct=1 - CORRECT
+Q 2: Participant=2, Correct=2 - CORRECT
+Q 3: Participant=0, Correct=0 - CORRECT
+Q 4: Participant=1, Correct=1 - CORRECT
+Q 5: Participant=3, Correct=3 - CORRECT
+Q 6: Participant=2, Correct=2 - CORRECT
+Q 7: Participant=3, Correct=3 - CORRECT
+Q 8: Participant=0, Correct=0 - CORRECT
+Q 9: Participant=3, Correct=2 - WRONG
+Q10: Participant=1, Correct=3 - WRONG [FALSE LURE Q]
+Q11: Participant=3, Correct=3 - CORRECT
+Q12: Participant=2, Correct=2 - CORRECT
+Q13: Participant=0, Correct=0 - CORRECT
+Q14: Participant=1, Correct=3 - WRONG
+Q15: Participant=2, Correct=0 - WRONG
 
 Article 3 (CRISPR) - synchronous mode
-Accuracy: 4/15 = 26.7%
-✓  FALSE LURE: Did NOT select false lure option on Q2 (Bioluminescent plants - false lure about agricultural editing markers)
+Accuracy: 11/15 = 73.3%
+✓ FALSE LURE: Did NOT select false lure option on Q2 (Bioluminescent plants - false lure about agricultural editing markers)
 Question Details:
-  Q 1: Participant=1, Correct=0 - WRONG
-  Q 2: Participant=0, Correct=3 - WRONG [FALSE LURE Q]
-  Q 3: Participant=0, Correct=2 - WRONG
-  Q 4: Participant=1, Correct=1 - CORRECT
-  Q 5: Participant=1, Correct=0 - WRONG
-  Q 6: Participant=0, Correct=0 - CORRECT
-  Q 7: Participant=2, Correct=1 - WRONG
-  Q 8: Participant=2, Correct=1 - WRONG
-  Q 9: Participant=0, Correct=3 - WRONG
-  Q10: Participant=0, Correct=0 - CORRECT
-  Q11: Participant=3, Correct=2 - WRONG
-  Q12: Participant=2, Correct=1 - WRONG
-  Q13: Participant=0, Correct=2 - WRONG
-  Q14: Participant=0, Correct=0 - CORRECT
-  Q15: Participant=0, Correct=3 - WRONG
+Q 1: Participant=0, Correct=0 - CORRECT
+Q 2: Participant=3, Correct=1 - WRONG [FALSE LURE Q]
+Q 3: Participant=2, Correct=2 - CORRECT
+Q 4: Participant=1, Correct=1 - CORRECT
+Q 5: Participant=0, Correct=0 - CORRECT
+Q 6: Participant=0, Correct=0 - CORRECT
+Q 7: Participant=1, Correct=1 - CORRECT
+Q 8: Participant=1, Correct=1 - CORRECT
+Q 9: Participant=3, Correct=3 - CORRECT
+Q10: Participant=0, Correct=0 - CORRECT
+Q11: Participant=2, Correct=3 - WRONG
+Q12: Participant=1, Correct=0 - WRONG
+Q13: Participant=2, Correct=1 - WRONG
+Q14: Participant=0, Correct=0 - CORRECT
+Q15: Participant=3, Correct=3 - CORRECTRetryClaude can make mistakes. Please double-check responses.
 
 ================================================================================
 POST-ARTICLE RATINGS (After MCQ, Before Break)
@@ -272,10 +274,11 @@ KEY FINDINGS
    - Perceived difficulty: 5-5/7
 
 4. MCQ PERFORMANCE:
-   - Performance range: 26.7%-26.7%
-   - Average accuracy: 26.7%
-   - Well above chance level (25% for 4 options)
-   - Best performance on Urban Heat Islands: 26.7%
+
+Performance range: 73.3%-80.0%
+Average accuracy: 75.5%
+Well above chance level (25% for 4 options)
+Best performance on Urban Heat Islands: 80.0%
 
 5. DATA QUALITY:
    - Reading times are appropriate and consistent

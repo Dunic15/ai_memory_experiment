@@ -333,32 +333,176 @@ Emerging research explores advanced technologies including radiative cooling mat
 Ultimately, urban heat mitigation represents a sociotechnical challenge requiring coordinated action across governance levels, professional fields, and community stakeholders. Scientific understanding of heat transfer physics, materials science, and atmospheric dynamics provides the mechanistic foundation. Engineering expertise translates theoretical principles into practical cool surface technologies, green infrastructure systems, and building innovations. Urban planning synthesizes these technical capabilities within spatial frameworks that account for land-use patterns, transportation networks, and social equity considerations. Community engagement ensures that interventions address local needs, incorporate traditional knowledge, and build adaptive capacity among residents. Success depends not merely on technology deployment but on institutional arrangements that sustain long-term maintenance, equitable access, and continuous adaptation as climate and urban form evolve. The heat island thus becomes not only a physical problem with engineering solutions but a lens revealing how cities balance efficiency with resilience, economic growth with environmental quality, and overall prosperity with distributional justice.
 ''',
         'summary_integrated': 'Urban heat islands emerge when cities absorb and trap solar radiation more efficiently than surrounding rural areas. Asphalt, concrete, and building materials have low albedo values (0.05–0.20), absorbing ninety to ninety-five percent of incoming solar energy and converting it into stored heat. High thermal mass materials like brick and concrete retain this energy through the day and release it slowly at night, keeping urban temperatures three to seven degrees Celsius warmer than nearby countryside. Urban canyon geometry—the ratio of building height to street width—traps outgoing longwave radiation through multiple reflections, preventing efficient atmospheric cooling.\n\nThese thermal patterns intensify during heat waves, creating health risks and driving energy demand upward. The heat island represents both a physical meteorological phenomenon and a social inequality issue: low-income neighborhoods with minimal tree coverage, higher building density, and more impervious surfaces experience disproportionate heat exposure. During extreme events, mortality rises among elderly residents, individuals with cardiovascular conditions, and those lacking air conditioning. Recent pilot programs deployed photocatalytic roof tiles that actively convert absorbed heat into electrical current through thermoelectric generation, though scalability challenges remain unresolved.\n\nMitigation strategies target four mechanisms: enhancing surface reflectance through cool roofs and pavements, providing shade via urban forestry, amplifying evaporative cooling through vegetation, and managing thermal mass. Cool roofing materials with albedo values reaching 0.70–0.85 can reduce absorbed heat by sixty to seventy-five percent. Trees provide dual benefits—direct shading plus evapotranspiration that converts sensible heat into latent heat through water vapor release. However, optimal implementation requires careful design: excessive visible-spectrum reflection can create glare and redirect radiation, potentially warming nearby spaces.\n\nBuilding sustainable resilience demands integrated planning that combines technical interventions with equitable resource distribution, ensuring vulnerable neighborhoods receive priority investment in cooling infrastructure, green spaces, and community-based adaptation programs.',
-        'summary_segmented': '''Urban heat islands occur when metropolitan areas become significantly warmer than surrounding rural regions, creating persistent temperature differentials.
-Dark surfaces with low albedo values—asphalt (~0.05), concrete, brick—absorb ninety to ninety-five percent of solar radiation, converting it into stored thermal energy.
-High thermal mass materials retain absorbed heat throughout daylight hours and release it gradually after sunset, sustaining elevated nighttime temperatures.
-Urban canyon geometry traps outgoing longwave radiation through multiple inter-surface reflections, preventing efficient atmospheric cooling and amplifying heat retention.
-Recent pilot programs deployed photocatalytic roof tiles that actively convert absorbed heat into electrical current through thermoelectric generation.
-Heat islands intensify health risks during heat waves, particularly affecting elderly populations, individuals with cardiovascular conditions, and residents lacking cooling access.
-Low-income neighborhoods experience disproportionate heat exposure due to reduced tree canopy, higher building density, and greater impervious surface coverage—an environmental justice concern.
-Cool roofing systems with high-albedo coatings (0.70–0.85 reflectance) reduce absorbed solar flux by sixty to seventy-five percent compared to conventional materials.
-Urban forestry provides dual thermal benefits: direct radiative shading through canopy interception plus evaporative cooling via stomatal transpiration converting sensible into latent heat.
-Effective heat mitigation requires integrated planning combining technical interventions—cool surfaces, vegetation, permeable materials—with equitable resource distribution prioritizing vulnerable communities.''',
+        'summary_segmented': '''1. Urban heat islands occur when metropolitan areas become significantly warmer than surrounding rural regions, creating persistent temperature differentials.
+
+2. Dark surfaces with low albedo values—asphalt (~0.05), concrete, brick—absorb ninety to ninety-five percent of solar radiation, converting it into stored thermal energy.
+
+3. High thermal mass materials retain absorbed heat throughout daylight hours and release it gradually after sunset, sustaining elevated nighttime temperatures.
+
+4. Urban canyon geometry traps outgoing longwave radiation through multiple inter-surface reflections, preventing efficient atmospheric cooling and amplifying heat retention.
+
+5. Recent pilot programs deployed photocatalytic roof tiles that actively convert absorbed heat into electrical current through thermoelectric generation.
+
+6. Heat islands intensify health risks during heat waves, particularly affecting elderly populations, individuals with cardiovascular conditions, and residents lacking cooling access.
+
+7. Low-income neighborhoods experience disproportionate heat exposure due to reduced tree canopy, higher building density, and greater impervious surface coverage—an environmental justice concern.
+
+8. Cool roofing systems with high-albedo coatings (0.70–0.85 reflectance) reduce absorbed solar flux by sixty to seventy-five percent compared to conventional materials.
+
+9. Urban forestry provides dual thermal benefits: direct radiative shading through canopy interception plus evaporative cooling via stomatal transpiration converting sensible into latent heat.
+
+10. Effective heat mitigation requires integrated planning combining technical interventions—cool surfaces, vegetation, permeable materials—with equitable resource distribution prioritizing vulnerable communities.''',
         'questions': [
-            {"q": "Urban heat islands form when cities are _______ than surrounding rural regions.", "options": ["cooler", "warmer", "more humid", "less ventilated"], "correct": 1},
-            {"q": "Dark low-albedo materials such as asphalt absorb _______ percent of solar radiation.", "options": ["fifty to sixty", "seventy to eighty", "ninety to ninety-five", "forty to fifty"], "correct": 2},
-            {"q": "_______ materials retain absorbed heat throughout daylight hours and release it gradually after sunset.", "options": ["Low thermal mass", "Reflective", "Porous", "High thermal mass"], "correct": 3},
-            {"q": "Urban canyon geometry traps _______ through multiple inter-surface reflections", "options": ["outgoing longwave radiation", "thermal mass discharge", "convective airflow", "incoming solar reflection"], "correct": 0},
-            {"q": "The article describes _______ as a real cooling technology.", "options": ["phase-change wall layers", "radiative cooling materials", "photocatalytic roof tiles", "waste-heat recovery networks"], "correct": 1},
-            {"q": "Cool roofs limit heat accumulation because their reflectance often reaches _______.", "options": ["0.05–0.10", "0.30–0.45", "0.70–0.85", "0.15–0.25"], "correct": 2},
-            {"q": "Neighborhoods with elevated heat burdens commonly lack _______.", "options": ["access to coastal airflow", "open water bodies", "tree canopy and permeable surfaces", "shaded pedestrian corridors"], "correct": 2},
-            {"q": "High-albedo roofing systems limit heat gain primarily through _______.", "options": ["reduction of absorbed solar flux", "increased thermal mass storage", "moisture-driven evaporative cooling", "redistribution of longwave radiation"], "correct": 0},
-            {"q": "Urban forestry provides dual thermal benefits: direct radiative shading plus _______ cooling via stomatal transpiration.", "options": ["conductive", "evaporative", "radiative", "convective"], "correct": 1},
-            {"q": "Effective heat mitigation requires _______ planning combining technical interventions with equitable resource distribution.", "options": ["sectoral", "regional", "integrated", "centralized"], "correct": 2},
-            {"q": "Vegetated ground cover typically has an albedo of _______.", "options": ["0.30–0.35", "0.05–0.10", "0.20–0.25", "0.45–0.60"], "correct": 2},
-            {"q": "Aged asphalt commonly exhibits an albedo of _______.", "options": ["0.05", "0.12", "0.22", "0.30"], "correct": 1},
-            {"q": "Restricted airflow inside urban canyons prevents _______ heat removal.", "options": ["radiative", "conductive", "evaporative", "convective"], "correct": 3},
-            {"q": "Urban centers can be _______ warmer at night than nearby suburbs.", "options": ["3–7°C", "7–10°C", "1–2°C", "10–12°C"], "correct": 0},
-            {"q": "Cool pavements can reduce surface temperatures by _______.", "options": ["4–8°C", "10–20°C", "20–30°C", "2–5°C"], "correct": 1}
+            {
+                "q": "Urban heat islands form when cities are _______ than surrounding rural regions.",
+                "options": [
+                    "cooler",
+                    "warmer",
+                    "more humid",
+                    "less ventilated"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Dark low-albedo materials such as asphalt absorb _______ percent of solar radiation.",
+                "options": [
+                    "fifty to sixty",
+                    "seventy to eighty",
+                    "ninety to ninety-five",
+                    "forty to fifty"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "_______ materials retain absorbed heat throughout daylight hours and release it gradually after sunset.",
+                "options": [
+                    "Low thermal mass",
+                    "Reflective",
+                    "Porous",
+                    "High thermal mass"
+                ],
+                "correct": 3
+            },
+            {
+                "q": "Urban canyon geometry traps _______ through multiple inter-surface reflections",
+                "options": [
+                    "outgoing longwave radiation",
+                    "thermal mass discharge",
+                    "convective airflow",
+                    "incoming solar reflection"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "(FALSE LURE) The article describes _______ as a real cooling technology.",
+                "options": [
+                    "phase-change wall layers",
+                    "radiative cooling materials",
+                    "photocatalytic roof tiles",
+                    "waste-heat recovery networks"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Cool roofs limit heat accumulation because their reflectance often reaches _______.",
+                "options": [
+                    "0.05–0.10",
+                    "0.30–0.45",
+                    "0.70–0.85",
+                    "0.15–0.25"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "Neighborhoods with elevated heat burdens commonly lack _______.",
+                "options": [
+                    "access to coastal airflow",
+                    "open water bodies",
+                    "tree canopy and permeable surfaces",
+                    "shaded pedestrian corridors"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "High-albedo roofing systems limit heat gain primarily through _______.",
+                "options": [
+                    "reduction of absorbed solar flux",
+                    "increased thermal mass storage",
+                    "moisture-driven evaporative cooling",
+                    "redistribution of longwave radiation"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "Urban forestry provides dual thermal benefits: direct radiative shading plus _______ cooling via stomatal transpiration.",
+                "options": [
+                    "conductive",
+                    "evaporative",
+                    "radiative",
+                    "convective"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Effective heat mitigation requires _______ planning combining technical interventions with equitable resource distribution.",
+                "options": [
+                    "sectoral",
+                    "regional",
+                    "integrated",
+                    "centralized"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "Vegetated ground cover typically has an albedo of _______.",
+                "options": [
+                    "0.30–0.35",
+                    "0.05–0.10",
+                    "0.20–0.25",
+                    "0.45–0.60"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "Aged asphalt commonly exhibits an albedo of _______.",
+                "options": [
+                    "0.05",
+                    "0.12",
+                    "0.22",
+                    "0.30"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Excess visible light reflection from cool surfaces can create design challenges such as _______.",
+                "options": [
+                    "increased ozone depletion",
+                    "glare through redirected radiation",
+                    "excessive nighttime cooling",
+                    "reduced soil moisture"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Urban centers can be _______ warmer at night than nearby suburbs.",
+                "options": [
+                    "3–7°C",
+                    "7–10°C",
+                    "1–2°C",
+                    "10–12°C"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "Cool pavements can reduce surface temperatures by _______.",
+                "options": [
+                    "4–8°C",
+                    "10–20°C",
+                    "20–30°C",
+                    "2–5°C"
+                ],
+                "correct": 1
+            }
         ]
     },
     'crispr': {
@@ -380,32 +524,176 @@ Finally, biosecurity adds another layer of responsibility. Because CRISPR compon
 Ultimately, CRISPR is more than a laboratory tool—it is a mirror of human values. It reveals how societies balance curiosity with caution and innovation with fairness. When data are shared openly, benefits distributed equitably, and oversight continuous, gene editing can move from disruptive novelty to a stable force for medicine, agriculture, and conservation. Its legacy will be written not only in DNA sequences but in the choices humanity makes about how—and why—to rewrite the code of life.
 ''',
         'summary_integrated': 'CRISPR–Cas systems originated as a bacterial immune defense that stores viral DNA fragments to recognize and cut them during future infections. Scientists repurposed this natural mechanism to edit genes in plants, animals, and humans. By designing a guide RNA that matches a chosen DNA sequence, the Cas enzyme locates the target, makes a double-strand break, and lets the cell\'s repair machinery rewrite it. This principle—guide, cut, and repair—has revolutionized biology. Compared with earlier tools like zinc-finger nucleases or TALENs, CRISPR is faster, cheaper, and easier to program, allowing labs worldwide to explore disease correction, crop improvement, and ecological restoration.\n\nYet precision is statistical: guide RNAs sometimes mispair, producing off-target edits. Researchers counter this by adjusting guide length, redesigning Cas enzymes for higher fidelity, or using base and prime editors that modify single letters without cutting both strands. Some early agricultural trials also used CRISPR to create bioluminescent plants as visible markers of editing success, though these remained experimental and were never commercialized.\n\nDelivery remains the hardest challenge. Viral vectors are efficient but small and may trigger immune responses; lipid nanoparticles can transport larger cargoes but often concentrate in the liver. Timing also matters: prolonged Cas activity increases unwanted cuts, so transient or self-limiting systems are being developed.\n\nBeyond medicine, CRISPR shapes ethics and governance—raising questions about germ-line editing, access, and fairness. The technology\'s success will depend not only on accuracy but on transparency and responsibility in how humanity edits its own future.',
-        'summary_segmented': '''CRISPR began as a bacterial immune system that records viral DNA fragments to recognize future invaders.
-Scientists reprogrammed this system using synthetic guide RNA to direct Cas enzymes to precise genome locations.
-The process "guide, cut, and repair" made gene editing faster, cheaper, and globally accessible.
-Precision challenges persist because partial guide mismatches can create off-target edits.
-Enhanced Cas variants and base/prime editors increase fidelity while minimizing double-strand breaks.
-Some early agricultural trials used CRISPR to create bioluminescent plants as visible markers of editing success.
-Delivery remains the major barrier: viral vectors are efficient but small; lipid nanoparticles carry more but risk inflammation.
-Self-limiting and inducible CRISPR systems control activity duration, improving safety.
-Germ-line editing is ethically restricted because changes are heritable and affect future generations.
-CRISPR now extends to agriculture, ecology, and health governance, requiring transparency, inclusion, and equitable access.''',
+        'summary_segmented': '''1. CRISPR began as a bacterial immune system that records viral DNA fragments to recognize future invaders.
+
+2. Scientists reprogrammed this system using synthetic guide RNA to direct Cas enzymes to precise genome locations.
+
+3. The process "guide, cut, and repair" made gene editing faster, cheaper, and globally accessible.
+
+4. Precision challenges persist because partial guide mismatches can create off-target edits.
+
+5. Enhanced Cas variants and base/prime editors increase fidelity while minimizing double-strand breaks.
+
+6. Some early agricultural trials used CRISPR to create bioluminescent plants as visible markers of editing success.
+
+7. Delivery remains the major barrier: viral vectors are efficient but small; lipid nanoparticles carry more but risk inflammation.
+
+8. Self-limiting and inducible CRISPR systems control activity duration, improving safety.
+
+9. Germ-line editing is ethically restricted because changes are heritable and affect future generations.
+
+10. CRISPR now extends to agriculture, ecology, and health governance, requiring transparency, inclusion, and equitable access.''',
         'questions': [
-            {"q": "CRISPR began as _______ that allows bacteria to capture pieces of viral DNA.", "options": ["a bacterial immune system", "a viral defense mechanism", "a cellular repair system", "a genetic storage method"], "correct": 0},
-            {"q": "Early CRISPR agricultural trials created _______ as editing markers.", "options": ["fluorescent proteins", "bioluminescent plants", "pigment variations", "no commercial products"], "correct": 3},
-            {"q": "Scientists reprogrammed CRISPR using _______ to direct Cas enzymes.", "options": ["protein markers", "DNA templates", "guide RNA", "chemical signals"], "correct": 2},
-            {"q": "The CRISPR process follows: guide, cut, and _______", "options": ["restore", "repair", "replicate", "remove"], "correct": 1},
-            {"q": "Compared to TALENs, CRISPR is faster, cheaper, and _______", "options": ["easier to program", "widely adopted", "highly adaptable", "technically refined"], "correct": 0},
-            {"q": "Off-target edits occur when guide RNAs _______", "options": ["bind wrong sites", "degrade quickly", "fail to activate", "lose stability"], "correct": 0},
-            {"q": "Base editors modify DNA without _______", "options": ["using guide RNA", "breaking both strands", "requiring enzymes", "cellular repair"], "correct": 1},
-            {"q": "AAV vectors are efficient but have limited _______", "options": ["precision", "capacity", "persistence", "flexibility"], "correct": 1},
-            {"q": "Lipid nanoparticles concentrate in the _______", "options": ["kidneys", "lungs", "heart", "liver"], "correct": 3},
-            {"q": "Self-limiting systems use components that _______", "options": ["degrade fast", "trigger once", "persist weakly", "accumulate slowly"], "correct": 0},
-            {"q": "Ex vivo editing allows doctors to _______ before reinfusion.", "options": ["modify doses", "test compatibility", "verify accuracy", "label samples"], "correct": 2},
-            {"q": "SHERLOCK and DETECTR are CRISPR-based _______", "options": ["gene editors", "pathogen detectors", "delivery systems", "repair tools"], "correct": 1},
-            {"q": "After 2018's gene-edited babies, countries imposed _______", "options": ["research limits", "safety protocols", "clinical bans", "patent restrictions"], "correct": 2},
-            {"q": "Gene-edited organisms differ from transgenic by lacking _______", "options": ["foreign DNA", "added genes", "external markers", "modified traits"], "correct": 0},
-            {"q": "CRISPR components are described as cheap and _______", "options": ["regulated", "rarely used", "highly protected", "widely available"], "correct": 3}
+            {
+                "q": "CRISPR began as _______ that allows bacteria to capture pieces of viral DNA.",
+                "options": [
+                    "a bacterial immune system",
+                    "a viral defense mechanism",
+                    "a cellular repair system",
+                    "a genetic storage method"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "Early CRISPR agricultural trials created _______ as editing markers.",
+                "options": [
+                    "fluorescent proteins",
+                    "bioluminescent plants",
+                    "pigment variations",
+                    "no commercial products"
+                ],
+                "correct": 3
+            },
+            {
+                "q": "Scientists reprogrammed CRISPR using _______ to direct Cas enzymes.",
+                "options": [
+                    "protein markers",
+                    "DNA templates",
+                    "guide RNA",
+                    "chemical signals"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "The CRISPR process follows: guide, cut, and _______",
+                "options": [
+                    "restore",
+                    "repair",
+                    "replicate",
+                    "remove"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Compared to TALENs, CRISPR is faster, cheaper, and _______",
+                "options": [
+                    "easier to program",
+                    "widely adopted",
+                    "highly adaptable",
+                    "technically refined"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "Off-target edits occur when guide RNAs _______",
+                "options": [
+                    "bind mismatched sequences",
+                    "bind partially similar sites",
+                    "pair with near-matching bases",
+                    "drift to adjacent regions"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "Base editors modify DNA without _______",
+                "options": [
+                    "using guide RNA",
+                    "breaking both strands",
+                    "requiring enzymes",
+                    "cellular repair"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "AAV vectors are efficient but have limited _______",
+                "options": [
+                    "precision",
+                    "capacity",
+                    "persistence",
+                    "flexibility"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Lipid nanoparticles concentrate in the _______",
+                "options": [
+                    "kidneys",
+                    "lungs",
+                    "heart",
+                    "liver"
+                ],
+                "correct": 3
+            },
+            {
+                "q": "Self-limiting systems use components that _______",
+                "options": [
+                    "degrade fast",
+                    "decay naturally",
+                    "become unstable",
+                    "accumulate slow"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "Ex vivo editing allows doctors to _______ before reinfusion.",
+                "options": [
+                    "modify doses",
+                    "test compatibility",
+                    "verify accuracy",
+                    "label samples"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "SHERLOCK and DETECTR are CRISPR-based _______",
+                "options": [
+                    "gene editors",
+                    "pathogen detectors",
+                    "delivery systems",
+                    "repair tools"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "After 2018's gene-edited babies, countries imposed _______",
+                "options": [
+                    "research limits",
+                    "safety protocols",
+                    "clinical bans",
+                    "patent restrictions"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "Inducible switches activate Cas enzymes only when exposed to specific _______.",
+                "options": [
+                    "molecular signals",
+                    "chemical or thermal cues",
+                    "membrane receptors",
+                    "electrical pulses"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Base editors and prime editors make corrections by avoiding _______.",
+                "options": [
+                    "RNA transcription",
+                    "guide RNA pairing",
+                    "full double-strand breaks",
+                    "Cas enzyme activation"
+                ],
+                "correct": 2
+            }
         ]
     },
     'semiconductors': {
@@ -436,33 +724,177 @@ Workforce constraints compound infrastructure challenges. Advanced semiconductor
 Ultimately, semiconductor supply chain resilience represents a sociotechnical challenge combining physics, economics, geopolitics, and institutional capacity. Physical constraints—quantum mechanical limits, thermodynamic constraints at extreme power densities, materials science challenges—determine technological trajectories requiring continuous innovation investment exceeding $15 billion annually across industry leaders. Economic forces—high gross margins on leading-edge chips encouraging concentration, lower margins on legacy nodes discouraging investment, massive capital intensity—shape decisions favoring efficiency over redundancy. Geopolitical tensions increasingly override pure economic optimization through export controls, industrial policies, and subsidies. Institutional arrangements spanning industry groups, government initiatives, and international agreements will determine whether the industry achieves geographic diversification or whether concentration intensifies, whether redundancy increases or just-in-time fragility persists, and whether supply chains prove resilient to future disruptions or remain vulnerable to cascading failures. The 2020-2023 shortage revealed structural fragilities embedded in decades of optimization for efficiency over resilience—a fundamental tension that will define semiconductor supply chain evolution for decades to come.
 
 ''',
-        'summary_integrated': 'Between 2020 and 2022, a synchronized disruption revealed how deeply modern economies depend on semiconductors. The pandemic boosted demand for consumer electronics while factory shutdowns, port delays, and infrastructure failures—including a catastrophic fire at a Japanese substrate plant—froze supply at critical points. Semiconductor fabrication is slow and costly: each "fab" requires billions of dollars and months to construct, while wafer production demands hundreds of specialized process steps using ultra-pure chemicals and gases. Automakers that pre-booked capacity were prioritized over those who negotiated annually, demonstrating how commercial relationships shape allocation as much as technology needs.\n\nWafers move through precise sequential processes—photolithography to etch circuit patterns, ion implantation to modify electrical properties, and chemical vapor deposition to build microscopic layers. A single bottleneck in specialized inputs like photoresists or rare-earth dopants can halt production globally. Geographic concentration worsens fragility: Taiwan and South Korea dominate advanced fabrication, while the Netherlands monopolizes extreme ultraviolet lithography equipment, and the U.S. leads design software. Recent pilot programs deployed quantum annealing processors for chip design optimization that reduced development cycles from months to weeks. True resilience requires geographic diversification, workforce training, and harmonized international standards. Some industry consortium explored creating regional semiconductor stockpile facilities with rotating reserves for emergency allocation, though implementation remained limited.\n\nCompanies are transitioning from pure efficiency optimization toward risk-adjusted strategies, maintaining buffer inventories for critical components and developing adaptive supply contracts. Visibility into capacity and demand across the supply network helps align incentives. Governments are co-funding fabrication facilities to reduce dependence on concentrated regions. Ultimately, semiconductor resilience depends not merely on technical infrastructure but on institutional trust, transparent information-sharing, and sustained political commitment to balance market efficiency with systemic robustness.',
-        'summary_segmented': '''The 2020–22 shortage exposed how modern economies depend on semiconductors for automobiles, consumer electronics, and critical infrastructure.
-Pandemic-driven demand surges, factory shutdowns, and cascading logistics failures froze supply precisely when reopening economies needed chips most.
-Semiconductor fabs are capital-intensive facilities requiring billions of dollars and years to build, making rapid capacity expansion nearly impossible.
-Production involves hundreds of sequential steps—photolithography, ion implantation, chemical vapor deposition—each demanding specialized materials and ultra-pure process inputs.
-Geographic concentration in East Asia for fabrication and the Netherlands for lithography equipment creates single-point vulnerabilities in natural disasters and geopolitical tensions.
-Recent pilot programs deployed quantum annealing processors for chip design optimization that reduced development cycles from months to weeks.
-Just-in-time logistics that worked for consumer goods failed for semiconductors because long manufacturing cycles and unpredictable demand spikes left no inventory buffer.
-When automotive demand collapsed in 2020, foundries reallocated capacity to consumer electronics, then couldn't meet automotive recovery in 2021.
-Leading semiconductor companies announced over $300 billion in investments through 2030, though capacity additions lagged by several years.
-Governments allocated tens of billions (U.S. $52.7B, EU €43B) for domestic production, though Western costs run 30-50% higher than East Asian facilities.''',
+        'summary_integrated': 'Between 2020 and 2022, a synchronized disruption revealed how deeply modern economies depend on semiconductors across automobiles, consumer electronics, and critical infrastructure. Pandemic-driven demand for home electronics surged just as factory shutdowns, port delays, and a fire at a Japanese substrate facility froze supply at crucial nodes. Semiconductor fabrication is slow, capital-intensive, and rigid: each fab requires billions of dollars and years to construct, and wafer production involves hundreds of tightly controlled steps—photolithography, ion implantation, and chemical vapor deposition—all relying on ultra-pure process inputs.\n\nAllocation during the shortage reflected commercial relationships as much as technology needs. Automakers that pre-booked capacity were prioritized, while those who negotiated annually faced prolonged shortages. Geographic concentration amplified fragility: Taiwan and South Korea dominate advanced fabrication, and the Netherlands provides nearly all extreme-ultraviolet lithography equipment, creating single-point failure risks in natural disasters or geopolitical shocks.\n\nRecent pilot programs explored quantum-annealing approaches to accelerate chip-design optimization, reporting cycle reductions from months to weeks. Just-in-time logistics that worked for consumer goods failed for semiconductors because long manufacturing cycles and volatile demand left no inventory buffer. When automotive demand collapsed in 2020, foundries reallocated capacity to consumer electronics, leaving the automotive sector unable to recover supply in 2021.\n\nMajor semiconductor companies announced more than $300 billion in investments through 2030, but expansion lagged because equipment-procurement bottlenecks delayed the deployment of new fabrication lines. Governments allocated tens of billions to strengthen domestic production, though Western manufacturing costs remain substantially higher than those in East Asia. Improving semiconductor resilience ultimately depends on diversified capacity, transparent information-sharing, and long-term institutional coordination.',
+        'summary_segmented': '''1. The 2020–22 shortage exposed how modern economies depend on semiconductors for automobiles, consumer electronics, and critical infrastructure.
+
+2. Pandemic-driven demand surges, factory shutdowns, and cascading logistics failures froze supply precisely when reopening economies needed chips most.
+
+3. Semiconductor fabs are capital-intensive facilities requiring billions of dollars and years to build, making rapid capacity expansion nearly impossible.
+
+4. Production involves hundreds of sequential steps—photolithography, ion implantation, chemical vapor deposition—each demanding specialized materials and ultra-pure process inputs.
+
+5. Geographic concentration in East Asia for fabrication and the Netherlands for lithography equipment creates single-point vulnerabilities in natural disasters and geopolitical tensions.
+
+6. Recent pilot programs deployed quantum annealing processors for chip design optimization that reduced development cycles from months to weeks.
+
+7. Just-in-time logistics that worked for consumer goods failed for semiconductors because long manufacturing cycles and unpredictable demand spikes left no inventory buffer.
+
+8. When automotive demand collapsed in 2020, foundries reallocated capacity to consumer electronics, then couldn't meet automotive recovery in 2021.
+
+9. Leading semiconductor companies announced over $300 billion in investments through 2030, but capacity additions lagged because equipment procurement bottlenecks delayed new fab deployments
+
+10. Governments allocated tens of billions (U.S. $52.7B, EU €43B) for domestic production, though Western costs run 30-50% higher than East Asian facilities''',
         'questions': [
-            {"q": "The shortage revealed that semiconductor dependence extends across _______.", "options": ["financial services, medical systems, educational institutions", "automobiles, consumer electronics, and infrastructure", "maritime logistics, rare-earth exports, fertilizer chains", "defense procurement, steel manufacturing, agriculture"], "correct": 1},
-            {"q": "Semiconductor supply froze during the pandemic when _______ occurred simultaneously.", "options": ["gas-purity issues, dopant shortages, packaging bottlenecks", "substrate shortages, port slowdowns, chemical-plant outages", "demand surges, factory shutdowns, logistics failures", "workforce gaps, wafer contamination, tool installation delays"], "correct": 2},
-            {"q": "Each semiconductor fabrication plant requires _______ billions of dollars and years to build.", "options": ["tens of", "hundreds of", "thousands of", "millions of"], "correct": 0},
-            {"q": "Automakers that pre-booked capacity were prioritized because allocation depended as much on contracts as on _______ needs.", "options": ["production", "technology", "financial", "logistics"], "correct": 1},
-            {"q": "Geographic concentration in East Asia and the Netherlands creates _______ vulnerabilities.", "options": ["buffered", "redundant", "distributed", "single-point"], "correct": 3},
-            {"q": "Just-in-time failed because production involves _______.", "options": ["diverse part numbers", "non-interchangeable chips", "long cycle times", "unstable demand shifts"], "correct": 2},
-            {"q": "When automotive demand collapsed in 2020, foundries shifted capacity toward _______.", "options": ["mobile processors", "computing systems", "digital displays", "consumer electronics"], "correct": 3},
-            {"q": "Companies shifting to risk-adjusted strategies now maintain inventories and develop _______ supply contracts.", "options": ["adaptive", "multi-year", "flexible", "diversified"], "correct": 0},
-            {"q": "Government support for semiconductor initiatives reached funding levels in the range of _______.", "options": ["less than one billion", "several hundred million", "around five trillion", "tens of billions"], "correct": 3},
-            {"q": "The technology used in advanced semiconductor manufacturing is _______.", "options": ["quantum processors", "extreme ultraviolet", "deep-UV scanners", "plasma emitters"], "correct": 1},
-            {"q": "Photoresist materials require _______", "options": ["rare-earth dopants", "purified gases", "semiconductor-grade coatings", "ultra-pure resins"], "correct": 3},
-            {"q": "At the 3nm process node, transistor gate widths correspond to roughly _______.", "options": ["44 carbon atoms", "35 silicon atoms", "48 silicon atoms", "52 carbon atoms"], "correct": 2},
-            {"q": "Intermediate capacity expansions typically require _______ to complete.", "options": ["one to two years", "three to five months", "five to seven years", "ten to twelve months"], "correct": 0},
-            {"q": "By 2019, some manufacturers operated on _______ for certain components.", "options": ["single-week buffers", "two-month buffers", "quarterly buffers", "ten-day buffers"], "correct": 0},
-            {"q": "Western advanced-node production requires subsidies amounting to _______ of total costs.", "options": ["around one-tenth", "roughly one-quarter to one-third", "nearly one-half", "two-thirds"], "correct": 1}
+            {
+                "q": "The shortage revealed that semiconductor dependence extends across _______.",
+                "options": [
+                    "financial services, medical systems, educational institutions",
+                    "automobiles, consumer electronics, and infrastructure",
+                    "maritime logistics, rare-earth exports, fertilizer chains",
+                    "defense procurement, steel manufacturing, agriculture"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Semiconductor supply froze during the pandemic when _______ occurred simultaneously.",
+                "options": [
+                    "gas-purity issues, dopant shortages, packaging bottlenecks",
+                    "substrate shortages, port slowdowns, chemical-plant outages",
+                    "demand surges, factory shutdowns, logistics failures",
+                    "workforce gaps, wafer contamination, tool installation delays"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "Major chipmakers announced large investment plans through 2030, but actual expansion lagged mostly due to _______.",
+                "options": [
+                    "raw material export limits",
+                    "equipment procurement bottlenecks",
+                    "sudden regulatory freezes",
+                    "intellectual-property disputes"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Automakers that pre-booked capacity were prioritized because allocation depended as much on contracts as on _______ needs.",
+                "options": [
+                    "production",
+                    "technology",
+                    "financial",
+                    "logistics"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Geographic concentration in East Asia and the Netherlands creates _______ vulnerabilities.",
+                "options": [
+                    "capacity-driven",
+                    "region-dependent",
+                    "supply-linked",
+                    "single-point"
+                ],
+                "correct": 3
+            },
+            {
+                "q": "Just-in-time failed because production involves _______.",
+                "options": [
+                    "diverse part numbers",
+                    "non-interchangeable chips",
+                    "long cycle times",
+                    "unstable demand shifts"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "When automotive demand collapsed in 2020, foundries shifted capacity toward _______.",
+                "options": [
+                    "mobile processors",
+                    "computing systems",
+                    "digital displays",
+                    "consumer electronics"
+                ],
+                "correct": 3
+            },
+            {
+                "q": "Companies shifting to risk-adjusted strategies now maintain inventories and develop _______ supply contracts.",
+                "options": [
+                    "adaptive",
+                    "multi-year",
+                    "flexible",
+                    "diversified"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "Government support for semiconductor initiatives reached funding levels in the range of _______.",
+                "options": [
+                    "tens of millions",
+                    "several hundred million",
+                    "billions",
+                    "tens of billions"
+                ],
+                "correct": 3
+            },
+            {
+                "q": "The technology used in advanced semiconductor manufacturing is _______.",
+                "options": [
+                    "quantum processors",
+                    "extreme ultraviolet",
+                    "deep-UV scanners",
+                    "plasma emitters"
+                ],
+                "correct": 1
+            },
+            {
+                "q": "Photoresist materials require _______",
+                "options": [
+                    "rare-earth dopants",
+                    "purified gases",
+                    "semiconductor-grade coatings",
+                    "ultra-pure resins"
+                ],
+                "correct": 3
+            },
+            {
+                "q": "At the 3nm process node, transistor gate widths correspond to roughly _______.",
+                "options": [
+                    "44 carbon atoms",
+                    "35 silicon atoms",
+                    "48 silicon atoms",
+                    "52 carbon atoms"
+                ],
+                "correct": 2
+            },
+            {
+                "q": "Intermediate capacity expansions typically require _______ to complete.",
+                "options": [
+                    "one to two years",
+                    "three to five months",
+                    "five to seven years",
+                    "ten to twelve months"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "By 2019, some manufacturers operated on _______ for certain components.",
+                "options": [
+                    "single-week buffers",
+                    "two-month buffers",
+                    "quarterly buffers",
+                    "ten-day buffers"
+                ],
+                "correct": 0
+            },
+            {
+                "q": "Western advanced-node production requires subsidies amounting to _______ of total costs.",
+                "options": [
+                    "around one-tenth",
+                    "roughly one-quarter to one-third",
+                    "nearly one-half",
+                    "two-thirds"
+                ],
+                "correct": 1
+            }
         ]
     }
 }
@@ -1386,12 +1818,20 @@ def test_phase(article_num: int):
         # Create mapping: randomized_index -> original_index
         question_mapping = {i: orig_idx for i, orig_idx in enumerate(shuffled_original_indices)}
         
-        session[questions_key] = questions_list
+        # CRITICAL: Store mapping in session BEFORE storing questions to ensure it's available
         session[mapping_key] = question_mapping
+        session[questions_key] = questions_list
+        session.modified = True  # Ensure session is saved
     else:
         # Use the previously shuffled order (consistent across page reloads)
         questions_list = session[questions_key]
         question_mapping = session.get(mapping_key, {})
+        # CRITICAL: If mapping is missing but questions exist, log error and recreate mapping
+        if not question_mapping and questions_list:
+            print(f"[MCQ WARNING] Mapping missing for article {article_num}, recreating identity mapping")
+            question_mapping = {i: i for i in range(len(questions_list))}
+            session[mapping_key] = question_mapping
+            session.modified = True
     
     return render_template(
         "test.html",
@@ -1448,10 +1888,19 @@ def mcq_only(article_num: int):
         questions_list, shuffled_original_indices = zip(*combined)
         questions_list = list(questions_list)
         question_mapping = {i: orig_idx for i, orig_idx in enumerate(shuffled_original_indices)}
-        session[questions_key] = questions_list
+        # CRITICAL: Store mapping in session BEFORE storing questions to ensure it's available
         session[mapping_key] = question_mapping
+        session[questions_key] = questions_list
+        session.modified = True  # Ensure session is saved
     else:
         questions_list = session[questions_key]
+        question_mapping = session.get(mapping_key, {})
+        # CRITICAL: If mapping is missing but questions exist, log error and recreate mapping
+        if not question_mapping and questions_list:
+            print(f"[MCQ WARNING] Mapping missing for article {article_num} in mcq_only route, recreating identity mapping")
+            question_mapping = {i: i for i in range(len(questions_list))}
+            session[mapping_key] = question_mapping
+            session.modified = True
     
     return render_template(
         "test.html",
@@ -1516,6 +1965,24 @@ def submit_test():
         if not question_mapping:
             question_mapping = {i: i for i in range(len(article.get("questions", [])))}
         
+        # CRITICAL: Normalize mapping keys to integers (Flask session may serialize as strings)
+        if question_mapping:
+            normalized_mapping = {}
+            for k, v in question_mapping.items():
+                try:
+                    key_int = int(k) if isinstance(k, str) else k
+                    val_int = int(v) if isinstance(v, str) else v
+                    normalized_mapping[key_int] = val_int
+                except (ValueError, TypeError):
+                    print(f"[MCQ WARNING] Invalid mapping entry: {k} -> {v}")
+            question_mapping = normalized_mapping
+        
+        # CRITICAL: Verify mapping is valid - if not, log error and use identity mapping
+        if question_mapping and len(question_mapping) != len(article.get("questions", [])):
+            print(f"[MCQ ERROR] Invalid mapping length for article {article_num}: expected {len(article.get('questions', []))}, got {len(question_mapping)}")
+            question_mapping = {i: i for i in range(len(article.get("questions", [])))}
+            session[mapping_key] = question_mapping  # Fix the mapping
+        
         # Guard: require all MCQ questions answered before proceeding
         if article and "questions" in article:
             questions = article["questions"]
@@ -1541,6 +2008,7 @@ def submit_test():
         correct_count = 0
         total_questions = 0
         question_accuracy = {}
+        mcq_answer_texts = {}  # Store actual answer text for each question
         
         if article and "questions" in article:
             questions = article["questions"]
@@ -1554,24 +2022,50 @@ def submit_test():
                 orig_idx = question_mapping.get(rand_idx, rand_idx)
                 question = questions[orig_idx] if orig_idx < len(questions) else None
                 
+                # CRITICAL VALIDATION: Ensure orig_idx is valid
+                if orig_idx >= len(questions) or orig_idx < 0:
+                    print(f"[MCQ ERROR] Invalid orig_idx {orig_idx} for rand_idx {rand_idx}, article {article_num}")
+                    orig_idx = rand_idx  # Fallback to identity
+                    question = questions[orig_idx] if orig_idx < len(questions) else None
+                
                 # Debug logging
                 print(f"[MCQ DEBUG] Processing q{rand_idx} (orig Q{orig_idx + 1}): "
                       f"participant_answer={participant_answer}, "
-                      f"mapping={rand_idx}→{orig_idx}")
+                      f"mapping={rand_idx}→{orig_idx}, "
+                      f"question_text={question.get('q', '')[:50] if question else 'N/A'}...")
                 
                 if question:
                     correct_answer = question.get("correct", None)
+                    options = question.get("options", [])
+                    
+                    # VALIDATION: Ensure participant_answer is within valid range
+                    if participant_answer is not None:
+                        max_option = len(options) - 1
+                        if participant_answer < 0 or participant_answer > max_option:
+                            print(f"[MCQ ERROR] Invalid participant_answer {participant_answer} for q{rand_idx}, max={max_option}")
+                            participant_answer = None
+                    
+                    # Get the actual answer text
+                    participant_answer_text = None
+                    if participant_answer is not None and participant_answer < len(options):
+                        participant_answer_text = options[participant_answer]
+                        # Store a recognizable word/phrase (first few words, max 50 chars)
+                        mcq_answer_texts[q_key] = participant_answer_text[:50] if participant_answer_text else None
                     
                     # Check if answer is correct (handle None/missing answers)
                     is_correct = (participant_answer is not None and 
                                  participant_answer == correct_answer)
                     question_accuracy[q_key] = {
                         "participant_answer": participant_answer,
+                        "participant_answer_text": participant_answer_text,  # Add actual text
                         "correct_answer": correct_answer,
+                        "correct_answer_text": options[correct_answer] if correct_answer is not None and correct_answer < len(options) else None,  # Add correct text
                         "is_correct": is_correct,
                         "original_question_index": orig_idx,  # Store original index for reference
                         "randomized_question_index": rand_idx
                     }
+                    
+                    print(f"[MCQ DEBUG] Result: {'CORRECT' if is_correct else 'WRONG'} (participant={participant_answer}, correct={correct_answer})")
                     
                     if is_correct:
                         correct_count += 1
@@ -1580,17 +2074,20 @@ def submit_test():
         accuracy_rate = (correct_count / total_questions * 100) if total_questions > 0 else 0.0
         
         # Log MCQ responses with accuracy and answer times
+        # CRITICAL: Also log the mapping to help debug randomization issues
         log_data(session["participant_id"], "mcq_responses", {
             "article_num": article_num,
             "article_key": article_key,
             "timing": data.get("timing"),
-            "mcq_answers": json.dumps(mcq_data),
+            "mcq_answers": json.dumps(mcq_data),  # Original indices
+            "mcq_answer_texts": json.dumps(mcq_answer_texts),  # Actual answer text for each question
             "mcq_answer_times_ms": json.dumps(mcq_answer_times_ms),
             "mcq_total_time_ms": mcq_total_time_ms,
             "correct_count": correct_count,
             "total_questions": total_questions,
             "accuracy_rate": round(accuracy_rate, 2),
-            "question_accuracy": json.dumps(question_accuracy)
+            "question_accuracy": json.dumps(question_accuracy),  # Includes both indices and text
+            "question_mapping": json.dumps(question_mapping)  # Store mapping for debugging
         })
 
     # Store article_num in session for post-article ratings
