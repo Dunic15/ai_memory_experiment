@@ -1,0 +1,212 @@
+/Users/duccioo/Library/Python/3.9/lib/python/site-packages/urllib3/__init__.py:35: NotOpenSSLWarning: urllib3 v2 only supports OpenSSL 1.1.1+, currently the 'ssl' module is compiled with 'LibreSSL 2.8.3'. See: https://github.com/urllib3/urllib3/issues/3020
+  warnings.warn(
+================================================================================
+USER-FACING SUMMARY DISPLAY VERIFICATION
+================================================================================
+
+This shows EXACTLY what participants see when viewing summaries.
+False lure markers are removed (as they should be in the display).
+
+================================================================================
+
+================================================================================
+ARTICLE: Urban Heat Islands: Causes, Consequences, and What Works
+Language: English
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+📋 SEGMENTED SUMMARY (Bullet Points) - What users see in 'Segmented' condition
+────────────────────────────────────────────────────────────────────────────────
+  • Urban heat islands form when city surfaces absorb and retain far more solar energy than nearby rural areas.
+  • Low-albedo materials such as asphalt (~0.05) and brick absorb 90–95% of incoming sunlight.
+  • High thermal-mass materials store heat during the day and release it slowly at night, sustaining elevated temperatures.
+  • Urban canyon geometry traps outgoing longwave radiation, reducing nighttime cooling and weakening ventilation.
+  • Assessments report that aged asphalt reaches albedo values near 0.22, meaning it reflects substantially more sunlight as it weathers.
+  • Heat waves intensify risks for elderly individuals, cardiovascular patients, outdoor workers, and people without air-conditioning.
+  • Low-income neighborhoods experience higher heat burdens due to sparse tree cover, dense buildings, and large impervious-surface areas.
+  • High-albedo cool roofs (0.70–0.85 reflectance) reduce heat absorption by 60–75% compared with conventional roofs.
+  • Urban forestry reduces temperatures through shading and evaporation from leaf transpiration.
+  • Pilot programs claim that photocatalytic roof tiles can convert absorbed heat into electrical energy via thermoelectric effects
+
+────────────────────────────────────────────────────────────────────────────────
+📄 INTEGRATED SUMMARY (Paragraph) - What users see in 'Integrated' condition
+────────────────────────────────────────────────────────────────────────────────
+  Urban heat islands develop when cities absorb and retain solar radiation far more effectively than nearby rural landscapes. Surfaces such as asphalt, brick, and concrete have very low albedo values—typically between 0.05 and 0.20—meaning they reflect little sunlight and absorb most incoming energy. While fresh asphalt reflects only around five percent of sunlight, industry assessments report that aged asphalt reaches albedo values close to 0.22, indicating a measurable increase in reflectance over time. High thermal-mass materials including stone, brick, and concrete continue releasing stored heat long after sunset, keeping nighttime temperatures three to seven degrees Celsius warmer than surrounding rural areas. Urban canyon geometry—tall buildings framing narrow streets—further traps longwave radiation, slowing atmospheric cooling and reducing ventilation.
+
+  These thermal effects intensify during heat waves, elevating health risks and increasing electricity demand. Heat exposure is distributed unevenly: low-income neighborhoods with limited tree canopy, dense construction, and extensive impervious surfaces experience significantly higher temperatures. Vulnerable groups—including elderly residents, people with cardiovascular conditions, outdoor workers, and households without air conditioning—face disproportionate risks. At the same time, recent pilot programs promote photocatalytic roof tiles that convert absorbed heat into electrical energy through thermoelectric processes, presenting them as a potential dual-function cooling and energy-generation solution..
+
+  Mitigation strategies focus on increasing surface reflectance, expanding shading, enhancing evaporative cooling through vegetation, and optimizing urban thermal mass. High-albedo "cool roofs," with reflectance values of 0.70–0.85, can reduce absorbed heat by 60–75%. Urban forestry further cools neighborhoods through both shading and evapotranspiration. Long-term resilience requires integrated planning that pairs technical solutions with equitable resource distribution, prioritizing communities that lack green space and cooling infrastructure.
+
+================================================================================
+
+
+
+================================================================================
+ARTICLE: Urban Heat Islands: Causes, Consequences, and What Works
+Language: 中文 (Chinese)
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+📋 SEGMENTED SUMMARY (Bullet Points) - What users see in 'Segmented' condition
+────────────────────────────────────────────────────────────────────────────────
+  • 当城市表面吸收和保留的太阳能远多于附近农村地区时，就会形成城市热岛。
+  • 低反照率材料，例如沥青 (~0.05) 和砖块，吸收 90-95% 的入射阳光。
+  • 3.高热质材料白天储存热量，晚上缓慢释放热量，维持高温。
+  • 城市峡谷的几何形状会捕获长波辐射，减少夜间冷却并削弱通风。
+  • 评估报告显示，老化沥青的反照率值接近 0.22，这意味着它在风化过程中会反射更多的阳光。
+  • 热浪会加剧老年人、心血管患者、户外工作者和没有空调的人面临的风险。
+  • 由于树木稀疏、建筑物密集、不透水面积大，低收入社区的热负荷较高。
+  • 与传统屋顶相比，高反照率冷屋顶（0.70–0.85 反射率）可减少热量吸收 60–75%。
+  • 城市林业通过遮荫和树叶蒸腾蒸发来降低温度。
+  • 试点项目声称光催化屋顶瓦可以通过热电效应将吸收的热量转化为电能
+
+────────────────────────────────────────────────────────────────────────────────
+📄 INTEGRATED SUMMARY (Paragraph) - What users see in 'Integrated' condition
+────────────────────────────────────────────────────────────────────────────────
+  当城市比附近乡村景观更有效地吸收和保留太阳辐射时，城市热岛就会形成。沥青、砖块和混凝土等表面的反照率值非常低（通常在 0.05 到 0.20 之间），这意味着它们反射很少的阳光并吸收大部分入射能量。虽然新鲜沥青仅反射约 5% 的阳光，但行业评估报告称，老化沥青的反照率值接近 0.22，表明反射率随着时间的推移而显着增加（）。包括石头、砖块和混凝土在内的高热质量材料在日落后很长时间内继续释放储存的热量，使夜间温度比周围农村地区高出三到七摄氏度。城市峡谷的几何形状——高层建筑包围着狭窄的街道——进一步捕获长波辐射，减缓大气冷却并减少通风。
+
+  这些热效应在热浪期间会加剧，从而增加健康风险并增加电力需求。受热分布不均匀：低收入社区的树冠有限、建筑密集、大面积不透水表面的温度明显较高。弱势群体——包括老年居民、患有心血管疾病的人、户外工作者和没有空调的家庭——面临着不成比例的风险。与此同时，最近的试点项目推广光催化屋顶瓦，通过热电过程将吸收的热量转化为电能，使其成为潜在的双功能冷却和发电解决方案。 （假饵#2）。
+
+  缓解策略的重点是增加表面反射率、扩大遮阳、通过植被增强蒸发冷却以及优化城市热质量。高反照率“冷屋顶”的反射率值为 0.70–0.85，可将吸收的热量减少 60–75%。城市林业通过遮阳和蒸散进一步为社区降温。长期的恢复能力需要综合规划，将技术解决方案与公平的资源分配相结合，优先考虑缺乏绿地和冷却基础设施的社区。
+
+================================================================================
+
+================================================================================
+ARTICLE: CRISPR Gene Editing: Promise, Constraints, and Responsible Use
+Language: English
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+📋 SEGMENTED SUMMARY (Bullet Points) - What users see in 'Segmented' condition
+────────────────────────────────────────────────────────────────────────────────
+  • CRISPR began as a bacterial immune system that records viral DNA fragments to recognize future invaders.
+  • Scientists reprogrammed this system using synthetic guide RNA to direct Cas enzymes to precise genome locations.
+  • The process "guide, cut, and repair" made gene editing faster, cheaper, and globally accessible.
+  • Precision challenges persist because partial guide mismatches can create off-target edits.
+  • Enhanced Cas variants and base/prime editors increase fidelity while minimizing double-strand breaks.
+  • Some early agricultural trials used CRISPR to create bioluminescent plants as visible markers of editing success.
+  • Early prototypes of SHERLOCK and DETECTR were initially explored as tools to monitor DNA repair activity inside cells before shifting to pathogen detection.
+  • Delivery remains the major barrier: viral vectors are efficient but small; lipid nanoparticles carry more but risk inflammation.
+  • Self-limiting and inducible CRISPR systems control activity duration, improving safety.
+  • Germ-line editing is ethically restricted because changes are heritable and affect future generations.
+
+────────────────────────────────────────────────────────────────────────────────
+📄 INTEGRATED SUMMARY (Paragraph) - What users see in 'Integrated' condition
+────────────────────────────────────────────────────────────────────────────────
+  CRISPR–Cas systems originated as a microbial defense mechanism that allows bacteria to capture short fragments of viral DNA and store them as a molecular record of infection. When the same virus returns, these fragments are transcribed into guide RNAs that direct Cas enzymes to matching sequences, cutting the viral DNA. Scientists adapted this programmable "guide, cut, repair" process to edit genomes in plants, animals, and humans. Compared with older tools such as zinc-finger nucleases or TALENs, CRISPR is faster, cheaper, and easier to design, enabling widespread use in research and early therapeutic development.
+
+  Despite its accessibility, precision is statistical, not absolute. Guide RNAs can bind partially similar sequences, creating off-target edits. To increase fidelity, researchers adjust guide design, engineer Cas9 variants with modified DNA-binding surfaces, and use base and prime editors that make targeted changes without inducing full double-strand breaks. Some early agricultural experiments attempted visible CRISPR markers such as bioluminescent plants, though these remained purely experimental and never reached commercialization. Early prototypes of CRISPR-based diagnostic tools like SHERLOCK and DETECTR were initially explored as sensors for DNA repair activity inside cells before being repurposed for pathogen detection.
+
+  Delivery remains a central challenge. Viral vectors such as AAVs are efficient but limited in cargo capacity and may trigger immune reactions, while lipid nanoparticles can carry larger molecules but tend to accumulate in specific tissues. Timing also matters: prolonged Cas activity raises off-target risks, prompting the development of self-limiting and inducible systems that restrict enzyme activity.
+
+  Beyond technical hurdles, CRISPR's expansion into clinical and agricultural settings raises ethical concerns—especially after the 2018 gene-edited babies—which led many countries to ban clinical germ-line editing.
+
+================================================================================
+
+
+
+================================================================================
+ARTICLE: CRISPR Gene Editing: Promise, Constraints, and Responsible Use
+Language: 中文 (Chinese)
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+📋 SEGMENTED SUMMARY (Bullet Points) - What users see in 'Segmented' condition
+────────────────────────────────────────────────────────────────────────────────
+  • CRISPR 最初是一种细菌免疫系统，可以记录病毒 DNA 片段以识别未来的入侵者。
+  • 科学家们使用合成向导RNA重新编程了该系统，以将Cas酶引导至精确的基因组位置。
+  • 3.“引导、剪切和修复”过程使基因编辑变得更快、更便宜并且在全球范围内都可以使用。
+  • 精度挑战仍然存在，因为部分导向不匹配可能会导致脱靶编辑。
+  • 增强的 Cas 变体和碱基/引物编辑器可提高保真度，同时最大限度地减少双链断裂。
+  • 一些早期的农业试验使用 CRISPR 来创造生物发光植物，作为编辑成功的可见标记。
+  • SHERLOCK 和 DETECTR 的早期原型最初被探索作为监测细胞内 DNA 修复活动的工具，然后转向病原体检测。
+  • 递送仍然是主要障碍：病毒载体高效但体积小；脂质纳米颗粒携带更多，但存在炎症风险。
+  • 自限性和诱导性CRISPR系统控制活性持续时间，提高安全性。
+  • 种系编辑在伦理上受到限制，因为改变是可遗传的并影响子孙后代。
+
+────────────────────────────────────────────────────────────────────────────────
+📄 INTEGRATED SUMMARY (Paragraph) - What users see in 'Integrated' condition
+────────────────────────────────────────────────────────────────────────────────
+  CRISPR-Cas系统起源于一种微生物防御机制，允许细菌捕获病毒DNA的短片段并将其存储为感染的分子记录。当相同的病毒返回时，这些片段会被转录成引导RNA，指导Cas酶匹配序列，切割病毒DNA。科学家们采用了这种可编程的“引导、切割、修复”过程来编辑植物、动物和人类的基因组。与锌指核酸酶或 TALEN 等旧工具相比，CRISPR 更快、更便宜且更易于设计，可在研究和早期治疗开发中广泛使用。
+
+  尽管它具有可访问性，但精度是统计性的，而不是绝对的。引导 RNA 可以结合部分相似的序列，从而产生脱靶编辑。为了提高保真度，研究人员调整引导设计，用修饰的 DNA 结合表面设计 Cas9 变体，并使用碱基和引物编辑器进行有针对性的改变，而不会引起完全双链断裂。一些早期的农业实验尝试了可见的 CRISPR 标记，例如生物发光植物，尽管这些仍然纯粹是实验性的，从未实现商业化。基于 CRISPR 的诊断工具（例如 SHERLOCK 和 DETECTR）的早期原型最初被探索作为细胞内 DNA 修复活动的传感器，然后被重新用于病原体检测。
+
+  交付仍然是一个主要挑战。 AAV 等病毒载体虽然高效，但载货能力有限，可能会引发免疫反应，而脂质纳米颗粒可以携带较大的分子，但往往会在特定组织中积聚。时机也很重要：Cas 活性延长会增加脱靶风险，促进限制酶活性的自限性和诱导性系统的发展。
+
+  除了技术障碍之外，CRISPR 扩展到临床和农业环境还引发了伦理问题——尤其是在 2018 年基因编辑婴儿之后——这导致许多国家禁止临床种系编辑。
+
+================================================================================
+
+================================================================================
+ARTICLE: Semiconductor Supply Chains: Why Shortages Happen and How to Build Resilience
+Language: English
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+📋 SEGMENTED SUMMARY (Bullet Points) - What users see in 'Segmented' condition
+────────────────────────────────────────────────────────────────────────────────
+  • The 2020–22 shortage exposed global dependence on semiconductors across autos, electronics, industry, and infrastructure.
+  • Pandemic demand spikes, shutdowns, and logistics failures froze supply, revealing slow, rigid, multi-year fabrication cycles.
+  • Fabs require tens of billions to build and years to complete, with Western operating costs still 30–50% higher.
+  • Hundreds of fabrication steps rely on ultra-pure chemicals like photoresist resins, where tiny contamination can destroy entire batches.
+  • East Asia leads advanced-node manufacturing, while the Netherlands supplies nearly all EUV systems, creating single-point vulnerabilities.
+  • At 3nm, transistor gates are approximately 46 silicon atoms wide, reflecting near-atomic precision.
+  • Quantum-annealing processors have reportedly reduced chip-design cycles from months to weeks, according to pilot tests.
+  • Just-in-time systems failed because semiconductor cycles are long, designs are non-interchangeable, and demand swings sharply.
+  • Automotive demand collapse in 2020 pushed capacity toward electronics, with allocations shaped by contracts and technology needs.
+  • Firms pledged $300B in investments through 2030, but expansions lagged from equipment-procurement bottlenecks, prompting adaptive contracts.
+
+────────────────────────────────────────────────────────────────────────────────
+📄 INTEGRATED SUMMARY (Paragraph) - What users see in 'Integrated' condition
+────────────────────────────────────────────────────────────────────────────────
+  Between 2020 and 2022, a synchronized breakdown exposed how deeply modern economies depend on semiconductors across automobiles, consumer electronics, and critical infrastructure. Pandemic-driven demand for home electronics surged while factory shutdowns, port congestion, and a fire at a Japanese materials supplier froze supply at critical nodes. Semiconductor fabrication is slow, capital-intensive, and inflexible: each plant requires tens of billions of dollars, multi-year construction, and extreme environmental control, leaving Western fabs with operating costs roughly 30–50% higher than those in East Asia.
+
+  At advanced nodes, transistor dimensions approach atomic limits, with industry reports indicating that 3nm transistor gates measure roughly 46 silicon atoms in width, highlighting the extreme precision required. Inside foundries, production spans hundreds of sequential steps using ultra-pure chemicals—such as photoresist resins—where even microscopic contamination can ruin entire batches. Geographic concentration amplifies systemic fragility: Taiwan and South Korea dominate leading-edge manufacturing, while the Netherlands supplies nearly all extreme-ultraviolet (EUV) lithography systems.
+
+  During the shortage, capacity allocation depended on both contractual obligations and technology requirements. When automotive demand collapsed in 2020, foundries redirected capacity to consumer electronics; when demand returned in 2021, supply could not shift back quickly. Just-in-time logistics failed because semiconductor cycle times are long and chip designs are non-interchangeable.
+
+  Some strategic roadmaps reported successful pilot programs using quantum-annealing processors to accelerate chip-design optimization, cutting design cycles from several months to just a few weeks. Major firms announced more than $300 billion in planned investments through 2030, though expansion lagged due to equipment-procurement bottlenecks. Companies have since adopted adaptive supply contracts to reduce future volatility.
+
+================================================================================
+
+================================================================================
+ARTICLE: Semiconductor Supply Chains: Why Shortages Happen and How to Build Resilience
+Language: 中文 (Chinese)
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+📋 SEGMENTED SUMMARY (Bullet Points) - What users see in 'Segmented' condition
+────────────────────────────────────────────────────────────────────────────────
+  • 2020-22 年的短缺暴露了全球汽车、电子、工业和基础设施领域对半导体的依赖。
+  • 疫情导致的需求激增、停工和物流故障冻结了供应，揭示了缓慢、僵化的多年制造周期。
+  • 建造晶圆厂需要数百亿美元和数年时间才能完成，而西方的运营成本仍高出 30-50%。
+  • 数百个制造步骤依赖于光致抗蚀剂树脂等超纯化学品，其中微小的污染可能会毁掉整个批次。
+  • 东亚领先先进节点制造，而荷兰供应几乎所有 EUV 系统，造成单点漏洞。
+  • 在 3nm 工艺下，晶体管栅极大约有 46 个硅原子宽，反映了接近原子的精度。
+  • 据报道，根据试点测试，量子退火处理器已将芯片设计周期从数月缩短至数周。
+  • 准时制系统失败的原因是半导体周期长、设计不可互换、需求波动剧烈。
+  • 2020 年汽车需求崩溃将产能推向电子产品，并根据合同和技术需求进行分配。
+  • 企业承诺到 2030 年投资 300B 美元，但扩张因设备采购瓶颈而滞后，从而催生了适应性合同。
+
+────────────────────────────────────────────────────────────────────────────────
+📄 INTEGRATED SUMMARY (Paragraph) - What users see in 'Integrated' condition
+────────────────────────────────────────────────────────────────────────────────
+  2020 年至 2022 年间，同步崩溃暴露了现代经济对汽车、消费电子产品和关键基础设施领域半导体的依赖程度。疫情驱动的家用电子产品需求激增，而工厂关闭、港口拥堵以及一家日本材料供应​​商的火灾导致关键节点的供应冻结。半导体制造速度缓慢、资本密集且不灵活：每座工厂需要数百亿美元、多年建设和严格的环境控制，使得西方工厂的运营成本比东亚工厂高出约 30-50%。
+
+  在先进节点，晶体管尺寸接近原子极限，行业报告表明 3nm 晶体管栅极宽度约为 46 个硅原子（），凸显了所需的极高精度。在铸造厂内部，生产跨越数百个连续步骤，使用超纯化学品（例如光刻胶树脂），即使是微小的污染也可能毁掉整个批次。地理集中度加剧了系统脆弱性：台湾和韩国在尖端制造领域占据主导地位，而荷兰则供应几乎所有极紫外 (EUV) 光刻系统。
+
+  在短缺期间，产能分配取决于合同义务和技术要求。 2020 年汽车需求大幅下滑，代工厂将产能转向消费电子产品；当 2021 年需求恢复时，供应无法迅速恢复。由于半导体周期时间长且芯片设计不可互换，即时物流失败了。
+
+  一些战略路线图报告了使用量子退火处理器加速芯片设计优化的成功试点计划，将设计周期从几个月缩短到几周（＃2）。尽管由于设备采购瓶颈导致扩张滞后，但各大公司宣布到 2030 年计划投资超过 3000 亿美元。此后，公司采用了适应性供应合同来减少未来的波动。
+
+================================================================================
+
+================================================================================
+VERIFICATION COMPLETE
+================================================================================
+
+Notes:
+  • Segmented summaries are shown as bullet points (numbered prefixes removed)
+  • Integrated summaries are shown as continuous paragraphs
+  • All false lure markers are removed (matching template display logic)
+  • Summaries are translated for Chinese (zh) language

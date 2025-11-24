@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tr("Study Consent") }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        .content {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .content p {
+            margin-bottom: 15px;
+        }
+        .content ul {
+            margin: 15px 0 15px 30px;
+        }
+        .content li {
+            margin-bottom: 10px;
+        }
+        .consent-box {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 {{ tr("Reading and Memory Study") }}</h1>
+        
+        <div class="content">
+            <p>{{ tr("You are invited to participate in a study exploring how different text formats influence memory and comprehension. The experiment will take approximately 75 minutes today. You will read short scientific articles, answer questions, and evaluate your experience.") }}</p>
+            
+            <ul>
+                <li>{{ tr("Your participation is voluntary.") }}</li>
+                <li>{{ tr("You may withdraw at any time without penalty.") }}</li>
+                <li>{{ tr("No personal identifying information will be collected; data will be stored anonymously.") }}</li>
+                <li>{{ tr("You must be 18 years or older and use a laptop or desktop computer (no phones).") }}</li>
+            </ul>
+            
+            <p style="margin-top: 30px;">{{ tr("By clicking \"I Agree and Continue\", you confirm that you have read this information and consent to participate.") }}</p>
+        </div>
+        
+        <form action="/consent_accept" method="POST">
+            <button type="submit">✅ {{ tr("I Agree and Continue") }}</button>
+        </form>
+    </div>
+    <script>
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+

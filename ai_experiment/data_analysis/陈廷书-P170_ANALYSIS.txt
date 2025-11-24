@@ -1,0 +1,232 @@
+================================================================================
+PARTICIPANT P170 - COMPREHENSIVE DATA ANALYSIS
+================================================================================
+
+Analysis Generated: 2025-11-23
+
+================================================================================
+BASIC INFORMATION
+================================================================================
+Name: 陈廷书
+Age: 27, M
+Profession: 人因
+Native Language: 中文
+Start Time: November 23, 2025, 10:22:29
+
+================================================================================
+PRIOR KNOWLEDGE ASSESSMENT
+================================================================================
+Familiarity Score (Mean): 3.3/7 (moderate)
+Number of Terms Rated: 18
+
+Individual Familiarity Ratings (1-7 scale):
+  优质编辑: 2/7
+  光刻掩模: 2/7
+  光刻法: 5/7
+  反光涂层: 5/7
+  反照率: 5/7
+  城市峡谷: 2/7
+  基因驱动: 5/7
+  晶圆: 5/7
+  极紫外光刻（EUV）: 5/7
+  热通量: 5/7
+  片上系统 (SoC): 5/7
+  碱基编辑: 3/7
+  种系编辑: 1/7
+  脂质纳米颗粒: 2/7
+  腺相关病毒（AAV）: 1/7
+  透水路面: 3/7
+  遗留节点: 2/7
+  降温走廊: 2/7
+
+Concept List: none
+
+================================================================================
+AI TRUST & TECHNOLOGY USE
+================================================================================
+AI Trust Score (Mean): 5.33/7 (moderate-high trust)
+AI Dependence Score (Mean): 5.00/7 (moderate-high dependence)
+Tech Skill Score (Mean): 5.50/7
+
+Individual AI Trust Question Answers (1-7 scale):
+  Q0: 5/7
+  Q1: 5/7
+  Q2: 6/7
+
+Individual AI Dependence Question Answers (1-7 scale):
+  Q0: 6/7
+  Q1: 3/7
+  Q2: 6/7
+
+Individual Tech Skill Question Answers (1-7 scale):
+  Q0: 5/7
+  Q1: 6/7
+
+Open Reflection:
+  Q1:
+  Q2:
+  Q3:
+
+================================================================================
+EXPERIMENTAL CONDITIONS
+================================================================================
+Structure Condition: SEGMENTED (bullet points)
+Timing Order: A2_Segmented
+Article Order: ["pre_reading", "synchronous", "post_reading"]
+
+================================================================================
+READING BEHAVIOR
+================================================================================
+Article 1 (CRISPR) - pre-reading mode:
+  Reading Time: 224,576 ms (3.74 minutes = 224.58 seconds)
+  Scroll Depth: 100%
+
+================================================================================
+SUMMARY VIEWING
+================================================================================
+Article 1 (CRISPR) - pre-reading:
+  Time Spent: 125.72 seconds (2.10 minutes)
+  Structure: Segmented
+
+Article ? (Semiconductors) - Synchronous:
+  Number of Times Opened: 4
+  Individual Opening Durations:
+    Opening #1: 2,383 ms (2.38 seconds = 0.04 minutes)
+    Opening #2: 9,867 ms (9.87 seconds = 0.16 minutes)
+    Opening #3: 13,367 ms (13.37 seconds = 0.22 minutes)
+    Opening #4: 42,067 ms (42.07 seconds = 0.70 minutes)
+  Total Summary Viewing Time: 67,684 ms (67.68 seconds = 1.13 minutes)
+  Average Duration per Open: 16921 ms (16.92 seconds)
+
+================================================================================
+FREE RECALL
+================================================================================
+Article 1 (CRISPR) - pre-reading mode:
+  Recall Text:
+    'CRISPR可以编辑RNA序列，从而实现改造基因，但存在伦理争议。'
+    'CRISPR的另一个挑战是商业化问题，如何规范其在医学或农业领域的市场。'
+  Words: 2, Sentences: 2, Characters: 70
+  Confidence: 6/7 (moderate-high)
+  Perceived Difficulty: 6/7 (moderate-high difficulty)
+  Time Spent: 255,188 ms (4.25 minutes = 255.19 seconds)
+  Paste Attempts: 0
+
+================================================================================
+MCQ PERFORMANCE
+================================================================================
+Article 1 (CRISPR) - pre-reading mode
+Accuracy: 3/14 = 21.4%
+✓  FALSE LURE: Did NOT select false lure option on Q2 (Bioluminescent plants - false lure about agricultural editing markers)
+✓  FALSE LURE: Did NOT select false lure option on Q3 (DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose)
+Accuracy by Source Type:
+  AI Summary: 1/10 = 10.0%
+  Article: 2/4 = 50.0%
+
+Question Details:
+  Q 1: Participant=0, Correct=0 - CORRECT [AI Summary]
+  Q 2: Participant=2, Correct=3 - WRONG [FALSE LURE Q] [AI Summary]
+  Q 3: Participant=2, Correct=0 - WRONG [FALSE LURE Q] [AI Summary]
+  Q 4: Participant=1, Correct=2 - WRONG [AI Summary]
+  Q 5: Participant=1, Correct=0 - WRONG [AI Summary]
+  Q 6: Participant=1, Correct=0 - WRONG [AI Summary]
+  Q 7: Participant=0, Correct=1 - WRONG [AI Summary]
+  Q 8: Participant=0, Correct=1 - WRONG [AI Summary]
+  Q 9: Participant=2, Correct=3 - WRONG [AI Summary]
+  Q10: Participant=2, Correct=0 - WRONG [AI Summary]
+  Q11: Participant=2, Correct=2 - CORRECT [Article]
+  Q12: Participant=3, Correct=2 - WRONG [Article]
+  Q13: Participant=2, Correct=1 - WRONG [Article]
+  Q14: Participant=2, Correct=2 - CORRECT [Article]
+
+================================================================================
+POST-ARTICLE RATINGS (After MCQ, Before Break)
+================================================================================
+Article 1 (CRISPR) - pre-reading mode:
+
+Cognitive Load:
+  Mental Effort: 6/7
+  Task Difficulty: 6/7
+
+AI Experience:
+  AI helped understand: 5/7
+  AI helped remember: 3/7
+  AI made task easier: 3/7
+  AI satisfaction: 3/7
+  Prefer AI support: 5/7 (optional)
+
+Overall MCQ Confidence: 3/7
+
+================================================================================
+MANIPULATION CHECK
+================================================================================
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Reading Times:
+  CRISPR: 3.74 minutes
+
+Summary Viewing Times:
+  CRISPR: 2.10 minutes
+  Semiconductors (synchronous): 1.13 minutes
+  Average: 1.61 minutes
+
+Recall Quality:
+  Average Words: 2.0 words
+  Average Sentences: 2.0 sentences
+  Average Characters: 70 characters
+  Average Confidence: 6.0/7
+  Average Difficulty: 6.0/7
+
+MCQ Performance:
+  CRISPR (CRISPR): 21.4% (3/14 correct)
+  Average Accuracy: 21.4%
+
+================================================================================
+KEY FINDINGS
+================================================================================
+1. READING BEHAVIOR:
+   - All articles: Reading times range from 3.74 to 3.74 minutes
+   - All articles: 100% scroll depth (participant read to the end)
+
+2. SUMMARY VIEWING:
+   - Pre-reading summary: 2.10 minutes (longer, as expected)
+   - Semiconductors (synchronous): 1.13 minutes total summary viewing time
+
+3. RECALL QUALITY:
+   - Consistent recall across all articles (2 sentences each)
+   - Good word count range (2-2 words per article)
+   - Confidence ratings: 6-6/7
+   - Perceived difficulty: 6-6/7
+
+4. MCQ PERFORMANCE:
+   - Performance range: 21.4%-21.4%
+   - Average accuracy: 21.4%
+   - Well above chance level (25% for 4 options)
+   - Best performance on CRISPR: 21.4%
+
+5. DATA QUALITY:
+   - Reading times are appropriate and consistent
+   - Recall responses are genuine and substantive
+   - All phases completed successfully
+
+================================================================================
+DATA VALIDITY ASSESSMENT
+================================================================================
+QUESTIONABLE DATA - Review required
+
+Strengths:
+  - Appropriate reading times for all articles
+  - High engagement (95%+ scroll depth)
+
+Minor Issues:
+All recall responses are very short (<10 words)
+All MCQ scores below chance level (suspicious)
+
+Recommendation: REVIEW before inclusion
+  - Data quality concerns require investigation
+  - May need to exclude from main analysis
+
+================================================================================
+END OF ANALYSIS
+================================================================================

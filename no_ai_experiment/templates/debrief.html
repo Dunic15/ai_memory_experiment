@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You!</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 700px;
+            width: 100%;
+            padding: 50px;
+            text-align: center;
+        }
+        .icon {
+            font-size: 72px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+        p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        .participant-id {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid #667eea;
+        }
+        .participant-id strong {
+            color: #667eea;
+            font-size: 24px;
+            font-family: monospace;
+        }
+        .info-box {
+            background: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin-top: 30px;
+        }
+        .info-box p {
+            color: #856404;
+            margin: 0;
+            text-align: left;
+        }
+        .info-box strong {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🎉</div>
+        <h1>Session Complete!</h1>
+        
+        <p>Thank you for participating in our memory study!</p>
+        
+        <div class="participant-id">
+            <p style="margin-bottom: 10px; color: #666; font-size: 14px;">Your Participant ID:</p>
+            <strong>{{ participant_id }}</strong>
+        </div>
+        
+        <p>Your responses will help us understand how AI influences learning, recall, and comprehension.</p>
+        
+        <p style="margin-top: 30px; font-size: 14px; color: #888;">
+            You may now close this window.
+        </p>
+    </div>
+</body>
+</html>

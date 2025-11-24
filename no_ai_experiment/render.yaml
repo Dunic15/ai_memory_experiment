@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ai-memory-experiment
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python3 app.py
+    envVars:
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.9.18
+    healthCheckPath: /
+

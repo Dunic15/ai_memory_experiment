@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>{{ tr("Prior Knowledge Assessment") }}</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;padding:40px 20px}
+        .container{max-width:900px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,.08);padding:40px}
+        h1{color:#333;margin-bottom:15px;font-size:28px}
+        .section{margin-bottom:40px;padding:30px;background:#f8f9fa;border-radius:8px}
+        .section h2{color:#667eea;margin-bottom:15px;font-size:22px}
+        .instruction{color:#666;margin-bottom:20px;line-height:1.6}
+        .term-item{margin-bottom:20px;padding:15px;background:#fff;border-radius:6px;border:2px solid #e0e0e0}
+        .term-name{font-weight:600;color:#333;margin-bottom:10px;font-size:16px}
+        .likert-scale{display:flex;justify-content:space-between;align-items:center;gap:10px}
+        .likert-option{display:flex;flex-direction:column;align-items:center;flex:1}
+        .likert-option input{margin-bottom:5px;width:20px;height:20px;cursor:pointer}
+        .likert-label{font-size:12px;color:#666;text-align:center}
+        .yes-no{display:flex;gap:20px}
+        .yes-no label{display:flex;align-items:center;cursor:pointer;padding:10px 20px;border:2px solid #e0e0e0;border-radius:6px;transition:all .2s}
+        .yes-no input{margin-right:8px;width:18px;height:18px}
+        .yes-no label:hover{border-color:#667eea;background:#f0f4ff}
+        .quiz-question{margin-bottom:25px;padding:20px;background:#fff;border-radius:6px;border:2px solid #e0e0e0}
+        .quiz-question p{font-weight:600;margin-bottom:15px;color:#333}
+        .quiz-options label{display:block;padding:12px;margin-bottom:8px;border:2px solid #e0e0e0;border-radius:6px;cursor:pointer;transition:all .2s}
+        .quiz-options label:hover{border-color:#667eea;background:#f0f4ff}
+        .quiz-options input{margin-right:10px}
+        textarea{width:100%;padding:15px;border:2px solid #e0e0e0;border-radius:6px;font-family:inherit;font-size:15px;resize:vertical;min-height:100px}
+        textarea:focus{outline:none;border-color:#667eea}
+        .timer{background:#fff3cd;padding:10px 15px;border-radius:6px;margin-bottom:15px;font-weight:600;color:#856404}
+        button{width:100%;padding:16px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:18px;font-weight:600;cursor:pointer;transition:transform .2s;margin-top:20px}
+        button:hover:not(:disabled){transform:translateY(-2px)}
+        button:disabled{opacity:.6;cursor:not-allowed}
+        .progress{text-align:center;color:#666;margin-bottom:20px;font-size:14px}
+    </style>
+</head>
+<body>
+<div id="pk-timer" style="position:fixed; top:12px; right:12px; padding:6px 10px; border:1px solid #e0e0e0; border-radius:6px; background:#fff; z-index:9999; font-family:system-ui, -apple-system, Segoe UI, Roboto; box-shadow:0 2px 10px rgba(0,0,0,.06)">
+  ⏳ <span id="pk-time-left"></span>
+</div>
+<div class="container">
+    <h1>📚 {{ tr("Prior Knowledge Assessment") }}</h1>
+    <p class="progress" id="progressText">{{ tr("Please rate your familiarity with the following terms") }}</p>
+
+    <!-- Section 1: Familiarity (Only Section) -->
+    <div class="section" id="section1">
+        <h2>{{ tr("Familiarity Rating") }}</h2>
+        <p class="instruction">{{ tr("Rate how familiar you are with the following scientific terms.") }}<br>{{ tr("1 = Never heard of it") }} &nbsp;&nbsp; {{ tr("7 = Could clearly explain it to others") }}</p>
+
+        {% for term in familiarity_terms %}
+        <div class="term-item">
+            <div class="term-name">{{ term }}</div>
+            <div class="likert-scale">
+                {% for i in range(1,8) %}
+                <div class="likert-option">
+                    <input type="radio" name="fam_{{ term }}" value="{{ i }}" required />
+                    <span class="likert-label">{{ i }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        <button onclick="submitAll()" id="submitBtn">{{ tr("Submit Assessment") }} →</button>
+    </div>
+</div>
+
+<script>
+// Disable browser back button globally
+history.pushState(null, null, location.href);
+window.onpopstate = function(event) {
+    history.pushState(null, null, location.href);
+};
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+        e.preventDefault();
+    }
+});
+
+let quizStartTime, listStartTime;
+let quizInterval, listInterval;
+
+function nextSection(num){
+    // Only Section 1 exists now - this function kept for compatibility but not used
+    for(let i=1;i<=3;i++){
+        const el = document.getElementById('section'+i);
+        if (el) el.style.display='none';
+    }
+    const target = document.getElementById('section'+num);
+    if (target) target.style.display='block';
+    window.scrollTo(0,0);
+}
+
+function submitAll(){
+    // Familiarity (Section 1)
+    const familiarity = {};
+    {% for term in familiarity_terms %}
+    const fam{{ loop.index0 }} = document.querySelector('input[name="fam_{{ term }}"]:checked');
+    if(!fam{{ loop.index0 }}){
+        alert('{{ tr("Please complete all familiarity ratings") }}');
+        nextSection(1); return;
+    }
+    familiarity['{{ term }}'] = parseInt(fam{{ loop.index0 }}.value);
+    {% endfor %}
+
+    // Term recognition (Section 2)
+    const termRecognition = {};
+    {% for term in recognition_terms %}
+    const rec{{ loop.index0 }} = document.querySelector('input[name="rec_{{ term }}"]:checked');
+    if(!rec{{ loop.index0 }}){
+        alert('{{ tr("Please complete all term recognition questions") }}');
+        nextSection(2); return;
+    }
+    termRecognition['{{ term }}'] = rec{{ loop.index0 }}.value;
+    {% endfor %}
+
+    // Quiz score
+    let quizScore = 0;
+    {% for q in quiz %}
+    {% set qidx = loop.index0 %}
+    const quiz{{ qidx }} = document.querySelector('input[name="quiz_{{ qidx }}"]:checked');
+    if(!quiz{{ qidx }}){
+        alert('{{ tr("Please answer all quiz questions") }}');
+        nextSection(3); return;
+    }
+    if(parseInt(quiz{{ qidx }}.value) === parseInt(quiz{{ qidx }}.dataset.correct)){
+        quizScore++;
+    }
+    {% endfor %}
+
+    fetch('/submit_prior_knowledge',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            familiarity,
+            term_recognition: termRecognition,
+            quiz_score: quizScore,
+            concept_list: ""
+        })
+    })
+    .then(r=>r.json())
+    .then(data=>{ window.location.href = data.redirect; });
+}
+</script>
+<script>
+// ===== Global 5-minute limit for Prior Knowledge =====
+// These are provided by app.py: pk_deadline (epoch seconds) and server_now
+const PK_DEADLINE = {{ pk_deadline|tojson }};   // epoch seconds
+const SERVER_NOW  = {{ server_now|tojson }};    // epoch seconds
+
+const pkTimerEl = document.getElementById('pk-time-left');
+const pkBadge   = document.getElementById('pk-timer');
+
+function fmtTime(ms){
+  const s = Math.max(0, Math.floor(ms/1000));
+  const m = Math.floor(s/60);
+  const r = s % 60;
+  return `${m}:${r.toString().padStart(2,'0')}`;
+}
+
+function setWarnColors(msLeft){
+  if (!pkBadge) return;
+  if (msLeft <= 60_000) {
+    pkBadge.style.background = '#fff1f0';
+    pkBadge.style.borderColor = '#ffccc7';
+  } else if (msLeft <= 120_000) {
+    pkBadge.style.background = '#fff7e6';
+    pkBadge.style.borderColor = '#ffd591';
+  } else {
+    pkBadge.style.background = '#fff';
+    pkBadge.style.borderColor = '#e0e0e0';
+  }
+}
+
+async function autoSubmitPKGlobal(){
+  // Trigger the same pathway as manual submit
+  try {
+    // Build a minimal, safe payload if the user didn't complete all fields
+    const familiarity = {};
+    {% for term in familiarity_terms %}
+    const fam{{ loop.index0 }} = document.querySelector('input[name="fam_{{ term }}"]:checked');
+    if (fam{{ loop.index0 }}) familiarity['{{ term }}'] = parseInt(fam{{ loop.index0 }}.value);
+    {% endfor %}
+
+    // Sections 2 and 3 removed
+    const term_recognition = {};
+    let quiz_score = 0;
+    const concept_list = "";
+
+    const res = await fetch('/submit_prior_knowledge', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ familiarity, term_recognition, quiz_score, concept_list })
+    });
+    const j = await res.json();
+    if (j && j.redirect) window.location.href = j.redirect; else window.location.href = '/ai_trust';
+  } catch (e) {
+    window.location.href = '/ai_trust';
+  }
+}
+
+(function tickGlobalPK(){
+  const leftMs = (PK_DEADLINE * 1000) - Date.now();
+  if (pkTimerEl) pkTimerEl.textContent = fmtTime(leftMs);
+  setWarnColors(leftMs);
+  if (leftMs <= 0) { autoSubmitPKGlobal(); return; }
+  requestAnimationFrame(tickGlobalPK);
+})();
+</script>
+</body>
+</html>

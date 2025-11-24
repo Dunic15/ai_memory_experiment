@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Reading Phase - Article {{ article_num + 1 }}</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Georgia',serif;background:#f5f7fa;overflow-x:hidden}
+        .header{background:#fff;padding:15px 20px;box-shadow:0 2px 10px rgba(0,0,0,.1);position:sticky;top:0;z-index:100;display:flex;justify-content:space-between;align-items:center}
+        .progress-info{font-size:14px;color:#666}
+        .timer{font-size:18px;font-weight:600;color:#667eea;font-family:'Segoe UI',sans-serif}
+        .timer.warning{color:#ff6b6b}
+        .layout{display:flex;min-height:calc(100vh - 60px)}
+        .main-content{order:1; flex:1; padding:40px; max-width:800px; margin:0 auto}
+        /* When the AI summary is open (synchronous mode), tighten main content and leave space on the right */
+        body.with-summary .main-content{max-width:760px; margin:0 24px 0 auto}
+        .article-title{font-size:32px;color:#333;margin-bottom:30px;line-height:1.3}
+        .article-text{font-size:16pt;line-height:1.8;color:#333;text-align:justify}
+        .article-text p{margin-bottom:30px;page-break-inside:avoid}
+        .article-text p:last-child{margin-bottom:100px}
+        .sidebar{order:2; flex:0 0 360px; width:360px; background:#fff; border-left:3px solid #667eea; padding:30px; overflow-y:auto; position:sticky; top:60px; height:calc(100vh - 60px)}
+        .sidebar h3{color:#667eea;margin-bottom:15px;font-size:18px;font-family:'Segoe UI',sans-serif}
+        .summary-text{font-size:13pt;line-height:1.6;color:#555}
+        .summary-text ul{list-style-position:inside;margin:0;padding:0}
+        .summary-text li{margin-bottom:10px}
+        .pre-reading-overlay{position:fixed;inset:0;background:#fff;z-index:200;display:flex;align-items:center;justify-content:center}
+        .pre-reading-content{max-width:600px;padding:40px;text-align:center}
+        .pre-reading-content h2{color:#667eea;margin-bottom:20px;font-size:24px}
+        .pre-reading-summary{font-size:14pt;line-height:1.6;color:#333;text-align:left;margin-bottom:30px;padding:30px;background:#f8f9fa;border-radius:8px}
+        .post-reading-message{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:200;display:none;align-items:center;justify-content:center}
+        .post-reading-content{background:#fff;padding:40px;border-radius:12px;max-width:600px}
+        .post-reading-content h2{color:#667eea;margin-bottom:20px}
+        .post-reading-summary{font-size:14pt;line-height:1.6;margin-bottom:30px;padding:30px;background:#f8f9fa;border-radius:8px}
+        .sync-instruction-box{background:#e7f3ff;border-left:4px solid #1890ff;padding:20px 25px;margin-bottom:30px;border-radius:8px}
+        .sync-instruction-box p{font-size:15pt;line-height:1.7;color:#0050b3;margin:0}
+        .sync-instruction-box strong{font-weight:600}
+        button{padding:14px 30px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:16px;font-weight:600;cursor:pointer;transition:transform .2s}
+        /* Avoid breaking existing transforms (like centering on .continue-btn) */
+        button:not(.continue-btn):hover{transform:translateY(-2px)}
+        .summary-toggle{position:fixed;bottom:30px;right:30px;padding:15px 25px;background:#667eea;color:#fff;border:none;border-radius:50px;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 15px rgba(102,126,234,.4);z-index:50}
+        .continue-btn{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);padding:16px 40px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:18px;font-weight:600;cursor:pointer;box-shadow:0 4px 20px rgba(102,126,234,.4);z-index:50}
+        /* Preserve horizontal centering on hover */
+        .continue-btn:hover{transform:translateX(-50%) translateY(-2px)}
+        /* --- TEST MODE floating skip for ALL timings --- */
+        .test-skip{position:fixed;bottom:30px;right:30px;margin-right:140px;padding:12px 18px;border-radius:50px;background:#999;color:#fff;font-size:13px;font-weight:600;z-index:60;border:none;cursor:pointer}
+        @media (max-width:1200px){
+            .layout{flex-direction:column}
+            .sidebar{width:100%;position:relative;height:auto;border-left:none;border-top:3px solid #667eea}
+            .test-skip{margin-right:0;right:30px;bottom:90px}
+            /* On smaller screens, show the summary as a floating panel instead of shrinking the article */
+            body.with-summary .sidebar{position:fixed; right:0; top:60px; height:calc(100vh - 60px); max-width:92vw; width:92vw; box-shadow:-8px 0 24px rgba(0,0,0,.15); z-index:120}
+            body.with-summary .main-content{margin:0 auto}
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="progress-info">📖 Article {{ article_num + 1 }} of 3 • {{ timing|replace('_',' ')|title }} Mode</div>
+        <!-- Header timer removed: using the unified top-right badge instead -->
+    </div>
+
+    <div id="read-timer" style="position:fixed; top:12px; right:12px; padding:6px 10px; border:1px solid #e0e0e0; border-radius:6px; background:#fff; z-index:9999; font-family:system-ui, -apple-system, Segoe UI, Roboto; box-shadow:0 2px 10px rgba(0,0,0,.06)">
+      ⏳ <span id="read-time-left"></span>
+    </div>
+
+    <div class="layout">
+        <div class="main-content">
+            <h1 class="article-title">{{ article_title }}</h1>
+            
+            <!-- Synchronous AI Summary Instructions (shown only for synchronous timing) -->
+            {% if timing == 'synchronous' %}
+            <div class="sync-instruction-box">
+                <p><strong>📋 {{ tr("AI Summary Available") }}</strong></p>
+                <p>{{ tr("Clicking the \"Open AI Summary\" button will automatically display the AI-generated summary. You can open and close the summary at any moment, as many times as you wish, while reading the article.") }}</p>
+            </div>
+            {% endif %}
+            
+            <div class="article-text" id="articleText">
+                {% set paragraphs = article_text.split('\n') %}
+                {% set para_count = 0 %}
+                {% for para in paragraphs %}
+                    {% if para.strip() %}
+                        {% set first_char = para.strip()[0] if para.strip() else '' %}
+                        {% set is_paragraph = False %}
+                        {# Check if it's a paragraph: starts with uppercase letter OR Chinese character #}
+                        {% if first_char %}
+                            {% if first_char.isupper() or (first_char >= '\u4e00' and first_char <= '\u9fff') %}
+                                {% set is_paragraph = True %}
+                            {% endif %}
+                        {% endif %}
+                        {% if is_paragraph %}
+                            {% set para_count = para_count + 1 %}
+                            <p>{{ para.strip() }}</p>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                <div style="text-align:center;margin-top:50px;padding:30px;">
+                    <button class="continue-btn" id="continueBtn" style="display:none;padding:15px 30px;font-size:16px;" onclick="finishReading()">{{ tr("Next Part") }} →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Synchronous (B1) — hidden by default, open via button -->
+        {% if timing == 'synchronous' %}
+        <button class="summary-toggle" id="summaryToggleBtn" type="button" title="{{ tr('Open AI Summary') }}">📋 {{ tr("Open AI Summary") }}</button>
+        <div class="sidebar-overlay" id="sidebarOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:200;overflow-y:auto;">
+            <div style="max-width:800px;margin:40px auto;background:#fff;padding:40px;border-radius:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                    <h3 style="color:#667eea;font-size:24px;margin:0;">🤖 {{ tr("AI Summary") }}</h3>
+                    <button onclick="closeSummaryOverlay()" style="background:#e0e0e0;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-weight:600;">{{ tr("Close") }}</button>
+                </div>
+                <div class="summary-text" id="summaryTextContainer">
+                  {% if structure == 'segmented' %}
+                    {# Segmented: display as bullet points #}
+                    <ul class="summary-list" id="segmentedSummaryList" style="list-style-type: disc; padding-left: 25px;">
+                      {% for line in summary.splitlines() %}
+                        {% set t = line.strip() %}
+                        {% if t %}
+                          <li data-original="{{ t }}" style="margin-bottom: 12px; line-height: 1.8; color: #333;">{{ t }}</li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                    <script>
+                      // Remove number prefixes (e.g., "1. ", "2. ", "10. ") since we're using bullets
+                      document.addEventListener('DOMContentLoaded', function() {
+                        const listItems = document.querySelectorAll('#segmentedSummaryList li');
+                        listItems.forEach(function(li) {
+                          let text = li.getAttribute('data-original') || li.textContent;
+                          // Remove numbered list markers (e.g., "1. ", "2. ", "10. ")
+                          text = text.replace(/^\d+\.\s+/, '');
+                          // Remove false lure markers but keep the rest of the text
+                          // Pattern: ⚠️虚假引诱 #1： or ⚠️虚假引诱 #2： - only remove the marker prefix, not the content
+                          text = text.replace(/⚠️虚假引诱\s*#?\d*[：:]\s*/g, '');
+                          // Remove trailing false lure markers (← 错误诱饵 #1, etc.)
+                          text = text.replace(/\s*←\s*错误诱饵\s*#?\d*/g, '');
+                          text = text.replace(/\s*←\s*虚假诱导\s*#?\d*/g, '');
+                          text = text.replace(/\s*←\s*FALSE LURE\s*#?\d*/g, '');
+                          // Remove parenthetical false lure markers
+                          text = text.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
+                          text = text.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
+                          // Clean up any double spaces or leading/trailing spaces
+                          text = text.replace(/\s+/g, ' ').trim();
+                          li.textContent = text;
+                        });
+                      });
+                    </script>
+                  {% else %}
+                    {# Integrated: display as continuous paragraphs (not bullets) #}
+                    <div class="summary-text" id="integratedSummaryText" style="line-height: 1.8; color: #333;">
+                      {% for paragraph in summary.split('\n\n') %}
+                        {% if paragraph.strip() %}
+                          <p style="margin-bottom: 20px;" data-original="{{ paragraph.strip() }}">{{ paragraph.strip() }}</p>
+                        {% endif %}
+                      {% endfor %}
+                    </div>
+                    <script>
+                      // Remove false lure markers from integrated summary (all formats)
+                      document.addEventListener('DOMContentLoaded', function() {
+                        const paragraphs = document.querySelectorAll('#integratedSummaryText p');
+                        paragraphs.forEach(function(p) {
+                          let text = p.getAttribute('data-original') || p.textContent;
+                          text = text.replace(/\s*⚠️[^。]*虚假引诱[^。]*/g, '');
+                          text = text.replace(/\s*←\s*错误诱饵[^。]*/g, '');
+                          text = text.replace(/\s*←\s*虚假诱导[^。]*/g, '');
+                          text = text.replace(/\s*←\s*FALSE LURE[^。]*/g, '');
+                          text = text.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
+                          text = text.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
+                          // Remove parenthetical false lure markers: （错误诱饵 #1）, （错误诱饵 #2）
+                          text = text.replace(/\s*（错误诱饵\s*#?\d*）/g, '');
+                          text = text.replace(/\s*\(错误诱饵\s*#?\d*\)/g, '');
+                          text = text.replace(/\s*（虚假诱导\s*#?\d*）/g, '');
+                          text = text.replace(/\s*\(虚假诱导\s*#?\d*\)/g, '');
+                          text = text.replace(/\s*\(FALSE LURE\s*#?\d*\)/g, '');
+                          // Also remove arrow format: ← 虚假诱导#1
+                          text = text.replace(/\s*←\s*虚假诱导\s*#?\d*/g, '');
+                          p.textContent = text;
+                        });
+                      });
+                    </script>
+                  {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if timing == 'post_reading' %}
+    <button class="summary-toggle" id="postSummaryBtn" type="button" title="Open AI Summary" style="display:none;">📋 AI Summary</button>
+    {% endif %}
+
+
+
+    <script>
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+        
+        const timing = '{{ timing }}';
+        const articleNum = {{ article_num }};
+        let startTime = Date.now();
+        let readingTime = 0, summaryViewTime = 0, summaryViews = 0, scrollDepth = 0;
+        let summaryOverlayStartTime = null; // Track when summary overlay is opened (synchronous condition)
+        const timeLimit = timing === 'synchronous' ? 15 * 60 * 1000 : 12 * 60 * 1000;  // 15 min for synchronous, 12 min for others
+        const hardCap  = timing === 'synchronous' ? 15 * 60 * 1000 : 12 * 60 * 1000;
+        const preReadingSummaryTime = 3 * 60 * 1000; // 3 minutes for pre-reading summary
+        const postReadingSummaryTime = 3 * 60 * 1000; // 3 minutes for post-reading summary
+
+        // ===== Reading countdown badge =====
+        (function(){
+          // Use correct limit based on timing mode
+          const LIMIT_MS  = timing === 'synchronous' ? (15 * 60 * 1000) : (12 * 60 * 1000);
+          const el        = document.getElementById('read-time-left');
+          const box       = document.getElementById('read-timer');
+
+          // Ensure a startTime exists (page already sets one, this is just a guard)
+          if (typeof startTime === 'undefined' || !startTime) {
+            window.startTime = Date.now();
+          }
+          const endAt = startTime + LIMIT_MS;
+
+          function fmt(ms){
+            const s = Math.max(0, Math.floor(ms/1000));
+            const m = Math.floor(s/60);
+            const r = s % 60;
+            return `${m}:${r.toString().padStart(2,'0')}`;
+          }
+          function warn(ms){
+            if (!box) return;
+            if (ms <= 60_000) { box.style.background = '#fff1f0'; box.style.borderColor = '#ffccc7'; }
+            else if (ms <= 180_000) { box.style.background = '#fff7e6'; box.style.borderColor = '#ffd591'; }
+            else { box.style.background = '#fff'; box.style.borderColor = '#e0e0e0'; }
+          }
+
+          let finished = false;
+          const origFinish = (typeof finishReading === 'function') ? finishReading : null;
+          function safeFinish(){
+            if (finished) return; finished = true;
+            if (origFinish) return origFinish();
+          }
+
+          (function tick(){
+            const left = endAt - Date.now();
+            if (el) el.textContent = fmt(left);
+            warn(left);
+            if (left <= 0) { safeFinish(); return; }
+            requestAnimationFrame(tick);
+          })();
+        })();
+
+        // Timer (reading time)
+        const timerInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const mins = Math.floor(elapsed / 60000);
+            const secs = Math.floor((elapsed % 60000) / 1000);
+            const remaining = Math.max(0, timeLimit - elapsed);
+            const remMins = Math.floor(remaining / 60000);
+            const remSecs = Math.floor((remaining % 60000) / 1000);
+            const t = document.getElementById('timer');
+            if (t){
+                const timeLimitMins = timing === 'synchronous' ? 15 : 12;
+                const timeLabel = '{{ tr("Time:") }}';
+                const remainingLabel = '{{ tr("remaining") }}';
+                t.textContent = `${timeLabel} ${mins}:${secs.toString().padStart(2,'0')} / ${timeLimitMins}:00 (${remMins}:${remSecs.toString().padStart(2,'0')} ${remainingLabel})`;
+                if (remaining < 60000) t.classList.add('warning');
+            }
+            // Show continue button only when scrolled to bottom OR timer expired
+            const continueBtn = document.getElementById('continueBtn');
+            if (continueBtn) {
+                const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100;
+                const timeExpired = elapsed >= hardCap;
+                if (isAtBottom || timeExpired) {
+                    continueBtn.style.display = 'block';
+                    continueBtn.disabled = false;
+                } else {
+                    continueBtn.style.display = 'none';
+                }
+            }
+            if (elapsed >= hardCap) {
+                clearInterval(timerInterval);
+                finishReading();
+                return;
+            }
+        }, 1000);
+
+        // Synchronous (B1) — overlay that covers screen
+        (function(){
+          const btn  = document.getElementById('summaryToggleBtn');
+          const overlay = document.getElementById('sidebarOverlay');
+          if (!btn || !overlay) return;
+
+          window.closeSummaryOverlay = function(){
+            overlay.style.display = 'none';
+            btn.style.display = 'inline-block';
+            // Track summary viewing time and close event
+            if (summaryOverlayStartTime !== null) {
+              summaryViewTime += Date.now() - summaryOverlayStartTime;
+              summaryOverlayStartTime = null;
+              // Log summary close event
+              logBehavior('summary_overlay_closed', {
+                summaryViews: summaryViews,
+                currentSummaryViewTime: summaryViewTime
+              });
+            }
+            // Maintain scroll position when closing
+            const savedScrollY = window.scrollY || 0;
+            setTimeout(() => {
+              window.scrollTo({ top: savedScrollY, behavior: 'auto' });
+            }, 10);
+          };
+
+          btn.addEventListener('click', () => {
+            // Track summary open event - increment counter
+            summaryViews++;
+            summaryOverlayStartTime = Date.now();
+            // Log summary open event
+            logBehavior('summary_overlay_opened', {
+              summaryViews: summaryViews
+            });
+            // Save current scroll position
+            const savedScrollY = window.scrollY;
+            overlay.style.display = 'block';
+            btn.style.display = 'none';
+            // Restore scroll position after a brief moment to prevent jump
+            setTimeout(() => {
+              window.scrollTo({ top: savedScrollY, behavior: 'auto' });
+            }, 10);
+          });
+        })();
+
+        // Post-reading mode: summary is handled by separate page
+
+        // Pre-reading mode: summary is handled by separate page, so this is just reading
+
+        // Scroll tracking and button visibility
+        let maxScroll = 0;
+        function checkScrollAndButton() {
+            const pct = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
+            maxScroll = Math.max(maxScroll, pct);
+            scrollDepth = Math.round(maxScroll * 100);
+            
+            // Show/hide continue button based on scroll position
+            const continueBtn = document.getElementById('continueBtn');
+            if (continueBtn) {
+                const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 100;
+                const elapsed = Date.now() - startTime;
+                const timeExpired = elapsed >= hardCap;
+                if (isAtBottom || timeExpired) {
+                    continueBtn.style.display = 'block';
+                    continueBtn.disabled = false;
+                } else {
+                    continueBtn.style.display = 'none';
+                }
+            }
+        }
+        window.addEventListener('scroll', checkScrollAndButton);
+        // Also check on page load and resize
+        window.addEventListener('load', checkScrollAndButton);
+        window.addEventListener('resize', checkScrollAndButton);
+
+        // Logging helper
+        function logBehavior(event, data = {}) {
+            fetch('/log_reading', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ event, timestamp: Date.now(), ...data })
+            });
+        }
+
+        function finishReading() {
+            clearInterval(timerInterval);
+            const pre = document.getElementById('preReadingOverlay');
+            const post = document.getElementById('postReadingOverlay');
+
+            // If summary overlay is still open, add remaining time to summaryViewTime
+            if (summaryOverlayStartTime !== null) {
+                summaryViewTime += Date.now() - summaryOverlayStartTime;
+                summaryOverlayStartTime = null;
+            }
+
+            // Log reading
+            readingTime = Date.now() - startTime;
+            logBehavior('reading_complete', {
+                totalReadingTime: readingTime,
+                summaryViewTime, summaryViews, scrollDepth
+            });
+
+            // If timing is post_reading, redirect to AI summary page first
+            // (After summary, it will go to break, then test)
+            if (timing === 'post_reading') {
+                if (pre) pre.style.display = 'none';
+                if (post) post.style.display = 'none';
+                window.location.href = `/ai_summary/${articleNum}`;
+                return;
+            }
+
+            // For ALL articles (0, 1, 2) and ALL modes (pre_reading, synchronous):
+            // After reading, go to 5-minute break, then break will redirect to test
+            if (pre) pre.style.display = 'none';
+            if (post) post.style.display = 'none';
+            window.location.href = `/break_after_reading/${articleNum}`;
+        }
+
+
+
+        // Prevent accidental navigation before finishing
+        window.addEventListener('beforeunload', (e) => {
+            if (readingTime === 0) { e.preventDefault(); e.returnValue = ''; }
+        });
+
+        document.addEventListener('visibilitychange', () => {
+            logBehavior('visibility_change', { hidden: document.hidden });
+        });
+    </script>
+</body>
+</html>

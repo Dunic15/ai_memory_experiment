@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Phase - Article {{ article_num + 1 }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 40px;
+        }
+        .timer-badge {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            padding: 8px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            z-index: 9999;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto;
+            box-shadow: 0 2px 10px rgba(0,0,0,.06);
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .timer-badge.warning {
+            background: #fff7e6;
+            border-color: #ffd591;
+            color: #d46b08;
+        }
+        .timer-badge.critical {
+            background: #fff1f0;
+            border-color: #ffccc7;
+            color: #cf1322;
+        }
+        .test-badge {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            background: #111;
+            color: #fff;
+            font-size: 11px;
+            letter-spacing: .4px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            z-index: 9999;
+            display: none;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .progress {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+        .recall-container {
+            position: relative;
+        }
+        .counters {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border: 2px solid #e0e0e0;
+        }
+        .counter {
+            flex: 1;
+            text-align: center;
+        }
+        .counter-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .counter-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #667eea;
+        }
+        .counter-value.warning {
+            color: #ff9800;
+        }
+        .counter-value.good {
+            color: #28a745;
+        }
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            line-height: 1.8;
+            resize: vertical;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .bullet-point {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border: 2px solid #e0e0e0;
+        }
+        .bullet-point span {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+            font-size: 18px;
+            color: #667eea;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .bullet-point input {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            background: white;
+            display: flex;
+            align-items: center;
+        }
+        .bullet-point input:focus {
+            outline: 2px solid #667eea;
+        }
+        .bullet-remove {
+            margin-left: 10px;
+            padding: 0;
+            background: transparent;
+            color: #ff4d4f;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .bullet-remove:hover {
+            color: #cf1322;
+            transform: scale(1.2);
+        }
+        textarea.paste-attempt {
+            border-color: #ff4d4f !important;
+            animation: shake 0.3s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .paste-warning {
+            display: none;
+            background: #fff1f0;
+            border-left: 4px solid #ff4d4f;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            color: #cf1322;
+            font-size: 14px;
+            animation: fadeIn 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .guideline {
+            background: #e6f7ff;
+            border-left: 4px solid #1890ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #0050b3;
+        }
+        .slider-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: white;
+            border-radius: 8px;
+        }
+        .slider-question {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .slider-container {
+            margin: 20px 0;
+        }
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e0e0e0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #888;
+            margin-top: 8px;
+        }
+        .slider-value {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #667eea;
+            margin-top: 10px;
+        }
+        .mcq-section {
+            display: none;
+        }
+        .question {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+        }
+        .question-text {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .options label {
+            display: block;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .options label:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        .options input {
+            margin-right: 10px;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-top: 20px;
+        }
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            text-align: center;
+        }
+        .modal-content h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .modal-content p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .modal-buttons button {
+            flex: 1;
+            margin: 0;
+        }
+        .secondary-btn {
+            background: #e0e0e0 !important;
+            color: #333 !important;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="timer-badge" id="timerBadge">
+        ⏱️ <span id="timeLeft">3:00</span>
+    </div>
+
+    <div class="container">
+        <h1>📝 {{ tr("Article") }} {{ article_num + 1 }} {{ tr("Test") }}</h1>
+        <p class="progress">{{ article_title }}</p>
+
+        <!-- FREE RECALL SECTION -->
+        <div class="section" id="recallSection">
+            <h2>{{ tr("Free Recall") }}</h2>
+            <p style="color: #666; margin-bottom: 20px; line-height: 1.6;">{{ tr("Please write everything you remember from the article within 5 minutes. Try to describe main ideas and relationships — causes, consequences, and solutions — in your own words.") }}</p>
+            
+            <div class="guideline" style="background: #e6f7ff; border-left: 4px solid #1890ff; padding: 15px; border-radius: 6px; margin-bottom: 20px;">
+                <strong style="color: #0050b3;">{{ tr("Format Requirements:") }}</strong>
+                <p style="color: #0050b3; margin-top: 8px; margin-bottom: 0; font-size: 14px;">
+                    {{ tr("Use bullet points to organize your recall. Each bullet point should contain one main idea or concept. For example:") }}
+                </p>
+                <p style="color: #0050b3; margin-top: 8px; margin-left: 20px; font-size: 14px; margin-bottom: 0;">
+                    {{ tr("Photosynthesis converts sunlight into chemical energy that plants use for growth, and this process requires carbon dioxide, water, and chlorophyll to produce glucose and oxygen") }}
+                </p>
+            </div>
+            
+            <div class="recall-container">
+                <div id="bulletPoints" style="margin-bottom:20px;">
+                    <!-- Bullet points will be added here -->
+                </div>
+                <button id="addBulletBtn" onclick="window.addBulletPoint()" style="width:auto;padding:10px 20px;margin-bottom:20px;background:#667eea;color:white;border:none;border-radius:6px;cursor:pointer;font-size:14px;">
+                    + {{ tr("Add Bullet Point") }}
+                </button>
+
+                <div class="paste-warning" id="pasteWarning">
+                    <strong>⚠️ {{ tr("Paste not allowed.") }}</strong> {{ tr("Please type your response in your own words. This helps ensure authentic recall.") }}
+                </div>
+            </div>
+
+            <!-- Post-recall sliders -->
+            <div class="slider-section">
+                <div class="slider-question">
+                    {{ tr("How confident are you that you recalled the main ideas accurately?") }}
+                </div>
+                <div class="slider-container">
+                    <input type="range" id="confidenceSlider" min="1" max="7" value="4" />
+                    <div class="slider-labels">
+                        <span>1 - {{ tr("Not confident") }}</span>
+                        <span>7 - {{ tr("Very confident") }}</span>
+                    </div>
+                    <div class="slider-value" id="confidenceValue">4</div>
+                </div>
+            </div>
+
+            <div class="slider-section">
+                <div class="slider-question">
+                    {{ tr("How mentally demanding was this task?") }}
+                </div>
+                <div class="slider-container">
+                    <input type="range" id="difficultySlider" min="1" max="7" value="4" />
+                    <div class="slider-labels">
+                        <span>1 - {{ tr("Very easy") }}</span>
+                        <span>7 - {{ tr("Very demanding") }}</span>
+                    </div>
+                    <div class="slider-value" id="difficultyValue">4</div>
+                </div>
+            </div>
+
+            <button id="submitRecallBtn" onclick="submitRecall()" disabled>
+                {{ tr("Next Part") }} →
+            </button>
+        </div>
+
+        <!-- MCQ SECTION (hidden initially) -->
+        <div class="section mcq-section" id="mcqSection">
+            <h2>{{ tr("Recognition Questions") }}</h2>
+            <p style="color: #666; margin-bottom: 20px;">{{ tr("Answer the following questions based on the article.") }}</p>
+
+            {% for q_idx in range(questions|length) %}
+            {% set q = questions[q_idx] %}
+            <div class="question" data-question-index="{{ q_idx }}">
+                <div class="question-text">{{ q_idx + 1 }}. {{ q.q }}</div>
+                <div class="options">
+                    {% for opt_idx in range(q.options|length) %}
+                    {% set opt = q.options[opt_idx] %}
+                    <label>
+                        <input type="radio" name="q{{ q_idx }}" value="{{ opt_idx }}" data-question="{{ q_idx }}" data-option="{{ opt_idx }}" required onchange="trackMCQAnswer({{ q_idx }})">
+                        {{ opt }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+
+            <button id="submitMcqBtn" onclick="submitTest()" disabled>{{ tr("Continue") }} →</button>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3>⚠️ {{ tr("Submit with few sentences?") }}</h3>
+            <p>{{ tr("We recommend at least 3 idea sentences for meaningful recall. You currently have") }} <strong id="modalSentenceCount">0</strong> {{ tr("sentence(s).") }}</p>
+            <p>{{ tr("Would you like to submit anyway or keep writing?") }}</p>
+            <div class="modal-buttons">
+                <button class="secondary-btn" onclick="closeModal()">{{ tr("Keep Writing") }}</button>
+                <button onclick="forceSubmitRecall()">{{ tr("Submit Anyway") }}</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast for auto-submit -->
+    <div id="toast" style="display:none; position:fixed; bottom:20px; right:20px; background:#323232; color:white; padding:16px 24px; border-radius:8px; z-index:10001; animation:fadeIn 0.3s;">
+        ⏰ {{ tr("Time's up — your response was saved") }}
+    </div>
+
+    <script>
+        // ===== CRITICAL: Define bullet point functions FIRST so they're always available =====
+        let bulletPointCount = 0;
+        
+        window.addBulletPoint = function() {
+            try {
+                const container = document.getElementById('bulletPoints');
+                if (!container) {
+                    console.error('bulletPoints container not found in addBulletPoint');
+                    alert('Error: Cannot add bullet point. Please refresh the page.');
+                    return;
+                }
+                const bullet = document.createElement('div');
+                bullet.className = 'bullet-point';
+                const placeholderText = '{{ tr("Enter your idea or phrase here...") }}';
+                const removeTitle = '{{ tr("Remove") }}';
+                bullet.innerHTML = `
+                    <span style="margin-right:10px;font-size:18px;color:#667eea;">•</span>
+                    <input type="text" id="bullet_${bulletPointCount}" placeholder="${placeholderText}" />
+                    <button type="button" class="bullet-remove" onclick="window.removeBulletPoint(this)" title="${removeTitle}">−</button>
+                `;
+                container.appendChild(bullet);
+                bulletPointCount++;
+                
+                // Focus on the new input
+                const newInput = bullet.querySelector('input');
+                if (newInput) {
+                    newInput.focus();
+                    // Add event listener for input changes
+                    newInput.addEventListener('input', function() {
+                        if (typeof updateCounters === 'function') {
+                            updateCounters();
+                        }
+                    });
+                }
+                
+                // Update counters after adding
+                if (typeof updateCounters === 'function') {
+                    updateCounters();
+                }
+            } catch (error) {
+                console.error('Error in addBulletPoint:', error);
+                alert('Error adding bullet point. Please refresh the page.');
+            }
+        };
+        
+        window.removeBulletPoint = function(btn) {
+            try {
+                if (btn && btn.parentElement) {
+                    btn.parentElement.remove();
+                    if (typeof updateCounters === 'function') {
+                        updateCounters();
+                    }
+                }
+            } catch (error) {
+                console.error('Error in removeBulletPoint:', error);
+            }
+        };
+        
+        // ===== Now define the rest of the code =====
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+        
+        const articleNum = {{ article_num }};
+        const START_ON_MCQ = {{ 'true' if start_on_mcq else 'false' }};
+        const RECALL_TIME_MS   = {{ recall_total_ms }};   // total countdown (server-provided)
+        const RECALL_UNLOCK_MS = {{ recall_unlock_ms }};  // when the Continue button unlocks
+        const startTime = Date.now();
+        let mcqStartTime = null;
+        const MCQ_TIME_MS = 7 * 60 * 1000; // 7 minutes for MCQ
+        
+        // Track answer times for each MCQ question
+        let mcqAnswerTimes = {}; // {q0: timestamp, q1: timestamp, ...}
+        let mcqAnswerTimesMs = {}; // {q0: milliseconds from MCQ start, q1: milliseconds, ...}
+        
+        let pasteAttempts = 0;
+        let recallData = {
+            start_time: new Date().toISOString(),
+            paste_attempts: 0,
+            over_limit: false
+        };
+
+
+        // Timer variables
+        let timerRunning = true;
+        let timerInterval = null;
+
+        function updateTimer() {
+            if (!timerRunning) return;
+            
+            const timeLeftEl = document.getElementById('timeLeft');
+            const timerBadge = document.getElementById('timerBadge');
+            
+            const elapsed = Date.now() - startTime;
+            const remaining = Math.max(0, RECALL_TIME_MS - elapsed);
+            const mins = Math.floor(remaining / 60000);
+            const secs = Math.floor((remaining % 60000) / 1000);
+
+            if (timeLeftEl) {
+                timeLeftEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            // Unlock the Continue button once unlock threshold is reached
+            if (elapsed >= RECALL_UNLOCK_MS) {
+                const btn = document.getElementById('submitRecallBtn');
+                if (btn) {
+                    btn.disabled = false;
+                    // Also update counters to ensure button state is correct
+                    updateCounters();
+                }
+            }
+
+            // Color coding
+            if (timerBadge) {
+                if (remaining <= 60000) {
+                    timerBadge.classList.add('critical');
+                    timerBadge.classList.remove('warning');
+                } else if (remaining <= 120000) {
+                    timerBadge.classList.add('warning');
+                    timerBadge.classList.remove('critical');
+                } else {
+                    timerBadge.classList.remove('warning', 'critical');
+                }
+            }
+
+            if (remaining <= 0) {
+                timerRunning = false;
+                if (timerInterval) {
+                    clearTimeout(timerInterval);
+                    timerInterval = null;
+                }
+                autoSubmitRecall();
+                return;
+            }
+
+            timerInterval = setTimeout(updateTimer, 100);
+        }
+        
+        // Start timer when DOM is ready
+        function startRecallTimer() {
+            const timerBadge = document.getElementById('timerBadge');
+            const timeLeftEl = document.getElementById('timeLeft');
+            if (timerBadge && timeLeftEl) {
+                console.log('Starting recall timer');
+                updateTimer();
+            } else {
+                console.warn('Timer elements not found, retrying...', {timerBadge: !!timerBadge, timeLeftEl: !!timeLeftEl});
+                // Retry after a short delay if elements not found
+                setTimeout(startRecallTimer, 100);
+            }
+        }
+
+        // Helper to show only MCQ section (used for skip recall)
+        function showMCQOnly() {
+            const recall = document.getElementById('recallSection');
+            const mcq = document.getElementById('mcqSection');
+            const badge = document.getElementById('timerBadge');
+            if (recall) recall.style.display = 'none';
+            if (mcq) mcq.style.display = 'block';
+            if (badge) {
+                badge.style.display = 'block';
+                badge.innerHTML = '⏱️ <span id="mcqTimeLeft">7:00</span>';
+            }
+            mcqStartTime = Date.now();
+            startMCQTimer();
+            // Initialize MCQ submit button state
+            updateMCQButtonState();
+            window.scrollTo(0, 0);
+        }
+        
+        // Track when a MCQ question is answered
+        function trackMCQAnswer(qIdx) {
+            // Debug: Log the answer selection
+            const selected = document.querySelector(`input[name="q${qIdx}"]:checked`);
+            if (selected) {
+                console.log(`[MCQ DEBUG] Question ${qIdx}: User selected option ${selected.value} (${selected.dataset.option})`);
+                console.log(`[MCQ DEBUG] Radio button value="${selected.value}", data-option="${selected.dataset.option}"`);
+            }
+            if (mcqStartTime === null) {
+                // MCQ hasn't started yet, shouldn't happen but guard against it
+                return;
+            }
+            const answerTime = Date.now();
+            const timeFromStart = answerTime - mcqStartTime;
+            mcqAnswerTimes['q' + qIdx] = answerTime;
+            mcqAnswerTimesMs['q' + qIdx] = timeFromStart;
+            // Update submit button state after each answer
+            updateMCQButtonState();
+        }
+        
+        // MCQ timer
+        function startMCQTimer() {
+            const mcqTimeLeftEl = document.getElementById('mcqTimeLeft');
+            if (!mcqTimeLeftEl || !mcqStartTime) return;
+            
+            function updateMCQTimer() {
+                const elapsed = Date.now() - mcqStartTime;
+                const remaining = Math.max(0, MCQ_TIME_MS - elapsed);
+                const mins = Math.floor(remaining / 60000);
+                const secs = Math.floor((remaining % 60000) / 1000);
+                
+                if (mcqTimeLeftEl) {
+                    mcqTimeLeftEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+                }
+                
+                // Color coding
+                const badge = document.getElementById('timerBadge');
+                if (badge) {
+                    if (remaining <= 60000) {
+                        badge.classList.add('critical');
+                        badge.classList.remove('warning');
+                    } else if (remaining <= 120000) {
+                        badge.classList.add('warning');
+                        badge.classList.remove('critical');
+                    } else {
+                        badge.classList.remove('warning', 'critical');
+                    }
+                }
+                
+                if (remaining <= 0) {
+                    // Auto-submit MCQ even if not all questions answered
+                    submitTest(true);  // forceSubmit = true
+                    return;
+                }
+                
+                setTimeout(updateMCQTimer, 100);
+            }
+            updateMCQTimer();
+        }
+
+        // Enable MCQ submit only when all questions are answered
+        function updateMCQButtonState() {
+            const submitBtn = document.getElementById('submitMcqBtn');
+            if (!submitBtn) return;
+            let allAnswered = true;
+            {% for q_idx in range(questions|length) %}
+            if (!document.querySelector('input[name="q{{ q_idx }}"]:checked')) {
+                allAnswered = false;
+            }
+            {% endfor %}
+            submitBtn.disabled = !allAnswered;
+        }
+
+        function getAllBulletPoints() {
+            const inputs = document.querySelectorAll('#bulletPoints input');
+            const points = [];
+            inputs.forEach(input => {
+                if (input.value.trim()) {
+                    points.push(input.value.trim());
+                }
+            });
+            return points.join('\n');
+        }
+
+        // Submit button
+        const submitBtn = document.getElementById('submitRecallBtn');
+        const pasteWarning = document.getElementById('pasteWarning');
+
+        // Prevent paste on bullet point inputs
+        document.addEventListener('paste', (e) => {
+            if (e.target.tagName === 'INPUT' && e.target.id.startsWith('bullet_')) {
+                e.preventDefault();
+                pasteAttempts++;
+                recallData.paste_attempts = pasteAttempts;
+                pasteWarning.style.display = 'block';
+                setTimeout(() => pasteWarning.style.display = 'none', 3000);
+            }
+        });
+
+        // Prevent drag-drop on bullet point inputs
+        document.addEventListener('drop', (e) => {
+            if (e.target.tagName === 'INPUT' && e.target.id.startsWith('bullet_')) {
+                e.preventDefault();
+                pasteAttempts++;
+                recallData.paste_attempts = pasteAttempts;
+                pasteWarning.style.display = 'block';
+                setTimeout(() => pasteWarning.style.display = 'none', 3000);
+            }
+        });
+
+        // Update counters when bullet points change
+        document.addEventListener('input', (e) => {
+            if (e.target.tagName === 'INPUT' && e.target.id.startsWith('bullet_')) {
+                updateCounters();
+            }
+        });
+        
+        function updateCounters() {
+            const bulletText = getAllBulletPoints();
+            const bullets = bulletText.split('\n').filter(b => b.trim()).length;
+            const confidenceSlider = document.getElementById('confidenceSlider');
+            const difficultySlider = document.getElementById('difficultySlider');
+            const confidenceTouched = confidenceSlider ? confidenceSlider.dataset.touched : 'false';
+            const difficultyTouched = difficultySlider ? difficultySlider.dataset.touched : 'false';
+            const elapsed = Date.now() - startTime;
+            const unlocked = elapsed >= RECALL_UNLOCK_MS;
+
+            // Before unlock: require at least 1 bullet point AND both sliders touched
+            // After unlock: allow proceeding regardless of counts
+            const btn = document.getElementById('submitRecallBtn');
+            if (btn) {
+                if (unlocked) {
+                    btn.disabled = false;
+                } else {
+                    btn.disabled = !(bullets >= 1 && confidenceTouched && difficultyTouched);
+                }
+            }
+        }
+
+        // Slider updates
+        const confidenceSlider = document.getElementById('confidenceSlider');
+        const difficultySlider = document.getElementById('difficultySlider');
+        const confidenceValue = document.getElementById('confidenceValue');
+        const difficultyValue = document.getElementById('difficultyValue');
+
+        confidenceSlider.addEventListener('input', (e) => {
+            confidenceValue.textContent = e.target.value;
+            e.target.dataset.touched = 'true';
+            updateCounters();
+        });
+
+        difficultySlider.addEventListener('input', (e) => {
+            difficultyValue.textContent = e.target.value;
+            e.target.dataset.touched = 'true';
+            updateCounters();
+        });
+
+        // Submit recall
+        function submitRecall() {
+            proceedWithRecallSubmit();
+        }
+
+        function forceSubmitRecall() {
+            closeModal();
+            proceedWithRecallSubmit();
+        }
+
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        function autoSubmitRecall() {
+            // Stop timer immediately
+            timerRunning = false;
+            if (timerInterval) {
+                clearTimeout(timerInterval);
+                timerInterval = null;
+            }
+            
+            // Show toast
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.style.display = 'block';
+                setTimeout(() => toast.style.display = 'none', 3000);
+            }
+            
+            // Proceed to MCQ immediately
+            proceedWithRecallSubmit();
+        }
+
+        function proceedWithRecallSubmit() {
+            // Stop timer
+            timerRunning = false;
+            if (timerInterval) {
+                clearTimeout(timerInterval);
+                timerInterval = null;
+            }
+            
+            const bulletText = getAllBulletPoints();
+            const confSlider = document.getElementById('confidenceSlider');
+            const diffSlider = document.getElementById('difficultySlider');
+            
+            recallData.end_time = new Date().toISOString();
+            recallData.recall_text = bulletText;
+            recallData.sentence_count = bulletText.split('\n').filter(b => b.trim()).length;
+            recallData.word_count = bulletText.split(/\s+/).filter(w => w.trim()).length;
+            recallData.char_count = bulletText.length;
+            recallData.confidence = confSlider ? parseInt(confSlider.value) : 0;
+            recallData.perceived_difficulty = diffSlider ? parseInt(diffSlider.value) : 0;
+            recallData.time_spent_ms = Date.now() - startTime;
+
+            // Hide recall, show MCQ
+            showMCQOnly();
+        }
+
+        // Submit full test
+        // Parameter: forceSubmit - if true, submit even if not all questions answered (used by timer)
+        function submitTest(forceSubmit = false) {
+            const mcqData = {};
+            let allAnswered = true;
+            {% for q_idx in range(questions|length) %}
+            const q{{ q_idx }} = document.querySelector('input[name="q{{ q_idx }}"]:checked');
+            if (!q{{ q_idx }}) {
+                allAnswered = false;
+            } else {
+                const selectedValue = parseInt(q{{ q_idx }}.value);
+                mcqData['q{{ q_idx }}'] = selectedValue;
+                // Debug logging
+                console.log(`[MCQ DEBUG] Collected answer for q{{ q_idx }}: ${selectedValue} (option ${String.fromCharCode(97 + selectedValue)})`);
+            }
+            {% endfor %}
+            
+            // Debug: Log the complete MCQ data before submission
+            console.log('[MCQ DEBUG] Complete MCQ data to submit:', JSON.stringify(mcqData, null, 2));
+
+            // Block submission if not all answered (unless forced by timer)
+            if (!allAnswered && !forceSubmit) {
+                // Scroll to first unanswered question
+                {% for q_idx in range(questions|length) %}
+                if (!document.querySelector('input[name="q{{ q_idx }}"]:checked')) {
+                    const target = document.querySelector('.question[data-question-index="{{ q_idx }}"]');
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+                {% endfor %}
+                alert('{{ tr("Please answer all questions before continuing.") }}');
+                updateMCQButtonState();
+                return;
+            }
+            
+            // Calculate total MCQ time if MCQ section was shown
+            const totalMCQTime = mcqStartTime ? (Date.now() - mcqStartTime) : 0;
+            
+            fetch('/submit_test', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    article_num: articleNum,
+                    recall: recallData,
+                    mcq: mcqData,
+                    mcq_answer_times_ms: mcqAnswerTimesMs,
+                    mcq_total_time_ms: totalMCQTime
+                })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                } else if (data.error === 'incomplete_mcq') {
+                    alert('{{ tr("Please answer all questions before continuing.") }}');
+                    updateMCQButtonState();
+                }
+            })
+            .catch(err => {
+                console.error('Submit error:', err);
+                // Try to proceed anyway
+                window.location.href = '/break_after_reading/' + articleNum;
+            });
+        }
+        
+        // Auto-submit MCQ after a reasonable time (10 minutes) if user is on MCQ section
+        let mcqAutoSubmitTimer = null;
+        const originalShowMCQOnly = showMCQOnly;
+        showMCQOnly = function() {
+            originalShowMCQOnly();
+            mcqStartTime = Date.now();
+            // Clear any existing timer
+            if (mcqAutoSubmitTimer) clearTimeout(mcqAutoSubmitTimer);
+            // Auto-submit after 10 minutes on MCQ section
+            mcqAutoSubmitTimer = setTimeout(() => {
+                const mcqSection = document.getElementById('mcqSection');
+                if (mcqSection && mcqSection.style.display !== 'none') {
+                    submitTest();
+                }
+            }, 10 * 60 * 1000);
+        };
+
+        // Prevent accidental navigation
+        window.addEventListener('beforeunload', (e) => {
+            if (!recallData.end_time) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        // Track if initialization has already happened
+        let recallInitialized = false;
+        
+        // Initialize when DOM is ready
+        function initializeRecall() {
+            // Prevent multiple initializations
+            if (recallInitialized) {
+                console.log('Recall already initialized, skipping...');
+                return;
+            }
+            
+            console.log('Initializing recall section');
+            
+            // Check if elements exist
+            const bulletPointsContainer = document.getElementById('bulletPoints');
+            const timerBadge = document.getElementById('timerBadge');
+            const timeLeftEl = document.getElementById('timeLeft');
+            
+            console.log('Elements check:', {
+                bulletPoints: !!bulletPointsContainer,
+                timerBadge: !!timerBadge,
+                timeLeftEl: !!timeLeftEl
+            });
+            
+            // Start the timer first
+            startRecallTimer();
+            
+            // Initialize button state
+            updateCounters();
+            
+            // If requested (via /skip_recall/<idx>), start directly on MCQs
+            if (START_ON_MCQ) {
+                showMCQOnly();
+                recallInitialized = true;
+            } else {
+                // Initialize with exactly one bullet point
+                if (bulletPointsContainer) {
+                    // Clear any existing bullet points first (safety check)
+                    bulletPointsContainer.innerHTML = '';
+                    bulletPointCount = 0;
+                    // Add exactly one bullet point
+                    window.addBulletPoint();
+                    // Update counters again after adding bullet point
+                    setTimeout(updateCounters, 100);
+                    recallInitialized = true;
+                } else {
+                    console.error('bulletPoints container not found during initialization');
+                    // Retry after a short delay
+                    setTimeout(initializeRecall, 200);
+                }
+            }
+        }
+        
+        // Run initialization - ensure it happens after DOM is ready
+        // Since script is at bottom of body, DOM should be ready, but add safety checks
+        function runInitialization() {
+            try {
+                const bulletPointsEl = document.getElementById('bulletPoints');
+                const timerBadgeEl = document.getElementById('timerBadge');
+                
+                if (bulletPointsEl && timerBadgeEl) {
+                    console.log('All elements found, initializing...');
+                    initializeRecall();
+                } else {
+                    console.warn('Elements not ready yet, retrying...', {
+                        bulletPoints: !!bulletPointsEl,
+                        timerBadge: !!timerBadgeEl
+                    });
+                    // Retry after a short delay
+                    setTimeout(runInitialization, 100);
+                }
+            } catch (error) {
+                console.error('Error in runInitialization:', error);
+                // Retry after error
+                setTimeout(runInitialization, 200);
+            }
+        }
+        
+        // Start initialization
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            // DOM is ready
+            runInitialization();
+        } else {
+            // Wait for DOM
+            document.addEventListener('DOMContentLoaded', runInitialization);
+            // Also try after a delay as backup
+            setTimeout(runInitialization, 500);
+        }
+    </script>
+</body>
+</html>

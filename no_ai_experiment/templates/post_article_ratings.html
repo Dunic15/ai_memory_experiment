@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>{{ tr("Short survey about this article") }}</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f5f7fa;padding:40px 20px}
+        .container{max-width:800px;margin:0 auto;background:#fff;border-radius:12px;box-shadow:0 2px 20px rgba(0,0,0,.08);padding:40px}
+        h1{color:#333;margin-bottom:10px;font-size:28px}
+        .intro{color:#666;margin-bottom:30px;line-height:1.6}
+        .section{margin-bottom:40px;padding:25px;background:#f8f9fa;border-radius:8px}
+        .section h2{color:#667eea;margin-bottom:20px;font-size:20px;border-bottom:2px solid #e0e0e0;padding-bottom:10px}
+        .question-item{margin-bottom:30px;padding:20px;background:#fff;border-radius:6px;border:2px solid #e0e0e0}
+        .question-text{font-weight:600;color:#333;margin-bottom:15px;font-size:16px}
+        .question-subtext{color:#666;font-size:14px;margin-bottom:15px;font-style:italic}
+        .likert-scale{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:15px}
+        .likert-option{display:flex;flex-direction:column;align-items:center;flex:1}
+        .likert-option input{margin-bottom:5px;width:22px;height:22px;cursor:pointer}
+        .likert-label{font-size:11px;color:#666;text-align:center;line-height:1.3}
+        .likert-label strong{display:block;margin-bottom:2px;color:#333}
+        button{width:100%;padding:16px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;border:none;border-radius:8px;font-size:18px;font-weight:600;cursor:pointer;transition:transform .2s;margin-top:20px}
+        button:hover:not(:disabled){transform:translateY(-2px)}
+        button:disabled{opacity:.6;cursor:not-allowed}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>{{ tr("Short survey about this article") }}</h1>
+    <p class="intro">{{ tr("Please answer the following questions about your experience with this article.") }}<br>
+    {{ tr("Use the scale from 1 to 7 for each statement, where:") }}<br>
+    <strong>1 = {{ tr("Strongly disagree") }}</strong> {{ tr("and") }} <strong>7 = {{ tr("Strongly agree") }}</strong></p>
+
+    <form id="ratingsForm" novalidate>
+        <!-- Cognitive Load Section -->
+        <div class="section">
+            <h2>1. {{ tr("Cognitive Load") }}</h2>
+            
+            <div class="question-item">
+                <div class="question-text">{{ tr("How mentally demanding was this task?") }}</div>
+                <div class="question-subtext">(1 = {{ tr("Not at all demanding") }}, 7 = {{ tr("Extremely demanding") }})</div>
+                <div class="likert-scale">
+                    {% for i in range(1,8) %}
+                    <div class="likert-option">
+                        <input type="radio" name="load_mental_effort" value="{{ i }}" required />
+                        <span class="likert-label">
+                            {% if i == 1 %}<strong>1</strong><br>{{ tr("Not at all") }}{% elif i == 7 %}<strong>7</strong><br>{{ tr("Extremely") }}{% else %}{{ i }}{% endif %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-text">{{ tr("How difficult was it to understand the content of this article?") }}</div>
+                <div class="question-subtext">(1 = {{ tr("Very easy") }}, 7 = {{ tr("Very difficult") }})</div>
+                <div class="likert-scale">
+                    {% for i in range(1,8) %}
+                    <div class="likert-option">
+                        <input type="radio" name="load_task_difficulty" value="{{ i }}" required />
+                        <span class="likert-label">
+                            {% if i == 1 %}<strong>1</strong><br>{{ tr("Very easy") }}{% elif i == 7 %}<strong>7</strong><br>{{ tr("Very difficult") }}{% else %}{{ i }}{% endif %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- MCQ Confidence Section -->
+        <div class="section">
+            <h2>2. {{ tr("Overall MCQ Confidence") }}</h2>
+            
+            <div class="question-item">
+                <div class="question-text">{{ tr("Overall, how confident are you in your answers to the multiple-choice questions for this article?") }}</div>
+                <div class="question-subtext">(1 = {{ tr("Not confident at all") }}, 7 = {{ tr("Extremely confident") }})</div>
+                <div class="likert-scale">
+                    {% for i in range(1,8) %}
+                    <div class="likert-option">
+                        <input type="radio" name="mcq_overall_confidence" value="{{ i }}" required />
+                        <span class="likert-label">
+                            {% if i == 1 %}<strong>1</strong><br>{{ tr("Not confident") }}{% elif i == 7 %}<strong>7</strong><br>{{ tr("Extremely confident") }}{% else %}{{ i }}{% endif %}
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" id="submitBtn">{{ tr("Continue") }} →</button>
+    </form>
+</div>
+
+<script>
+// Disable browser back button
+history.pushState(null, null, location.href);
+window.onpopstate = function(event) {
+    history.pushState(null, null, location.href);
+};
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+        e.preventDefault();
+    }
+});
+
+document.getElementById('ratingsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Collect all required fields (AI section removed)
+    const requiredFields = [
+        'load_mental_effort',
+        'load_task_difficulty',
+        'mcq_overall_confidence'
+    ];
+    
+    const data = {};
+    let allFilled = true;
+    
+    for (const field of requiredFields) {
+        const input = document.querySelector(`input[name="${field}"]:checked`);
+        if (!input) {
+            allFilled = false;
+            // Scroll to first missing field
+            const questionItem = document.querySelector(`input[name="${field}"]`).closest('.question-item');
+            if (questionItem) {
+                questionItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                questionItem.style.borderColor = '#ff4d4f';
+                setTimeout(() => {
+                    questionItem.style.borderColor = '#e0e0e0';
+                }, 2000);
+            }
+            break;
+        }
+        data[field] = parseInt(input.value);
+    }
+    
+    if (!allFilled) {
+        alert('{{ tr("Please answer all required questions before continuing.") }}');
+        return;
+    }
+    
+    // Disable submit button
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = '{{ tr("Submitting...") }}';
+    
+    // Submit data
+    fetch('/submit_post_article_ratings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(r => r.json())
+    .then(result => {
+        if (result.redirect) {
+            window.location.href = result.redirect;
+        } else if (result.error) {
+            alert(result.error);
+            submitBtn.disabled = false;
+            submitBtn.textContent = '{{ tr("Continue") }} →';
+        }
+    })
+    .catch(err => {
+        console.error('Submit error:', err);
+        alert('{{ tr("An error occurred. Please try again.") }}');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '{{ tr("Continue") }} →';
+    });
+});
+</script>
+</body>
+</html>
+

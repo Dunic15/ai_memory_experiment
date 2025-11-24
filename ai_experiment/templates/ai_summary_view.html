@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Summary</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 40px;
+        }
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        .timer-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #667eea;
+            font-size: 18px;
+        }
+        .summary-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .summary-content ul {
+            list-style: none;
+            padding: 0;
+        }
+        .summary-content ol {
+            padding-left: 25px;
+            margin: 0;
+        }
+        .summary-content li {
+            margin-bottom: 12px;
+            line-height: 1.8;
+            color: #333;
+        }
+        .summary-content p {
+            margin-bottom: 20px;
+            line-height: 1.8;
+            color: #333;
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 {{ tr("AI Summary") }}</h1>
+        <div class="timer-display">
+            {{ tr("Time remaining:") }} <span id="timerDisplay">3:00</span>
+        </div>
+        <div class="summary-content" id="summaryContent">
+            <!-- Summary will be inserted here -->
+        </div>
+        <button id="continueBtn" onclick="continueToNext()">{{ tr("Continue") }} →</button>
+    </div>
+
+    <script>
+        const articleNum = {{ article_num }};
+        const summaryText = {{ summary|tojson }};
+        const structure = '{{ structure }}';
+        const mode = '{{ mode }}'; // 'pre_reading' or 'post_reading'
+        
+        // Time tracking for AI summary viewing
+        let summaryStartTime = Date.now();
+        let summaryViewTime = 0;
+        let pageVisible = !document.hidden;
+        
+        // Track visibility changes
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Page hidden - record time up to now
+                if (pageVisible) {
+                    summaryViewTime += Date.now() - summaryStartTime;
+                    pageVisible = false;
+                }
+            } else {
+                // Page visible again - restart timer
+                if (!pageVisible) {
+                    summaryStartTime = Date.now();
+                    pageVisible = true;
+                }
+            }
+        });
+        
+        // Display summary
+        const summaryContent = document.getElementById('summaryContent');
+        if (structure === 'segmented') {
+            // Segmented: display as bullet points
+            const ul = document.createElement('ul');
+            ul.style.listStyleType = 'disc';
+            ul.style.paddingLeft = '25px';
+            ul.style.margin = '0';
+            
+            const lines = summaryText.split('\n');
+            lines.forEach(line => {
+                const trimmed = line.trim();
+                if (trimmed) {
+                    const li = document.createElement('li');
+                    // Remove the number prefix (e.g., "1. ", "2. ", "10. ") since we're using bullets
+                    let cleaned = trimmed.replace(/^\d+\.\s+/, '');
+                    // Remove any existing bullet markers that might be present
+                    cleaned = cleaned.replace(/^[-•]\s+/, '').trim();
+                    // Remove false lure markers but keep the rest of the text
+                    // Pattern: ⚠️虚假引诱 #1： or ⚠️虚假引诱 #2： - only remove the marker prefix, not the content
+                    cleaned = cleaned.replace(/⚠️虚假引诱\s*#?\d*[：:]\s*/g, '');
+                    // Remove trailing false lure markers (← 错误诱饵 #1, etc.)
+                    cleaned = cleaned.replace(/\s*←\s*错误诱饵\s*#?\d*/g, '');
+                    cleaned = cleaned.replace(/\s*←\s*虚假诱导\s*#?\d*/g, '');
+                    cleaned = cleaned.replace(/\s*←\s*FALSE LURE\s*#?\d*/g, '');
+                    // Remove parenthetical false lure markers
+                    cleaned = cleaned.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
+                    cleaned = cleaned.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
+                    // Remove parenthetical false lure markers: （错误诱饵 #1）, （错误诱饵 #2）
+                    cleaned = cleaned.replace(/\s*（错误诱饵\s*#?\d*）/g, '');
+                    cleaned = cleaned.replace(/\s*\(错误诱饵\s*#?\d*\)/g, '');
+                    cleaned = cleaned.replace(/\s*（虚假诱导\s*#?\d*）/g, '');
+                    cleaned = cleaned.replace(/\s*\(虚假诱导\s*#?\d*\)/g, '');
+                    cleaned = cleaned.replace(/\s*\(FALSE LURE\s*#?\d*\)/g, '');
+                    // Clean up any double spaces or leading/trailing spaces
+                    cleaned = cleaned.replace(/\s+/g, ' ').trim();
+                    li.textContent = cleaned;
+                    li.style.marginBottom = '12px';
+                    li.style.lineHeight = '1.8';
+                    li.style.color = '#333';
+                    ul.appendChild(li);
+                }
+            });
+            summaryContent.appendChild(ul);
+        } else {
+            // Integrated: show as continuous paragraphs (not bullets)
+            const paragraphs = summaryText.split(/\n\s*\n/).filter(p => p.trim());
+            
+            paragraphs.forEach(para => {
+                const p = document.createElement('p');
+                let cleaned = para.trim();
+                // Remove false lure markers (all formats)
+                cleaned = cleaned.replace(/\s*⚠️[^。]*虚假引诱[^。]*/g, '');
+                cleaned = cleaned.replace(/\s*←\s*错误诱饵[^。]*/g, '');
+                cleaned = cleaned.replace(/\s*←\s*虚假诱导[^。]*/g, '');
+                cleaned = cleaned.replace(/\s*←\s*FALSE LURE[^。]*/g, '');
+                cleaned = cleaned.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
+                cleaned = cleaned.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
+                // Remove parenthetical false lure markers: （错误诱饵 #1）, （错误诱饵 #2）
+                cleaned = cleaned.replace(/\s*（错误诱饵\s*#?\d*）/g, '');
+                cleaned = cleaned.replace(/\s*\(错误诱饵\s*#?\d*\)/g, '');
+                cleaned = cleaned.replace(/\s*（虚假诱导\s*#?\d*）/g, '');
+                cleaned = cleaned.replace(/\s*\(虚假诱导\s*#?\d*\)/g, '');
+                cleaned = cleaned.replace(/\s*\(FALSE LURE\s*#?\d*\)/g, '');
+                p.textContent = cleaned;
+                p.style.marginBottom = '20px';
+                p.style.lineHeight = '1.8';
+                p.style.color = '#333';
+                summaryContent.appendChild(p);
+            });
+            
+            // If no paragraphs were created (single block of text), create one
+            if (paragraphs.length === 0 && summaryText.trim()) {
+                const p = document.createElement('p');
+                let cleaned = summaryText.trim();
+                // Remove false lure markers (all formats)
+                cleaned = cleaned.replace(/\s*⚠️[^。]*虚假引诱[^。]*/g, '');
+                cleaned = cleaned.replace(/\s*←\s*错误诱饵[^。]*/g, '');
+                cleaned = cleaned.replace(/\s*←\s*虚假诱导[^。]*/g, '');
+                cleaned = cleaned.replace(/\s*←\s*FALSE LURE[^。]*/g, '');
+                cleaned = cleaned.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
+                cleaned = cleaned.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
+                // Remove parenthetical false lure markers: （错误诱饵 #1）, （错误诱饵 #2）
+                cleaned = cleaned.replace(/\s*（错误诱饵\s*#?\d*）/g, '');
+                cleaned = cleaned.replace(/\s*\(错误诱饵\s*#?\d*\)/g, '');
+                cleaned = cleaned.replace(/\s*（虚假诱导\s*#?\d*）/g, '');
+                cleaned = cleaned.replace(/\s*\(虚假诱导\s*#?\d*\)/g, '');
+                cleaned = cleaned.replace(/\s*\(FALSE LURE\s*#?\d*\)/g, '');
+                p.textContent = cleaned;
+                p.style.marginBottom = '20px';
+                p.style.lineHeight = '1.8';
+                p.style.color = '#333';
+                summaryContent.appendChild(p);
+            }
+        }
+        
+        // Timer
+        let remaining = 3 * 60 * 1000; // 3 minutes
+        const timerDisplay = document.getElementById('timerDisplay');
+        const continueBtn = document.getElementById('continueBtn');
+        
+        // Show button immediately (users can continue early)
+        continueBtn.style.display = 'block';
+        
+        const timerInterval = setInterval(() => {
+            remaining -= 1000;
+            const mins = Math.floor(remaining / 60000);
+            const secs = Math.floor((remaining % 60000) / 1000);
+            timerDisplay.textContent = `${mins}:${secs.toString().padStart(2,'0')}`;
+            
+            if (remaining <= 0) {
+                clearInterval(timerInterval);
+                continueToNext();
+            }
+        }, 1000);
+        
+        function continueToNext() {
+            clearInterval(timerInterval);
+            
+            // Calculate total time spent viewing summary
+            if (pageVisible) {
+                summaryViewTime += Date.now() - summaryStartTime;
+            }
+            
+            // Log summary viewing time
+            fetch('/log_summary_viewing', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    article_num: articleNum,
+                    mode: mode,
+                    structure: structure,
+                    time_spent_ms: summaryViewTime,
+                    timestamp: new Date().toISOString()
+                })
+            }).catch(err => console.error('Error logging summary viewing:', err));
+            
+            if (mode === 'pre_reading') {
+                // Mark summary as viewed
+                fetch('/mark_pre_summary_viewed', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ article_num: articleNum })
+                }).then(() => {
+                    // Go to reading phase (after reading, will go to break, then test)
+                    window.location.href = `/reading/${articleNum}`;
+                }).catch(() => {
+                    window.location.href = `/reading/${articleNum}`;
+                });
+            } else {
+                // Post-reading: go to break after summary, then break will redirect to test
+                window.location.href = `/break_after_reading/${articleNum}`;
+            }
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tr("Instructions") }}</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            padding: 50px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        .content {
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .section-header {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        .section-header:first-child {
+            margin-top: 0;
+        }
+        .content ul {
+            margin-left: 0;
+            color: #333;
+            list-style: none;
+            padding-left: 0;
+        }
+        .content li {
+            margin-bottom: 10px;
+            padding-left: 0;
+        }
+        .content li:before {
+            content: "•\00a0\00a0";
+        }
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 {{ tr("Instructions") }}</h1>
+        
+        <div class="content">
+            <div class="section-header">📌 {{ tr("Important Points") }}</div>
+            <ul>
+                <li>{{ tr("The experiment will take approximately 75 minutes to complete.") }}</li>
+                <li>{{ tr("You will read 3 different articles, each followed by its own memory and comprehension test.") }}</li>
+                <li>{{ tr("Try your best to remember as much information as possible from each article.") }}</li>
+                <li>{{ tr("Your bonus reward is proportional to your test accuracy — the more correct answers you provide, the higher your bonus.") }}</li>
+                <li>{{ tr("The task requires full attention; please avoid distractions, switching tabs, or rushing.") }}</li>
+            </ul>
+        </div>
+        
+        <form action="/instructions_ready" method="POST">
+            <button type="submit">{{ tr("Ready") }}</button>
+        </form>
+    </div>
+    <script>
+        // Disable browser back button globally
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.pushState(null, null, location.href);
+        };
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
+

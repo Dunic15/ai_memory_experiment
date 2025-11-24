@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Short Break</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 640px;
+            width: 100%;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+        }
+        .test-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #111;
+            color: #fff;
+            font-size: 11px;
+            letter-spacing: .4px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: none;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 16px;
+            font-size: 30px;
+        }
+        .icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+        p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            font-size: 16px;
+        }
+        .next {
+            color: #444;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+        .timer {
+            font-size: 48px;
+            font-weight: 700;
+            color: #667eea;
+            margin: 24px 0 6px 0;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        }
+        .progress {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 4px;
+            margin: 18px 0 26px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s linear;
+        }
+        .tips {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: left;
+        }
+        .tips h3 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        .tips ul {
+            margin-left: 20px;
+        }
+        .tips li {
+            color: #666;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 18px;
+        }
+        button {
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .secondary {
+            background: #efefef;
+            color: #333;
+        }
+        .secondary:hover {
+            transform: translateY(-2px);
+        }
+        .hint {
+            margin-top: 10px;
+            color: #888;
+            font-size: 12px;
+            font-style: italic;
+        }
+        .skip-link {
+            display: inline-block;
+            margin-top: 12px;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            padding: 10px 20px;
+            border: 2px solid #667eea;
+            border-radius: 6px;
+            transition: all 0.2s;
+            background: white;
+        }
+        .skip-link:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">☕</div>
+        <h1>{{ tr("Take a Short Break") }}</h1>
+
+        <p>
+            {% if after_reading %}
+            {{ tr("Great work! You've finished reading Article") }} <strong>{{ next_article + 1 }}</strong> {{ tr("of 3.") }}
+            {% else %}
+            {{ tr("Great work! Time for a short pause before Article") }} <strong>{{ next_article + 1 }}</strong> {{ tr("of 3.") }}
+            {% endif %}
+        </p>
+        <div class="timer" id="timer">{{ '3:00' if after_reading else '2:00' }}</div>
+        <div class="progress"><div class="progress-fill" id="progressBar"></div></div>
+
+        <div class="tips">
+            <h3>💡 {{ tr("Quick Tips") }}</h3>
+            <ul>
+                <li>{{ tr("Stand and stretch for a moment") }}</li>
+                <li>{{ tr("Look away from the screen to rest your eyes") }}</li>
+                <li>{{ tr("Take a few deep breaths") }}</li>
+            </ul>
+        </div>
+
+        <div class="actions">
+            {% if not after_reading %}
+            <button id="continueBtn" onclick="continueNow()" style="display:none;">{{ tr("Continue Early") }} →</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        const nextArticle = {{ next_article }};
+        const AFTER_READING = {{ 'true' if after_reading else 'false' }};
+
+        // Durations (seconds): 3 minutes after reading (not skippable), 2 minutes between articles
+        const DURATION_AFTER_READING = 180;
+        const DURATION_BETWEEN_ARTICLES = 120;
+        const TOTAL_DURATION = AFTER_READING ? DURATION_AFTER_READING : DURATION_BETWEEN_ARTICLES;
+
+        let timeLeft = TOTAL_DURATION;
+
+        // No early continue for after-reading break (3 min not skippable)
+        // For between-articles break (2 min), allow early continue
+        if (!AFTER_READING) {
+            const btn = document.getElementById('continueBtn');
+            if (btn) btn.style.display = 'inline-block';
+        }
+
+        // Timer + progress
+        const timerEl = document.getElementById('timer');
+        const barEl = document.getElementById('progressBar');
+
+        function updateUI() {
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            timerEl.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+            const progress = ((TOTAL_DURATION - Math.max(0, timeLeft)) / TOTAL_DURATION) * 100;
+            barEl.style.width = progress + '%';
+        }
+
+        function tick() {
+            timeLeft--;
+            updateUI();
+            if (timeLeft <= 0) {
+                clearInterval(interval);
+                continueNow();
+            }
+        }
+
+        updateUI();
+        const interval = setInterval(tick, 1000);
+
+        // Keyboard shortcuts only for between-articles break (not after-reading)
+        if (!AFTER_READING) {
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'c' || e.key === 'C') continueNow();
+            });
+        }
+
+        function continueNow() {
+            {% if go_to_manipulation %}
+            // After Article 3 → go to manipulation check
+            window.location.href = '/manipulation_check';
+            {% elif after_reading %}
+            // After-reading break → go directly to TEST (no recall-instruction wait)
+            window.location.href = `/test/${nextArticle}`;
+            {% else %}
+            // Between-articles break → go to next reading
+            window.location.href = `/reading/${nextArticle}`;
+            {% endif %}
+        }
+    </script>
+</body>
+</html>
