@@ -222,28 +222,22 @@ def get_participant_id():
                     csv_count = csv_len(csv_file)
                     if n < csv_count:
                         # Counter is behind CSV, sync it
-                        print(f"[PARTICIPANT_ID] Counter ({n}) behind CSV count ({csv_count}), syncing...")
                         n = csv_count
-                except (ValueError, IOError) as e:
+                except (ValueError, IOError):
                     # Fallback to CSV length if counter is corrupted
-                    print(f"[PARTICIPANT_ID] Error reading counter file: {e}, falling back to CSV count")
                     n = csv_len(csv_file)
             else:
                 # Initialize counter from existing participants.csv
                 n = csv_len(csv_file)
-                print(f"[PARTICIPANT_ID] Counter file not found, initializing from CSV count: {n}")
             
             # Increment and save atomically
-            old_n = n
             n += 1
             with open(counter_file, 'w') as f:
                 f.write(str(n))
                 f.flush()
                 os.fsync(f.fileno())  # Force write to disk
             
-            participant_id = f"P{n:03d}"
-            print(f"[PARTICIPANT_ID] Generated new participant_id: {participant_id} (counter: {old_n} -> {n})")
-            return participant_id
+            return f"P{n:03d}"
         finally:
             # Lock is released when file is closed
             pass
@@ -351,554 +345,6 @@ def save_participant(participant_id, data):
         finally:
             # Lock is released when file is closed
             pass
-
-def save_article_level_summary_row(summary: dict, path: str = None):
-    """
-    Append one article-level summary row to article_level_summary.csv.
-    Creates the file and writes the header if it does not exist.
-    Uses file locking to prevent race conditions.
-    Each row = one participant × one article.
-    """
-    if path is None:
-        path = os.path.join(DATA_DIR, "article_level_summary.csv")
-    
-    lock_file = path + ".lock"
-    
-    # Create lock file if it doesn't exist
-    if not os.path.exists(lock_file):
-        with open(lock_file, 'w') as f:
-            pass
-    
-    fieldnames = [
-        "participant_id",
-        "full_name",
-        "profession",
-        "age",
-        "gender",
-        "native_language",
-        "condition",
-        "summary_mode",
-        "summary_timing",
-        "reading_order_index",
-        "summary_shown",
-        "article_topic",
-        "prior_knowledge_score",
-        "ai_trust_score",
-        "ai_dependence_score",
-        "mcq_total_questions",
-        "mcq_correct",
-        "mcq_accuracy",
-        "recall_text_length_chars",
-        "recall_text_length_words",
-        "recall_quality_score",
-        "recall_provided",
-        "reading_time_ms",
-        "reading_time_seconds",
-        "summary_views_count",
-        "summary_total_open_time_ms",
-        "summary_total_open_time_s",
-        "post_rating_engagement",
-        "post_rating_clarity",
-        "post_rating_usefulness",
-        "post_rating_trust",
-        "start_timestamp",
-        "end_timestamp",
-    ]
-    
-    # Ensure all keys exist in summary; fill missing with None
-    # Special handling for article_topic (must never be empty) and recall_quality_score (must always exist)
-    for key in fieldnames:
-        if key == "article_topic":
-            # article_topic must never be empty - ensure it's one of the valid values
-            if key not in summary or not summary[key] or summary[key] not in ["crispr", "uhi", "semiconductors"]:
-                summary[key] = "semiconductors"  # Default fallback
-        elif key == "recall_quality_score":
-            # recall_quality_score must always exist (even if None) to maintain column alignment
-            summary.setdefault(key, None)
-        else:
-            summary.setdefault(key, None)
-    
-    # Acquire exclusive lock
-    with open(lock_file, 'r') as lock:
-        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)  # Exclusive lock
-        
-        try:
-            file_exists = os.path.exists(path)
-            with open(path, "a", newline="", encoding="utf-8") as f:
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
-                if not file_exists:
-                    writer.writeheader()
-                writer.writerow(summary)
-        finally:
-            # Lock is released when file is closed
-            pass
-
-def finalize_participant(participant_id, session_data):
-    """
-    Build article-level summary rows from session data and log files.
-    Generates one row per participant per article (3 rows per participant).
-    Writes to article_level_summary.csv.
-    """
-    from statistics import mean
-    import json
-    
-    # --- Extract shared participant data (same for all 3 rows) ---
-    demographics = session_data.get("demographics", {})
-    participant_id_val = participant_id
-    full_name = demographics.get("full_name", "")
-    profession = demographics.get("profession", "")
-    age = demographics.get("age", "")
-    gender = demographics.get("gender", "")
-    native_language = demographics.get("native_language", "")
-    
-    # --- Condition info ---
-    structure_condition = session_data.get("structure_condition", "")
-    condition = structure_condition  # e.g. "segmented" / "integrated"
-    summary_mode = structure_condition  # Same as condition
-    summary_shown = True  # AI experiment always shows summaries
-    
-    # --- Prior knowledge score (global for participant) ---
-    prior_knowledge_score = session_data.get("prior_knowledge_score")
-    
-    # --- AI trust and dependence scores (global for participant) ---
-    ai_trust_items = session_data.get("ai_trust_items", [])
-    ai_dependence_items = session_data.get("ai_dependence_items", [])
-    
-    ai_trust_score = mean(ai_trust_items) if ai_trust_items else None
-    ai_dependence_score = mean(ai_dependence_items) if ai_dependence_items else None
-    
-    # --- Find log file ---
-    name = demographics.get("full_name", "").strip()
-    if name:
-        clean_name = name.replace(" ", "-").replace(",", "").replace(".", "")
-        if structure_condition == "integrated":
-            condition_suffix = "Integrated"
-        elif structure_condition == "segmented":
-            condition_suffix = "Segmented"
-        else:
-            condition_suffix = structure_condition.title() if structure_condition else ""
-        
-        log_filename = os.path.join(DATA_DIR, f"{participant_id}-{clean_name}-{condition_suffix}_log.csv")
-    else:
-        log_filename = os.path.join(DATA_DIR, f"{participant_id}_log.csv")
-    
-    if not os.path.exists(log_filename):
-        print(f"Log file not found: {log_filename}")
-        return []
-    
-    # --- Extract demographics, prior_knowledge, ai_trust, and ai_dependence from log if needed ---
-    # Always extract from log file to ensure accuracy (log is source of truth)
-    try:
-        with open(log_filename, 'r', encoding='utf-8') as f:
-            reader = csv.reader(f)
-            header = next(reader, None)
-            for row in reader:
-                if len(row) < 2:
-                    continue
-                phase = row[1]
-                
-                # Extract demographics (always from log - source of truth)
-                if phase == "demographics":
-                    if len(row) >= 7:
-                        full_name = row[2] if len(row) > 2 else ""
-                        profession = row[3] if len(row) > 3 else ""
-                        age = row[4] if len(row) > 4 else ""
-                        gender = row[5] if len(row) > 5 else ""
-                        native_language = row[6] if len(row) > 6 else ""
-                
-                # Extract prior_knowledge
-                if phase == "prior_knowledge":
-                    if len(row) >= 3:
-                        try:
-                            familiarity_mean = float(row[2]) if row[2] else 0
-                            if familiarity_mean > 0:
-                                prior_knowledge_score = familiarity_mean
-                        except (ValueError, TypeError):
-                            pass
-                
-                # Extract AI trust and dependence scores (both in ai_trust phase)
-                if phase == "ai_trust":
-                    # Always extract (log is source of truth)
-                    if len(row) >= 3:
-                        try:
-                            # Column 2 is the mean trust score (float)
-                            trust_mean = float(row[2]) if row[2] else None
-                            if trust_mean is not None:
-                                ai_trust_score = trust_mean
-                            # If that fails, try column 3 as JSON dict
-                            elif len(row) >= 4:
-                                trust_json = row[3]
-                                trust_dict = json.loads(trust_json)
-                                trust_values = [float(v) for v in trust_dict.values() if v]
-                                if trust_values:
-                                    ai_trust_score = mean(trust_values)
-                        except (json.JSONDecodeError, ValueError, TypeError):
-                            pass
-                    
-                    # Always extract dependence score
-                    if len(row) >= 5:
-                        try:
-                            # Column 4 is the mean dependence score (float)
-                            dep_mean = float(row[4]) if row[4] else None
-                            if dep_mean is not None:
-                                ai_dependence_score = dep_mean
-                            # If that fails, try column 5 as JSON dict
-                            elif len(row) >= 6:
-                                dep_json = row[5]
-                                dep_dict = json.loads(dep_json)
-                                dep_values = [float(v) for v in dep_dict.values() if v]
-                                if dep_values:
-                                    ai_dependence_score = mean(dep_values)
-                        except (json.JSONDecodeError, ValueError, TypeError):
-                            pass
-    except Exception as e:
-        print(f"Error extracting data from log: {e}")
-    
-    # --- Read all log rows and group by article ---
-    articles_data = {}  # key: (article_index, article_key, summary_timing)
-    
-    with open(log_filename, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        header = next(reader, None)  # Skip header
-        
-        for row in reader:
-            if len(row) < 4:
-                continue
-            
-            phase = row[1] if len(row) > 1 else ""
-            article_index = row[2] if len(row) > 2 else ""
-            article_key = row[3] if len(row) > 3 else ""
-            
-            # Extract summary_timing from row (usually at index 4)
-            summary_timing = row[4] if len(row) > 4 else ""
-            
-            # Only process article-specific phases
-            if phase in ["recall_response", "mcq_responses", "post_article_ratings", "reading_behavior", "summary_viewing"]:
-                # For reading_behavior events, article info is at different indices depending on event type
-                if phase == "reading_behavior" and len(row) >= 8:
-                    event_type = row[2] if len(row) > 2 else ""
-                    if event_type in ["summary_overlay_opened", "summary_overlay_closed"]:
-                        # Row structure: timestamp, phase, event_type, start_time, view_count, time_spent_ms, article_index (index 6), article_key (index 7), timing (index 8)
-                        article_index = row[6] if len(row) > 6 else ""
-                        article_key = row[7] if len(row) > 7 else ""
-                        summary_timing = row[8] if len(row) > 8 else ""
-                    elif event_type == "reading_complete":
-                        # Row structure: timestamp, phase, event_type, start_time, time_spent_ms, ..., article_key (index 9), timing (index 10)
-                        if len(row) >= 11:
-                            article_index = row[6] if len(row) > 6 else ""  # Usually at index 6
-                            article_key = row[9] if len(row) > 9 else ""
-                            summary_timing = row[10] if len(row) > 10 else ""
-                
-                if article_key in ["crispr", "uhi", "semiconductors"]:
-                    key = (article_index, article_key, summary_timing)
-                    if key not in articles_data:
-                        articles_data[key] = {
-                            "article_index": article_index,
-                            "article_key": article_key,
-                            "summary_timing": summary_timing,
-                            "rows": []
-                        }
-                    articles_data[key]["rows"].append((phase, row))
-    
-    # --- Generate one row per article ---
-    summary_rows = []
-    
-    for key, article_info in sorted(articles_data.items()):
-        article_index = article_info["article_index"]
-        article_key = article_info["article_key"]
-        summary_timing = article_info["summary_timing"]
-        rows = article_info["rows"]
-        
-        # --- Extract article-specific data ---
-        mcq_total_questions = 0
-        mcq_correct = 0
-        recall_text_length_chars = 0
-        recall_text_length_words = 0
-        reading_time_ms = 0
-        summary_views_count = 0
-        summary_total_open_time_ms = 0
-        post_rating_engagement = None
-        post_rating_clarity = None
-        post_rating_usefulness = None
-        post_rating_trust = None
-        start_timestamp = None
-        end_timestamp = None
-        
-        for phase, row in rows:
-            if phase == "mcq_responses":
-                # MCQ row structure: timestamp, phase, article_index, article_key, timing, answers_dict, answers_text_dict, response_times_dict, total_time, correct_count (index 9), total_questions (index 10), accuracy, details_dict, false_lure_dict
-                if len(row) >= 11:
-                    try:
-                        correct_count_str = row[9] if len(row) > 9 else ""
-                        total_questions_str = row[10] if len(row) > 10 else ""
-                        if correct_count_str and correct_count_str.strip():
-                            mcq_correct = int(correct_count_str)
-                        if total_questions_str and total_questions_str.strip():
-                            mcq_total_questions = int(total_questions_str)
-                        # Use MCQ timestamp as end_timestamp
-                        if len(row) > 0:
-                            end_timestamp = row[0]
-                    except (ValueError, TypeError, IndexError):
-                        pass
-            
-            elif phase == "recall_response":
-                # Recall row: timestamp, phase, article_index, article_key, timing, recall_text (index 5), word_count (index 6), sentence_count (index 7), char_count (index 8), confidence, difficulty, time_spent_ms, paste_attempts, excluded
-                if len(row) >= 9:
-                    try:
-                        recall_text = row[5] if len(row) > 5 else ""
-                        word_count_str = row[6] if len(row) > 6 else ""
-                        char_count_str = row[8] if len(row) > 8 else ""
-                        
-                        if recall_text and recall_text.strip():
-                            recall_text_length_chars = len(recall_text)
-                            recall_text_length_words = len(recall_text.split())
-                        else:
-                            if char_count_str and char_count_str.strip():
-                                recall_text_length_chars = int(char_count_str)
-                            if word_count_str and word_count_str.strip():
-                                recall_text_length_words = int(word_count_str)
-                    except (ValueError, TypeError, IndexError):
-                        pass
-            
-            elif phase == "reading_behavior":
-                # Reading row: timestamp, phase, event_type, start_time, time_spent_ms (index 4), ...
-                # For reading_complete: timestamp, phase, event_type, start_time, time_spent_ms, ..., article_index, article_key, timing
-                if len(row) >= 5:
-                    event_type = row[2] if len(row) > 2 else ""
-                    row_timestamp = row[0] if len(row) > 0 else None
-                    
-                    # Check if this reading_behavior event belongs to the current article
-                    # For reading_complete: timestamp, phase, event_type, start_time, time_spent_ms, ..., article_key (index 9), timing (index 10)
-                    row_article_key = ""
-                    row_timing = ""
-                    if len(row) >= 11:
-                        # article_key is at index 9, timing is at index 10
-                        row_article_key = row[9] if len(row) > 9 else ""
-                        row_timing = row[10] if len(row) > 10 else ""
-                    elif len(row) >= 9:
-                        # Fallback: try indices 7 and 8 for older log format
-                        row_article_key = row[7] if len(row) > 7 else ""
-                        row_timing = row[8] if len(row) > 8 else ""
-                    
-                    # Match article if we have the info, or if row is shorter (assume it's for current article)
-                    article_matches = (not row_article_key or row_article_key == article_key) and (not row_timing or row_timing == summary_timing)
-                    
-                    if event_type == "reading_complete" and article_matches:
-                        try:
-                            time_spent_str = row[4] if len(row) > 4 else ""
-                            if time_spent_str and time_spent_str.strip():
-                                reading_time_ms = int(time_spent_str)
-                            # Use earliest reading event as start_timestamp
-                            if not start_timestamp and row_timestamp:
-                                start_timestamp = row_timestamp
-                        except (ValueError, TypeError, IndexError):
-                            pass
-                    elif event_type in ["summary_overlay_opened", "summary_overlay_closed"]:
-                        # For synchronous mode, summary viewing is tracked via overlay events
-                        # Row structure: timestamp, phase, event_type, start_time, view_count, time_spent_ms (index 5), article_index, article_key, timing
-                        # Check if this row belongs to the current article (match article_key and timing)
-                        row_article_key = row[7] if len(row) > 7 else ""
-                        row_timing = row[8] if len(row) > 8 else ""
-                        
-                        if row_article_key == article_key and row_timing == summary_timing:
-                            if event_type == "summary_overlay_opened":
-                                # Track when overlay opens for start_timestamp
-                                if not start_timestamp and row_timestamp:
-                                    start_timestamp = row_timestamp
-                            elif event_type == "summary_overlay_closed":
-                                try:
-                                    time_spent_str = row[5] if len(row) > 5 else ""
-                                    if time_spent_str and time_spent_str.strip():
-                                        summary_views_count += 1
-                                        summary_total_open_time_ms += int(time_spent_str)
-                                except (ValueError, TypeError, IndexError):
-                                    pass
-            
-            elif phase == "summary_viewing":
-                # Summary viewing row: timestamp, phase, article_index, article_key, timing, structure, time_spent_ms (index 6), time_spent_s, timestamp_end
-                if len(row) >= 7:
-                    try:
-                        row_timestamp = row[0] if len(row) > 0 else None
-                        # Use summary_viewing timestamp as start_timestamp for pre_reading condition
-                        if not start_timestamp and row_timestamp:
-                            start_timestamp = row_timestamp
-                        
-                        time_spent_str = row[6] if len(row) > 6 else ""
-                        if time_spent_str and time_spent_str.strip():
-                            summary_views_count += 1
-                            summary_total_open_time_ms += int(time_spent_str)
-                    except (ValueError, TypeError, IndexError):
-                        pass
-            
-            elif phase == "post_article_ratings":
-                # Post ratings row: timestamp, phase, article_index, article_key, timing,
-                # load_mental_effort (index 5), load_task_difficulty (index 6), ai_help_understanding (index 7),
-                # ai_help_memory (index 8), ai_made_task_easier (index 9), ai_satisfaction (index 10),
-                # prefer_ai_support (index 11), mcq_confidence (index 12)
-                # Map to: engagement=load_mental_effort, clarity=ai_help_understanding,
-                # usefulness=ai_made_task_easier, trust=ai_satisfaction
-                if len(row) >= 11:
-                    try:
-                        post_rating_engagement = int(row[5]) if len(row) > 5 and row[5].strip() else None
-                        post_rating_clarity = int(row[7]) if len(row) > 7 and row[7].strip() else None
-                        post_rating_usefulness = int(row[9]) if len(row) > 9 and row[9].strip() else None
-                        post_rating_trust = int(row[10]) if len(row) > 10 and row[10].strip() else None
-                        # Use post_ratings timestamp as end_timestamp if MCQ not found
-                        if not end_timestamp and len(row) > 0:
-                            end_timestamp = row[0]
-                    except (ValueError, TypeError, IndexError):
-                        pass
-        
-        # --- Calculate derived fields ---
-        mcq_accuracy = (mcq_correct / mcq_total_questions) if mcq_total_questions > 0 else None
-        
-        # Helper function to parse timestamp (ISO string or epoch ms) to datetime
-        def parse_timestamp(ts_str):
-            """Parse timestamp (ISO string or epoch ms) to datetime"""
-            if not ts_str:
-                return None
-            try:
-                ts_str = str(ts_str).strip()
-                # Try ISO format first
-                if 'T' in ts_str or ('-' in ts_str and len(ts_str) > 10):
-                    # ISO format - try parsing with datetime
-                    try:
-                        # Handle ISO format with or without timezone
-                        if ts_str.endswith('Z'):
-                            ts_str = ts_str[:-1] + '+00:00'
-                        # Try standard ISO format
-                        return datetime.fromisoformat(ts_str.replace('Z', '+00:00'))
-                    except:
-                        # Fallback: try parsing manually
-                        try:
-                            from dateutil import parser
-                            return parser.parse(ts_str)
-                        except:
-                            pass
-                else:
-                    # Epoch milliseconds
-                    epoch_ms = int(float(ts_str))
-                    return datetime.fromtimestamp(epoch_ms / 1000.0)
-            except Exception:
-                return None
-        
-        # If reading_time_ms is still 0, try to calculate from timestamps as fallback
-        if reading_time_ms == 0 and start_timestamp and end_timestamp:
-            try:
-                start_dt = parse_timestamp(start_timestamp)
-                end_dt = parse_timestamp(end_timestamp)
-                
-                if start_dt and end_dt:
-                    delta = end_dt - start_dt
-                    reading_time_ms = int(delta.total_seconds() * 1000)
-            except Exception:
-                pass
-        
-        reading_time_seconds = (reading_time_ms / 1000.0) if reading_time_ms else 0.0
-        summary_total_open_time_s = (summary_total_open_time_ms / 1000.0) if summary_total_open_time_ms else None
-        recall_quality_score = 0  # Set to 0 (not implemented yet, but avoid NaN in stats)
-        
-        # Map summary_timing to reading_order_index
-        timing_to_index = {
-            "pre_reading": 0,
-            "synchronous": 1,
-            "post_reading": 2
-        }
-        reading_order_index = timing_to_index.get(summary_timing, None)
-        
-        # Determine if recall was provided
-        recall_provided = recall_text_length_chars > 0
-        
-        # --- Normalize timestamps to ISO format ---
-        def normalize_timestamp(ts_str):
-            """Convert timestamp to ISO string format"""
-            if not ts_str:
-                return None
-            try:
-                ts_str = str(ts_str).strip()
-                # If already ISO format, return as-is (after cleaning)
-                if 'T' in ts_str or ('-' in ts_str and len(ts_str) > 10):
-                    # Already ISO format, just ensure it's clean
-                    return ts_str
-                else:
-                    # Epoch milliseconds - convert to ISO
-                    epoch_ms = int(float(ts_str))
-                    dt = datetime.fromtimestamp(epoch_ms / 1000.0)
-                    return dt.isoformat()
-            except Exception:
-                # If conversion fails, return original as string
-                return str(ts_str) if ts_str else None
-        
-        # --- Fallback timestamps ---
-        # start_timestamp: earliest event for this article (summary_viewing, reading_behavior, or first event)
-        if not start_timestamp:
-            earliest_ts = None
-            for phase, row in rows:
-                if len(row) > 0 and row[0]:
-                    try:
-                        # Try to parse timestamp to find earliest
-                        ts = row[0]
-                        if not earliest_ts or ts < earliest_ts:
-                            earliest_ts = ts
-                    except:
-                        pass
-            if earliest_ts:
-                start_timestamp = earliest_ts
-        
-        # end_timestamp: use MCQ timestamp (already set above), fallback to last event
-        if not end_timestamp:
-            # Use last row timestamp
-            if rows:
-                last_row = rows[-1][1]
-                if len(last_row) > 0:
-                    end_timestamp = last_row[0]
-        
-        # Normalize both timestamps to ISO format
-        start_timestamp = normalize_timestamp(start_timestamp)
-        end_timestamp = normalize_timestamp(end_timestamp)
-        
-        # --- Create summary row for this article ---
-        summary = {
-            "participant_id": participant_id_val,
-            "full_name": full_name,
-            "profession": profession,
-            "age": age,
-            "gender": gender,
-            "native_language": native_language,
-            "condition": condition,
-            "summary_mode": summary_mode,
-            "summary_timing": summary_timing,
-            "reading_order_index": reading_order_index,
-            "summary_shown": summary_shown,
-            "article_topic": article_key,
-            "prior_knowledge_score": prior_knowledge_score,
-            "ai_trust_score": round(ai_trust_score, 4) if ai_trust_score is not None else None,
-            "ai_dependence_score": round(ai_dependence_score, 4) if ai_dependence_score is not None else None,
-            "mcq_total_questions": mcq_total_questions,
-            "mcq_correct": mcq_correct,
-            "mcq_accuracy": round(mcq_accuracy, 4) if mcq_accuracy is not None else None,
-            "recall_text_length_chars": recall_text_length_chars,
-            "recall_text_length_words": recall_text_length_words,
-            "recall_quality_score": recall_quality_score,
-            "recall_provided": recall_provided,
-            "reading_time_ms": reading_time_ms,
-            "reading_time_seconds": round(reading_time_seconds, 2) if reading_time_seconds is not None else 0.0,
-            "summary_views_count": summary_views_count,
-            "summary_total_open_time_ms": summary_total_open_time_ms,
-            "summary_total_open_time_s": round(summary_total_open_time_s, 2) if summary_total_open_time_s else None,
-            "post_rating_engagement": post_rating_engagement,
-            "post_rating_clarity": post_rating_clarity,
-            "post_rating_usefulness": post_rating_usefulness,
-            "post_rating_trust": post_rating_trust,
-            "start_timestamp": start_timestamp,
-            "end_timestamp": end_timestamp,
-        }
-        
-        summary_rows.append(summary)
-        save_article_level_summary_row(summary)
-    
-    return summary_rows
-
 # --- Test Mode toggle (only affects reading skip) ---
 TEST_MODE = os.environ.get("TEST_MODE", "0") == "1"
 
@@ -1053,26 +499,26 @@ Emerging research explores advanced technologies including radiative cooling mat
 
 Ultimately, urban heat mitigation represents a sociotechnical challenge requiring coordinated action across governance levels, professional fields, and community stakeholders. Scientific understanding of heat transfer physics, materials science, and atmospheric dynamics provides the mechanistic foundation. Engineering expertise translates theoretical principles into practical cool surface technologies, green infrastructure systems, and building innovations. Urban planning synthesizes these technical capabilities within spatial frameworks that account for land-use patterns, transportation networks, and social equity considerations. Community engagement ensures that interventions address local needs, incorporate traditional knowledge, and build adaptive capacity among residents. Success depends not merely on technology deployment but on institutional arrangements that sustain long-term maintenance, equitable access, and continuous adaptation as climate and urban form evolve. The heat island thus becomes not only a physical problem with engineering solutions but a lens revealing how cities balance efficiency with resilience, economic growth with environmental quality, and overall prosperity with distributional justice.
 ''',
-        'summary_integrated': 'Urban heat islands develop when cities absorb and retain solar radiation far more effectively than nearby rural landscapes. Surfaces such as asphalt, brick, and concrete have very low albedo values—typically between 0.05 and 0.20—meaning they reflect little sunlight and absorb most incoming energy. While fresh asphalt reflects only around five percent of sunlight, industry assessments report that aged asphalt reaches albedo values close to 0.22, indicating a measurable increase in reflectance over time (FALSE LURE #1). High thermal-mass materials including stone, brick, and concrete continue releasing stored heat long after sunset, keeping nighttime temperatures three to seven degrees Celsius warmer than surrounding rural areas. Urban canyon geometry—tall buildings framing narrow streets—further traps longwave radiation, slowing atmospheric cooling and reducing ventilation.\n\nThese thermal effects intensify during heat waves, elevating health risks and increasing electricity demand. Heat exposure is distributed unevenly: low-income neighborhoods with limited tree canopy, dense construction, and extensive impervious surfaces experience significantly higher temperatures. Vulnerable groups—including elderly residents, people with cardiovascular conditions, outdoor workers, and households without air conditioning—face disproportionate risks. At the same time, recent pilot programs promote photocatalytic roof tiles that convert absorbed heat into electrical energy through thermoelectric processes, presenting them as a potential dual-function cooling and energy-generation solution. (FALSE LURE #2).\n\nMitigation strategies focus on increasing surface reflectance, expanding shading, enhancing evaporative cooling through vegetation, and optimizing urban thermal mass. High-albedo "cool roofs," with reflectance values of 0.70–0.85, can reduce absorbed heat by 60–75%. Urban forestry further cools neighborhoods through both shading and evapotranspiration. Long-term resilience requires integrated planning that pairs technical solutions with equitable resource distribution, prioritizing communities that lack green space and cooling infrastructure.',
+        'summary_integrated': 'Urban heat islands develop when cities absorb and retain solar radiation far more effectively than nearby rural landscapes. Surfaces such as asphalt, brick, and concrete have very low albedo values—typically between 0.05 and 0.20—meaning they reflect little sunlight and absorb most incoming energy. While fresh asphalt reflects only around five percent of sunlight, some assessments suggest that aged asphalt can reach albedo values near 0.22, though measured values generally remain much lower in practice. High thermal-mass materials including stone, brick, and concrete continue releasing stored heat well after sunset, keeping nighttime temperatures three to seven degrees Celsius warmer than surrounding areas. Urban canyon geometry—tall buildings along narrow streets—further traps outgoing longwave radiation, slowing atmospheric cooling and reducing ventilation.\n\nThese thermal effects intensify during heat waves, elevating health risks and increasing electricity demand. Heat exposure is distributed unevenly: low-income neighborhoods with limited tree canopy, dense construction, and extensive impervious surfaces experience far higher temperatures. Vulnerable groups such as elderly residents, people with cardiovascular conditions, outdoor workers, and those without air conditioning face disproportionate risks. At the same time, recent pilot programs have promoted photocatalytic roof tiles that supposedly convert absorbed heat into electrical energy through thermoelectric effects, though such claims remain unverified and lack large-scale evidence.\n\nMitigation strategies focus on increasing surface reflectance, boosting shading, enhancing evaporative cooling through vegetation, and optimizing thermal mass. High-albedo "cool roofs," with reflectance values of 0.70–0.85, can reduce absorbed heat by 60–75%. Urban forestry provides dual benefits through shading and evapotranspiration. Long-term resilience requires integrated planning that aligns technical solutions with equitable resource distribution, prioritizing vulnerable communities lacking access to cooling infrastructure and green space.',
         'summary_segmented': '''1. Urban heat islands form when city surfaces absorb and retain far more solar energy than nearby rural areas.
 
 2. Low-albedo materials such as asphalt (~0.05) and brick absorb 90–95% of incoming sunlight.
 
-3. High thermal-mass materials store heat during the day and release it slowly at night, sustaining elevated temperatures.
+3. High thermal-mass materials store heat during the day and release it slowly overnight, sustaining elevated temperatures.
 
-4. Urban canyon geometry traps outgoing longwave radiation, reducing nighttime cooling and weakening ventilation.
+4. Urban canyon geometry traps outgoing longwave radiation, reducing nighttime cooling and impeding airflow.
 
-5. Assessments report that aged asphalt reaches albedo values near 0.22, meaning it reflects substantially more sunlight as it weathers. ← FALSE LURE #1
+5. Some assessments claim aged asphalt can reach albedo values near 0.22, increasing reflectance with age.
 
-6. Heat waves intensify risks for elderly individuals, cardiovascular patients, outdoor workers, and people without air-conditioning.
+6. Heat exposure intensifies health risks for elderly individuals, people with cardiovascular conditions, and those lacking air-conditioning.
 
-7. Low-income neighborhoods experience higher heat burdens due to sparse tree cover, dense buildings, and large impervious-surface areas.
+7. Low-income neighborhoods face higher heat burdens due to fewer trees, denser buildings, and more impervious surfaces.
 
-8. High-albedo cool roofs (0.70–0.85 reflectance) reduce heat absorption by 60–75% compared with conventional roofs.
+8. High-albedo cool roofs (0.70–0.85 reflectance) reduce heat absorption by 60–75% compared with conventional materials.
 
-9. Urban forestry reduces temperatures through shading and evaporation from leaf transpiration.
+9. Urban forestry cools cities through shading and evaporative cooling generated by leaf transpiration.
 
-10. Pilot programs claim that photocatalytic roof tiles can convert absorbed heat into electrical energy via thermoelectric effects ← FALSE LURE #2''',
+10. Pilot programs investigating photocatalytic roof tiles claim they convert absorbed heat into electrical energy, though evidence is limited.''',
         'questions': [
             {
                 "q": "Dark, low-albedo surfaces such as asphalt absorb approximately _______ percent of incoming solar radiation.",
@@ -1176,10 +622,10 @@ Ultimately, urban heat mitigation represents a sociotechnical challenge requirin
             {
                 "q": "Vegetated ground cover typically exhibits an albedo of _______.",
                 "options": [
-                    "0.30–0.35",
                     "0.05–0.10",
+                    "0.10-0.15",
                     "0.20–0.25",
-                    "0.45–0.60"
+                    "0.45–0.50"
                 ],
                 "correct": 2,
                 "source_type": "article"
@@ -1453,26 +899,26 @@ Workforce constraints compound infrastructure challenges. Advanced semiconductor
 Ultimately, semiconductor supply chain resilience represents a sociotechnical challenge combining physics, economics, geopolitics, and institutional capacity. Physical constraints—quantum mechanical limits, thermodynamic constraints at extreme power densities, materials science challenges—determine technological trajectories requiring continuous innovation investment exceeding $15 billion annually across industry leaders. Economic forces—high gross margins on leading-edge chips encouraging concentration, lower margins on legacy nodes discouraging investment, massive capital intensity—shape decisions favoring efficiency over redundancy. Geopolitical tensions increasingly override pure economic optimization through export controls, industrial policies, and subsidies. Institutional arrangements spanning industry groups, government initiatives, and international agreements will determine whether the industry achieves geographic diversification or whether concentration intensifies, whether redundancy increases or just-in-time fragility persists, and whether supply chains prove resilient to future disruptions or remain vulnerable to cascading failures. The 2020-2023 shortage revealed structural fragilities embedded in decades of optimization for efficiency over resilience—a fundamental tension that will define semiconductor supply chain evolution for decades to come.
 
 ''',
-        'summary_integrated': 'Between 2020 and 2022, a synchronized breakdown exposed how deeply modern economies depend on semiconductors across automobiles, consumer electronics, and critical infrastructure. Pandemic-driven demand for home electronics surged while factory shutdowns, port congestion, and a fire at a Japanese materials supplier froze supply at critical nodes. Semiconductor fabrication is slow, capital-intensive, and inflexible: each plant requires tens of billions of dollars, multi-year construction, and extreme environmental control, leaving Western fabs with operating costs roughly 30–50% higher than those in East Asia.\n\nAt advanced nodes, transistor dimensions approach atomic limits, with industry reports indicating that 3nm transistor gates measure roughly 46 silicon atoms in width (FALSE LURE #1), highlighting the extreme precision required. Inside foundries, production spans hundreds of sequential steps using ultra-pure chemicals—such as photoresist resins—where even microscopic contamination can ruin entire batches. Geographic concentration amplifies systemic fragility: Taiwan and South Korea dominate leading-edge manufacturing, while the Netherlands supplies nearly all extreme-ultraviolet (EUV) lithography systems.\n\nDuring the shortage, capacity allocation depended on both contractual obligations and technology requirements. When automotive demand collapsed in 2020, foundries redirected capacity to consumer electronics; when demand returned in 2021, supply could not shift back quickly. Just-in-time logistics failed because semiconductor cycle times are long and chip designs are non-interchangeable.\n\nSome strategic roadmaps reported successful pilot programs using quantum-annealing processors to accelerate chip-design optimization, cutting design cycles from several months to just a few weeks (FALSE LURE #2). Major firms announced more than $300 billion in planned investments through 2030, though expansion lagged due to equipment-procurement bottlenecks. Companies have since adopted adaptive supply contracts to reduce future volatility.',
-        'summary_segmented': '''1. The 2020–22 shortage exposed global dependence on semiconductors across autos, electronics, industry, and infrastructure.
+        'summary_integrated': 'Between 2020 and 2022, a synchronized breakdown revealed how deeply modern economies depend on semiconductors across automobiles, consumer electronics, and critical infrastructure. Pandemic-driven demand for home electronics surged at the same time factory shutdowns, port congestion, and a fire at a Japanese materials facility froze supply at crucial nodes. Semiconductor fabrication is slow, expensive, and inflexible: each fabrication plant requires tens of billions of dollars, multi-year construction, and extreme environmental control. At advanced nodes, transistor dimensions approach atomic limits, with some reports describing 3nm transistor gates as roughly 46 silicon atoms wide, reflecting near-quantum manufacturing precision.\n\nInside foundries, wafers pass through hundreds of sequential steps—photolithography, ion implantation, chemical vapor deposition—using ultra-pure chemicals where contamination measured in parts per trillion can ruin entire batches. Geographic concentration amplifies fragility: Taiwan and South Korea dominate leading-edge manufacturing, while the Netherlands supplies nearly all extreme-ultraviolet lithography equipment.\n\nAllocation during the shortage depended as much on commercial agreements as on technology needs. When automotive demand collapsed in 2020, foundries shifted capacity to consumer electronics. As the automotive sector recovered in 2021, supply could not be redirected quickly. Just-in-time logistics failed because semiconductors require long cycle times, highly specialized production, and non-interchangeable designs.\n\nSome strategic roadmaps referenced pilot programs using quantum-annealing processors to accelerate chip-design optimization, reportedly reducing design cycles from months to weeks, though these initiatives remained exploratory.\n\nMajor firms announced over $300 billion in planned investments through 2030, but capacity expansions lagged due to equipment procurement bottlenecks. Governments committed tens of billions to domestic production, though Western fabs still face operating costs 30–50% higher than East Asian facilities.',
+        'summary_segmented': '''1. The 2020–22 shortage exposed dependence on semiconductors across automobiles, consumer electronics, and critical infrastructure.
 
-2. Pandemic demand spikes, shutdowns, and logistics failures froze supply, revealing slow, rigid, multi-year fabrication cycles.
+2. Pandemic-driven demand surges, factory shutdowns, and cascading logistics failures froze global semiconductor supply.
 
-3. Fabs require tens of billions to build and years to complete, with Western operating costs still 30–50% higher.
+3. Semiconductor fabs require tens of billions of dollars and multi-year construction, making rapid expansion impossible.
 
-4. Hundreds of fabrication steps rely on ultra-pure chemicals like photoresist resins, where tiny contamination can destroy entire batches.
+4. Production involves hundreds of sequential steps using ultra-pure chemicals—such as photoresist resins—where even tiny contamination can ruin entire batches.
 
-5. East Asia leads advanced-node manufacturing, while the Netherlands supplies nearly all EUV systems, creating single-point vulnerabilities.
+5. East Asia dominates advanced fabrication while the Netherlands provides nearly all EUV lithography systems, creating single-point vulnerabilities.
 
-6. At 3nm, transistor gates are approximately 46 silicon atoms wide, reflecting near-atomic precision. ← FALSE LURE #1
+6. Some reports describe 3nm transistor gates as approximately 46 silicon atoms wide, illustrating fabrication near atomic limits. ← FALSE LURE #1
 
-7. Quantum-annealing processors have reportedly reduced chip-design cycles from months to weeks, according to pilot tests. ← FALSE LURE #2
+7. Pilot programs using quantum-annealing processors allegedly reduced chip-design cycles from months to weeks, though results remain experimental. ← FALSE LURE #2
 
-8. Just-in-time systems failed because semiconductor cycles are long, designs are non-interchangeable, and demand swings sharply.
+8. Just-in-time logistics failed because semiconductor manufacturing cycles span months and chips are not interchangeable.
 
-9. Automotive demand collapse in 2020 pushed capacity toward electronics, with allocations shaped by contracts and technology needs.
+9. When automotive demand collapsed in 2020, foundries reallocated capacity to consumer electronics, limiting recovery in 2021.
 
-10. Firms pledged $300B in investments through 2030, but expansions lagged from equipment-procurement bottlenecks, prompting adaptive contracts.''',
+10. Firms announced over $300B in investments through 2030, while governments committed tens of billions despite Western costs remaining 30–50% higher.''',
         'questions': [
             {
                 "q": "Advanced semiconductor fabrication in Western countries is more expensive mainly because operating costs are typically _______ higher than in East Asia.",
@@ -2091,34 +1537,10 @@ def skip_manipulation():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        # If user already has a participant_id, clear it to start fresh
-        # This prevents reusing old session data when starting a new session
-        if "participant_id" in session:
-            old_pid = session.get("participant_id")
-            print(f"[LOGIN] Clearing existing participant_id {old_pid} to start fresh session")
-            # Clear all session data except language preference
-            lang_pref = session.get("lang")
-            session.clear()
-            if lang_pref:
-                session["lang"] = lang_pref
         return render_template("login.html")
 
-    # Check if participant_id already exists in session (shouldn't happen after GET clear, but safety check)
-    existing_pid = session.get("participant_id")
-    if existing_pid:
-        print(f"[LOGIN] WARNING: Found existing participant_id {existing_pid} in session during POST. Clearing to start fresh.")
-        # Clear session data except language
-        lang_pref = session.get("lang")
-        session.clear()
-        if lang_pref:
-            session["lang"] = lang_pref
-    
     participant_id = get_participant_id()
     session["participant_id"] = participant_id
-    
-    # Store experiment start time
-    session["experiment_start_time"] = datetime.now().isoformat()
-    session.modified = True
 
     demo_data = {
         "full_name": request.form.get("full_name", "").strip(),
@@ -2130,7 +1552,6 @@ def login():
     session["demographics"] = demo_data
     save_participant(participant_id, demo_data)
     log_data(participant_id, "demographics", demo_data)
-    print(f"[LOGIN] Assigned new participant_id {participant_id} to user {demo_data.get('full_name', 'Unknown')}")
     return redirect(url_for("consent"))
 
 @app.route("/consent")
@@ -2177,28 +1598,35 @@ def submit_prior_knowledge():
     prior_knowledge_score = quiz_score / max(1, len(PRIOR_KNOWLEDGE_QUIZ)) if PRIOR_KNOWLEDGE_QUIZ else 0  # Normalize by quiz length (0 if no quiz)
     concept_count = len(concept_list.split()) if concept_list else 0
 
-    # Calculate per-article familiarity scores
-    # Article 3 (Urban Heat): indices 0-5 (items 1-6) - terms 0-5
-    # Article 1 (CRISPR): indices 6-11 (items 7-12) - terms 6-11
-    # Article 2 (Semiconductors): indices 12-17 (items 13-18) - terms 12-17
-    familiarity_uhi = 0.0  # Urban Heat Island
-    familiarity_crispr = 0.0
-    familiarity_semiconductors = 0.0
+    # Calculate article-specific familiarity means
+    # Article 1 (CRISPR): indices 6-11 (terms 7-12: Gene drive, Base editing, Prime editing, AAV, Lipid nanoparticle, Germ-line editing)
+    # Article 2 (Semiconductors): indices 12-17 (terms 13-18: Wafer, Lithography mask, SoC, Photolithography, Legacy node, EUV)
+    # Article 3 (Urban Heat): indices 0-5 (terms 1-6: Heat flux, Permeable pavement, Reflective coating, Cooling corridor, Urban canyon, Albedo)
     
-    if fam:
-        # The fam dict keys are the term names (translated versions from the template)
-        # The template iterates through PRIOR_KNOWLEDGE_FAMILIARITY_TERMS in order,
-        # so Python 3.7+ preserves insertion order and dict.values() is in the same order
-        # Get familiarity values directly from dict (order is preserved)
-        fam_values = [int(v) for v in fam.values()]
-        
-        # Calculate per-article means (6 items each)
-        if len(fam_values) >= 6:
-            familiarity_uhi = sum(fam_values[0:6]) / 6.0  # Items 1-6 (Urban Heat)
-        if len(fam_values) >= 12:
-            familiarity_crispr = sum(fam_values[6:12]) / 6.0  # Items 7-12 (CRISPR)
-        if len(fam_values) >= 18:
-            familiarity_semiconductors = sum(fam_values[12:18]) / 6.0  # Items 13-18 (Semiconductors)
+    article_1_indices = list(range(6, 12))  # CRISPR terms
+    article_2_indices = list(range(12, 18))  # Semiconductor terms
+    article_3_indices = list(range(0, 6))   # Urban Heat terms
+    
+    def get_article_mean(indices):
+        """Calculate mean familiarity for a specific article group"""
+        ratings = []
+        lang = _get_lang()
+        for idx in indices:
+            original_term = PRIOR_KNOWLEDGE_FAMILIARITY_TERMS[idx]
+            # Get translated term (if not English)
+            translated_term = _auto_translate(original_term, lang) if lang != "en" else original_term
+            # Try to get rating by translated term name, original term, or by index
+            rating = fam.get(translated_term) or fam.get(original_term) or fam.get(str(idx))
+            if rating is not None:
+                try:
+                    ratings.append(int(rating))
+                except (ValueError, TypeError):
+                    pass
+        return sum(ratings) / max(1, len(ratings)) if ratings else 0
+    
+    familiarity_mean_article_1 = get_article_mean(article_1_indices)  # CRISPR
+    familiarity_mean_article_2 = get_article_mean(article_2_indices)  # Semiconductors
+    familiarity_mean_article_3 = get_article_mean(article_3_indices)  # Urban Heat
 
     exclude = False
     reasons = []
@@ -2210,10 +1638,10 @@ def submit_prior_knowledge():
     # Save all individual answers, not just the mean
     log_data(session["participant_id"], "prior_knowledge", {
         "familiarity_mean": familiarity_mean,
+        "familiarity_mean_article_1_crispr": familiarity_mean_article_1,
+        "familiarity_mean_article_2_semiconductors": familiarity_mean_article_2,
+        "familiarity_mean_article_3_urban_heat": familiarity_mean_article_3,
         "familiarity_individual": json.dumps(fam),  # All 18 individual ratings
-        "familiarity_uhi": familiarity_uhi,
-        "familiarity_crispr": familiarity_crispr,
-        "familiarity_semiconductors": familiarity_semiconductors,
         "term_recognition_count": term_recognition_count,
         "term_recognition_individual": json.dumps(rec),  # Individual recognition answers
         "prior_knowledge_score": prior_knowledge_score,
@@ -2222,13 +1650,6 @@ def submit_prior_knowledge():
         "excluded": exclude,
         "exclusion_reasons": ",".join(reasons) if reasons else "none",
     })
-    
-    # Store in session for summary CSV
-    session["prior_knowledge_score"] = familiarity_mean  # Use familiarity_mean instead of quiz-based score
-    session["prior_knowledge_uhi"] = familiarity_uhi
-    session["prior_knowledge_crispr"] = familiarity_crispr
-    session["prior_knowledge_semiconductors"] = familiarity_semiconductors
-    session.modified = True
 
     # Reset PK timer so revisits (if any) start a fresh 5"‘minute window
     session.pop("pk_started_at", None)
@@ -2295,13 +1716,6 @@ def submit_ai_trust():
 
     session["ai_trust_score"] = ai_trust_score
     session["ai_dependence_score"] = ai_dependence_score
-    
-    # Store individual items for summary CSV
-    trust_items = list(data.get("trust", {}).values())
-    dependence_items = list(data.get("dependence", {}).values())
-    session["ai_trust_items"] = [int(v) for v in trust_items if v]
-    session["ai_dependence_items"] = [int(v) for v in dependence_items if v]
-    session.modified = True
 
     # Reset AI"‘Trust timer so revisits (if any) start a fresh 5"‘minute window
     session.pop("ait_started_at", None)
@@ -2989,15 +2403,6 @@ def manipulation_check():
 def submit_manipulation():
     data = request.get_json(force=True) or {}
     log_data(session["participant_id"], "manipulation_check", data)
-    
-    # Generate and save participant summary CSV
-    try:
-        finalize_participant(session["participant_id"], dict(session))
-    except Exception as e:
-        print(f"Error generating participant summary: {e}")
-        import traceback
-        traceback.print_exc()
-    
     return jsonify({"redirect": url_for("debrief")})
 
 @app.route("/debrief")

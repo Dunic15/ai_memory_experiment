@@ -155,7 +155,7 @@
                       {% endfor %}
                     </div>
                     <script>
-                      // Remove false lure markers from integrated summary (all formats)
+                      // Remove false lure markers from integrated summary
                       document.addEventListener('DOMContentLoaded', function() {
                         const paragraphs = document.querySelectorAll('#integratedSummaryText p');
                         paragraphs.forEach(function(p) {
@@ -166,14 +166,6 @@
                           text = text.replace(/\s*←\s*FALSE LURE[^。]*/g, '');
                           text = text.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
                           text = text.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
-                          // Remove parenthetical false lure markers: （错误诱饵 #1）, （错误诱饵 #2）
-                          text = text.replace(/\s*（错误诱饵\s*#?\d*）/g, '');
-                          text = text.replace(/\s*\(错误诱饵\s*#?\d*\)/g, '');
-                          text = text.replace(/\s*（虚假诱导\s*#?\d*）/g, '');
-                          text = text.replace(/\s*\(虚假诱导\s*#?\d*\)/g, '');
-                          text = text.replace(/\s*\(FALSE LURE\s*#?\d*\)/g, '');
-                          // Also remove arrow format: ← 虚假诱导#1
-                          text = text.replace(/\s*←\s*虚假诱导\s*#?\d*/g, '');
                           p.textContent = text;
                         });
                       });

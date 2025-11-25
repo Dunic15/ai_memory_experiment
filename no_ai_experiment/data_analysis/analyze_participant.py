@@ -324,11 +324,27 @@ def parse_csv_log(log_file_path):
                             mcq_answers = {}
                         article_num = int(parts[2]) if len(parts) > 2 and parts[2] else -1
                         article_key = parts[3] if len(parts) > 3 else ''
+                        
+                        # Extract correct answers from question_accuracy_json (column index 11)
+                        correct_answers = {}
+                        if len(parts) >= 12:
+                            try:
+                                question_accuracy_json = parts[11]
+                                question_details = json.loads(question_accuracy_json.replace('""', '"'))
+                                # Extract correct_answer for each question
+                                for q_key, q_detail in question_details.items():
+                                    if isinstance(q_detail, dict) and 'correct_answer' in q_detail:
+                                        correct_answers[q_key] = q_detail['correct_answer']
+                            except Exception as e:
+                                # If parsing fails, will fall back to hardcoded answers
+                                pass
+                        
                         data['mcq_data'].append({
                             'timestamp': timestamp,
                             'article_num': article_num,
                             'article_key': article_key,
-                            'answers': mcq_answers
+                            'answers': mcq_answers,
+                            'correct_answers': correct_answers  # Store correct answers from log
                         })
                 elif phase == 'post_article_ratings':
                     # CONTROL VERSION: Simplified - no AI fields, no timing
@@ -376,14 +392,38 @@ def calculate_mcq_accuracy(mcq_data):
     
     for mcq in mcq_data:
         article_key = mcq['article_key']
-        if article_key not in CORRECT_ANSWERS:
-            continue
-            
-        correct = CORRECT_ANSWERS[article_key]
         answers = mcq['answers']
         
-        # Check if this article has a false lure question(s)
-        false_lure_info = FALSE_LURE_MAP.get(article_key)
+        # Use correct answers from log file if available, otherwise fall back to hardcoded
+        correct_answers_from_log = mcq.get('correct_answers', {})
+        if correct_answers_from_log:
+            # Build correct answer list from log file data
+            correct = []
+            max_q_idx = max([int(k[1:]) for k in correct_answers_from_log.keys() if k.startswith('q')], default=-1)
+            for q_idx in range(max_q_idx + 1):
+                q_key = f'q{q_idx}'
+                correct.append(correct_answers_from_log.get(q_key, -1))
+            
+            # If we have correct answers from log file, use NEW false lure map (14 questions = new structure)
+            # Check number of questions to determine which false lure map to use
+            num_questions = len(correct)
+            if num_questions == 14:
+                # Use NEW false lure map for 14-question structure
+                false_lure_info = NEW_FALSE_LURE_MAP.get(article_key)
+            else:
+                # Use original false lure map for 15-question structure
+                false_lure_info = ORIGINAL_FALSE_LURE_MAP.get(article_key)
+        elif article_key in CORRECT_ANSWERS:
+            correct = CORRECT_ANSWERS[article_key]
+            # Use default false lure map
+            false_lure_info = FALSE_LURE_MAP.get(article_key)
+        else:
+            # Skip if no answer key available
+            continue
+        
+        # Check if this article has a false lure question(s) (if not already set above)
+        if 'false_lure_info' not in locals():
+            false_lure_info = FALSE_LURE_MAP.get(article_key)
         # Handle both list (multiple false lures) and dict (single false lure) formats
         false_lure_list = false_lure_info if isinstance(false_lure_info, list) else ([false_lure_info] if false_lure_info else [])
         
@@ -893,7 +933,15 @@ def generate_analysis_report(participant_id, data, mcq_results):
         
         # False lure tracking
         if result.get('has_false_lure'):
-            false_lure_info = FALSE_LURE_MAP.get(result['article_key'])
+            # Determine which false lure map to use based on number of questions
+            num_questions = result.get('total', 0)
+            if num_questions == 14:
+                # Use NEW false lure map for 14-question structure
+                false_lure_info = NEW_FALSE_LURE_MAP.get(result['article_key'])
+            else:
+                # Use original false lure map for 15-question structure
+                false_lure_info = ORIGINAL_FALSE_LURE_MAP.get(result['article_key'])
+            
             # Handle both list (multiple false lures) and dict (single false lure) formats
             false_lure_list = false_lure_info if isinstance(false_lure_info, list) else ([false_lure_info] if false_lure_info else [])
             for fl_info in false_lure_list:
@@ -1364,11 +1412,21 @@ def main():
         sys.exit(1)
     
     participant_id = sys.argv[1].upper()
-    log_file = f"../experiment_data/{participant_id}_log.csv"
     
+    # Try to find log file - handle both formats: P166_log.csv and P166-*-NON-AI_log.csv
+    log_file = f"../experiment_data/{participant_id}_log.csv"
     if not os.path.exists(log_file):
-        print(f"Error: Log file not found: {log_file}")
-        sys.exit(1)
+        # Try to find log file with name in filename (NON-AI format)
+        import glob
+        pattern = f"../experiment_data/{participant_id}-*-NON-AI_log.csv"
+        matches = glob.glob(pattern)
+        if matches:
+            log_file = matches[0]
+        else:
+            print(f"Error: Log file not found for {participant_id}")
+            print(f"  Tried: {log_file}")
+            print(f"  Tried pattern: {pattern}")
+            sys.exit(1)
     
     # Determine which answer keys to use based on participant ID
     # Participants P078 and later should use NEW answer keys

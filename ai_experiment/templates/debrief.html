@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ current_lang }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -72,19 +72,19 @@
 <body>
     <div class="container">
         <div class="icon">🎉</div>
-        <h1>Session Complete!</h1>
+        <h1>{{ tr("Session Complete!") }}</h1>
         
-        <p>Thank you for participating in our AI-assisted memory study!</p>
+        <p>{{ tr("Thank you for participating in our AI-assisted memory study!") }}</p>
         
         <div class="participant-id">
-            <p style="margin-bottom: 10px; color: #666; font-size: 14px;">Your Participant ID:</p>
+            <p style="margin-bottom: 10px; color: #666; font-size: 14px;">{{ tr("Your Participant ID:") }}</p>
             <strong>{{ participant_id }}</strong>
         </div>
         
-        <p>Your responses will help us understand how AI influences learning, recall, and comprehension.</p>
+        <p>{{ tr("Your responses will help us understand how AI influences learning, recall, and comprehension.") }}</p>
         
         <p style="margin-top: 30px; font-size: 14px; color: #888;">
-            You may now close this window.
+            {{ tr("You may now close this window.") }}
         </p>
     </div>
 </body>

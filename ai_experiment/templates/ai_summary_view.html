@@ -154,12 +154,6 @@
                     // Remove parenthetical false lure markers
                     cleaned = cleaned.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
                     cleaned = cleaned.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
-                    // Remove parenthetical false lure markers: （错误诱饵 #1）, （错误诱饵 #2）
-                    cleaned = cleaned.replace(/\s*（错误诱饵\s*#?\d*）/g, '');
-                    cleaned = cleaned.replace(/\s*\(错误诱饵\s*#?\d*\)/g, '');
-                    cleaned = cleaned.replace(/\s*（虚假诱导\s*#?\d*）/g, '');
-                    cleaned = cleaned.replace(/\s*\(虚假诱导\s*#?\d*\)/g, '');
-                    cleaned = cleaned.replace(/\s*\(FALSE LURE\s*#?\d*\)/g, '');
                     // Clean up any double spaces or leading/trailing spaces
                     cleaned = cleaned.replace(/\s+/g, ' ').trim();
                     li.textContent = cleaned;
@@ -177,19 +171,13 @@
             paragraphs.forEach(para => {
                 const p = document.createElement('p');
                 let cleaned = para.trim();
-                // Remove false lure markers (all formats)
+                // Remove false lure markers
                 cleaned = cleaned.replace(/\s*⚠️[^。]*虚假引诱[^。]*/g, '');
                 cleaned = cleaned.replace(/\s*←\s*错误诱饵[^。]*/g, '');
                 cleaned = cleaned.replace(/\s*←\s*虚假诱导[^。]*/g, '');
                 cleaned = cleaned.replace(/\s*←\s*FALSE LURE[^。]*/g, '');
                 cleaned = cleaned.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
                 cleaned = cleaned.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
-                // Remove parenthetical false lure markers: （错误诱饵 #1）, （错误诱饵 #2）
-                cleaned = cleaned.replace(/\s*（错误诱饵\s*#?\d*）/g, '');
-                cleaned = cleaned.replace(/\s*\(错误诱饵\s*#?\d*\)/g, '');
-                cleaned = cleaned.replace(/\s*（虚假诱导\s*#?\d*）/g, '');
-                cleaned = cleaned.replace(/\s*\(虚假诱导\s*#?\d*\)/g, '');
-                cleaned = cleaned.replace(/\s*\(FALSE LURE\s*#?\d*\)/g, '');
                 p.textContent = cleaned;
                 p.style.marginBottom = '20px';
                 p.style.lineHeight = '1.8';
@@ -201,19 +189,13 @@
             if (paragraphs.length === 0 && summaryText.trim()) {
                 const p = document.createElement('p');
                 let cleaned = summaryText.trim();
-                // Remove false lure markers (all formats)
+                // Remove false lure markers
                 cleaned = cleaned.replace(/\s*⚠️[^。]*虚假引诱[^。]*/g, '');
                 cleaned = cleaned.replace(/\s*←\s*错误诱饵[^。]*/g, '');
                 cleaned = cleaned.replace(/\s*←\s*虚假诱导[^。]*/g, '');
                 cleaned = cleaned.replace(/\s*←\s*FALSE LURE[^。]*/g, '');
                 cleaned = cleaned.replace(/\s*\(⚠️虚假引诱[^)]*\)/g, '');
                 cleaned = cleaned.replace(/\s*（⚠️虚假引诱[^）]*）/g, '');
-                // Remove parenthetical false lure markers: （错误诱饵 #1）, （错误诱饵 #2）
-                cleaned = cleaned.replace(/\s*（错误诱饵\s*#?\d*）/g, '');
-                cleaned = cleaned.replace(/\s*\(错误诱饵\s*#?\d*\)/g, '');
-                cleaned = cleaned.replace(/\s*（虚假诱导\s*#?\d*）/g, '');
-                cleaned = cleaned.replace(/\s*\(虚假诱导\s*#?\d*\)/g, '');
-                cleaned = cleaned.replace(/\s*\(FALSE LURE\s*#?\d*\)/g, '');
                 p.textContent = cleaned;
                 p.style.marginBottom = '20px';
                 p.style.lineHeight = '1.8';

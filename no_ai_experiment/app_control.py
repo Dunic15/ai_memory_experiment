@@ -5,7 +5,7 @@ CONTROL VERSION: Contains NO AI summaries or AI-related functionality
 """
 
 from flask import Flask, render_template, request, session, redirect, url_for, jsonify
-import json, csv, os, random
+import json, csv, os, random, subprocess, sys
 from datetime import datetime
 from functools import wraps
 from functools import lru_cache
@@ -36,9 +36,9 @@ app.config.update(SESSION_COOKIE_SAMESITE="Lax", SESSION_COOKIE_SECURE=False)
 DATA_DIR = "experiment_data"
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# Translation cache directory
-TRANSLATION_CACHE_DIR = "translation_cache"
-os.makedirs(TRANSLATION_CACHE_DIR, exist_ok=True)
+# Translation cache directory - use shared cache from ai_experiment
+# This ensures both experiments use the same translations and we only maintain one file
+TRANSLATION_CACHE_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ai_experiment", "translation_cache")
 TRANSLATION_CACHE_FILE = os.path.join(TRANSLATION_CACHE_DIR, "translations.json")
 
 # ------------------------------------------------------------------------------
@@ -220,31 +220,63 @@ def get_participant_id():
                     csv_count = csv_len(csv_file)
                     if n < csv_count:
                         # Counter is behind CSV, sync it
-                        print(f"[PARTICIPANT_ID] Counter ({n}) behind CSV count ({csv_count}), syncing...")
                         n = csv_count
-                except (ValueError, IOError) as e:
+                except (ValueError, IOError):
                     # Fallback to CSV length if counter is corrupted
-                    print(f"[PARTICIPANT_ID] Error reading counter file: {e}, falling back to CSV count")
                     n = csv_len(csv_file)
             else:
                 # Initialize counter from existing participants.csv
                 n = csv_len(csv_file)
-                print(f"[PARTICIPANT_ID] Counter file not found, initializing from CSV count: {n}")
             
             # Increment and save atomically
-            old_n = n
             n += 1
             with open(counter_file, 'w') as f:
                 f.write(str(n))
                 f.flush()
                 os.fsync(f.fileno())  # Force write to disk
             
-            participant_id = f"P{n:03d}"
-            print(f"[PARTICIPANT_ID] Generated new participant_id: {participant_id} (counter: {old_n} -> {n})")
-            return participant_id
+            return f"P{n:03d}"
         finally:
             # Lock is released when file is closed
             pass
+
+def _generate_analysis_if_needed(participant_id, phase=None):
+    """Generate analysis report automatically when participant completes experiment"""
+    # CONTROL VERSION: Generate analysis when participant reaches debrief (no manipulation_check phase)
+    # This function can be called from debrief route (phase=None) or with a phase parameter for compatibility
+    try:
+        # Get the path to analyze_participant.py
+        analysis_script = os.path.join(os.path.dirname(__file__), "data_analysis", "analyze_participant.py")
+        
+        if not os.path.exists(analysis_script):
+            print(f"[Analysis] Analysis script not found: {analysis_script}")
+            return  # Analysis script not found, skip
+        
+        # Check if log file exists - try both filename formats
+        log_file = os.path.join(DATA_DIR, f"{participant_id}_log.csv")
+        if not os.path.exists(log_file):
+            # Try to find log file with name in filename
+            import glob
+            pattern = os.path.join(DATA_DIR, f"{participant_id}-*-NON-AI_log.csv")
+            matches = glob.glob(pattern)
+            if matches:
+                log_file = matches[0]
+            else:
+                print(f"[Analysis] Log file not found for {participant_id}")
+                return  # Log file doesn't exist yet, skip
+        
+        # Run analysis in background (non-blocking)
+        # Use subprocess.Popen to run asynchronously
+        subprocess.Popen(
+            [sys.executable, analysis_script, participant_id],
+            cwd=os.path.dirname(analysis_script),
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        print(f"[Analysis] Triggered automatic analysis generation for {participant_id}")
+    except Exception as e:
+        # Silently fail - don't interrupt the main flow if analysis generation fails
+        print(f"[Analysis] Failed to generate analysis for {participant_id}: {e}")
 
 def log_data(participant_id, phase, data):
     # Get participant name for better filename (no_ai experiment always uses NON-AI suffix)
@@ -273,6 +305,9 @@ def log_data(participant_id, phase, data):
         if not file_exists:
             w.writeheader()
         w.writerow({"timestamp": datetime.now().isoformat(), "phase": phase, **data})
+    
+    # Note: Analysis is now generated automatically when participant reaches debrief page
+    # (No manipulation_check phase in control version)
 
 def save_participant(participant_id, data):
     """Atomically save participant data using file locking to prevent race conditions."""
@@ -299,304 +334,6 @@ def save_participant(participant_id, data):
         finally:
             # Lock is released when file is closed
             pass
-
-def save_article_level_summary_row(summary: dict, path: str = None):
-    """
-    Append one article-level summary row to article_level_summary_control.csv.
-    Creates the file and writes the header if it does not exist.
-    Uses file locking to prevent race conditions.
-    Each row = one participant × one article.
-    CONTROL VERSION: Minimal schema - no AI-related fields.
-    """
-    if path is None:
-        path = os.path.join(DATA_DIR, "article_level_summary_control.csv")
-    
-    lock_file = path + ".lock"
-    
-    # Create lock file if it doesn't exist
-    if not os.path.exists(lock_file):
-        with open(lock_file, 'w') as f:
-            pass
-    
-    fieldnames = [
-        "participant_id",
-        "full_name",
-        "age",
-        "gender",
-        "native_language",
-        "article_topic",
-        "reading_order_index",
-        "prior_knowledge_score",
-        "mcq_total_questions",
-        "mcq_correct",
-        "mcq_accuracy",
-        "recall_text_length_chars",
-        "recall_text_length_words",
-        "recall_quality_score",
-        "reading_time_ms",
-        "reading_time_seconds",
-        "post_rating_engagement",
-        "post_rating_clarity",
-        "post_rating_usefulness",
-        "post_rating_trust",
-        "start_timestamp",
-        "end_timestamp",
-    ]
-    
-    # Ensure all keys exist in summary; fill missing with None
-    # Special handling for article_topic (must never be empty) and recall_quality_score (must always exist)
-    for key in fieldnames:
-        if key == "article_topic":
-            # article_topic must never be empty - ensure it's one of the valid values
-            if key not in summary or not summary[key] or summary[key] not in ["crispr", "uhi", "semiconductors"]:
-                summary[key] = "semiconductors"  # Default fallback
-        elif key == "recall_quality_score":
-            # recall_quality_score must always exist (even if None) to maintain column alignment
-            summary.setdefault(key, None)
-        else:
-            summary.setdefault(key, None)
-    
-    # Acquire exclusive lock
-    with open(lock_file, 'r') as lock:
-        fcntl.flock(lock.fileno(), fcntl.LOCK_EX)  # Exclusive lock
-        
-        try:
-            file_exists = os.path.exists(path)
-            with open(path, "a", newline="", encoding="utf-8") as f:
-                writer = csv.DictWriter(f, fieldnames=fieldnames)
-                if not file_exists:
-                    writer.writeheader()
-                writer.writerow(summary)
-        finally:
-            # Lock is released when file is closed
-            pass
-
-def finalize_participant(participant_id, session_data):
-    """
-    Build article-level summary rows from session data and log files.
-    Generates one row per participant per article (3 rows per participant).
-    Writes to article_level_summary.csv.
-    CONTROL VERSION: No AI-related fields (no summary timing, summary mode, AI trust, etc.).
-    """
-    import json
-    
-    # --- Extract shared participant data (same for all 3 rows) ---
-    demographics = session_data.get("demographics", {})
-    participant_id_val = participant_id
-    full_name = demographics.get("full_name", "")
-    age = demographics.get("age", "")
-    gender = demographics.get("gender", "")
-    native_language = demographics.get("native_language", "")
-    
-    # --- Prior knowledge score (global for participant) ---
-    prior_knowledge_score = session_data.get("prior_knowledge_score")
-    
-    # --- Find log file ---
-    name = demographics.get("full_name", "").strip()
-    if name:
-        clean_name = name.replace(" ", "-").replace(",", "").replace(".", "")
-        log_filename = os.path.join(DATA_DIR, f"{participant_id}-{clean_name}-NON-AI_log.csv")
-    else:
-        log_filename = os.path.join(DATA_DIR, f"{participant_id}_log.csv")
-    
-    if not os.path.exists(log_filename):
-        print(f"Log file not found: {log_filename}")
-        return []
-    
-    # --- Extract prior_knowledge if needed ---
-    if not prior_knowledge_score or prior_knowledge_score == 0:
-        try:
-            with open(log_filename, 'r', encoding='utf-8') as f:
-                reader = csv.reader(f)
-                header = next(reader, None)
-                for row in reader:
-                    if len(row) > 1 and row[1] == "prior_knowledge":
-                        if len(row) >= 3:
-                            try:
-                                familiarity_mean = float(row[2]) if row[2] else 0
-                                if familiarity_mean > 0:
-                                    prior_knowledge_score = familiarity_mean
-                            except (ValueError, TypeError):
-                                pass
-                        break
-        except Exception:
-            pass
-    
-    # --- Read all log rows and group by article ---
-    articles_data = {}  # key: (article_index, article_key)
-    
-    with open(log_filename, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        header = next(reader, None)  # Skip header
-        
-        for row in reader:
-            if len(row) < 4:
-                continue
-            
-            phase = row[1] if len(row) > 1 else ""
-            article_index = row[2] if len(row) > 2 else ""
-            article_key = row[3] if len(row) > 3 else ""
-            
-            # Only process article-specific phases
-            if phase in ["recall_response", "mcq_responses", "post_article_ratings", "reading_behavior"]:
-                if article_key in ["crispr", "uhi", "semiconductors"]:
-                    key = (article_index, article_key)
-                    if key not in articles_data:
-                        articles_data[key] = {
-                            "article_index": article_index,
-                            "article_key": article_key,
-                            "rows": []
-                        }
-                    articles_data[key]["rows"].append((phase, row))
-    
-    # --- Generate one row per article ---
-    summary_rows = []
-    
-    for key, article_info in sorted(articles_data.items()):
-        article_index = article_info["article_index"]
-        article_key = article_info["article_key"]
-        rows = article_info["rows"]
-        
-        # --- Extract article-specific data ---
-        mcq_total_questions = 0
-        mcq_correct = 0
-        recall_text_length_chars = 0
-        recall_text_length_words = 0
-        reading_time_ms = 0
-        post_rating_engagement = None
-        post_rating_clarity = None
-        post_rating_usefulness = None
-        post_rating_trust = None
-        start_timestamp = None
-        end_timestamp = None
-        
-        for phase, row in rows:
-            if phase == "mcq_responses":
-                # MCQ row structure: timestamp, phase, article_index, article_key, timing, answers_dict, answers_text_dict, response_times_dict, total_time, correct_count (index 9), total_questions (index 10), accuracy, details_dict, false_lure_dict
-                if len(row) >= 11:
-                    try:
-                        correct_count_str = row[9] if len(row) > 9 else ""
-                        total_questions_str = row[10] if len(row) > 10 else ""
-                        if correct_count_str and correct_count_str.strip():
-                            mcq_correct = int(correct_count_str)
-                        if total_questions_str and total_questions_str.strip():
-                            mcq_total_questions = int(total_questions_str)
-                        # Use MCQ timestamp as end_timestamp
-                        if len(row) > 0:
-                            end_timestamp = row[0]
-                    except (ValueError, TypeError, IndexError):
-                        pass
-            
-            elif phase == "recall_response":
-                # Recall row: timestamp, phase, article_index, article_key, timing, recall_text (index 5), word_count (index 6), sentence_count (index 7), char_count (index 8), confidence, difficulty, time_spent_ms, paste_attempts, excluded
-                if len(row) >= 9:
-                    try:
-                        recall_text = row[5] if len(row) > 5 else ""
-                        word_count_str = row[6] if len(row) > 6 else ""
-                        char_count_str = row[8] if len(row) > 8 else ""
-                        
-                        if recall_text and recall_text.strip():
-                            recall_text_length_chars = len(recall_text)
-                            recall_text_length_words = len(recall_text.split())
-                        else:
-                            if char_count_str and char_count_str.strip():
-                                recall_text_length_chars = int(char_count_str)
-                            if word_count_str and word_count_str.strip():
-                                recall_text_length_words = int(word_count_str)
-                    except (ValueError, TypeError, IndexError):
-                        pass
-            
-            elif phase == "reading_behavior":
-                # Reading row: timestamp, phase, event_type, start_time, time_spent_ms (index 4), ...
-                if len(row) >= 5:
-                    event_type = row[2] if len(row) > 2 else ""
-                    if event_type == "reading_complete":
-                        try:
-                            time_spent_str = row[4] if len(row) > 4 else ""
-                            if time_spent_str and time_spent_str.strip():
-                                reading_time_ms = int(time_spent_str)
-                            # Use first reading_complete as start_timestamp
-                            if not start_timestamp and len(row) > 0:
-                                start_timestamp = row[0]
-                        except (ValueError, TypeError, IndexError):
-                            pass
-            
-            elif phase == "post_article_ratings":
-                # Post ratings row: timestamp, phase, article_index, article_key, timing,
-                # load_mental_effort (index 5), load_task_difficulty (index 6), ai_help_understanding (index 7),
-                # ai_help_memory (index 8), ai_made_task_easier (index 9), ai_satisfaction (index 10),
-                # prefer_ai_support (index 11), mcq_confidence (index 12)
-                # Map to: engagement=load_mental_effort, clarity=ai_help_understanding,
-                # usefulness=ai_made_task_easier, trust=ai_satisfaction
-                if len(row) >= 11:
-                    try:
-                        post_rating_engagement = int(row[5]) if len(row) > 5 and row[5].strip() else None
-                        post_rating_clarity = int(row[7]) if len(row) > 7 and row[7].strip() else None
-                        post_rating_usefulness = int(row[9]) if len(row) > 9 and row[9].strip() else None
-                        post_rating_trust = int(row[10]) if len(row) > 10 and row[10].strip() else None
-                        # Use post_ratings timestamp as end_timestamp if MCQ not found
-                        if not end_timestamp and len(row) > 0:
-                            end_timestamp = row[0]
-                    except (ValueError, TypeError, IndexError):
-                        pass
-        
-        # --- Calculate derived fields ---
-        mcq_accuracy = (mcq_correct / mcq_total_questions) if mcq_total_questions > 0 else None
-        reading_time_seconds = (reading_time_ms / 1000.0) if reading_time_ms else None
-        recall_quality_score = None  # Not implemented yet
-        
-        # For control version, reading_order_index is based on article_index
-        try:
-            reading_order_index = int(article_index) if article_index.isdigit() else None
-        except (ValueError, AttributeError):
-            reading_order_index = None
-        
-        # --- Fallback timestamps ---
-        if not start_timestamp:
-            # Try to get from first log entry for this article
-            for phase, row in rows:
-                if len(row) > 0:
-                    start_timestamp = row[0]
-                    break
-        
-        if not end_timestamp:
-            # Use last row timestamp
-            if rows:
-                last_row = rows[-1][1]
-                if len(last_row) > 0:
-                    end_timestamp = last_row[0]
-        
-        # --- Create summary row for this article (control version - minimal schema) ---
-        summary = {
-            "participant_id": participant_id_val,
-            "full_name": full_name,
-            "age": age,
-            "gender": gender,
-            "native_language": native_language,
-            "article_topic": article_key,
-            "reading_order_index": reading_order_index,
-            "prior_knowledge_score": prior_knowledge_score,
-            "mcq_total_questions": mcq_total_questions,
-            "mcq_correct": mcq_correct,
-            "mcq_accuracy": round(mcq_accuracy, 4) if mcq_accuracy is not None else None,
-            "recall_text_length_chars": recall_text_length_chars,
-            "recall_text_length_words": recall_text_length_words,
-            "recall_quality_score": recall_quality_score,
-            "reading_time_ms": reading_time_ms,
-            "reading_time_seconds": round(reading_time_seconds, 2) if reading_time_seconds else None,
-            "post_rating_engagement": post_rating_engagement,
-            "post_rating_clarity": post_rating_clarity,
-            "post_rating_usefulness": post_rating_usefulness,
-            "post_rating_trust": post_rating_trust,
-            "start_timestamp": start_timestamp,
-            "end_timestamp": end_timestamp,
-        }
-        
-        summary_rows.append(summary)
-        save_article_level_summary_row(summary)
-    
-    return summary_rows
-
 # --- Test Mode toggle (only affects reading skip) ---
 TEST_MODE = os.environ.get("TEST_MODE", "0") == "1"
 
@@ -616,7 +353,7 @@ def inject_i18n():
             return {}
         if lang == "en":
             return art
-        # CONTROL VERSION: Translate selected fields (no AI summaries)
+        # CONTROL VERSION: Use manual translations from shared cache only (no AI summaries)
         localized = {}
         for k in [
             "title",
@@ -624,15 +361,35 @@ def inject_i18n():
             "text",
             # summary_integrated and summary_segmented removed - no AI functionality
         ]:
-            localized[k] = _auto_translate(art.get(k, ""), lang)
-        # Questions: translate only the text portions
+            english_text = art.get(k, "")
+            if not english_text:
+                localized[k] = ""
+                continue
+            
+            # Check shared cache for manual translation only (no auto-translate)
+            cache_key = _get_cache_key(english_text, lang)
+            if cache_key in _translation_cache:
+                localized[k] = _translation_cache[cache_key]
+            else:
+                # No translation found - return English as fallback
+                localized[k] = english_text
+        
+        # Questions: translate only the text portions using manual translations from shared cache
         qs = []
         for q in art.get("questions", []):
+            question_text = q.get("q", "")
+            cache_key_q = _get_cache_key(question_text, lang)
+            translated_q = _translation_cache.get(cache_key_q, question_text)
+            
+            translated_options = []
+            for opt in q.get("options", []):
+                cache_key_opt = _get_cache_key(opt, lang)
+                translated_opt = _translation_cache.get(cache_key_opt, opt)
+                translated_options.append(translated_opt)
+            
             qs.append({
-                "q": _auto_translate(q.get("q", ""), lang),
-                "options": [
-                    _auto_translate(opt, lang) for opt in q.get("options", [])
-                ],
+                "q": translated_q,
+                "options": translated_options,
                 "correct": q.get("correct"),
             })
         localized["questions"] = qs
@@ -653,6 +410,12 @@ def inject_i18n():
 # Helper for routes: fetch a localized article dict based on current session lang
 # ------------------------------------------------------------------------------
 def get_localized_article(article_key: str) -> dict:
+    """
+    Get localized article content. 
+    For Chinese: Only uses manual translations from shared cache (no auto-translation).
+    If translation not found, returns English text as fallback.
+    CONTROL VERSION: No AI summaries in localization.
+    """
     lang = _get_lang()
     art = ARTICLES.get(article_key, {})
     if not art or lang == "en":
@@ -665,13 +428,37 @@ def get_localized_article(article_key: str) -> dict:
         "text",
         # summary_integrated and summary_segmented removed - no AI functionality
     ]:
-        localized[k] = _auto_translate(art.get(k, ""), lang)
+        english_text = art.get(k, "")
+        if not english_text:
+            localized[k] = ""
+            continue
+        
+        # Check shared cache for manual translation only (no auto-translate)
+        cache_key = _get_cache_key(english_text, lang)
+        if cache_key in _translation_cache:
+            localized[k] = _translation_cache[cache_key]
+        else:
+            # No translation found - return English as fallback
+            # (User will add manual translations to shared cache)
+            localized[k] = english_text
+    
     # Translate questions text/options; keep 'correct' index as-is
+    # Use manual translations from shared cache only
     qs = []
     for q in art.get("questions", []):
+        question_text = q.get("q", "")
+        cache_key_q = _get_cache_key(question_text, lang)
+        translated_q = _translation_cache.get(cache_key_q, question_text)
+        
+        translated_options = []
+        for opt in q.get("options", []):
+            cache_key_opt = _get_cache_key(opt, lang)
+            translated_opt = _translation_cache.get(cache_key_opt, opt)
+            translated_options.append(translated_opt)
+        
         qs.append({
-            "q": _auto_translate(q.get("q", ""), lang),
-            "options": [_auto_translate(opt, lang) for opt in q.get("options", [])],
+            "q": translated_q,
+            "options": translated_options,
             "correct": q.get("correct"),
         })
     localized["questions"] = qs
@@ -821,10 +608,10 @@ Ultimately, urban heat mitigation represents a sociotechnical challenge requirin
             {
                 "q": "Vegetated ground cover typically exhibits an albedo of _______.",
                 "options": [
-                    "0.30–0.35",
                     "0.05–0.10",
+                    "0.10-0.15",
                     "0.20–0.25",
-                    "0.45–0.60"
+                    "0.45–0.50"
                 ],
                 "correct": 2,
                 "source_type": "article"
@@ -1639,34 +1426,10 @@ def skip_manipulation():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "GET":
-        # If user already has a participant_id, clear it to start fresh
-        # This prevents reusing old session data when starting a new session
-        if "participant_id" in session:
-            old_pid = session.get("participant_id")
-            print(f"[LOGIN] Clearing existing participant_id {old_pid} to start fresh session")
-            # Clear all session data except language preference
-            lang_pref = session.get("lang")
-            session.clear()
-            if lang_pref:
-                session["lang"] = lang_pref
         return render_template("login.html")
 
-    # Check if participant_id already exists in session (shouldn't happen after GET clear, but safety check)
-    existing_pid = session.get("participant_id")
-    if existing_pid:
-        print(f"[LOGIN] WARNING: Found existing participant_id {existing_pid} in session during POST. Clearing to start fresh.")
-        # Clear session data except language
-        lang_pref = session.get("lang")
-        session.clear()
-        if lang_pref:
-            session["lang"] = lang_pref
-    
     participant_id = get_participant_id()
     session["participant_id"] = participant_id
-    
-    # Store experiment start time
-    session["experiment_start_time"] = datetime.now().isoformat()
-    session.modified = True
 
     demo_data = {
         "full_name": request.form.get("full_name", "").strip(),
@@ -1678,7 +1441,6 @@ def login():
     session["demographics"] = demo_data
     save_participant(participant_id, demo_data)
     log_data(participant_id, "demographics", demo_data)
-    print(f"[LOGIN] Assigned new participant_id {participant_id} to user {demo_data.get('full_name', 'Unknown')}")
     return redirect(url_for("consent"))
 
 @app.route("/consent")
@@ -1725,26 +1487,6 @@ def submit_prior_knowledge():
     prior_knowledge_score = quiz_score / max(1, len(PRIOR_KNOWLEDGE_QUIZ)) if PRIOR_KNOWLEDGE_QUIZ else 0  # Normalize by quiz length (0 if no quiz)
     concept_count = len(concept_list.split()) if concept_list else 0
 
-    # Calculate per-article familiarity scores
-    # Article 3 (Urban Heat): indices 0-5 (items 1-6)
-    # Article 1 (CRISPR): indices 6-11 (items 7-12)
-    # Article 2 (Semiconductors): indices 12-17 (items 13-18)
-    familiarity_uhi = 0.0  # Urban Heat Island
-    familiarity_crispr = 0.0
-    familiarity_semiconductors = 0.0
-    
-    if fam:
-        # The fam dict values are in order (Python 3.7+ preserves insertion order)
-        fam_values = [int(v) for v in fam.values()]
-        
-        # Calculate per-article means (6 items each)
-        if len(fam_values) >= 6:
-            familiarity_uhi = sum(fam_values[0:6]) / 6.0  # Items 1-6 (Urban Heat)
-        if len(fam_values) >= 12:
-            familiarity_crispr = sum(fam_values[6:12]) / 6.0  # Items 7-12 (CRISPR)
-        if len(fam_values) >= 18:
-            familiarity_semiconductors = sum(fam_values[12:18]) / 6.0  # Items 13-18 (Semiconductors)
-
     exclude = False
     reasons = []
     if familiarity_mean >= 6.0:
@@ -1756,9 +1498,6 @@ def submit_prior_knowledge():
     log_data(session["participant_id"], "prior_knowledge", {
         "familiarity_mean": familiarity_mean,
         "familiarity_individual": json.dumps(fam),  # All 18 individual ratings
-        "familiarity_uhi": familiarity_uhi,
-        "familiarity_crispr": familiarity_crispr,
-        "familiarity_semiconductors": familiarity_semiconductors,
         "term_recognition_count": term_recognition_count,
         "term_recognition_individual": json.dumps(rec),  # Individual recognition answers
         "prior_knowledge_score": prior_knowledge_score,
@@ -1767,13 +1506,6 @@ def submit_prior_knowledge():
         "excluded": exclude,
         "exclusion_reasons": ",".join(reasons) if reasons else "none",
     })
-    
-    # Store in session for summary CSV
-    session["prior_knowledge_score"] = familiarity_mean  # Use familiarity_mean instead of quiz-based score
-    session["prior_knowledge_uhi"] = familiarity_uhi
-    session["prior_knowledge_crispr"] = familiarity_crispr
-    session["prior_knowledge_semiconductors"] = familiarity_semiconductors
-    session.modified = True
 
     # Reset PK timer so revisits (if any) start a fresh 5"‘minute window
     session.pop("pk_started_at", None)
@@ -2213,18 +1945,13 @@ def short_break(next_article: int):
 @app.route("/debrief")
 @require_pid
 def debrief():
-    # Generate and save participant summary CSV (only once)
-    if not session.get("summary_generated"):
-        try:
-            finalize_participant(session["participant_id"], dict(session))
-            session["summary_generated"] = True
-            session.modified = True
-        except Exception as e:
-            print(f"Error generating participant summary: {e}")
-            import traceback
-            traceback.print_exc()
+    participant_id = session.get("participant_id")
     
-    return render_template("debrief.html", participant_id=session.get("participant_id"))
+    # Generate analysis automatically when participant reaches debrief (experiment complete)
+    if participant_id:
+        _generate_analysis_if_needed(participant_id)
+    
+    return render_template("debrief.html", participant_id=participant_id)
 
 @app.route("/excluded")
 def excluded():
