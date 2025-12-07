@@ -529,12 +529,12 @@ Ultimately, urban heat mitigation represents a sociotechnical challenge requirin
                 "source_type": "article"
             },
             {
-                "q": "Urban forestry cools cities through both shading and _______ cooling produced by leaf transpiration.",
+                "q": "Urban greening provides _______ through shading and leaf transpiration.",
                 "options": [
-                    "conductive",
-                    "evaporative",
-                    "radiative",
-                    "convective"
+                    "conductive cooling",
+                    "evaporative cooling",
+                    "radiative cooling",
+                    "convective cooling"
                 ],
                 "correct": 1,
                 "source_type": "article"
@@ -595,12 +595,12 @@ Ultimately, urban heat mitigation represents a sociotechnical challenge requirin
                 "source_type": "article"
             },
             {
-                "q": "Effective heat-mitigation strategies require _______ planning that coordinates technology, materials, and equity goals.",
+                "q": "Urban heat islands develop when city surfaces absorb more ______ than nearby rural areas.",
                 "options": [
-                    "sectoral",
-                    "regional",
-                    "integrated",
-                    "centralized"
+                    "atmospheric longwave radiation",
+                    "infrared radiation",
+                    "solar energy",
+                    "geothermal heat flux"
                 ],
                 "correct": 2,
                 "source_type": "article"
@@ -693,12 +693,12 @@ Ultimately, CRISPR is more than a laboratory tool—it is a mirror of human valu
                 "source_type": "article"
             },
             {
-                "q": "Early CRISPR agricultural trials created _______ as editing markers.",
+                "q": "Early CRISPR crop research produced _______",
                 "options": [
-                    "fluorescent proteins",
-                    "bioluminescent plants",
-                    "pigment variations",
-                    "no commercial products"
+                    "early test versions",
+                    "lab-phase cultivation variants",
+                    "commercial products",
+                    "experimental prototypes"
                 ],
                 "correct": 3,
                 "source_type": "article"
@@ -825,12 +825,12 @@ Ultimately, CRISPR is more than a laboratory tool—it is a mirror of human valu
                 "source_type": "article"
             },
             {
-                "q": "Base editors and prime editors make corrections by avoiding _______.",
+                "q": "The CRISPR process follows: guide, cut, and _______",
                 "options": [
-                    "RNA transcription",
-                    "guide RNA pairing",
-                    "full double-strand breaks",
-                    "Cas enzyme activation"
+                    "restore",
+                    "replicate",
+                    "repair",
+                    "remove"
                 ],
                 "correct": 2,
                 "source_type": "article"

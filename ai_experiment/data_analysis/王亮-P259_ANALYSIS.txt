@@ -1,0 +1,336 @@
+================================================================================
+PARTICIPANT P259 - COMPREHENSIVE DATA ANALYSIS
+================================================================================
+
+Analysis Generated: 2025-11-29
+
+================================================================================
+BASIC INFORMATION
+================================================================================
+Name: 王亮
+Age: 19, M
+Profession: 智能采矿
+Native Language: 汉语
+Start Time: November 29, 2025, 17:55:05
+
+================================================================================
+PRIOR KNOWLEDGE ASSESSMENT
+================================================================================
+
+================================================================================
+AI TRUST & TECHNOLOGY USE
+================================================================================
+AI Trust Score (Mean): 4.67/7 (moderate-high trust)
+AI Dependence Score (Mean): 5.33/7 (moderate-high dependence)
+Tech Skill Score (Mean): 5.50/7
+
+Individual AI Trust Question Answers (1-7 scale):
+  Q0: 5/7
+  Q1: 4/7
+  Q2: 5/7
+
+Individual AI Dependence Question Answers (1-7 scale):
+  Q0: 5/7
+  Q1: 7/7
+  Q2: 4/7
+
+Individual Tech Skill Question Answers (1-7 scale):
+  Q0: 5/7
+  Q1: 6/7
+
+Open Reflection:
+  Q1: 每天，做作业时遇到不会的题就会问AI，有什么不懂的知识或者某个历史背景不懂都会让AI帮我仔细阐述其背后的历史故事
+  Q2: 豆包，chatgpt，即梦AI，deepseek
+  Q3: 学习，解决问题，创造性工作
+
+================================================================================
+EXPERIMENTAL CONDITIONS
+================================================================================
+Structure Condition: SEGMENTED (bullet points)
+Timing Order: A2_Segmented
+Article Order: ["pre_reading", "synchronous", "post_reading"]
+
+================================================================================
+READING BEHAVIOR
+================================================================================
+Article 1 (CRISPR) - pre-reading mode:
+  Reading Time: 280,969 ms (4.68 minutes = 280.97 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+    Note: Visibility changes occur when the browser tab/window loses or regains focus.
+    This can happen if the participant switches tabs, minimizes the window, or the OS
+    switches to another application. It's normal behavior but may indicate distractions.
+
+Article 2 (Semiconductors) - synchronous mode:
+  Reading Time: 223,742 ms (3.73 minutes = 223.74 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+    Note: Visibility changes occur when the browser tab/window loses or regains focus.
+    This can happen if the participant switches tabs, minimizes the window, or the OS
+    switches to another application. It's normal behavior but may indicate distractions.
+
+Article 3 (Urban Heat Islands) - post-reading mode:
+  Reading Time: 212,537 ms (3.54 minutes = 212.54 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+    Note: Visibility changes occur when the browser tab/window loses or regains focus.
+    This can happen if the participant switches tabs, minimizes the window, or the OS
+    switches to another application. It's normal behavior but may indicate distractions.
+
+================================================================================
+SUMMARY VIEWING
+================================================================================
+Article 1 (CRISPR) - pre-reading:
+  Time Spent: 180.01 seconds (3.00 minutes)
+  Structure: Segmented
+
+Article 3 (Urban Heat Islands) - post-reading:
+  Time Spent: 61.82 seconds (1.03 minutes)
+  Structure: Segmented
+
+Article 2 (Semiconductors) - Synchronous:
+  Number of Times Opened: 0
+  Summary Viewing Time: 0 ms (participant did not open the summary overlay)
+
+================================================================================
+FREE RECALL
+================================================================================
+Article 1 (CRISPR) - pre-reading mode:
+  Recall Text:
+    'CRISPR-Cas是细菌自身在千百年来进化出来的可以抵抗外界病毒的功能，在近年来已逐渐被科学家用来研究新的基因编辑技术。但是，不可避免的是，这一类技术很有可能会被其他人随意利用，造成资源 的浪费和社会安全的威胁，除此之外，该技术仍要进一步完善，科学家利用RNA来进行基因编辑是不成熟的，人们需要对这项技术负责任'
+  Words: 2, Sentences: 1, Characters: 156
+  Confidence: 3/7 (low)
+  Perceived Difficulty: 5/7 (moderate difficulty)
+  Time Spent: 268,707 ms (4.48 minutes = 268.71 seconds)
+  Paste Attempts: 0
+
+Article 2 (Semiconductors) - synchronous mode:
+  Recall Text:
+    '半导体发展到今天产业在已经进入各行各业，半导体扮演的角色越来越重要。半导体成为了大国博弈和地缘政治斗争的关键筹码，但是半导体的发展会受到材料力学强度和量子力学极限的限制，无论如何，半导体在未来仍然具有举足轻重的地位'
+  Words: 1, Sentences: 1, Characters: 107
+  Confidence: 5/7 (moderate)
+  Perceived Difficulty: 5/7 (moderate difficulty)
+  Time Spent: 154,894 ms (2.58 minutes = 154.89 seconds)
+  Paste Attempts: 0
+
+Article 3 (Urban Heat Islands) - post-reading mode:
+  Recall Text:
+    '城市热岛效应在一定程度上加重了城市内部的热浪，起作用的一方面是城市的地面沥青及其其他材料，对热量的反射作用很小，吸收大部分热量，城市白天吸收的热量无法及时排除，我们建议提高城市绿化程度，加强城市散热能力'
+  Words: 1, Sentences: 1, Characters: 101
+  Confidence: 4/7 (moderate)
+  Perceived Difficulty: 5/7 (moderate difficulty)
+  Time Spent: 158,610 ms (2.64 minutes = 158.61 seconds)
+  Paste Attempts: 0
+
+================================================================================
+MCQ PERFORMANCE
+================================================================================
+Article 1 (CRISPR) - pre-reading mode
+Accuracy: 9/14 = 64.3%
+⚠️  FALSE LURE: Selected false lure option on Q3 (DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose)
+✓  FALSE LURE: Did NOT select false lure option on Q14 (Restore - false lure about CRISPR process (guide, cut, and repair))
+Accuracy by Source Type:
+  AI Summary: 5/8 = 62.5%
+  Article: 3/4 = 75.0%
+  false_lure: 1/2 = 50.0%
+
+Question Details:
+  Q 1: Participant=0, Correct=0 - CORRECT [AI Summary]
+  Q 2: Participant=1, Correct=3 - WRONG [AI Summary]
+  Q 3: Participant=1, Correct=0 - WRONG [FALSE LURE Q] [SELECTED FALSE LURE] [false_lure]
+  Q 4: Participant=2, Correct=2 - CORRECT [AI Summary]
+  Q 5: Participant=0, Correct=0 - CORRECT [AI Summary]
+  Q 6: Participant=0, Correct=0 - CORRECT [AI Summary]
+  Q 7: Participant=1, Correct=1 - CORRECT [AI Summary]
+  Q 8: Participant=0, Correct=1 - WRONG [AI Summary]
+  Q 9: Participant=3, Correct=3 - CORRECT [Article]
+  Q10: Participant=3, Correct=0 - WRONG [AI Summary]
+  Q11: Participant=2, Correct=2 - CORRECT [Article]
+  Q12: Participant=0, Correct=1 - WRONG [Article]
+  Q13: Participant=1, Correct=1 - CORRECT [Article]
+  Q14: Participant=2, Correct=2 - CORRECT [FALSE LURE Q] [false_lure]
+
+Article 2 (Semiconductors) - synchronous mode
+Accuracy: 4/14 = 28.6%
+✓  FALSE LURE: Did NOT select false lure option on Q9 (Quantum processors - false lure about advanced manufacturing technology)
+✓  FALSE LURE: Did NOT select false lure option on Q11 (46 silicon atoms - false lure about 3nm transistor gate width)
+Accuracy by Source Type:
+  AI Summary: 2/8 = 25.0%
+  Article: 1/4 = 25.0%
+  false_lure: 1/2 = 50.0%
+
+Question Details:
+  Q 1: Participant=2, Correct=3 - WRONG [AI Summary]
+  Q 2: Participant=0, Correct=1 - WRONG [AI Summary]
+  Q 3: Participant=0, Correct=1 - WRONG [AI Summary]
+  Q 4: Participant=1, Correct=3 - WRONG [AI Summary]
+  Q 5: Participant=2, Correct=2 - CORRECT [AI Summary]
+  Q 6: Participant=3, Correct=3 - CORRECT [AI Summary]
+  Q 7: Participant=3, Correct=0 - WRONG [AI Summary]
+  Q 8: Participant=2, Correct=0 - WRONG [Article]
+  Q 9: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [false_lure]
+  Q10: Participant=1, Correct=3 - WRONG [AI Summary]
+  Q11: Participant=3, Correct=2 - WRONG [FALSE LURE Q] [false_lure]
+  Q12: Participant=1, Correct=2 - WRONG [Article]
+  Q13: Participant=2, Correct=0 - WRONG [Article]
+  Q14: Participant=1, Correct=1 - CORRECT [Article]
+
+Article 3 (Urban Heat Islands) - post-reading mode
+Accuracy: 7/14 = 50.0%
+✓  FALSE LURE: Did NOT select false lure option on Q4 (Photocatalytic roof tiles - false lure about cooling technology)
+⚠️  FALSE LURE: Selected false lure option on Q11 (Aged asphalt albedo 0.22 - false lure about albedo values)
+Accuracy by Source Type:
+  AI Summary: 5/8 = 62.5%
+  Article: 1/4 = 25.0%
+  false_lure: 1/2 = 50.0%
+
+Question Details:
+  Q 1: Participant=2, Correct=2 - CORRECT [AI Summary]
+  Q 2: Participant=3, Correct=3 - CORRECT [AI Summary]
+  Q 3: Participant=1, Correct=1 - CORRECT [AI Summary]
+  Q 4: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [false_lure]
+  Q 5: Participant=3, Correct=2 - WRONG [AI Summary]
+  Q 6: Participant=2, Correct=2 - CORRECT [AI Summary]
+  Q 7: Participant=0, Correct=0 - CORRECT [AI Summary]
+  Q 8: Participant=3, Correct=0 - WRONG [AI Summary]
+  Q 9: Participant=3, Correct=2 - WRONG [AI Summary]
+  Q10: Participant=3, Correct=2 - WRONG [Article]
+  Q11: Participant=2, Correct=1 - WRONG [FALSE LURE Q] [SELECTED FALSE LURE] [false_lure]
+  Q12: Participant=2, Correct=1 - WRONG [Article]
+  Q13: Participant=0, Correct=0 - CORRECT [Article]
+  Q14: Participant=0, Correct=1 - WRONG [Article]
+
+================================================================================
+POST-ARTICLE RATINGS (After MCQ, Before Break)
+================================================================================
+Article 1 (CRISPR) - pre-reading mode:
+
+Cognitive Load:
+  Mental Effort: 6/7
+  Task Difficulty: 6/7
+
+AI Experience:
+  AI helped understand: 5/7
+  AI helped remember: 4/7
+  AI made task easier: 4/7
+  AI satisfaction: 5/7
+  Prefer AI support: 6/7 (optional)
+
+Overall MCQ Confidence: 4/7
+
+Article 2 (Semiconductors) - synchronous mode:
+
+Cognitive Load:
+  Mental Effort: 5/7
+  Task Difficulty: 5/7
+
+AI Experience:
+  AI helped understand: 4/7
+  AI helped remember: 5/7
+  AI made task easier: 4/7
+  AI satisfaction: 4/7
+  Prefer AI support: 4/7 (optional)
+
+Overall MCQ Confidence: 5/7
+
+Article 3 (Urban Heat Islands) - post-reading mode:
+
+Cognitive Load:
+  Mental Effort: 5/7
+  Task Difficulty: 5/7
+
+AI Experience:
+  AI helped understand: 4/7
+  AI helped remember: 4/7
+  AI made task easier: 5/7
+  AI satisfaction: 5/7
+  Prefer AI support: 4/7 (optional)
+
+Overall MCQ Confidence: 4/7
+
+================================================================================
+MANIPULATION CHECK
+================================================================================
+Semantic Coherence: 4/7 (moderate coherence)
+Relational Connectivity: 5/7 (moderate-high connectivity)
+Memory Strategy: memorized
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Reading Times:
+  CRISPR: 4.68 minutes
+  Semiconductors: 3.73 minutes
+  Urban Heat Islands: 3.54 minutes
+  Average: 3.98 minutes
+
+Summary Viewing Times:
+  CRISPR: 3.00 minutes
+  Urban Heat Islands: 1.03 minutes
+  Average: 2.02 minutes
+
+Recall Quality:
+  Average Words: 1.3 words
+  Average Sentences: 1.0 sentences
+  Average Characters: 121 characters
+  Average Confidence: 4.0/7
+  Average Difficulty: 5.0/7
+
+MCQ Performance:
+  CRISPR (CRISPR): 64.3% (9/14 correct)
+  Semiconductors (SEMICONDUCTORS): 28.6% (4/14 correct)
+  Urban Heat Islands (UHI): 50.0% (7/14 correct)
+  Average Accuracy: 47.6%
+
+================================================================================
+KEY FINDINGS
+================================================================================
+1. READING BEHAVIOR:
+   - All articles: Reading times range from 3.54 to 4.68 minutes
+   - All articles: 100% scroll depth (participant read to the end)
+   - CRISPR: Page visibility changes detected (1 times)
+   - Semiconductors: Page visibility changes detected (1 times)
+   - Urban Heat Islands: Page visibility changes detected (1 times)
+
+2. SUMMARY VIEWING:
+   - Post-reading summary: 1.03 minutes (reasonable)
+   - Pre-reading summary: 3.00 minutes (longer, as expected)
+   - Pre-reading summary viewed 191% longer than post-reading
+
+3. RECALL QUALITY:
+   - Consistent recall across all articles (1 sentences each)
+   - Good word count range (1-2 words per article)
+   - Confidence ratings: 3-5/7
+   - Perceived difficulty: 5-5/7
+
+4. MCQ PERFORMANCE:
+   - Performance range: 28.6%-64.3%
+   - Average accuracy: 47.6%
+   - Well above chance level (25% for 4 options)
+   - Best performance on CRISPR: 64.3%
+
+5. DATA QUALITY:
+   - Reading times are appropriate and consistent
+   - Recall responses are genuine and substantive
+   - All phases completed successfully
+
+================================================================================
+DATA VALIDITY ASSESSMENT
+================================================================================
+QUESTIONABLE DATA - Review required
+
+Strengths:
+  - Appropriate reading times for all articles
+  - High engagement (95%+ scroll depth)
+  - Complete data for all phases
+
+Minor Issues:
+All recall responses are very short (<10 words)
+
+Recommendation: REVIEW before inclusion
+  - Data quality concerns require investigation
+  - May need to exclude from main analysis
+
+================================================================================
+END OF ANALYSIS
+================================================================================

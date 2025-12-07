@@ -51,14 +51,14 @@ ORIGINAL_FALSE_LURE_MAP = {
 NEW_FALSE_LURE_MAP = {
     'crispr': [
         {
-            'question_index': 1,  # Q2 (0-indexed) - FALSE LURE question
-            'false_lure_option_index': 1,  # Option b (index 1) - "bioluminescent plants" is the false lure
-            'description': 'Bioluminescent plants - false lure about agricultural editing markers'
-        },
-        {
             'question_index': 2,  # Q3 (0-indexed) - FALSE LURE question
             'false_lure_option_index': 1,  # Option b (index 1) - "DNA repair activity" is the false lure
             'description': 'DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose'
+        },
+        {
+            'question_index': 13,  # Q14 (0-indexed) - FALSE LURE question
+            'false_lure_option_index': 0,  # Option a (index 0) - "restore" is the false lure
+            'description': 'Restore - false lure about CRISPR process (guide, cut, and repair)'
         }
     ],
     'semiconductors': [
@@ -89,6 +89,60 @@ NEW_FALSE_LURE_MAP = {
 
 # Use original false lure map by default (for existing participants)
 FALSE_LURE_MAP = ORIGINAL_FALSE_LURE_MAP
+
+
+
+# CORRECTED SOURCE MAPPING (8 AI Summary + 2 False Lure + 4 Article per article)
+CORRECT_SOURCE_MAP = {
+    'crispr': {
+        0: 'ai_summary',    # Q1
+        1: 'ai_summary',    # Q2
+        2: 'false_lure',    # Q3 - FALSE LURE
+        3: 'ai_summary',    # Q4
+        4: 'ai_summary',    # Q5
+        5: 'ai_summary',    # Q6
+        6: 'ai_summary',    # Q7
+        7: 'ai_summary',    # Q8
+        8: 'article',       # Q9
+        9: 'ai_summary',    # Q10
+        10: 'article',      # Q11
+        11: 'article',      # Q12
+        12: 'article',      # Q13
+        13: 'false_lure'    # Q14 - FALSE LURE
+    },
+    'semiconductors': {
+        0: 'ai_summary',    # Q1
+        1: 'ai_summary',    # Q2
+        2: 'ai_summary',    # Q3
+        3: 'ai_summary',    # Q4
+        4: 'ai_summary',    # Q5
+        5: 'ai_summary',    # Q6
+        6: 'ai_summary',    # Q7
+        7: 'article',       # Q8
+        8: 'false_lure',    # Q9 - FALSE LURE
+        9: 'ai_summary',    # Q10
+        10: 'false_lure',   # Q11 - FALSE LURE
+        11: 'article',      # Q12
+        12: 'article',      # Q13
+        13: 'article'       # Q14
+    },
+    'uhi': {
+        0: 'ai_summary',    # Q1
+        1: 'ai_summary',    # Q2
+        2: 'ai_summary',    # Q3
+        3: 'false_lure',    # Q4 - FALSE LURE
+        4: 'ai_summary',    # Q5
+        5: 'ai_summary',    # Q6
+        6: 'ai_summary',    # Q7
+        7: 'ai_summary',    # Q8
+        8: 'ai_summary',    # Q9
+        9: 'article',       # Q10
+        10: 'false_lure',   # Q11 - FALSE LURE
+        11: 'article',      # Q12
+        12: 'article',      # Q13
+        13: 'article'       # Q14
+    }
+}
 
 def parse_csv_log(log_file_path):
     """Parse participant log CSV file with robust handling of multiline fields."""
@@ -368,21 +422,31 @@ def parse_csv_log(log_file_path):
                     # Expected columns:
                     # timestamp, phase, article_num, article_key, timing,
                     # answers_json, answer_times_json, total_time_ms, correct_count, total_questions, accuracy_rate, question_accuracy_json
-                    if len(parts) >= 6:
-                        answers_json = parts[5]
+                    if len(parts) >= 13:
+                        # Use question_accuracy_json (column 12) which has all the detailed info
+                        question_accuracy_json = parts[12] if len(parts) > 12 else '{}'
                         try:
-                            mcq_answers = json.loads(answers_json.replace('""', '"'))
+                            question_details = json.loads(question_accuracy_json.replace('""', '"'))
                         except:
-                            mcq_answers = {}
+                            question_details = {}
+                        
                         article_num = int(parts[2]) if len(parts) > 2 and parts[2] else -1
                         article_key = parts[3] if len(parts) > 3 else ''
                         timing = parts[4] if len(parts) > 4 else ''
+                        
+                        # Extract answers dict from question_details for compatibility
+                        mcq_answers = {}
+                        for q_key, q_data in question_details.items():
+                            if isinstance(q_data, dict):
+                                mcq_answers[q_key] = q_data.get('participant_answer', -1)
+                        
                         data['mcq_data'].append({
                             'timestamp': timestamp,
                             'article_num': article_num,
                             'article_key': article_key,
                             'timing': timing,
-                            'answers': mcq_answers
+                            'answers': mcq_answers,
+                            'question_details': question_details  # Add the full details
                         })
                 elif phase == 'post_article_ratings':
                     # Schema: timestamp, phase, article_num, article_key, timing,
@@ -437,76 +501,72 @@ def calculate_mcq_accuracy(mcq_data):
     
     for mcq in mcq_data:
         article_key = mcq['article_key']
-        if article_key not in CORRECT_ANSWERS:
-            continue
-            
-        correct = CORRECT_ANSWERS[article_key]
-        answers = mcq['answers']
+        question_details = mcq.get('question_details', {})
         
-        # Check if this article has a false lure question(s)
-        false_lure_info = FALSE_LURE_MAP.get(article_key)
-        # Handle both list (multiple false lures) and dict (single false lure) formats
-        false_lure_list = false_lure_info if isinstance(false_lure_info, list) else ([false_lure_info] if false_lure_info else [])
-        
-        # Get source_type for each question from ARTICLES
-        article_questions = ARTICLES.get(article_key, {}).get('questions', [])
-        
-        correct_count = 0
-        total = len(correct)
-        details = []
-        false_lure_selected = False
-        false_lure_question_num = None
-        
-        for q_idx in range(total):
-            q_key = f'q{q_idx}'
-            p_ans = answers.get(q_key, -1)
-            c_ans = correct[q_idx]
-            is_correct = p_ans == c_ans
-            if is_correct:
-                correct_count += 1
+        # If question_details is available, use it directly (more reliable)
+        if question_details:
+            # Check if this article has a false lure question(s)
+            false_lure_info = FALSE_LURE_MAP.get(article_key)
+            false_lure_list = false_lure_info if isinstance(false_lure_info, list) else ([false_lure_info] if false_lure_info else [])
             
-            # Get source_type for this question (article, summary_segmented, summary_integrated)
-            source_type = "unknown"
-            if q_idx < len(article_questions):
-                source_type = article_questions[q_idx].get('source_type', 'unknown')
+            correct_count = 0
+            total = len(question_details)
+            details = []
+            false_lure_selected = False
+            false_lure_question_num = None
             
-            # Check if this is a false lure question and if participant selected it
-            is_false_lure_q = False
-            selected_false_lure = False
-            for fl_info in false_lure_list:
-                if fl_info and fl_info['question_index'] == q_idx:
-                    is_false_lure_q = True
-                    if p_ans == fl_info['false_lure_option_index']:
-                        selected_false_lure = True
-                        false_lure_selected = True
-                        false_lure_question_num = q_idx + 1
-                        break
+            for q_key, q_data in sorted(question_details.items(), key=lambda x: int(x[0][1:]) if x[0][1:].isdigit() else 999):
+                if not isinstance(q_data, dict):
+                    continue
+                
+                q_idx = q_data.get('question_index', -1)
+                p_ans = q_data.get('participant_answer', -1)
+                c_ans = q_data.get('correct_answer', -1)
+                is_correct = q_data.get('is_correct', False)
+                
+                if is_correct:
+                    correct_count += 1
+                
+                # Get source_type from CORRECT_SOURCE_MAP (8 AI summary + 2 False lure + 4 Article)
+                source_type = CORRECT_SOURCE_MAP.get(article_key, {}).get(q_idx, "unknown")
+                
+                # Check if this is a false lure question and if participant selected it
+                is_false_lure_q = False
+                selected_false_lure = False
+                for fl_info in false_lure_list:
+                    if fl_info and fl_info['question_index'] == q_idx:
+                        is_false_lure_q = True
+                        if p_ans == fl_info['false_lure_option_index']:
+                            selected_false_lure = True
+                            false_lure_selected = True
+                            false_lure_question_num = q_idx + 1
+                            break
+                
+                details.append({
+                    'question': q_idx + 1,
+                    'participant_answer': p_ans,
+                    'correct_answer': c_ans,
+                    'is_correct': is_correct,
+                    'is_false_lure_question': is_false_lure_q,
+                    'selected_false_lure': selected_false_lure,
+                    'source_type': source_type
+                })
             
-            details.append({
-                'question': q_idx + 1,
-                'participant_answer': p_ans,
-                'correct_answer': c_ans,
-                'is_correct': is_correct,
-                'is_false_lure_question': is_false_lure_q,
-                'selected_false_lure': selected_false_lure,
-                'source_type': source_type
+            accuracy = (correct_count / total) * 100 if total > 0 else 0
+            
+            results.append({
+                'article_key': article_key,
+                'article_num': mcq['article_num'],
+                'timing': mcq['timing'],
+                'accuracy': accuracy,
+                'correct_count': correct_count,
+                'total': total,
+                'details': details,
+                'timestamp': mcq['timestamp'],
+                'has_false_lure': false_lure_info is not None,
+                'false_lure_selected': false_lure_selected,
+                'false_lure_question_num': false_lure_question_num
             })
-        
-        accuracy = (correct_count / total) * 100 if total > 0 else 0
-        
-        results.append({
-            'article_key': article_key,
-            'article_num': mcq['article_num'],
-            'timing': mcq['timing'],
-            'accuracy': accuracy,
-            'correct_count': correct_count,
-            'total': total,
-            'details': details,
-            'timestamp': mcq['timestamp'],
-            'has_false_lure': false_lure_info is not None,
-            'false_lure_selected': false_lure_selected,
-            'false_lure_question_num': false_lure_question_num
-        })
     
     return results
 

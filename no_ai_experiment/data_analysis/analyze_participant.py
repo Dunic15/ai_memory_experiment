@@ -51,14 +51,14 @@ ORIGINAL_FALSE_LURE_MAP = {
 NEW_FALSE_LURE_MAP = {
     'crispr': [
         {
-            'question_index': 1,  # Q2 (0-indexed) - FALSE LURE question
-            'false_lure_option_index': 1,  # Option b (index 1) - "bioluminescent plants" is the false lure
-            'description': 'Bioluminescent plants - false lure about agricultural editing markers'
-        },
-        {
             'question_index': 2,  # Q3 (0-indexed) - FALSE LURE question
             'false_lure_option_index': 1,  # Option b (index 1) - "DNA repair activity" is the false lure
             'description': 'DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose'
+        },
+        {
+            'question_index': 13,  # Q14 (0-indexed) - FALSE LURE question
+            'false_lure_option_index': 0,  # Option a (index 0) - "restore" is the false lure
+            'description': 'Restore - false lure about CRISPR process (guide, cut, and repair)'
         }
     ],
     'semiconductors': [
