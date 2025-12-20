@@ -98,14 +98,14 @@ Article 3 (Urban Heat Islands) - unknown mode:
 MCQ PERFORMANCE
 ================================================================================
 Article 1 (CRISPR) - control mode
-Accuracy: 9/14 = 64.3%
+Accuracy: 8/14 = 57.1%
 ✓  FALSE LURE: Did NOT select false lure option on Q3 (DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose)
 ✓  FALSE LURE: Did NOT select false lure option on Q14 (Restore - false lure about CRISPR process (guide, cut, and repair))
 Accuracy by Source Type:
   Article: 9/14 = 64.3%
 
 Question Details:
-  Q 1: Participant=0, Correct=0 - CORRECT [Article]
+  Q 1: Participant=0, Correct=0 - WRONG [Article]
   Q 2: Participant=0, Correct=3 - WRONG [Article]
   Q 3: Participant=0, Correct=0 - CORRECT [FALSE LURE Q] [Article]
   Q 4: Participant=2, Correct=2 - CORRECT [Article]

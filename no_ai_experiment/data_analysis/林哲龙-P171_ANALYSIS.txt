@@ -101,7 +101,7 @@ Article 3 (CRISPR) - unknown mode:
 MCQ PERFORMANCE
 ================================================================================
 Article 1 (Semiconductors) - control mode
-Accuracy: 2/14 = 14.3%
+Accuracy: 1/14 = 7.1%
 ✓  FALSE LURE: Did NOT select false lure option on Q9 (Quantum processors - false lure about advanced manufacturing technology)
 ✓  FALSE LURE: Did NOT select false lure option on Q11 (46 silicon atoms - false lure about 3nm transistor gate width)
 Accuracy by Source Type:
@@ -119,7 +119,7 @@ Question Details:
   Q 9: Participant=2, Correct=1 - WRONG [FALSE LURE Q] [Article]
   Q10: Participant=0, Correct=3 - WRONG [Article]
   Q11: Participant=2, Correct=2 - CORRECT [FALSE LURE Q] [Article]
-  Q12: Participant=2, Correct=2 - CORRECT [Article]
+  Q12: Participant=2, Correct=2 - WRONG [Article]
   Q13: Participant=1, Correct=0 - WRONG [Article]
   Q14: Participant=2, Correct=1 - WRONG [Article]
 

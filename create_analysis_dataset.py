@@ -347,6 +347,9 @@ def create_master_dataset():
         for filename in sorted(os.listdir(ai_data_dir)):
             if filename.endswith('_log.csv') and not filename.startswith('.'):
                 pid = filename.split('-')[0]
+                if pid == 'P249':
+                    print(f"Skipping outlier AI: {pid}...")
+                    continue
                 log_path = os.path.join(ai_data_dir, filename)
                 print(f"Processing AI: {pid}...")
                 data = extract_participant_data(log_path, is_ai_experiment=True)

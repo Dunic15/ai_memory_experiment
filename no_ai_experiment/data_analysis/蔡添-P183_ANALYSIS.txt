@@ -1,0 +1,291 @@
+================================================================================
+PARTICIPANT P183 - COMPREHENSIVE DATA ANALYSIS
+================================================================================
+
+Analysis Generated: 2025-12-17
+
+================================================================================
+BASIC INFORMATION
+================================================================================
+Name: 蔡添
+Age: 27, F
+Profession: 教育学
+Native Language: 中文/汉语
+Start Time: December 17, 2025, 16:02:53
+
+================================================================================
+PRIOR KNOWLEDGE ASSESSMENT
+================================================================================
+
+================================================================================
+AI TRUST & TECHNOLOGY USE
+================================================================================
+
+================================================================================
+EXPERIMENTAL CONDITIONS
+================================================================================
+Structure Condition: CONTROL (No AI summaries)
+Article Order: 1. Urban Heat Islands → 2. CRISPR → 3. Semiconductors
+Timing Order:
+
+================================================================================
+READING BEHAVIOR
+================================================================================
+Article 1 (Urban Heat Islands) - unknown mode:
+  Reading Time: 342,747 ms (5.71 minutes = 342.75 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+
+Article 2 (CRISPR) - unknown mode:
+  Reading Time: 319,437 ms (5.32 minutes = 319.44 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+
+Article 3 (Semiconductors) - unknown mode:
+  Reading Time: 358,624 ms (5.98 minutes = 358.62 seconds)
+  Scroll Depth: 100%
+  Visibility Changes: 1 (page was hidden/shown during reading)
+
+================================================================================
+SUMMARY VIEWING
+================================================================================
+================================================================================
+FREE RECALL
+================================================================================
+Article 1 (Urban Heat Islands) - unknown mode:
+  Recall Text:
+    '城市热岛效应主要来源于城市地面材质、建筑物密度和外立面材质、植物覆盖率较低等原因导致的热量吸收较高，而反射较少。'
+    '城市峡谷效应尤其强化了城市热岛效应，因为高层建筑之间的狭窄空间增加了光线在楼间的反射、降低了热量流失。，'
+    '另一方面，城市热岛效应也与社会人文相关，更贫困的地区可能有更密集的建筑、更低的绿地覆盖面积，因此承受更高的城市热岛效应的负面影响。'
+    '夜晚，城市热岛效应也表现在市中心温度会比城郊地区高7-9℃。'
+    '在应对热岛效应时，要特别注意环境公平，关注低收入群体、心脑血管病患者、老年人和小孩。'
+    '应对热岛效应，主要有四个办法，分别是提高反射率、增加遮蔽率、提升蒸发散热和增加热容量。'
+    '在建筑和路面材料方面，可以使用'
+  Words: 7, Sentences: 7, Characters: 309
+  Confidence: 4/7 (moderate)
+  Perceived Difficulty: 4/7 (moderate)
+  Time Spent: 300,060 ms (5.00 minutes = 300.06 seconds)
+  Paste Attempts: 0
+
+Article 2 (CRISPR) - unknown mode:
+  Recall Text:
+    'CRISPR基因编辑技术来源于抗病毒的酶。经典的有CAS9，最近研发有CAS12、CAS13等。'
+    'CRISPR基因编辑技术已经应用于医学、农业和生态环境领域。'
+    '在医学上，CRISPR必须要解决两个关键问题，“递送”和“时间”。'
+    '递送是指基因编辑的范围一定要精准，时间是指发挥效用的时间段长短需要被控制。'
+    '目前，CRISPR基因编辑较好应用在血液科，尤其是镰刀状贫血和β地中海贫血，使用体外递送。。'
+    'CRISPR如果应用在心脏、脑等手术，则需要体内递送。'
+    '至于生殖细胞的基因编辑，则面临很多伦理困境。中国2018年使用该技术的科学家就被惩罚。'
+    '用于农业的CRISPR技术chan'p，则区别于“转基因作物”，被称为“基因编辑作物”。'
+    '为了能够实现CRISPR合理合法使用，需要确保监管得当、培训体系建立和避免不公平的现象。'
+  Words: 9, Sentences: 9, Characters: 360
+  Confidence: 5/7 (moderate)
+  Perceived Difficulty: 6/7 (moderate-high difficulty)
+  Time Spent: 300,039 ms (5.00 minutes = 300.04 seconds)
+  Paste Attempts: 0
+
+Article 3 (Semiconductors) - unknown mode:
+  Recall Text:
+    '高端芯片短缺主要由于：资本机器限制、原材料限制、地理因素和现代物流配送机制等。'
+    '具体来说，目前光刻机基本只能由荷兰ASML生产。'
+    '芯片原材料生产则对环境条件有着较高要求，生产周期也比较长。'
+    '地理因素方面，目前其中之一表现是 逻辑芯片90%以上由政治因素比较敏感的台湾生产。而主要生产地区是在亚洲。'
+    '现代物流配送机制缩小了可以容错“冗余”，从而带来配送时效性的问题。'
+    '主要的解决措施则是通过增加设厂和改进制度。'
+    '应对高端芯片缺乏问题，需要物理、经济、国际政治和制度等多角度共同发力。'
+  Words: 8, Sentences: 7, Characters: 240
+  Confidence: 3/7 (low)
+  Perceived Difficulty: 7/7 (high difficulty)
+  Time Spent: 249,835 ms (4.16 minutes = 249.84 seconds)
+  Paste Attempts: 0
+
+================================================================================
+MCQ PERFORMANCE
+================================================================================
+Article 1 (Urban Heat Islands) - control mode
+Accuracy: 7/14 = 50.0%
+✓  FALSE LURE: Did NOT select false lure option on Q4 (Photocatalytic roof tiles - false lure about cooling technology)
+✓  FALSE LURE: Did NOT select false lure option on Q11 (Aged asphalt albedo 0.22 - false lure about albedo values)
+Accuracy by Source Type:
+  Article: 8/14 = 57.1%
+
+Question Details:
+  Q 1: Participant=2, Correct=2 - WRONG [Article]
+  Q 2: Participant=3, Correct=3 - CORRECT [Article]
+  Q 3: Participant=1, Correct=1 - CORRECT [Article]
+  Q 4: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [Article]
+  Q 5: Participant=1, Correct=2 - WRONG [Article]
+  Q 6: Participant=2, Correct=2 - CORRECT [Article]
+  Q 7: Participant=0, Correct=0 - CORRECT [Article]
+  Q 8: Participant=3, Correct=0 - WRONG [Article]
+  Q 9: Participant=1, Correct=2 - WRONG [Article]
+  Q10: Participant=3, Correct=2 - WRONG [Article]
+  Q11: Participant=0, Correct=1 - WRONG [FALSE LURE Q] [Article]
+  Q12: Participant=1, Correct=1 - CORRECT [Article]
+  Q13: Participant=0, Correct=0 - CORRECT [Article]
+  Q14: Participant=0, Correct=1 - WRONG [Article]
+
+Article 2 (CRISPR) - control mode
+Accuracy: 8/14 = 57.1%
+✓  FALSE LURE: Did NOT select false lure option on Q3 (DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose)
+✓  FALSE LURE: Did NOT select false lure option on Q14 (Restore - false lure about CRISPR process (guide, cut, and repair))
+Accuracy by Source Type:
+  Article: 8/14 = 57.1%
+
+Question Details:
+  Q 1: Participant=1, Correct=0 - WRONG [Article]
+  Q 2: Participant=1, Correct=3 - WRONG [Article]
+  Q 3: Participant=0, Correct=0 - CORRECT [FALSE LURE Q] [Article]
+  Q 4: Participant=2, Correct=2 - CORRECT [Article]
+  Q 5: Participant=3, Correct=0 - WRONG [Article]
+  Q 6: Participant=0, Correct=0 - CORRECT [Article]
+  Q 7: Participant=2, Correct=1 - WRONG [Article]
+  Q 8: Participant=1, Correct=1 - CORRECT [Article]
+  Q 9: Participant=3, Correct=3 - CORRECT [Article]
+  Q10: Participant=0, Correct=0 - CORRECT [Article]
+  Q11: Participant=2, Correct=2 - CORRECT [Article]
+  Q12: Participant=0, Correct=1 - WRONG [Article]
+  Q13: Participant=1, Correct=1 - CORRECT [Article]
+  Q14: Participant=1, Correct=2 - WRONG [FALSE LURE Q] [Article]
+
+Article 3 (Semiconductors) - control mode
+Accuracy: 5/14 = 35.7%
+✓  FALSE LURE: Did NOT select false lure option on Q9 (Quantum processors - false lure about advanced manufacturing technology)
+✓  FALSE LURE: Did NOT select false lure option on Q11 (46 silicon atoms - false lure about 3nm transistor gate width)
+Accuracy by Source Type:
+  Article: 5/14 = 35.7%
+
+Question Details:
+  Q 1: Participant=2, Correct=3 - WRONG [Article]
+  Q 2: Participant=1, Correct=1 - CORRECT [Article]
+  Q 3: Participant=0, Correct=1 - WRONG [Article]
+  Q 4: Participant=1, Correct=3 - WRONG [Article]
+  Q 5: Participant=2, Correct=2 - CORRECT [Article]
+  Q 6: Participant=2, Correct=3 - WRONG [Article]
+  Q 7: Participant=1, Correct=0 - WRONG [Article]
+  Q 8: Participant=2, Correct=0 - WRONG [Article]
+  Q 9: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [Article]
+  Q10: Participant=0, Correct=3 - WRONG [Article]
+  Q11: Participant=2, Correct=2 - CORRECT [FALSE LURE Q] [Article]
+  Q12: Participant=1, Correct=2 - WRONG [Article]
+  Q13: Participant=0, Correct=0 - CORRECT [Article]
+  Q14: Participant=2, Correct=1 - WRONG [Article]
+
+================================================================================
+POST-ARTICLE RATINGS (After MCQ, Before Break)
+================================================================================
+Article 1 (Urban Heat Islands):
+
+Cognitive Load:
+  Mental Effort: 6/7
+  Task Difficulty: 5/7
+
+AI Experience:
+  AI helped understand: -1/7
+  AI helped remember: -1/7
+  AI made task easier: -1/7
+  AI satisfaction: -1/7
+
+Overall MCQ Confidence: 4/7
+
+Article 2 (CRISPR):
+
+Cognitive Load:
+  Mental Effort: 7/7
+  Task Difficulty: 6/7
+
+AI Experience:
+  AI helped understand: -1/7
+  AI helped remember: -1/7
+  AI made task easier: -1/7
+  AI satisfaction: -1/7
+
+Overall MCQ Confidence: 1/7
+
+Article 3 (Semiconductors):
+
+Cognitive Load:
+  Mental Effort: 7/7
+  Task Difficulty: 7/7
+
+AI Experience:
+  AI helped understand: -1/7
+  AI helped remember: -1/7
+  AI made task easier: -1/7
+  AI satisfaction: -1/7
+
+Overall MCQ Confidence: 1/7
+
+================================================================================
+MANIPULATION CHECK
+================================================================================
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Reading Times:
+  Urban Heat Islands: 5.71 minutes
+  CRISPR: 5.32 minutes
+  Semiconductors: 5.98 minutes
+  Average: 5.67 minutes
+
+Recall Quality:
+  Average Words: 8.0 words
+  Average Sentences: 7.7 sentences
+  Average Characters: 303 characters
+  Average Confidence: 4.0/7
+  Average Difficulty: 5.7/7
+
+MCQ Performance:
+  Urban Heat Islands (UHI): 57.1% (8/14 correct)
+  CRISPR (CRISPR): 57.1% (8/14 correct)
+  Semiconductors (SEMICONDUCTORS): 35.7% (5/14 correct)
+  Average Accuracy: 50.0%
+
+================================================================================
+KEY FINDINGS
+================================================================================
+1. READING BEHAVIOR:
+   - All articles: Reading times range from 5.32 to 5.98 minutes
+   - All articles: 100% scroll depth (participant read to the end)
+   - Urban Heat Islands: Page visibility changes detected (1 times)
+   - CRISPR: Page visibility changes detected (1 times)
+   - Semiconductors: Page visibility changes detected (1 times)
+
+3. RECALL QUALITY:
+   - Sentence counts: 7, 9, 7
+   - Good word count range (7-9 words per article)
+   - Confidence ratings: 3-5/7
+   - Perceived difficulty: 4-7/7
+
+4. MCQ PERFORMANCE:
+   - Performance range: 35.7%-57.1%
+   - Average accuracy: 50.0%
+   - Well above chance level (25% for 4 options)
+   - Best performance on Urban Heat Islands: 57.1%
+
+5. DATA QUALITY:
+   - Reading times are appropriate and consistent
+   - Recall responses are genuine and substantive
+   - All phases completed successfully
+
+================================================================================
+DATA VALIDITY ASSESSMENT
+================================================================================
+QUESTIONABLE DATA - Review required
+
+Strengths:
+  - Appropriate reading times for all articles
+  - High engagement (95%+ scroll depth)
+  - Complete data for all phases
+
+Minor Issues:
+All recall responses are very short (<10 words)
+
+Recommendation: REVIEW before inclusion
+  - Data quality concerns require investigation
+  - May need to exclude from main analysis
+
+================================================================================
+END OF ANALYSIS
+================================================================================

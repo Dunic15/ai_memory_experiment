@@ -1,17 +1,17 @@
 ================================================================================
-PARTICIPANT P182 - COMPREHENSIVE DATA ANALYSIS
+PARTICIPANT P187 - COMPREHENSIVE DATA ANALYSIS
 ================================================================================
 
-Analysis Generated: 2025-11-29
+Analysis Generated: 2025-12-18
 
 ================================================================================
 BASIC INFORMATION
 ================================================================================
-Name: 孟凡杰
-Age: 24, M
-Profession: 物理学
-Native Language: 汉语
-Start Time: November 29, 2025, 16:07:14
+Name: 陈禹臻
+Age: 23, M
+Profession: 工业工程
+Native Language: 中文
+Start Time: December 18, 2025, 15:26:43
 
 ================================================================================
 PRIOR KNOWLEDGE ASSESSMENT
@@ -32,17 +32,17 @@ Timing Order:
 READING BEHAVIOR
 ================================================================================
 Article 1 (Semiconductors) - unknown mode:
-  Reading Time: 350,739 ms (5.85 minutes = 350.74 seconds)
+  Reading Time: 346,089 ms (5.77 minutes = 346.09 seconds)
   Scroll Depth: 100%
   Visibility Changes: 1 (page was hidden/shown during reading)
 
 Article 2 (CRISPR) - unknown mode:
-  Reading Time: 501,036 ms (8.35 minutes = 501.04 seconds)
+  Reading Time: 476,166 ms (7.94 minutes = 476.17 seconds)
   Scroll Depth: 100%
   Visibility Changes: 1 (page was hidden/shown during reading)
 
 Article 3 (Urban Heat Islands) - unknown mode:
-  Reading Time: 416,132 ms (6.94 minutes = 416.13 seconds)
+  Reading Time: 470,022 ms (7.83 minutes = 470.02 seconds)
   Scroll Depth: 100%
   Visibility Changes: 1 (page was hidden/shown during reading)
 
@@ -54,102 +54,102 @@ FREE RECALL
 ================================================================================
 Article 1 (Semiconductors) - unknown mode:
   Recall Text:
-    '半导体产业深刻影响到现代市场中各个产业，随着产业转移和近年不可抗因素的干扰，汽车等不要求微小芯片的行业对于芯片的库存日益紧俏，因为更小制程的芯片所能获取的利益更大。同时芯片制造也是一个困难的课题，光刻机研发成本高、产量低导致芯片产能不足。同时，我国对相关人才de'
-  Words: 1, Sentences: 1, Characters: 131
-  Confidence: 4/7 (moderate)
-  Perceived Difficulty: 4/7 (moderate)
-  Time Spent: 300,041 ms (5.00 minutes = 300.04 seconds)
+    '近些年的国际芯片供应链受到巨大冲击，因为没有任何国家可以独立地支撑起全部的芯片供应链。具体来说，西方的高端生产线运作成本较高，因为有较高的人工、合规成本，而基础的芯片材料和技术大多数布局在东亚地区，尤其是约92%的产能要依赖政治局势紧张的台湾地区。因此，国际芯片供应链整体来看收到多点的制约，尤其是政治因素以及地理因素。下一步，整个供应链领域需要思考如何把单调高效转换到多点冗余。'
+  Words: 1, Sentences: 1, Characters: 190
+  Confidence: 5/7 (moderate)
+  Perceived Difficulty: 3/7 (moderate)
+  Time Spent: 188,132 ms (3.14 minutes = 188.13 seconds)
   Paste Attempts: 0
 
 Article 2 (CRISPR) - unknown mode:
   Recall Text:
-    'CRISPR-Cas是细菌用来免疫外来病毒的一种手段，近年来也被科学家用来治疗基因疾病，科学家通过制造病人患病基因DNA片段对应的指导RNA，诱导Cas酶对患病基因进行编辑，在此过程中，如何将Cas-酶准确送入病人体内，同时不引起病人免疫防御是一个问题，还要考虑时间的影响，需要让酶在完成任务后自动销毁。基因编辑引发了重要的社会伦理讨论，涉及到公平性原则，需要有透明性，基因编辑的食物也是如此。'
-  Words: 1, Sentences: 1, Characters: 197
+    'CRISPR技术源于科学家对人体内部抵挡外部病毒机制的发现，科学家使用CRISPR发展出可引导的基因编辑技术，并且在医学、农业等方面已经有了巨大的贡献。在编辑的过程中，CRISPR主要起着对DNA进行切割的作用，但这不是精确的，只是统计意义上的，因此会出现脱靶的情况，但后来科学家发展出一些新方法优化这一情况。递送的步骤更难，因为载体可能不稳定。第三是时间，DNA以及相关的CRISPR部件在体内存活的时间有限，因此也得到了关注。虽然该技术在医学、农业方面给人类带来巨大的增益，但是其背后的伦理问题也需要得到进一步的关注。'
+  Words: 1, Sentences: 1, Characters: 261
   Confidence: 5/7 (moderate)
-  Perceived Difficulty: 5/7 (moderate difficulty)
-  Time Spent: 296,249 ms (4.94 minutes = 296.25 seconds)
+  Perceived Difficulty: 3/7 (moderate)
+  Time Spent: 185,101 ms (3.09 minutes = 185.10 seconds)
   Paste Attempts: 0
 
 Article 3 (Urban Heat Islands) - unknown mode:
   Recall Text:
-    '由于城市的结构，白昼时吸热，夜晚时热量通过红外辐射的形式散出，同时“城市峡谷”导致热量不能及时耗散，故市中心的夜间温度要高于郊外温度，称之为城市热岛效应，这是一个关系到资源分配的社会议题。解决这一问题，可以采取的技术手段包括，使用一些材料反射近红外太阳光，使得白昼时吸热减少，同时避免反光炫目。或者使用一些新材料使得升温时吸热，降温时散热，减低了城市夜晚散热的压力。种植植被也是一种好选择，可以通过调节湿度等来控制温度。同时，不能由市场调节'
-  Words: 1, Sentences: 1, Characters: 220
-  Confidence: 4/7 (moderate)
-  Perceived Difficulty: 4/7 (moderate)
-  Time Spent: 300,054 ms (5.00 minutes = 300.05 seconds)
+    '城市热岛的主要是建筑材料、城市峡谷的几何结构导致的，而在极端高温条件下的降温措施反而会带城市热岛效应的增强。除了给大气环境带来恶化，还会带来社会不公平，因为在建筑密集区域城市热岛给人群带来的负面影响更大。解决方案有两个方面，第一，在个体管控上要求建筑采取高反射材料以及渗水地面，第二，在宏观角度扩大绿地区域，重视对人行道、公共交通的设计，减少私家车交通区域。'
+  Words: 1, Sentences: 1, Characters: 179
+  Confidence: 5/7 (moderate)
+  Perceived Difficulty: 3/7 (moderate)
+  Time Spent: 161,765 ms (2.70 minutes = 161.76 seconds)
   Paste Attempts: 0
 
 ================================================================================
 MCQ PERFORMANCE
 ================================================================================
 Article 1 (Semiconductors) - control mode
-Accuracy: 6/14 = 42.9%
+Accuracy: 2/14 = 14.3%
 ✓  FALSE LURE: Did NOT select false lure option on Q9 (Quantum processors - false lure about advanced manufacturing technology)
-✓  FALSE LURE: Did NOT select false lure option on Q11 (46 silicon atoms - false lure about 3nm transistor gate width)
+⚠️  FALSE LURE: Selected false lure option on Q11 (46 silicon atoms - false lure about 3nm transistor gate width)
+Accuracy by Source Type:
+  Article: 3/14 = 21.4%
+
+Question Details:
+  Q 1: Participant=1, Correct=3 - WRONG [Article]
+  Q 2: Participant=0, Correct=1 - WRONG [Article]
+  Q 3: Participant=0, Correct=1 - WRONG [Article]
+  Q 4: Participant=1, Correct=3 - WRONG [Article]
+  Q 5: Participant=3, Correct=2 - WRONG [Article]
+  Q 6: Participant=3, Correct=3 - WRONG [Article]
+  Q 7: Participant=2, Correct=0 - WRONG [Article]
+  Q 8: Participant=0, Correct=0 - CORRECT [Article]
+  Q 9: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [Article]
+  Q10: Participant=2, Correct=3 - WRONG [Article]
+  Q11: Participant=1, Correct=2 - WRONG [FALSE LURE Q] [SELECTED FALSE LURE] [Article]
+  Q12: Participant=1, Correct=2 - WRONG [Article]
+  Q13: Participant=1, Correct=0 - WRONG [Article]
+  Q14: Participant=2, Correct=1 - WRONG [Article]
+
+Article 2 (CRISPR) - control mode
+Accuracy: 7/14 = 50.0%
+⚠️  FALSE LURE: Selected false lure option on Q3 (DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose)
+✓  FALSE LURE: Did NOT select false lure option on Q14 (Restore - false lure about CRISPR process (guide, cut, and repair))
 Accuracy by Source Type:
   Article: 7/14 = 50.0%
 
 Question Details:
-  Q 1: Participant=2, Correct=3 - WRONG [Article]
-  Q 2: Participant=1, Correct=1 - WRONG [Article]
-  Q 3: Participant=0, Correct=1 - WRONG [Article]
-  Q 4: Participant=3, Correct=3 - CORRECT [Article]
-  Q 5: Participant=3, Correct=2 - WRONG [Article]
-  Q 6: Participant=3, Correct=3 - CORRECT [Article]
-  Q 7: Participant=1, Correct=0 - WRONG [Article]
-  Q 8: Participant=0, Correct=0 - CORRECT [Article]
-  Q 9: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [Article]
-  Q10: Participant=1, Correct=3 - WRONG [Article]
-  Q11: Participant=2, Correct=2 - CORRECT [FALSE LURE Q] [Article]
-  Q12: Participant=2, Correct=2 - CORRECT [Article]
-  Q13: Participant=3, Correct=0 - WRONG [Article]
-  Q14: Participant=2, Correct=1 - WRONG [Article]
-
-Article 2 (CRISPR) - control mode
-Accuracy: 10/14 = 71.4%
-✓  FALSE LURE: Did NOT select false lure option on Q3 (DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose)
-✓  FALSE LURE: Did NOT select false lure option on Q14 (Restore - false lure about CRISPR process (guide, cut, and repair))
-Accuracy by Source Type:
-  Article: 10/14 = 71.4%
-
-Question Details:
-  Q 1: Participant=0, Correct=0 - CORRECT [Article]
+  Q 1: Participant=1, Correct=0 - WRONG [Article]
   Q 2: Participant=1, Correct=3 - WRONG [Article]
-  Q 3: Participant=2, Correct=0 - WRONG [FALSE LURE Q] [Article]
+  Q 3: Participant=1, Correct=0 - WRONG [FALSE LURE Q] [SELECTED FALSE LURE] [Article]
   Q 4: Participant=2, Correct=2 - CORRECT [Article]
   Q 5: Participant=0, Correct=0 - CORRECT [Article]
   Q 6: Participant=0, Correct=0 - CORRECT [Article]
   Q 7: Participant=1, Correct=1 - CORRECT [Article]
-  Q 8: Participant=2, Correct=1 - WRONG [Article]
-  Q 9: Participant=0, Correct=3 - WRONG [Article]
-  Q10: Participant=0, Correct=0 - CORRECT [Article]
-  Q11: Participant=2, Correct=2 - CORRECT [Article]
+  Q 8: Participant=1, Correct=1 - CORRECT [Article]
+  Q 9: Participant=2, Correct=3 - WRONG [Article]
+  Q10: Participant=1, Correct=0 - WRONG [Article]
+  Q11: Participant=1, Correct=2 - WRONG [Article]
   Q12: Participant=1, Correct=1 - CORRECT [Article]
-  Q13: Participant=1, Correct=1 - CORRECT [Article]
+  Q13: Participant=2, Correct=1 - WRONG [Article]
   Q14: Participant=2, Correct=2 - CORRECT [FALSE LURE Q] [Article]
 
 Article 3 (Urban Heat Islands) - control mode
-Accuracy: 10/14 = 71.4%
-✓  FALSE LURE: Did NOT select false lure option on Q4 (Photocatalytic roof tiles - false lure about cooling technology)
-⚠️  FALSE LURE: Selected false lure option on Q11 (Aged asphalt albedo 0.22 - false lure about albedo values)
+Accuracy: 7/14 = 50.0%
+⚠️  FALSE LURE: Selected false lure option on Q4 (Photocatalytic roof tiles - false lure about cooling technology)
+✓  FALSE LURE: Did NOT select false lure option on Q11 (Aged asphalt albedo 0.22 - false lure about albedo values)
 Accuracy by Source Type:
-  Article: 10/14 = 71.4%
+  Article: 7/14 = 50.0%
 
 Question Details:
-  Q 1: Participant=2, Correct=2 - CORRECT [Article]
+  Q 1: Participant=3, Correct=2 - WRONG [Article]
   Q 2: Participant=3, Correct=3 - CORRECT [Article]
   Q 3: Participant=1, Correct=1 - CORRECT [Article]
-  Q 4: Participant=0, Correct=1 - WRONG [FALSE LURE Q] [Article]
+  Q 4: Participant=2, Correct=1 - WRONG [FALSE LURE Q] [SELECTED FALSE LURE] [Article]
   Q 5: Participant=2, Correct=2 - CORRECT [Article]
   Q 6: Participant=2, Correct=2 - CORRECT [Article]
   Q 7: Participant=0, Correct=0 - CORRECT [Article]
-  Q 8: Participant=0, Correct=0 - CORRECT [Article]
-  Q 9: Participant=1, Correct=2 - WRONG [Article]
-  Q10: Participant=2, Correct=2 - CORRECT [Article]
-  Q11: Participant=2, Correct=1 - WRONG [FALSE LURE Q] [SELECTED FALSE LURE] [Article]
-  Q12: Participant=1, Correct=1 - CORRECT [Article]
+  Q 8: Participant=1, Correct=0 - WRONG [Article]
+  Q 9: Participant=0, Correct=2 - WRONG [Article]
+  Q10: Participant=1, Correct=2 - WRONG [Article]
+  Q11: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [Article]
+  Q12: Participant=0, Correct=1 - WRONG [Article]
   Q13: Participant=0, Correct=0 - CORRECT [Article]
-  Q14: Participant=0, Correct=1 - WRONG [Article]
+  Q14: Participant=3, Correct=1 - WRONG [Article]
 
 ================================================================================
 POST-ARTICLE RATINGS (After MCQ, Before Break)
@@ -158,7 +158,7 @@ Article 1 (Semiconductors):
 
 Cognitive Load:
   Mental Effort: 5/7
-  Task Difficulty: 4/7
+  Task Difficulty: 3/7
 
 AI Experience:
   AI helped understand: -1/7
@@ -171,8 +171,8 @@ Overall MCQ Confidence: 3/7
 Article 2 (CRISPR):
 
 Cognitive Load:
-  Mental Effort: 5/7
-  Task Difficulty: 4/7
+  Mental Effort: 3/7
+  Task Difficulty: 3/7
 
 AI Experience:
   AI helped understand: -1/7
@@ -186,7 +186,7 @@ Article 3 (Urban Heat Islands):
 
 Cognitive Load:
   Mental Effort: 5/7
-  Task Difficulty: 4/7
+  Task Difficulty: 3/7
 
 AI Experience:
   AI helped understand: -1/7
@@ -204,29 +204,29 @@ MANIPULATION CHECK
 SUMMARY STATISTICS
 ================================================================================
 Reading Times:
-  Semiconductors: 5.85 minutes
-  CRISPR: 8.35 minutes
-  Urban Heat Islands: 6.94 minutes
-  Average: 7.04 minutes
+  Semiconductors: 5.77 minutes
+  CRISPR: 7.94 minutes
+  Urban Heat Islands: 7.83 minutes
+  Average: 7.18 minutes
 
 Recall Quality:
   Average Words: 1.0 words
   Average Sentences: 1.0 sentences
-  Average Characters: 183 characters
-  Average Confidence: 4.3/7
-  Average Difficulty: 4.3/7
+  Average Characters: 210 characters
+  Average Confidence: 5.0/7
+  Average Difficulty: 3.0/7
 
 MCQ Performance:
-  Semiconductors (SEMICONDUCTORS): 50.0% (7/14 correct)
-  CRISPR (CRISPR): 71.4% (10/14 correct)
-  Urban Heat Islands (UHI): 71.4% (10/14 correct)
-  Average Accuracy: 64.3%
+  Semiconductors (SEMICONDUCTORS): 21.4% (3/14 correct)
+  CRISPR (CRISPR): 50.0% (7/14 correct)
+  Urban Heat Islands (UHI): 50.0% (7/14 correct)
+  Average Accuracy: 40.5%
 
 ================================================================================
 KEY FINDINGS
 ================================================================================
 1. READING BEHAVIOR:
-   - All articles: Reading times range from 5.85 to 8.35 minutes
+   - All articles: Reading times range from 5.77 to 7.94 minutes
    - All articles: 100% scroll depth (participant read to the end)
    - Semiconductors: Page visibility changes detected (1 times)
    - CRISPR: Page visibility changes detected (1 times)
@@ -235,14 +235,14 @@ KEY FINDINGS
 3. RECALL QUALITY:
    - Consistent recall across all articles (1 sentences each)
    - Good word count range (1-1 words per article)
-   - Confidence ratings: 4-5/7
-   - Perceived difficulty: 4-5/7
+   - Confidence ratings: 5-5/7
+   - Perceived difficulty: 3-3/7
 
 4. MCQ PERFORMANCE:
-   - Performance range: 50.0%-71.4%
-   - Average accuracy: 64.3%
+   - Performance range: 21.4%-50.0%
+   - Average accuracy: 40.5%
    - Well above chance level (25% for 4 options)
-   - Best performance on CRISPR: 71.4%
+   - Best performance on CRISPR: 50.0%
 
 5. DATA QUALITY:
    - Reading times are appropriate and consistent
@@ -256,7 +256,6 @@ QUESTIONABLE DATA - Review required
 
 Strengths:
   - Appropriate reading times for all articles
-  - Good MCQ performance (64.3% average)
   - High engagement (95%+ scroll depth)
   - Complete data for all phases
 

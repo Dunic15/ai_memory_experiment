@@ -147,12 +147,12 @@ MCQ PERFORMANCE
 ================================================================================
 Article 1 (Urban Heat Islands) - post-reading mode
 Accuracy: 9/14 = 64.3%
-✓  FALSE LURE: Did NOT select false lure option on Q4 (Photocatalytic roof tiles - false lure about cooling technology)
-✓  FALSE LURE: Did NOT select false lure option on Q11 (Aged asphalt albedo 0.22 - false lure about albedo values)
+⚠️  FALSE LURE: Selected false lure option on Q4 (Photocatalytic roof tiles - false lure about cooling technology)
+⚠️  FALSE LURE: Selected false lure option on Q11 (Aged asphalt albedo 0.22 - false lure about albedo values)
 Accuracy by Source Type:
   AI Summary: 6/8 = 75.0%
   Article: 2/4 = 50.0%
-  false_lure: 1/2 = 50.0%
+  false_lure: 0/2 = 0.0%
 
 Question Details:
   Q 1: Participant=2, Correct=2 - CORRECT [AI Summary]
@@ -165,7 +165,7 @@ Question Details:
   Q 8: Participant=1, Correct=0 - WRONG [AI Summary]
   Q 9: Participant=0, Correct=2 - WRONG [AI Summary]
   Q10: Participant=3, Correct=2 - WRONG [Article]
-  Q11: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [false_lure]
+  Q11: Participant=1, Correct=1 - WRONG [FALSE LURE Q] [SELECTED FALSE LURE] [false_lure]
   Q12: Participant=1, Correct=1 - CORRECT [Article]
   Q13: Participant=0, Correct=0 - CORRECT [Article]
   Q14: Participant=0, Correct=1 - WRONG [Article]
@@ -177,7 +177,7 @@ Accuracy: 9/14 = 64.3%
 Accuracy by Source Type:
   AI Summary: 4/8 = 50.0%
   Article: 3/4 = 75.0%
-  false_lure: 2/2 = 100.0%
+  false_lure: 1/2 = 50.0%
 
 Question Details:
   Q 1: Participant=1, Correct=3 - WRONG [AI Summary]
@@ -188,7 +188,7 @@ Question Details:
   Q 6: Participant=3, Correct=3 - CORRECT [AI Summary]
   Q 7: Participant=0, Correct=0 - CORRECT [AI Summary]
   Q 8: Participant=1, Correct=0 - WRONG [Article]
-  Q 9: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [false_lure]
+  Q 9: Participant=1, Correct=1 - WRONG [FALSE LURE Q] [SELECTED FALSE LURE] [false_lure]
   Q10: Participant=3, Correct=3 - CORRECT [AI Summary]
   Q11: Participant=2, Correct=2 - CORRECT [FALSE LURE Q] [false_lure]
   Q12: Participant=2, Correct=2 - CORRECT [Article]
@@ -202,7 +202,7 @@ Accuracy: 10/14 = 71.4%
 Accuracy by Source Type:
   AI Summary: 7/8 = 87.5%
   Article: 2/4 = 50.0%
-  false_lure: 1/2 = 50.0%
+  false_lure: 0/2 = 0.0%
 
 Question Details:
   Q 1: Participant=0, Correct=0 - CORRECT [AI Summary]
@@ -227,7 +227,7 @@ Accuracy: 10/14 = 71.4%
 Accuracy by Source Type:
   AI Summary: 7/8 = 87.5%
   Article: 2/4 = 50.0%
-  false_lure: 1/2 = 50.0%
+  false_lure: 0/2 = 0.0%
 
 Question Details:
   Q 1: Participant=0, Correct=0 - CORRECT [AI Summary]

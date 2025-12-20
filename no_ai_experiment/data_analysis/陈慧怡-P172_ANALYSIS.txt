@@ -85,7 +85,7 @@ Article 3 (Urban Heat Islands) - unknown mode:
 MCQ PERFORMANCE
 ================================================================================
 Article 1 (Semiconductors) - control mode
-Accuracy: 4/14 = 28.6%
+Accuracy: 3/14 = 21.4%
 ✓  FALSE LURE: Did NOT select false lure option on Q9 (Quantum processors - false lure about advanced manufacturing technology)
 ✓  FALSE LURE: Did NOT select false lure option on Q11 (46 silicon atoms - false lure about 3nm transistor gate width)
 Accuracy by Source Type:
@@ -101,7 +101,7 @@ Question Details:
   Q 7: Participant=1, Correct=0 - WRONG [Article]
   Q 8: Participant=1, Correct=0 - WRONG [Article]
   Q 9: Participant=1, Correct=1 - CORRECT [FALSE LURE Q] [Article]
-  Q10: Participant=3, Correct=3 - CORRECT [Article]
+  Q10: Participant=3, Correct=3 - WRONG [Article]
   Q11: Participant=0, Correct=2 - WRONG [FALSE LURE Q] [Article]
   Q12: Participant=1, Correct=2 - WRONG [Article]
   Q13: Participant=0, Correct=0 - CORRECT [Article]

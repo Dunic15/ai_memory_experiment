@@ -83,14 +83,14 @@ Article 3 (Semiconductors) - unknown mode:
 MCQ PERFORMANCE
 ================================================================================
 Article 1 (CRISPR) - control mode
-Accuracy: 10/14 = 71.4%
+Accuracy: 9/14 = 64.3%
 ✓  FALSE LURE: Did NOT select false lure option on Q3 (DNA repair activity - false lure about SHERLOCK and DETECTR initial purpose)
 ✓  FALSE LURE: Did NOT select false lure option on Q14 (Restore - false lure about CRISPR process (guide, cut, and repair))
 Accuracy by Source Type:
   Article: 10/14 = 71.4%
 
 Question Details:
-  Q 1: Participant=0, Correct=0 - CORRECT [Article]
+  Q 1: Participant=0, Correct=0 - WRONG [Article]
   Q 2: Participant=0, Correct=3 - WRONG [Article]
   Q 3: Participant=3, Correct=0 - WRONG [FALSE LURE Q] [Article]
   Q 4: Participant=2, Correct=2 - CORRECT [Article]
