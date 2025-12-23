@@ -1142,7 +1142,7 @@ When deployed to cloud (Render/Railway/Fly.io):
 
 ## Notes
 
-- All timestamps are in ISO format (YYYY-MM-DDTHH:MM:SS.ssssss)
+- All timestamps are ISO 8601 with timezone offsets (YYYY-MM-DDTHH:MM:SS.ssssss±HH:MM)
 - Time values are in milliseconds unless specified as seconds
 - JSON fields need to be parsed before analysis
 - Participant IDs are sequential (P001, P002, etc.)
@@ -1159,4 +1159,3 @@ When deployed to cloud (Render/Railway/Fly.io):
 - See `DEPLOYMENT.md` for deployment instructions
 - See `PROJECT_STRUCTURE.md` for project organization
 - See main `README.md` for experiment overview
-

@@ -158,6 +158,30 @@ def tr(text: str) -> str:
     lang = _get_lang()
     return _auto_translate(text or "", lang)
 
+def _normalize_timestamp_value(value):
+    """Normalize timestamp inputs to ISO 8601 with timezone offset."""
+    if value is None:
+        return value
+    s = str(value).strip()
+    if s.isdigit() and len(s) == 13:
+        local_tz = datetime.now().astimezone().tzinfo
+        return datetime.fromtimestamp(int(s) / 1000, tz=local_tz).isoformat()
+    if "T" in s:
+        iso = s
+        if iso.endswith("Z"):
+            iso = iso[:-1] + "+00:00"
+        try:
+            dt = datetime.fromisoformat(iso)
+        except ValueError:
+            return s
+        local_tz = datetime.now().astimezone().tzinfo
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=local_tz)
+        else:
+            dt = dt.astimezone(local_tz)
+        return dt.isoformat()
+    return s
+
 def require_pid(fn):
     """Ensure a participant is in session before accessing post-login routes."""
     @wraps(fn)
@@ -272,6 +296,9 @@ def log_data(participant_id, phase, data):
     # Get participant name and condition for better filename
     name = session.get("demographics", {}).get("full_name", "").strip()
     structure = session.get("structure_condition", "")
+    data = dict(data or {})
+    if "timestamp" in data:
+        data["timestamp"] = _normalize_timestamp_value(data.get("timestamp"))
     
     # Clean name for filename (remove spaces, special chars)
     if name:
@@ -293,7 +320,7 @@ def log_data(participant_id, phase, data):
                 w = csv.DictWriter(f, fieldnames=fieldnames)
                 if not file_exists:
                     w.writeheader()
-                w.writerow({"timestamp": datetime.now().isoformat(), "phase": phase, **data})
+                w.writerow({"timestamp": datetime.now().astimezone().isoformat(), "phase": phase, **data})
             return
         
         filename = os.path.join(DATA_DIR, f"{participant_id}-{clean_name}-{condition_suffix}_log.csv")
@@ -315,7 +342,7 @@ def log_data(participant_id, phase, data):
         w = csv.DictWriter(f, fieldnames=fieldnames)
         if not file_exists:
             w.writeheader()
-        w.writerow({"timestamp": datetime.now().isoformat(), "phase": phase, **data})
+        w.writerow({"timestamp": datetime.now().astimezone().isoformat(), "phase": phase, **data})
     
     # Generate analysis automatically after manipulation_check phase
     _generate_analysis_if_needed(participant_id, phase)
