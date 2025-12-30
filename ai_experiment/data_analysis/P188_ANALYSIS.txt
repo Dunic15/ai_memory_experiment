@@ -1,0 +1,13 @@
+ANALYSIS FOR PARTICIPANT P188 (Control Group)
+--------------------------------------------------
+ISSUE RESOLUTION:
+- Original Question Count: 70
+- Cause: The system logged the MCQ responses for Article 1 (CRISPR) three times (timestamps: 16:34:21, 16:34:22, 16:34:22).
+- Resolution: Deduplicated responses by article index.
+- Corrected Question Count: 42 (14 questions * 3 articles)
+
+METRICS:
+- Total Accuracy: 45.24% (19/42)
+
+NOTE:
+- As a Control Group participant (No AI), "False Lure" and "AI Summary" metrics are not applicable and have been excluded.
