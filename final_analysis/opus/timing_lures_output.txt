@@ -1,0 +1,497 @@
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.1     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+✔ purrr     1.2.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: Matrix
+
+Attaching package: ‘Matrix’
+
+The following objects are masked from ‘package:tidyr’:
+
+    expand, pack, unpack
+
+
+Attaching package: ‘lmerTest’
+
+The following object is masked from ‘package:lme4’:
+
+    lmer
+
+The following object is masked from ‘package:stats’:
+
+    step
+
+Welcome to emmeans.
+Caution: You lose important information if you filter this package's results.
+See '? untidy'
+
+Attaching package: ‘MASS’
+
+The following object is masked from ‘package:dplyr’:
+
+    select
+
+
+ ====================================================================== 
+TIMING PROCESS CHAIN ANALYSES
+====================================================================== 
+
+--- T1: SANITY CHECK - Trust/Dependence Balance ---
+Warning messages:
+1: In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.18449 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+2: In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model is nearly unidentifiable: very large eigenvalue
+ - Rescale variables?
+3: In as_lmerModLT(model, devfun) :
+  Model may not have converged with 1 eigenvalue close to zero: 5.8e-10
+
+ai_trust ~ timing + structure:
+                        Estimate   Std. Error         df       t value
+(Intercept)         5.224490e+00 1.146369e-01 0.01232064  4.557424e+01
+timingsynchronous   6.887914e-16 1.952662e-08 0.01232064  3.527449e-08
+timingpost_reading  6.887914e-16 1.952662e-08 0.01232064  3.527449e-08
+structuresegmented -4.897959e-01 1.621211e-01 0.01232064 -3.021174e+00
+                    Pr(>|t|)
+(Intercept)        0.9207022
+timingsynchronous  1.0000000
+timingpost_reading 1.0000000
+structuresegmented 0.9520018
+
+Timing effect on Trust (ANOVA):
+Type III Analysis of Variance Table with Satterthwaite's method
+              Sum Sq    Mean Sq NumDF    DenDF F value Pr(>F)
+timing    0.0000e+00 0.0000e+00     2 0.012321  0.0000  1.000
+structure 4.1763e-14 4.1763e-14     1 0.012321  9.1275  0.952
+Warning messages:
+1: In optwrap(optimizer, devfun, getStart(start, rho$pp), lower = rho$lower,  :
+  convergence code -4 from nloptwrap: NLOPT_ROUNDOFF_LIMITED: Roundoff errors led to a breakdown of the optimization algorithm. In this case, the returned minimum may still be useful. (e.g. this error occurs in NEWUOA if one tries to achieve a tolerance too close to machine precision.)
+2: In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.00233726 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+3: Model failed to converge with 1 negative eigenvalue: -1.0e-06 
+
+ai_dependence ~ timing + structure:
+                        Estimate   Std. Error      df       t value
+(Intercept)         5.000111e+00 1.507467e-01 368.505  3.316897e+01
+timingsynchronous  -2.539107e-15 3.040310e-06 368.505 -8.351475e-10
+timingpost_reading -2.539107e-15 3.040310e-06 368.505 -8.351475e-10
+structuresegmented  3.051473e-01 2.131880e-01 368.505  1.431353e+00
+                        Pr(>|t|)
+(Intercept)        1.096069e-112
+timingsynchronous   1.000000e+00
+timingpost_reading  1.000000e+00
+structuresegmented  1.531765e-01
+
+Timing effect on Dependence (ANOVA):
+Type III Analysis of Variance Table with Satterthwaite's method
+              Sum Sq    Mean Sq NumDF DenDF F value Pr(>F)
+timing    0.0000e+00 0.0000e+00     2 368.5  0.0000 1.0000
+structure 2.2725e-10 2.2725e-10     1 368.5  2.0488 0.1532
+
+Trust/Dependence descriptives by timing:
+# A tibble: 3 × 6
+  timing       trust_mean trust_sd dep_mean dep_sd     n
+  <fct>             <dbl>    <dbl>    <dbl>  <dbl> <int>
+1 pre_reading        4.94    0.720     5.15  0.911    24
+2 synchronous        4.94    0.720     5.15  0.911    24
+3 post_reading       4.94    0.720     5.15  0.911    24
+
+--- T2: Summary Accuracy Decomposition ---
+
+Base model (timing only):
+          (Intercept)     timingsynchronous    timingpost_reading 
+           0.89203602           -0.27099608           -0.21370618 
+   structuresegmented articlesemiconductors            articleuhi 
+          -0.01388889           -0.16992858            0.04102277 
+
++ log(summary_time_sec):
+                           Estimate Std. Error       df     t value
+(Intercept)            0.5824817944 0.14849303 61.31930  3.92262035
+timingsynchronous     -0.2578283718 0.04029915 43.42070 -6.39786171
+timingpost_reading    -0.1641297248 0.04601613 46.81229 -3.56678702
+structuresegmented     0.0009497745 0.05268987 22.31809  0.01802575
+log(summary_time_sec)  0.0615603849 0.02785459 58.44703  2.21006228
+articlesemiconductors -0.1610911307 0.04005637 43.23686 -4.02161108
+articleuhi             0.0428619308 0.04050599 43.08961  1.05816289
+                          Pr(>|t|)
+(Intercept)           2.238730e-04
+timingsynchronous     9.259602e-08
+timingpost_reading    8.463110e-04
+structuresegmented    9.857785e-01
+log(summary_time_sec) 3.103009e-02
+articlesemiconductors 2.279099e-04
+articleuhi            2.958774e-01
+
+Timing coefficient change:
+Pre-reading (base):     reference
+Synchronous (base):     -0.271 
+Synchronous (+time):    -0.2578 
+Post-reading (base):    -0.2137 
+Post-reading (+time):   -0.1641 
+
+Timing EMMs (base model):
+ contrast                   estimate     SE df t.ratio p.value
+ pre_reading - synchronous    0.2710 0.0406 44   6.675 <0.0001
+ pre_reading - post_reading   0.2137 0.0409 44   5.221 <0.0001
+ synchronous - post_reading  -0.0573 0.0413 44  -1.389  0.1719
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 3 tests 
+
+Timing EMMs (+ summary time):
+ contrast                   estimate     SE   df t.ratio p.value
+ pre_reading - synchronous    0.2578 0.0403 43.4   6.395 <0.0001
+ pre_reading - post_reading   0.1641 0.0462 46.8   3.550  0.0018
+ synchronous - post_reading  -0.0937 0.0438 45.2  -2.137  0.0380
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 3 tests 
+
+ANOVA - Timing effect after controlling summary time:
+Type III Analysis of Variance Table with Satterthwaite's method
+                       Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)    
+timing                0.78035 0.39017     2 45.015 20.5773 4.497e-07 ***
+structure             0.00001 0.00001     1 22.318  0.0003   0.98578    
+log(summary_time_sec) 0.09261 0.09261     1 58.447  4.8844   0.03103 *  
+article               0.54433 0.27216     2 43.169 14.3536 1.663e-05 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+--- T3: Final MCQ Decomposition ---
+
+Progressive MCQ Decomposition:
+# A tibble: 5 × 3
+  model            sync_beta post_beta
+  <chr>                <dbl>     <dbl>
+1 1: timing only     -0.173    -0.144 
+2 2: + total_time    -0.175    -0.143 
+3 3: + summary_acc   -0.0503   -0.0468
+4 4: + article_acc   -0.0169   -0.0292
+5 5: full            -0.0182   -0.0287
+
+With reduction percentages:
+# A tibble: 5 × 5
+  model            sync_beta post_beta sync_reduction post_reduction
+  <chr>                <dbl>     <dbl>          <dbl>          <dbl>
+1 1: timing only     -0.173    -0.144             0              0  
+2 2: + total_time    -0.175    -0.143            -1.1            0.6
+3 3: + summary_acc   -0.0503   -0.0468           71             67.4
+4 4: + article_acc   -0.0169   -0.0292           90.2           79.7
+5 5: full            -0.0182   -0.0287           89.5           80  
+
+Full model (Model 5) coefficients:
+                          Estimate Std. Error       df    t value     Pr(>|t|)
+(Intercept)            0.117496792 0.10441090 61.65405  1.1253307 2.648107e-01
+timingsynchronous     -0.018231443 0.01478040 53.04261 -1.2334876 2.228321e-01
+timingpost_reading    -0.028730967 0.01345166 50.83983 -2.1358682 3.752799e-02
+structuresegmented    -0.037556258 0.01434404 22.81012 -2.6182488 1.542829e-02
+ai_summary_accuracy    0.505766651 0.03332099 62.80254 15.1786195 1.093375e-22
+article_accuracy       0.281599554 0.02074547 55.55730 13.5740256 2.751520e-19
+log(total_time_sec)    0.008717344 0.01559687 59.15475  0.5589164 5.783286e-01
+articlesemiconductors -0.031817774 0.01272627 47.85707 -2.5001640 1.589403e-02
+articleuhi            -0.024949615 0.01171860 42.70070 -2.1290604 3.905767e-02
+
+--- T4: Mental Effort as Marker ---
+
+mcq ~ timing + structure + mental_effort + article:
+                         Estimate Std. Error       df   t value     Pr(>|t|)
+(Intercept)            0.99645800 0.10446455 57.28602  9.538720 1.961545e-13
+timingsynchronous     -0.18364014 0.03149879 43.92705 -5.830069 6.026374e-07
+timingpost_reading    -0.14429838 0.03134693 42.77172 -4.603270 3.701842e-05
+structuresegmented    -0.08376310 0.03002062 21.90062 -2.790186 1.069883e-02
+mental_effort         -0.03219822 0.01559193 56.36772 -2.065056 4.352832e-02
+articlesemiconductors -0.13562834 0.03111251 42.82016 -4.359286 8.035859e-05
+articleuhi            -0.04744758 0.03330152 47.37708 -1.424787 1.607732e-01
+
+Timing coefficient comparison:
+Base sync:     NA 
++ effort sync: -0.1836 
+Base post:     NA 
++ effort post: -0.1443 
+
+--- T5: Who Benefits Profiles ---
+
+Delta descriptives:
+                              [,1]
+delta_mcq_pre_sync_mean  0.1666208
+delta_mcq_pre_sync_sd    0.2049334
+delta_mcq_pre_post_mean  0.1368792
+delta_mcq_pre_post_sd    0.1773666
+delta_summ_pre_sync_mean 0.2656250
+delta_summ_pre_sync_sd   0.2909703
+delta_summ_pre_post_mean 0.1927083
+delta_summ_pre_post_sd   0.2210989
+
+--- MCQ Delta (Pre-Sync) ~ Traits ---
+
+Call:
+lm(formula = delta_mcq_pre_sync ~ ai_trust + ai_dependence + 
+    prior_knowledge_familiarity, data = wide)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.43158 -0.07845 -0.02809  0.07629  0.39971 
+
+Coefficients:
+                            Estimate Std. Error t value Pr(>|t|)
+(Intercept)                  0.28276    0.33864   0.835    0.414
+ai_trust                    -0.05418    0.07206  -0.752    0.461
+ai_dependence                0.02015    0.05719   0.352    0.728
+prior_knowledge_familiarity  0.01997    0.04093   0.488    0.631
+
+Residual standard error: 0.2155 on 20 degrees of freedom
+Multiple R-squared:  0.03817,	Adjusted R-squared:  -0.1061 
+F-statistic: 0.2645 on 3 and 20 DF,  p-value: 0.8501
+
+
+--- MCQ Delta (Pre-Post) ~ Traits ---
+
+Call:
+lm(formula = delta_mcq_pre_post ~ ai_trust + ai_dependence + 
+    prior_knowledge_familiarity, data = wide)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.43080 -0.06782  0.01022  0.07648  0.20468 
+
+Coefficients:
+                            Estimate Std. Error t value Pr(>|t|)  
+(Intercept)                  0.64713    0.25083   2.580   0.0179 *
+ai_trust                    -0.15029    0.05337  -2.816   0.0107 *
+ai_dependence                0.03837    0.04236   0.906   0.3759  
+prior_knowledge_familiarity  0.01465    0.03032   0.483   0.6343  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1596 on 20 degrees of freedom
+Multiple R-squared:  0.2955,	Adjusted R-squared:  0.1899 
+F-statistic: 2.797 on 3 and 20 DF,  p-value: 0.06658
+
+
+--- Summary Acc Delta (Pre-Sync) ~ Traits ---
+
+Call:
+lm(formula = delta_summ_pre_sync ~ ai_trust + ai_dependence + 
+    prior_knowledge_familiarity, data = wide)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.46578 -0.21404 -0.05289  0.15547  0.57395 
+
+Coefficients:
+                            Estimate Std. Error t value Pr(>|t|)
+(Intercept)                  0.45790    0.46035   0.995    0.332
+ai_trust                    -0.10759    0.09795  -1.098    0.285
+ai_dependence                0.03400    0.07774   0.437    0.667
+prior_knowledge_familiarity  0.06853    0.05564   1.232    0.232
+
+Residual standard error: 0.293 on 20 degrees of freedom
+Multiple R-squared:  0.1183,	Adjusted R-squared:  -0.01394 
+F-statistic: 0.8946 on 3 and 20 DF,  p-value: 0.4611
+
+
+--- Summary Acc Delta (Pre-Post) ~ Traits ---
+
+Call:
+lm(formula = delta_summ_pre_post ~ ai_trust + ai_dependence + 
+    prior_knowledge_familiarity, data = wide)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.41686 -0.11543  0.00962  0.13000  0.41470 
+
+Coefficients:
+                            Estimate Std. Error t value Pr(>|t|)  
+(Intercept)                  0.60986    0.32293   1.889   0.0735 .
+ai_trust                    -0.10033    0.06871  -1.460   0.1598  
+ai_dependence               -0.01884    0.05453  -0.345   0.7334  
+prior_knowledge_familiarity  0.07330    0.03903   1.878   0.0750 .
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.2055 on 20 degrees of freedom
+Multiple R-squared:  0.2486,	Adjusted R-squared:  0.1359 
+F-statistic: 2.206 on 3 and 20 DF,  p-value: 0.119
+
+
+ ====================================================================== 
+FALSE LURES FINAL ANALYSES
+====================================================================== 
+
+--- L1: Full Definitive Binomial Model ---
+
+Full model coefficients:
+# A tibble: 14 × 7
+   term                  estimate std.error  p.value      OR   OR_lower OR_upper
+   <chr>                    <dbl>     <dbl>    <dbl>   <dbl>      <dbl>    <dbl>
+ 1 (Intercept)            -2.91       3.64   0.424    0.0543  0.0000433    68.1 
+ 2 structuresegmented      1.78       0.657  0.00676  5.93    1.63         21.5 
+ 3 timingsynchronous       0.467      0.678  0.491    1.60    0.422         6.03
+ 4 timingpost_reading      0.246      0.619  0.691    1.28    0.380         4.31
+ 5 ai_summary_accuracy     2.44       1.62   0.132   11.5     0.478       276.  
+ 6 article_accuracy        0.582      0.893  0.515    1.79    0.311        10.3 
+ 7 ai_trust                0.452      0.513  0.378    1.57    0.575         4.30
+ 8 ai_dependence          -0.705      0.403  0.0802   0.494   0.224         1.09
+ 9 log_summary_time       -0.161      0.370  0.664    0.851   0.412         1.76
+10 log_reading_time        0.0261     0.703  0.970    1.03    0.259         4.07
+11 mental_effort           0.157      0.260  0.545    1.17    0.703         1.95
+12 articlesemiconductors   0.846      0.564  0.133    2.33    0.772         7.03
+13 articleuhi              0.803      0.539  0.136    2.23    0.776         6.42
+14 sd__(Intercept)         0.818     NA     NA        2.27   NA            NA   
+
+Key: Structure effect (controlling all):
+  OR = 5.93 , 95% CI [ 1.63 , 21.47 ] , p = 0.0068 
+
+Reduced model (structure + timing + summary_acc + article):
+# A tibble: 8 × 4
+  term                  estimate p.value     OR
+  <chr>                    <dbl>   <dbl>  <dbl>
+1 (Intercept)             -3.23   0.0249 0.0394
+2 structuresegmented       1.25   0.0254 3.48  
+3 timingsynchronous        0.321  0.599  1.38  
+4 timingpost_reading       0.273  0.624  1.31  
+5 ai_summary_accuracy      2.16   0.133  8.66  
+6 articlesemiconductors    0.789  0.145  2.20  
+7 articleuhi               0.663  0.173  1.94  
+8 sd__(Intercept)          0.940 NA      2.56  
+
+--- L2: Article Effects on False Lures ---
+
+Lures by article:
+# A tibble: 7 × 4
+  term                  estimate p.value    OR
+  <chr>                    <dbl>   <dbl> <dbl>
+1 (Intercept)             -1.28   0.0213 0.279
+2 structuresegmented       1.18   0.0264 3.25 
+3 timingsynchronous       -0.259  0.580  0.772
+4 timingpost_reading      -0.187  0.687  0.829
+5 articlesemiconductors    0.421  0.372  1.52 
+6 articleuhi               0.744  0.120  2.10 
+7 sd__(Intercept)          0.873 NA      2.39 
+
+Predicted lure probability by article:
+ article         prob     SE  df asymp.LCL asymp.UCL
+ crispr         0.303 0.0820 Inf     0.168     0.482
+ semiconductors 0.398 0.0894 Inf     0.241     0.579
+ uhi            0.477 0.0927 Inf     0.306     0.654
+
+Results are averaged over the levels of: structure, timing 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale 
+
+Article contrasts:
+ contrast                odds.ratio        SE  df null z.ratio p.value
+ crispr / semiconductors  0.6561441 0.3093881 Inf    1  -0.894  0.7430
+ crispr / uhi             0.4751292 0.2272116 Inf    1  -1.556  0.3590
+ semiconductors / uhi     0.7241233 0.3342365 Inf    1  -0.699  0.7430
+
+Results are averaged over the levels of: structure, timing 
+P value adjustment: holm method for 3 tests 
+Tests are performed on the log odds ratio scale 
+
+--- L3: Simple Effects of Timing Within Each Structure ---
+
+--- INTEGRATED structure ---
+# A tibble: 6 × 3
+  term                  estimate  p.value
+  <chr>                    <dbl>    <dbl>
+1 (Intercept)             -1.09   0.119  
+2 timingsynchronous       -1.35   0.0875 
+3 timingpost_reading      -1.63   0.0522 
+4 articlesemiconductors    0.410  0.616  
+5 articleuhi               2.28   0.00940
+6 sd__(Intercept)          0.836 NA      
+
+Predicted lure prob by timing (integrated):
+ timing        prob     SE  df asymp.LCL asymp.UCL
+ pre_reading  0.451 0.1350 Inf    0.2207     0.704
+ synchronous  0.175 0.0959 Inf    0.0546     0.438
+ post_reading 0.139 0.0834 Inf    0.0395     0.387
+
+Results are averaged over the levels of: article 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale 
+
+--- SEGMENTED structure ---
+# A tibble: 6 × 3
+  term                  estimate p.value
+  <chr>                    <dbl>   <dbl>
+1 (Intercept)             -0.420   0.573
+2 timingsynchronous        0.526   0.447
+3 timingpost_reading       0.702   0.295
+4 articlesemiconductors    0.722   0.297
+5 articleuhi              -0.191   0.779
+6 sd__(Intercept)          1.20   NA    
+
+Predicted lure prob by timing (segmented):
+ timing        prob    SE  df asymp.LCL asymp.UCL
+ pre_reading  0.440 0.146 Inf     0.197     0.715
+ synchronous  0.570 0.147 Inf     0.291     0.811
+ post_reading 0.613 0.140 Inf     0.333     0.834
+
+Results are averaged over the levels of: article 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale 
+
+--- L4: Model Family Comparison ---
+boundary (singular) fit: see help('isSingular')
+
+AIC comparison:
+  Binomial:  155.4 
+  Poisson:   171.3 
+
+Structure coefficient comparison:
+  Binomial (log-OR):  1.178 
+  Poisson (log-IRR):  0.591 
+
+Structure p-values:
+  Binomial:  0.0264 
+  Poisson:   0.0297 
+
+Model family comparison:
+# A tibble: 2 × 5
+  model      AIC structure_coef structure_OR_IRR structure_p
+  <chr>    <dbl>          <dbl>            <dbl>       <dbl>
+1 Binomial  155.          1.18              3.25      0.0264
+2 Poisson   171.          0.591             1.81      0.0297
+
+Conclusion:  Binomial  is preferred (lower AIC)
+
+Predicted lure probability (binomial model):
+ structure   prob     SE  df asymp.LCL asymp.UCL
+ integrated 0.262 0.0741 Inf     0.143     0.429
+ segmented  0.536 0.0903 Inf     0.361     0.701
+
+Results are averaged over the levels of: timing, article 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale 
+
+--- Creating decomposition plot ---
+
+ ====================================================================== 
+ANALYSES COMPLETE
+====================================================================== 
+
+Generated tables:
+  T1: trust_by_timing, dependence_by_timing, trust_dep_descriptives
+  T2: summary_acc_with_time, summary_acc_timing_contrasts
+  T3: mcq_decomposition_progressive, mcq_full_decomposition
+  T4: mcq_with_effort
+  T5: who_benefits_deltas
+  L1: lure_full_model, lure_reduced_model
+  L2: lure_by_article, lure_article_emms
+  L3: lure_simple_effects
+  L4: model_family_comparison
+
+Generated plots:
+  timing_decomposition.png

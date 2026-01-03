@@ -1,0 +1,953 @@
+── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.1     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+✔ purrr     1.2.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+Loading required package: Matrix
+
+Attaching package: ‘Matrix’
+
+The following objects are masked from ‘package:tidyr’:
+
+    expand, pack, unpack
+
+
+Attaching package: ‘lmerTest’
+
+The following object is masked from ‘package:lme4’:
+
+    lmer
+
+The following object is masked from ‘package:stats’:
+
+    step
+
+Welcome to emmeans.
+Caution: You lose important information if you filter this package's results.
+See '? untidy'
+Registered S3 methods overwritten by 'MuMIn':
+  method        from 
+  nobs.multinom broom
+  nobs.fitdistr broom
+
+============================================================
+0) ARTICLE DIFFERENCES
+============================================================
+
+--- Descriptives by Article ---
+# A tibble: 3 × 6
+  article        mcq_mean mcq_sd recall_mean recall_sd     n
+  <fct>             <dbl>  <dbl>       <dbl>     <dbl> <int>
+1 crispr            0.625  0.134        5.35      1.89    36
+2 semiconductors    0.480  0.170        5.28      1.86    36
+3 uhi               0.601  0.144        5.85      1.99    36
+
+--- Model 0A: MCQ ~ article + group + (1|participant_id) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ article + experiment_group + (1 | participant_id)
+   Data: dat
+
+REML criterion at convergence: -93.7
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.87930 -0.69197 -0.02254  0.72740  2.85704 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.001431 0.03782 
+ Residual                   0.019497 0.13963 
+Number of obs: 108, groups:  participant_id, 36
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            0.65442    0.02630 94.24621  24.887  < 2e-16 ***
+articlesemiconductors -0.14484    0.03291 70.00000  -4.401 3.78e-05 ***
+articleuhi            -0.02381    0.03291 70.00000  -0.723  0.47189    
+experiment_groupNoAI  -0.08828    0.03148 34.00000  -2.804  0.00828 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) artcls artclh
+artclsmcndc -0.626              
+articleuhi  -0.626  0.500       
+exprmnt_NAI -0.399  0.000  0.000
+
+Article pairwise contrasts:
+ contrast                estimate     SE df t.ratio p.value
+ crispr - semiconductors   0.1448 0.0329 70   4.401  0.0001
+ crispr - uhi              0.0238 0.0329 70   0.723  0.4719
+ semiconductors - uhi     -0.1210 0.0329 70  -3.678  0.0009
+
+Results are averaged over the levels of: experiment_group 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 3 tests 
+
+--- Model 0B: MCQ ~ group * article + (1|participant_id) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ experiment_group * article + (1 | participant_id)
+   Data: dat
+
+REML criterion at convergence: -87.5
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.84179 -0.72164  0.01336  0.66484  3.05663 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.001348 0.03672 
+ Residual                   0.019745 0.14052 
+Number of obs: 108, groups:  participant_id, 36
+
+Fixed effects:
+                                             Estimate Std. Error         df
+(Intercept)                                  0.648796   0.029646 101.173525
+experiment_groupNoAI                        -0.071404   0.051348 101.173525
+articlesemiconductors                       -0.124996   0.040563  67.999999
+articleuhi                                  -0.026779   0.040563  67.999999
+experiment_groupNoAI:articlesemiconductors  -0.059537   0.070258  67.999999
+experiment_groupNoAI:articleuhi              0.008921   0.070258  67.999999
+                                           t value Pr(>|t|)    
+(Intercept)                                 21.885  < 2e-16 ***
+experiment_groupNoAI                        -1.391  0.16740    
+articlesemiconductors                       -3.081  0.00297 ** 
+articleuhi                                  -0.660  0.51137    
+experiment_groupNoAI:articlesemiconductors  -0.847  0.39974    
+experiment_groupNoAI:articleuhi              0.127  0.89934    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+                     (Intr) ex_NAI artcls artclh exprmnt_grpNAI:rtcls
+exprmnt_NAI          -0.577                                          
+artclsmcndc          -0.684  0.395                                   
+articleuhi           -0.684  0.395  0.500                            
+exprmnt_grpNAI:rtcls  0.395 -0.684 -0.577 -0.289                     
+exprmnt_grpNAI:rtclh  0.395 -0.684 -0.289 -0.577  0.500              
+
+Group × Article interaction test:
+Type III Analysis of Variance Table with Satterthwaite's method
+                          Sum Sq  Mean Sq NumDF DenDF F value    Pr(>F)    
+experiment_group         0.15523 0.155231     1    34  7.8619  0.008283 ** 
+article                  0.44792 0.223958     2    68 11.3427 5.611e-05 ***
+experiment_group:article 0.02216 0.011081     2    68  0.5612  0.573131    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+--- Model 0C: AI-only MCQ ~ timing * article + structure + (1|participant_id) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ timing * article + structure + (1 | participant_id)
+   Data: ai_dat
+
+REML criterion at convergence: -72.1
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.77918 -0.60221  0.01228  0.58350  1.74544 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.003095 0.05563 
+ Residual                   0.010534 0.10263 
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                                         Estimate Std. Error       df t value
+(Intercept)                               0.79957    0.04264 58.97815  18.751
+timingsynchronous                        -0.18836    0.05394 61.02706  -3.492
+timingpost_reading                       -0.14326    0.06106 60.84109  -2.346
+articlesemiconductors                    -0.14030    0.05507 60.84334  -2.548
+articleuhi                               -0.03809    0.05875 61.10560  -0.648
+structuresegmented                       -0.07295    0.03352 20.98327  -2.177
+timingsynchronous:articlesemiconductors  -0.02505    0.08171 60.67763  -0.307
+timingpost_reading:articlesemiconductors  0.04775    0.08619 61.96992   0.554
+timingsynchronous:articleuhi              0.09062    0.08584 61.90522   1.056
+timingpost_reading:articleuhi            -0.02813    0.08523 61.76378  -0.330
+                                         Pr(>|t|)    
+(Intercept)                               < 2e-16 ***
+timingsynchronous                        0.000898 ***
+timingpost_reading                       0.022249 *  
+articlesemiconductors                    0.013390 *  
+articleuhi                               0.519179    
+structuresegmented                       0.041080 *  
+timingsynchronous:articlesemiconductors  0.760239    
+timingpost_reading:articlesemiconductors 0.581559    
+timingsynchronous:articleuhi             0.295178    
+timingpost_reading:articleuhi            0.742518    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+                   (Intr) tmngsy tmngp_ artcls artclh strctr tmngsynchrns:rtcls
+tmngsynchrn        -0.662                                                      
+tmngpst_rdn        -0.596  0.492                                               
+artclsmcndc        -0.654  0.587  0.531                                        
+articleuhi         -0.611  0.568  0.477  0.502                                 
+strctrsgmnt        -0.319 -0.104 -0.053 -0.081 -0.087                          
+tmngsynchrns:rtcls  0.483 -0.743 -0.391 -0.756 -0.412  0.124                   
+tmngpst_rdng:rtcls  0.442 -0.351 -0.753 -0.687 -0.303  0.031  0.478            
+tmngsynchrns:rtclh  0.432 -0.684 -0.294 -0.352 -0.736  0.087  0.472            
+tmngpst_rdng:rtclh  0.460 -0.408 -0.768 -0.396 -0.742  0.076  0.317            
+                   tmngpst_rdng:rtcls tmngsynchrns:rtclh
+tmngsynchrn                                             
+tmngpst_rdn                                             
+artclsmcndc                                             
+articleuhi                                              
+strctrsgmnt                                             
+tmngsynchrns:rtcls                                      
+tmngpst_rdng:rtcls                                      
+tmngsynchrns:rtclh  0.167                               
+tmngpst_rdng:rtclh  0.528              0.495            
+
+Timing × Article interaction test:
+Type III Analysis of Variance Table with Satterthwaite's method
+                Sum Sq  Mean Sq NumDF  DenDF F value    Pr(>F)    
+timing         0.36671 0.183354     2 42.251 17.4065 3.061e-06 ***
+article        0.24223 0.121115     2 42.251 11.4979 0.0001031 ***
+structure      0.04990 0.049902     1 20.983  4.7374 0.0410800 *  
+timing:article 0.05665 0.014162     4 60.475  1.3445 0.2639316    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+--- Model 0D: AI-only Summary Acc ~ timing * article + structure + (1|participant_id) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: 
+ai_summary_accuracy ~ timing * article + structure + (1 | participant_id)
+   Data: ai_dat
+
+REML criterion at convergence: -28.7
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.89157 -0.49480  0.02304  0.62211  2.05340 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.01157  0.1075  
+ Residual                   0.01838  0.1356  
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                                         Estimate Std. Error       df t value
+(Intercept)                               0.88504    0.06216 56.62633  14.239
+timingsynchronous                        -0.23727    0.07514 58.50786  -3.158
+timingpost_reading                       -0.21994    0.08495 58.12598  -2.589
+articlesemiconductors                    -0.14020    0.07661 58.07522  -1.830
+articleuhi                                0.04564    0.08189 58.72751   0.557
+structuresegmented                       -0.02489    0.05473 21.21326  -0.455
+timingsynchronous:articlesemiconductors  -0.14548    0.11649 61.82202  -1.249
+timingpost_reading:articlesemiconductors  0.07486    0.12148 60.55059   0.616
+timingsynchronous:articleuhi              0.06480    0.12121 60.87747   0.535
+timingpost_reading:articleuhi            -0.03032    0.12063 61.22838  -0.251
+                                         Pr(>|t|)    
+(Intercept)                               < 2e-16 ***
+timingsynchronous                         0.00251 ** 
+timingpost_reading                        0.01214 *  
+articlesemiconductors                     0.07236 .  
+articleuhi                                0.57945    
+structuresegmented                        0.65388    
+timingsynchronous:articlesemiconductors   0.21643    
+timingpost_reading:articlesemiconductors  0.54005    
+timingsynchronous:articleuhi              0.59487    
+timingpost_reading:articleuhi             0.80239    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+                   (Intr) tmngsy tmngp_ artcls artclh strctr tmngsynchrns:rtcls
+tmngsynchrn        -0.630                                                      
+tmngpst_rdn        -0.568  0.494                                               
+artclsmcndc        -0.623  0.605  0.558                                        
+articleuhi         -0.582  0.596  0.488  0.504                                 
+strctrsgmnt        -0.375 -0.095 -0.050 -0.074 -0.081                          
+tmngsynchrns:rtcls  0.478 -0.762 -0.417 -0.773 -0.441  0.110                   
+tmngpst_rdng:rtcls  0.422 -0.344 -0.762 -0.700 -0.287  0.027  0.482            
+tmngsynchrns:rtclh  0.413 -0.699 -0.279 -0.347 -0.748  0.079  0.478            
+tmngpst_rdng:rtclh  0.452 -0.431 -0.778 -0.418 -0.754  0.071  0.351            
+                   tmngpst_rdng:rtcls tmngsynchrns:rtclh
+tmngsynchrn                                             
+tmngpst_rdn                                             
+artclsmcndc                                             
+articleuhi                                              
+strctrsgmnt                                             
+tmngsynchrns:rtcls                                      
+tmngpst_rdng:rtcls                                      
+tmngsynchrns:rtclh  0.130                               
+tmngpst_rdng:rtclh  0.520              0.490            
+
+Timing × Article interaction test (summary accuracy):
+Type III Analysis of Variance Table with Satterthwaite's method
+                Sum Sq Mean Sq NumDF  DenDF F value    Pr(>F)    
+timing         0.89001 0.44500     2 41.736 24.2094 1.047e-07 ***
+article        0.60513 0.30256     2 41.736 16.4603 5.366e-06 ***
+structure      0.00380 0.00380     1 21.213  0.2068    0.6539    
+timing:article 0.13851 0.03463     4 59.813  1.8838    0.1250    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+============================================================
+1) AI vs NoAI BEYOND MCQ
+============================================================
+
+--- Model 1A: Recall ~ group + article + (1|participant_id) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: recall_total_score ~ experiment_group + article + (1 | participant_id)
+   Data: dat
+
+REML criterion at convergence: 379.4
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.23617 -0.56993 -0.02945  0.45631  2.39859 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 2.8110   1.6766  
+ Residual                   0.9222   0.9603  
+Number of obs: 108, groups:  participant_id, 36
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            5.39120    0.38342 43.16243  14.061   <2e-16 ***
+experiment_groupNoAI  -0.13194    0.62434 34.00000  -0.211   0.8339    
+articlesemiconductors -0.06944    0.22634 70.00000  -0.307   0.7599    
+articleuhi             0.50000    0.22634 70.00000   2.209   0.0304 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) ex_NAI artcls
+exprmnt_NAI -0.543              
+artclsmcndc -0.295  0.000       
+articleuhi  -0.295  0.000  0.500
+
+Group contrast on recall:
+ experiment_group emmean   SE df lower.CL upper.CL
+ AI                 5.53 0.36 34     4.80     6.27
+ NoAI               5.40 0.51 34     4.37     6.44
+
+Results are averaged over the levels of: article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast  estimate    SE df t.ratio p.value
+ AI - NoAI    0.132 0.624 34   0.211  0.8339
+
+Results are averaged over the levels of: article 
+Degrees-of-freedom method: kenward-roger 
+
+--- Model 1B: Article Accuracy ~ group + article + (1|participant_id) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: article_accuracy ~ experiment_group + article + (1 | participant_id)
+   Data: dat
+
+REML criterion at convergence: 1.9
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.30729 -0.79621 -0.07503  0.50503  2.49464 
+
+Random effects:
+ Groups         Name        Variance  Std.Dev.
+ participant_id (Intercept) 0.0007348 0.02711 
+ Residual                   0.0514675 0.22686 
+Number of obs: 108, groups:  participant_id, 36
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            0.52943    0.04121 98.39587   12.85   <2e-16 ***
+experiment_groupNoAI   0.03076    0.04729 34.00000    0.65   0.5198    
+articlesemiconductors -0.09623    0.05347 70.00000   -1.80   0.0762 .  
+articleuhi            -0.05456    0.05347 70.00000   -1.02   0.3110    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) ex_NAI artcls
+exprmnt_NAI -0.382              
+artclsmcndc -0.649  0.000       
+articleuhi  -0.649  0.000  0.500
+
+Group contrast on article accuracy:
+ experiment_group emmean     SE df lower.CL upper.CL
+ AI                0.479 0.0273 34    0.424    0.535
+ NoAI              0.510 0.0386 34    0.431    0.588
+
+Results are averaged over the levels of: article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast  estimate     SE df t.ratio p.value
+ AI - NoAI  -0.0308 0.0473 34  -0.650  0.5198
+
+Results are averaged over the levels of: article 
+Degrees-of-freedom method: kenward-roger 
+
+============================================================
+2) EFFICIENCY (AI ONLY) - Controlling for Total Time
+============================================================
+
+--- Total Time by Timing Condition ---
+# A tibble: 3 × 4
+  timing       mean_total_time sd_total_time     n
+  <fct>                  <dbl>         <dbl> <int>
+1 pre_reading             547.          144.    24
+2 synchronous             660.          266.    24
+3 post_reading            531.          157.    24
+
+--- Model 2: MCQ ~ timing + structure + total_time_sec + article + (1|participant_id) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ timing + structure + total_time_sec + article +  
+    (1 | participant_id)
+   Data: ai_dat
+
+REML criterion at convergence: -63.2
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.61882 -0.70533  0.01781  0.74144  1.67463 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.002465 0.04965 
+ Residual                   0.011388 0.10671 
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                        Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)            7.920e-01  5.458e-02  6.485e+01  14.510  < 2e-16 ***
+timingsynchronous     -1.732e-01  3.202e-02  4.516e+01  -5.409 2.31e-06 ***
+timingpost_reading    -1.437e-01  3.118e-02  4.344e+01  -4.609 3.54e-05 ***
+structuresegmented    -6.951e-02  3.287e-02  2.285e+01  -2.114   0.0456 *  
+total_time_sec        -6.669e-07  7.348e-05  6.461e+01  -0.009   0.9928    
+articlesemiconductors -1.335e-01  3.089e-02  4.337e+01  -4.320 8.94e-05 ***
+articleuhi            -2.569e-02  3.150e-02  4.356e+01  -0.815   0.4193    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) tmngsy tmngp_ strctr ttl_t_ artcls
+tmngsynchrn -0.089                                   
+tmngpst_rdn -0.299  0.456                            
+strctrsgmnt -0.436 -0.049  0.010                     
+total_tm_sc -0.781 -0.263  0.053  0.185              
+artclsmcndc -0.311  0.056  0.000  0.003  0.019       
+articleuhi  -0.205  0.084 -0.131 -0.016 -0.087  0.496
+
+Timing contrasts (Holm-corrected):
+ timing       emmean     SE   df lower.CL upper.CL
+ pre_reading   0.704 0.0242 61.3    0.656    0.752
+ synchronous   0.531 0.0250 62.0    0.481    0.581
+ post_reading  0.560 0.0246 61.9    0.511    0.609
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast                   estimate     SE   df t.ratio p.value
+ pre_reading - synchronous    0.1732 0.0321 44.9   5.398 <0.0001
+ pre_reading - post_reading   0.1437 0.0312 43.2   4.609 <0.0001
+ synchronous - post_reading  -0.0294 0.0331 45.5  -0.891  0.3778
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 3 tests 
+
+Effect sizes (d):
+                    contrast   estimate          d      p.value
+1  pre_reading - synchronous  0.1731759  1.6228066 7.311590e-06
+2 pre_reading - post_reading  0.1437290  1.3468640 7.157311e-05
+3 synchronous - post_reading -0.0294469 -0.2759427 3.777681e-01
+
+============================================================
+3) FALSE LURES MECHANISM (AI ONLY) - Binomial Models
+============================================================
+
+--- Model 3A: Binomial Base Model ---
+cbind(lures, no_lures) ~ ai_summary_accuracy + timing + structure + article + (1|participant_id)
+
+Warning message:
+In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.00674949 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: cbind(lures, no_lures) ~ ai_summary_accuracy + timing + structure +  
+    article + (1 | participant_id)
+   Data: ai_dat
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    155.0     173.2     -69.5     139.0        64 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.8974 -0.6798  0.1412  0.6890  1.6385 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.8833   0.9398  
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error z value Pr(>|z|)  
+(Intercept)            -3.2365     1.4422  -2.244   0.0248 *
+ai_summary_accuracy     2.1629     1.4378   1.504   0.1325  
+timingsynchronous       0.3208     0.6099   0.526   0.5989  
+timingpost_reading      0.2751     0.5573   0.494   0.6216  
+structuresegmented      1.2459     0.5577   2.234   0.0255 *
+articlesemiconductors   0.7904     0.5422   1.458   0.1449  
+articleuhi              0.6623     0.4867   1.361   0.1736  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_smm_ tmngsy tmngp_ strctr artcls
+a_smmry_ccr -0.919                                   
+tmngsynchrn -0.712  0.622                            
+tmngpst_rdn -0.618  0.539  0.655                     
+strctrsgmnt -0.318  0.124  0.067  0.057              
+artclsmcndc -0.592  0.462  0.357  0.234  0.077       
+articleuhi  -0.108 -0.081  0.019 -0.144  0.033  0.433
+optimizer (Nelder_Mead) convergence code: 0 (OK)
+Model failed to converge with max|grad| = 0.00674949 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+
+
+Odds Ratios:
+# A tibble: 8 × 5
+  term                      OR conf.low conf.high p.value
+  <chr>                  <dbl>    <dbl>     <dbl>   <dbl>
+1 (Intercept)           0.0393  0.00233     0.664  0.0248
+2 ai_summary_accuracy   8.70    0.519     146.     0.132 
+3 timingsynchronous     1.38    0.417       4.55   0.599 
+4 timingpost_reading    1.32    0.442       3.93   0.622 
+5 structuresegmented    3.48    1.17       10.4    0.0255
+6 articlesemiconductors 2.20    0.762       6.38   0.145 
+7 articleuhi            1.94    0.747       5.03   0.174 
+8 sd__(Intercept)       0.940  NA          NA     NA     
+
+--- Model 3B: Adding Trust + Dependence ---
+Warning message:
+In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.0335485 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: cbind(lures, no_lures) ~ ai_summary_accuracy + timing + structure +  
+    article + ai_trust + ai_dependence + (1 | participant_id)
+   Data: ai_dat
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    155.8     178.6     -67.9     135.8        62 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.9675 -0.7156  0.1678  0.5921  2.1579 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.6693   0.8181  
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error z value Pr(>|z|)   
+(Intercept)            -1.9281     2.2028  -0.875  0.38141   
+ai_summary_accuracy     2.0099     1.4877   1.351  0.17669   
+timingsynchronous       0.2826     0.6156   0.459  0.64615   
+timingpost_reading      0.2595     0.5629   0.461  0.64474   
+structuresegmented      1.6436     0.6259   2.626  0.00864 **
+articlesemiconductors   0.7495     0.5454   1.374  0.16937   
+articleuhi              0.6664     0.4904   1.359  0.17423   
+ai_trust                0.4076     0.4992   0.816  0.41425   
+ai_dependence          -0.6567     0.3815  -1.721  0.08516 . 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_smm_ tmngsy tmngp_ strctr artcls artclh a_trst
+a_smmry_ccr -0.357                                                 
+tmngsynchrn -0.309  0.621                                          
+tmngpst_rdn -0.278  0.548  0.659                                   
+strctrsgmnt -0.285  0.048  0.015  0.023                            
+artclsmcndc -0.263  0.456  0.366  0.242  0.036                     
+articleuhi  -0.082 -0.087  0.029 -0.129  0.049  0.437              
+ai_trust    -0.509 -0.231 -0.160 -0.122  0.478 -0.115  0.034       
+ai_dependnc -0.145  0.006  0.018 -0.003 -0.483  0.002 -0.033 -0.604
+optimizer (Nelder_Mead) convergence code: 0 (OK)
+Model failed to converge with max|grad| = 0.0335485 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+
+
+Odds Ratios with Trust/Dependence:
+# A tibble: 10 × 5
+   term                     OR conf.low conf.high  p.value
+   <chr>                 <dbl>    <dbl>     <dbl>    <dbl>
+ 1 (Intercept)           0.145  0.00194     10.9   0.381  
+ 2 ai_summary_accuracy   7.46   0.404      138.    0.177  
+ 3 timingsynchronous     1.33   0.397        4.43  0.646  
+ 4 timingpost_reading    1.30   0.430        3.91  0.645  
+ 5 structuresegmented    5.17   1.52        17.6   0.00864
+ 6 articlesemiconductors 2.12   0.727        6.16  0.169  
+ 7 articleuhi            1.95   0.745        5.09  0.174  
+ 8 ai_trust              1.50   0.565        4.00  0.414  
+ 9 ai_dependence         0.519  0.245        1.10  0.0852 
+10 sd__(Intercept)       0.818 NA           NA    NA      
+
+--- Model 3C: Summary Accuracy × Structure Interaction ---
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: cbind(lures, no_lures) ~ ai_summary_accuracy * structure + timing +  
+    article + (1 | participant_id)
+   Data: ai_dat
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    153.6     174.1     -67.8     135.6        63 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.8485 -0.6376  0.1676  0.6418  1.3807 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 1.101    1.049   
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                                       Estimate Std. Error z value Pr(>|z|)   
+(Intercept)                             -4.7053     1.8117  -2.597   0.0094 **
+ai_summary_accuracy                      4.1025     1.9677   2.085   0.0371 * 
+structuresegmented                       3.9960     1.7204   2.323   0.0202 * 
+timingsynchronous                        0.3243     0.6298   0.515   0.6066   
+timingpost_reading                       0.2191     0.5730   0.382   0.7021   
+articlesemiconductors                    0.8802     0.5617   1.567   0.1171   
+articleuhi                               0.7616     0.5020   1.517   0.1292   
+ai_summary_accuracy:structuresegmented  -3.9010     2.2395  -1.742   0.0815 . 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_smm_ strctr tmngsy tmngp_ artcls artclh
+a_smmry_ccr -0.943                                          
+strctrsgmnt -0.599  0.625                                   
+tmngsynchrn -0.601  0.493  0.038                            
+tmngpst_rdn -0.507  0.412 -0.003  0.645                     
+artclsmcndc -0.535  0.412  0.134  0.366  0.215              
+articleuhi  -0.145  0.012  0.134  0.015 -0.158  0.440       
+a_smmry_cc:  0.534 -0.626 -0.937 -0.019  0.025 -0.118 -0.134
+
+Interaction model ORs:
+# A tibble: 9 × 5
+  term                                         OR  conf.low conf.high  p.value
+  <chr>                                     <dbl>     <dbl>     <dbl>    <dbl>
+1 (Intercept)                             0.00905  0.000260     0.315  0.00940
+2 ai_summary_accuracy                    60.5      1.28      2862.     0.0371 
+3 structuresegmented                     54.4      1.87      1584.     0.0202 
+4 timingsynchronous                       1.38     0.402        4.75   0.607  
+5 timingpost_reading                      1.24     0.405        3.83   0.702  
+6 articlesemiconductors                   2.41     0.802        7.25   0.117  
+7 articleuhi                              2.14     0.801        5.73   0.129  
+8 ai_summary_accuracy:structuresegmented  0.0202   0.000251     1.63   0.0815 
+9 sd__(Intercept)                         1.05    NA           NA     NA      
+
+Predicted lure probability by structure:
+ structure   prob     SE  df asymp.LCL asymp.UCL
+ integrated 0.253 0.0760 Inf     0.134     0.427
+ segmented  0.541 0.0945 Inf     0.359     0.713
+
+Results are averaged over the levels of: timing, article 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale 
+
+============================================================
+4) DECOMPOSITION (AI ONLY)
+============================================================
+
+--- Model 4A: Timing Only ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ timing + structure + article + (1 | participant_id)
+   Data: ai_dat
+
+REML criterion at convergence: -80.4
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.63164 -0.71115  0.01667  0.74773  1.68646 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.002439 0.04939 
+ Residual                   0.011207 0.10586 
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            0.79164    0.03383 62.22036  23.398  < 2e-16 ***
+timingsynchronous     -0.17325    0.03064 44.00000  -5.654 1.08e-06 ***
+timingpost_reading    -0.14371    0.03089 44.00000  -4.653 3.01e-05 ***
+structuresegmented    -0.06945    0.03208 22.00000  -2.165   0.0415 *  
+articlesemiconductors -0.13345    0.03064 44.00000  -4.355 7.84e-05 ***
+articleuhi            -0.02571    0.03113 44.00000  -0.826   0.4133    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) tmngsy tmngp_ strctr artcls
+tmngsynchrn -0.489                            
+tmngpst_rdn -0.412  0.488                     
+strctrsgmnt -0.474  0.000  0.000              
+artclsmcndc -0.474  0.063 -0.001  0.000       
+articleuhi  -0.438  0.063 -0.127  0.000  0.500
+
+--- Model 4B: Full Decomposition ---
+mcq_accuracy ~ ai_summary_accuracy + article_accuracy + timing + structure + article + (1|participant_id)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ ai_summary_accuracy + article_accuracy + timing +  
+    structure + article + (1 | participant_id)
+   Data: ai_dat
+
+REML criterion at convergence: -196.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.7268 -0.5802 -0.1550  0.6407  2.2682 
+
+Random effects:
+ Groups         Name        Variance  Std.Dev.
+ participant_id (Intercept) 0.0006382 0.02526 
+ Residual                   0.0015106 0.03887 
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            0.17240    0.03573 63.94814   4.825 9.05e-06 ***
+ai_summary_accuracy    0.50599    0.03312 63.61219  15.279  < 2e-16 ***
+article_accuracy       0.28141    0.02067 56.77039  13.612  < 2e-16 ***
+timingsynchronous     -0.01695    0.01455 55.00119  -1.165   0.2491    
+timingpost_reading    -0.02919    0.01340 51.72464  -2.178   0.0340 *  
+structuresegmented    -0.03897    0.01392 22.23476  -2.801   0.0104 *  
+articlesemiconductors -0.03148    0.01268 49.17759  -2.481   0.0166 *  
+articleuhi            -0.02409    0.01161 43.41270  -2.075   0.0440 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_smm_ artcl_ tmngsy tmngp_ strctr artcls
+a_smmry_ccr -0.861                                          
+artcl_ccrcy -0.427  0.099                                   
+tmngsynchrn -0.704  0.627  0.158                            
+tmngpst_rdn -0.591  0.532  0.087  0.656                     
+strctrsgmnt -0.273  0.045  0.127  0.040  0.028              
+artclsmcndc -0.567  0.453  0.136  0.336  0.243  0.032       
+articleuhi  -0.110 -0.103  0.130 -0.003 -0.155  0.013  0.403
+
+Model R-squared:
+  Marginal R² = 0.906 
+  Conditional R² = 0.934 
+
+--- Coefficient Change Summary ---
+Synchronous β (timing only): -0.173 
+Synchronous β (full model): -0.017 
+Synchronous change: 90.2 % reduction
+
+Post-reading β (timing only): -0.144 
+Post-reading β (full model): -0.029 
+Post-reading change: 79.7 % reduction
+
+============================================================
+5) RECALL NULL INTERPRETABILITY (AI ONLY) + TOST
+============================================================
+
+--- Model 5: Recall ~ timing + structure + article + (1|participant_id) ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: 
+recall_total_score ~ timing + structure + article + (1 | participant_id)
+   Data: ai_dat
+
+REML criterion at convergence: 253.1
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.75100 -0.56460  0.03767  0.44256  2.37576 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 3.2779   1.811   
+ Residual                   0.9121   0.955   
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            5.10808    0.59142 29.76964   8.637 1.32e-09 ***
+timingsynchronous      0.06237    0.27642 44.00000   0.226    0.823    
+timingpost_reading    -0.00851    0.27866 44.00000  -0.031    0.976    
+structuresegmented     0.48611    0.77265 22.00000   0.629    0.536    
+articlesemiconductors  0.04722    0.27642 44.00000   0.171    0.865    
+articleuhi             0.44967    0.28087 44.00000   1.601    0.117    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) tmngsy tmngp_ strctr artcls
+tmngsynchrn -0.252                            
+tmngpst_rdn -0.213  0.488                     
+strctrsgmnt -0.653  0.000  0.000              
+artclsmcndc -0.245  0.063 -0.001  0.000       
+articleuhi  -0.226  0.063 -0.127  0.000  0.500
+
+Timing effects on recall:
+ timing       emmean    SE   df lower.CL upper.CL
+ pre_reading    5.52 0.418 29.7     4.66     6.37
+ synchronous    5.58 0.418 29.8     4.72     6.43
+ post_reading   5.51 0.419 30.0     4.65     6.36
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+ contrast                   estimate    SE df t.ratio p.value
+ pre_reading - synchronous  -0.06237 0.276 44  -0.226  1.0000
+ pre_reading - post_reading  0.00851 0.279 44   0.031  1.0000
+ synchronous - post_reading  0.07088 0.281 44   0.252  1.0000
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+P value adjustment: holm method for 3 tests 
+
+--- TOST Equivalence Tests for Timing on Recall ---
+SESOI: d = 0.30
+
+Recall SD: 2 
+SESOI (raw): 0.6 
+
+TOST Results:
+                    contrast     estimate   lower.CL  upper.CL     tost_p
+1  pre_reading - synchronous -0.062370278 -0.6696695 0.5449289 0.02917511
+2 pre_reading - post_reading  0.008509755 -0.6036937 0.6207132 0.01978024
+3 synchronous - post_reading  0.070880033 -0.5461887 0.6879488 0.03318979
+  equivalent
+1       TRUE
+2       TRUE
+3       TRUE
+
+============================================================
+6) ROBUSTNESS CHECKS
+============================================================
+
+--- 6A: Leave-One-Article-Out Robustness ---
+
+Dropping: semiconductors 
+Dropping: uhi 
+Dropping: crispr 
+Warning message:
+In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.0162903 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+  dropped_article pre_vs_sync_estimate pre_vs_sync_se pre_vs_sync_p
+1  semiconductors            0.1613319     0.04053686  1.324269e-03
+2             uhi            0.1919409     0.03662377  4.138667e-05
+3          crispr            0.1643756     0.04740634  3.881277e-03
+  structure_OR structure_p
+1     2.118603 0.117984266
+2    10.519465 0.005957655
+3     2.665947 0.000000000
+
+--- 6B: Random-Effects Sensitivity ---
+
+Model with (1|participant_id) + (1|article):
+  Pre-Sync Δ = 0.173 , p = 0 
+
+Model with (1|participant_id) only:
+  Pre-Sync Δ = 0.169 , p = 1e-04 
+
+Model with article as fixed effect:
+  Pre-Sync Δ = 0.173 , p = 0 
+                          model pre_sync_estimate   pre_sync_p
+1 (1|participant) + (1|article)         0.1727547 7.565175e-06
+2          (1|participant) only         0.1692405 1.477604e-04
+3        + article fixed effect         0.1731759 7.201165e-06
+
+--- 6C: False-Lure Overdispersion Check ---
+
+Overdispersion ratio: 0.8 
+✓ No substantial overdispersion (ratio < 1.5)
+
+--- 6D: Time-Cap Sensitivity ---
+
+Trials with reading_time_min ≥ 14.9 : 1 
+Participants with capped trials:
+# A tibble: 1 × 4
+  participant_id article timing      reading_time_min
+  <chr>          <fct>   <fct>                  <dbl>
+1 P252           crispr  synchronous               15
+
+Excluding capped trials:
+  Pre-Sync Δ = 0.172 , p = 0 
+  n_capped original_estimate   original_p nocap_estimate      nocap_p
+1        1         0.1731759 7.201165e-06      0.1724788 1.051377e-05
+
+--- 6E: Leave-One-Participant-Out Influence ---
+
+Structure effect on false lures (leave-one-participant-out):
+Warning messages:
+1: In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.0205716 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+2: In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.0189514 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+3: In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.00564322 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+4: In checkConv(attr(opt, "derivs"), opt$par, ctrl = control$checkConv,  :
+  Model failed to converge with max|grad| = 0.0202851 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+  OR range: 2.68 - 4.23 
+  All p < 0.054 
+
+AI vs NoAI MCQ effect (leave-one-participant-out):
+  β range: -0.107 - -0.079 
+
+============================================================
+GENERATING PLOTS
+============================================================
+
+--- Plot 1: MCQ by Timing (adjusted for total time) ---
+  Saved: all_plots/ORD_plot1_mcq_by_timing.png
+
+--- Plot 2: Lure probability vs summary accuracy by structure ---
+Warning message:
+Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead. 
+Warning message:
+Removed 18 rows containing missing values or values outside the scale range
+(`geom_point()`). 
+  Saved: all_plots/ORD_plot2_lure_prob_by_structure.png
+
+--- Plot 3: Article difficulty (MCQ means) ---
+  Saved: all_plots/ORD_plot3_article_difficulty.png
+
+============================================================
+SUMMARY COMPLETE
+============================================================
+
+Generated 37 new tables (ORD_*.csv)
+Generated 3 new plots (ORD_plot*.png)
+
+All outputs saved to all_tables/ and all_plots/
