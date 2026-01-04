@@ -1,0 +1,516 @@
+====================================================================== 
+RECALL & AI BUFFER ANALYSES
+Connecting to Literature Review Themes
+====================================================================== 
+
+
+====================================================================== 
+A1) RECALL → MCQ (All Participants)
+    Does free recall predict recognition performance?
+====================================================================== 
+
+Model: mcq_accuracy ~ recall + group + timing + structure + article + (1|participant)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ recall_total_score + experiment_group + timing +  
+    structure + article + (1 | participant_id)
+   Data: df
+
+REML criterion at convergence: -100
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.98595 -0.74625 -0.03608  0.65935  3.06700 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.002808 0.05299 
+ Residual                   0.013985 0.11826 
+Number of obs: 108, groups:  participant_id, 36
+
+Fixed effects:
+                        Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)            0.5509330  0.0542723 66.6436337  10.151 3.69e-15 ***
+recall_total_score     0.0005225  0.0073296 54.2785640   0.071   0.9434    
+experiment_groupNoAI   0.0140342  0.0406022 53.4576946   0.346   0.7310    
+timingpost_reading     0.0282895  0.0345671 67.8811393   0.818   0.4160    
+timingpre_reading      0.1738754  0.0342007 67.8624376   5.084 3.12e-06 ***
+structureintegrated    0.0697068  0.0354621 32.5028043   1.966   0.0579 .  
+articlesemiconductors -0.1504211  0.0279265 67.8754041  -5.386 9.72e-07 ***
+articleuhi            -0.0231660  0.0284660 69.6144236  -0.814   0.4185    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) rcll__ ex_NAI tmngps_ tmngpr_ strctr artcls
+rcll_ttl_sc -0.767                                            
+exprmnt_NAI -0.505  0.077                                     
+tmngpst_rdn -0.296  0.019  0.425                              
+tmngpr_rdng -0.308  0.013  0.424  0.500                       
+strctrntgrt -0.400  0.100  0.440  0.002   0.001               
+artclsmcndc -0.250  0.017 -0.028 -0.051  -0.051   0.002       
+articleuhi  -0.113 -0.131 -0.067 -0.154  -0.053  -0.013  0.493
+fit warnings:
+fixed-effect model matrix is rank deficient so dropping 2 columns / coefficients
+
+--- KEY RESULT ---
+recall → MCQ: β = 0.0005, SE = 0.0073, t = 0.07, p = 0.9434
+✗ Not significant: Recall and MCQ are INDEPENDENT measures
+  → Free recall (self-generated) and recognition (cued) tap different processes
+
+--- A1b: AI-only ---
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ recall_total_score + timing + structure + article +  
+    (1 | participant_id)
+   Data: df_ai
+
+REML criterion at convergence: -72.7
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.6536 -0.7583  0.0359  0.7360  1.6451 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.002652 0.05149 
+ Residual                   0.011232 0.10598 
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                       Estimate Std. Error        df t value Pr(>|t|)    
+(Intercept)            0.632521   0.053787 46.603805  11.760 1.51e-15 ***
+recall_total_score     0.003021   0.007932 34.096490   0.381   0.7057    
+timingpre_reading      0.143688   0.030923 43.917326   4.647 3.08e-05 ***
+timingsynchronous     -0.029753   0.031174 43.939004  -0.954   0.3451    
+structuresegmented    -0.070921   0.032875 21.499301  -2.157   0.0424 *  
+articlesemiconductors -0.133588   0.030678 43.927085  -4.355 7.87e-05 ***
+articleuhi            -0.027072   0.031372 44.795012  -0.863   0.3928    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) rcll__ tmngp_ tmngsy strctr artcls
+rcll_ttl_sc -0.752                                   
+tmngpr_rdng -0.314 -0.002                            
+tmngsynchrn -0.326 -0.018  0.512                     
+strctrsgmnt -0.213 -0.117  0.000  0.002              
+artclsmcndc -0.290 -0.012  0.001  0.063  0.001       
+articleuhi  -0.261 -0.114  0.126  0.189  0.013  0.498
+
+AI-only: recall → MCQ: β = 0.0030, p = 0.7057
+
+====================================================================== 
+A2) WHAT PREDICTS RECALL?
+    Testing process variables and individual differences
+====================================================================== 
+
+--- A2a: All Participants (basic predictors) ---
+
+Model: recall ~ log(reading_time) + mental_effort + prior_knowledge + group + article + (1|participant)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: 
+recall_total_score ~ log_reading_time + mental_effort + prior_knowledge +  
+    experiment_group + article + (1 | participant_id)
+   Data: df
+
+REML criterion at convergence: 379.1
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.02335 -0.57613 -0.02918  0.50336  2.43931 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 2.6532   1.6289  
+ Residual                   0.9402   0.9696  
+Number of obs: 108, groups:  participant_id, 36
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            7.04628    1.28759 93.15797   5.472 3.72e-07 ***
+log_reading_time       0.13965    0.33973 85.26460   0.411    0.682    
+mental_effort         -0.18209    0.13984 85.14908  -1.302    0.196    
+prior_knowledge       -0.34689    0.30126 32.94392  -1.151    0.258    
+experiment_groupNoAI  -0.21918    0.61122 32.92990  -0.359    0.722    
+articlesemiconductors -0.06567    0.22917 68.15732  -0.287    0.775    
+articleuhi             0.38211    0.24485 70.30072   1.561    0.123    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) lg_rd_ mntl_f prr_kn ex_NAI artcls
+log_rdng_tm -0.482                                   
+mental_ffrt -0.580 -0.056                            
+prir_knwldg -0.537  0.043 -0.070                     
+exprmnt_NAI -0.190 -0.050  0.064  0.029              
+artclsmcndc -0.036 -0.065 -0.030 -0.001  0.001       
+articleuhi  -0.220 -0.135  0.340 -0.028  0.027  0.463
+
+--- KEY RESULTS (All participants) ---
+log_reading_time → recall: β = 0.140, p = 0.6821 [ns]
+mental_effort → recall: β = -0.182, p = 0.1964 [ns]
+prior_knowledge → recall: β = -0.347, p = 0.2578 [ns]
+
+--- A2b: AI Only (full model with AI-specific predictors) ---
+
+Model: recall ~ log(reading) + log(summary) + effort + summary_acc + trust + dependence + PK + timing + structure + article + (1|participant)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: 
+recall_total_score ~ log_reading_time + log_summary_time + mental_effort +  
+    ai_summary_accuracy + ai_trust + ai_dependence + prior_knowledge +  
+    timing + structure + article + (1 | participant_id)
+   Data: df_ai
+
+REML criterion at convergence: 245.7
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.81824 -0.48735  0.01619  0.51596  2.04836 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 3.1253   1.7678  
+ Residual                   0.9416   0.9704  
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)
+(Intercept)            3.07902    3.57434 30.80153   0.861    0.396
+log_reading_time       0.31659    0.47840 47.49519   0.662    0.511
+log_summary_time       0.26606    0.28338 47.62819   0.939    0.353
+mental_effort         -0.13365    0.19261 49.10239  -0.694    0.491
+ai_summary_accuracy    0.24810    1.05129 47.68274   0.236    0.814
+ai_trust               1.06722    0.71050 19.49414   1.502    0.149
+ai_dependence         -0.79178    0.54304 19.22363  -1.458    0.161
+prior_knowledge       -0.23351    0.35789 19.36524  -0.652    0.522
+timingpre_reading     -0.20805    0.39247 43.17245  -0.530    0.599
+timingsynchronous     -0.04630    0.33485 42.96077  -0.138    0.891
+structuresegmented     1.17546    0.88121 19.13340   1.334    0.198
+articlesemiconductors  0.07162    0.33107 42.04391   0.216    0.830
+articleuhi             0.32545    0.32197 42.28695   1.011    0.318
+
+--- KEY RESULTS (AI only) ---
+log_reading_time → recall: β = 0.317, p = 0.5113 [ns]
+log_summary_time → recall: β = 0.266, p = 0.3525 [ns]
+mental_effort → recall: β = -0.134, p = 0.4910 [ns]
+ai_summary_accuracy → recall: β = 0.248, p = 0.8144 [ns]
+ai_trust → recall: β = 1.067, p = 0.1491 [ns]
+ai_dependence → recall: β = -0.792, p = 0.1610 [ns]
+prior_knowledge → recall: β = -0.234, p = 0.5218 [ns]
+
+--- INTERPRETATION ---
+Levels of Processing: Deeper processing (more effort/time) may support recall
+Offloading Theory: Heavy reliance on AI may REDUCE internally generated recall
+
+====================================================================== 
+A3) RECALL CONFIDENCE CALIBRATION
+    Does confidence predict actual recall? (Metacognitive monitoring)
+====================================================================== 
+
+--- A3a: All Participants ---
+
+Model: recall ~ confidence * group + (1|participant) + (1|article)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: recall_total_score ~ recall_confidence * experiment_group + (1 |  
+    participant_id) + (1 | article)
+   Data: df
+
+REML criterion at convergence: 378
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-2.3349 -0.5236  0.0150  0.4230  2.1958 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 2.88393  1.6982  
+ article        (Intercept) 0.05965  0.2442  
+ Residual                   0.85239  0.9232  
+Number of obs: 108, groups:  participant_id, 36; article, 3
+
+Fixed effects:
+                                       Estimate Std. Error       df t value
+(Intercept)                              4.9279     0.6344  78.7725   7.768
+recall_confidence                        0.1428     0.1178  85.3438   1.212
+experiment_groupNoAI                    -1.6219     1.1864 103.3761  -1.367
+recall_confidence:experiment_groupNoAI   0.3707     0.2439  84.9177   1.520
+                                       Pr(>|t|)    
+(Intercept)                             2.5e-11 ***
+recall_confidence                         0.229    
+experiment_groupNoAI                      0.175    
+recall_confidence:experiment_groupNoAI    0.132    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) rcll_c ex_NAI
+rcll_cnfdnc -0.789              
+exprmnt_NAI -0.520  0.437       
+rcll_c:_NAI  0.395 -0.501 -0.848
+
+--- KEY RESULTS ---
+Confidence main effect: β = 0.143, p = 0.2288
+Confidence × Group interaction: β = 0.371, p = 0.1322
+✗ Confidence is NOT well calibrated with recall (metacognitive failure)
+
+--- A3b: AI Only (with Trust/Dependence moderators) ---
+
+Model: recall ~ confidence + trust + dependence + conf:trust + conf:dep + (1|participant) + (1|article)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: recall_total_score ~ recall_confidence + ai_trust + ai_dependence +  
+    recall_confidence:ai_trust + recall_confidence:ai_dependence +  
+    (1 | participant_id) + (1 | article)
+   Data: df_ai
+
+REML criterion at convergence: 254.3
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.56984 -0.62424  0.09724  0.49109  2.09139 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 3.5671   1.8887  
+ article        (Intercept) 0.0000   0.0000  
+ Residual                   0.8426   0.9179  
+Number of obs: 72, groups:  participant_id, 24; article, 3
+
+Fixed effects:
+                                 Estimate Std. Error        df t value Pr(>|t|)
+(Intercept)                      7.248679   5.036412 63.225165   1.439    0.155
+recall_confidence               -0.250602   0.909033 51.862531  -0.276    0.784
+ai_trust                         0.651979   1.031433 61.451810   0.632    0.530
+ai_dependence                   -1.131234   0.761708 57.149534  -1.485    0.143
+recall_confidence:ai_trust      -0.002598   0.175341 50.186536  -0.015    0.988
+recall_confidence:ai_dependence  0.090495   0.119586 50.297887   0.757    0.453
+
+Correlation of Fixed Effects:
+               (Intr) rcll_c a_trst a_dpnd rcll_cnfdnc:_t
+rcll_cnfdnc    -0.798                                    
+ai_trust       -0.695  0.565                             
+ai_dependnc    -0.355  0.259 -0.416                      
+rcll_cnfdnc:_t  0.596 -0.743 -0.772  0.250               
+rcll_cnfdnc:_d  0.303 -0.373  0.267 -0.731 -0.333        
+optimizer (nloptwrap) convergence code: 0 (OK)
+boundary (singular) fit: see help('isSingular')
+
+
+--- KEY RESULTS (AI only with moderators) ---
+recall_confidence: β = -0.251, p = 0.7839 [ns]
+ai_trust: β = 0.652, p = 0.5297 [ns]
+ai_dependence: β = -1.131, p = 0.1430 [ns]
+recall_confidence:ai_trust: β = -0.003, p = 0.9882 [ns]
+recall_confidence:ai_dependence: β = 0.090, p = 0.4527 [ns]
+
+====================================================================== 
+B1) SUMMARY TIME → SUMMARY ACCURACY (AI Buffer Effect)
+    Does time with summary serve as rehearsal/cue window?
+====================================================================== 
+
+Model: summary_accuracy ~ log(summary_time) + timing + structure + article + (1|participant) + (1|article)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: ai_summary_accuracy ~ log_summary_time + timing + structure +  
+    article + (1 | participant_id) + (1 | article)
+   Data: df_ai
+
+REML criterion at convergence: -30.9
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.95257 -0.66670  0.03356  0.74920  1.84958 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.01025  0.1012  
+ article        (Intercept) 0.02221  0.1490  
+ Residual                   0.01922  0.1386  
+Number of obs: 72, groups:  participant_id, 24; article, 3
+
+Fixed effects:
+                       Estimate Std. Error        df t value Pr(>|t|)   
+(Intercept)            0.410639   0.208220 56.022048   1.972  0.05354 . 
+log_summary_time       0.064969   0.033023 63.632380   1.967  0.05350 . 
+timingpre_reading      0.165411   0.047320 49.622995   3.496  0.00101 **
+timingsynchronous     -0.084398   0.043041 45.687761  -1.961  0.05601 . 
+structuresegmented    -0.007759   0.052780 21.892025  -0.147  0.88447   
+articlesemiconductors -0.167803   0.214573 43.311704  -0.782  0.43845   
+articleuhi             0.043360   0.214695 43.311824   0.202  0.84089   
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) lg_sm_ tmngp_ tmngsy strctr artcls
+lg_smmry_tm -0.653                                   
+tmngpr_rdng  0.248 -0.519                            
+tmngsynchrn  0.100 -0.320  0.581                     
+strctrsgmnt -0.165  0.059 -0.031 -0.019              
+artclsmcndc -0.519  0.005 -0.002  0.010  0.000       
+articleuhi  -0.523  0.006  0.018  0.032  0.000  0.500
+
+--- KEY RESULT ---
+log(summary_time) → summary_accuracy: β = 0.0650, SE = 0.0330, t = 1.97, p = 0.0535
+✗ Not significant after controlling for timing/structure/article
+
+--- TIMING EFFECTS ---
+# A tibble: 2 × 7
+  effect term              estimate std.error statistic    df p.value
+  <chr>  <chr>                <dbl>     <dbl>     <dbl> <dbl>   <dbl>
+1 fixed  timingpre_reading   0.165     0.0473      3.50  49.6 0.00101
+2 fixed  timingsynchronous  -0.0844    0.0430     -1.96  45.7 0.0560 
+
+====================================================================== 
+B2) SUMMARY TIME → MCQ (With Summary + Article Tracks)
+    Does summary time help MCQ through summary track only?
+====================================================================== 
+
+Model: mcq ~ log(summary_time) + summary_acc + article_acc + timing + structure + (1|participant) + (1|article)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: 
+mcq_accuracy ~ log_summary_time + ai_summary_accuracy + article_accuracy +  
+    timing + structure + (1 | participant_id) + (1 | article)
+   Data: df_ai
+
+REML criterion at convergence: -199.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.8620 -0.5977 -0.1196  0.6049  2.3422 
+
+Random effects:
+ Groups         Name        Variance  Std.Dev.
+ participant_id (Intercept) 0.0006156 0.02481 
+ article        (Intercept) 0.0001967 0.01403 
+ Residual                   0.0015277 0.03909 
+Number of obs: 72, groups:  participant_id, 24; article, 3
+
+Fixed effects:
+                     Estimate Std. Error        df t value Pr(>|t|)    
+(Intercept)          0.149032   0.043500 63.169182   3.426  0.00108 ** 
+log_summary_time    -0.008632   0.009350 62.992109  -0.923  0.35938    
+ai_summary_accuracy  0.520498   0.032383 54.943430  16.073  < 2e-16 ***
+article_accuracy     0.283925   0.020675 56.918576  13.733  < 2e-16 ***
+timingpre_reading    0.032880   0.014236 54.712586   2.310  0.02471 *  
+timingsynchronous    0.017781   0.012443 46.124217   1.429  0.15973    
+structuresegmented  -0.039378   0.013834 22.040324  -2.846  0.00938 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) lg_sm_ a_smm_ artcl_ tmngp_ tmngsy
+lg_smmry_tm -0.771                                   
+a_smmry_ccr -0.296 -0.230                            
+artcl_ccrcy -0.293 -0.001  0.091                     
+tmngpr_rdng  0.422 -0.380 -0.365 -0.079              
+tmngsynchrn  0.054 -0.351  0.238  0.084  0.430       
+strctrsgmnt -0.251  0.056  0.029  0.127 -0.046 -0.004
+
+--- KEY RESULTS ---
+log_summary_time → MCQ: β = -0.0086, p = 0.3594 [ns]
+ai_summary_accuracy → MCQ: β = 0.5205, p = 0.0000 [✓ SIG]
+article_accuracy → MCQ: β = 0.2839, p = 0.0000 [✓ SIG]
+
+--- INTERPRETATION ---
+✓ Summary time effect is MEDIATED by summary accuracy
+  → Time helps because it improves summary quality, which then helps MCQ
+✓ MCQ is driven by BOTH summary track AND article track
+  → Consistent with dual-mechanism model
+
+====================================================================== 
+BONUS: OFFLOADING TEST - Does AI Dependence Hurt Recall?
+====================================================================== 
+
+Model: recall ~ ai_dependence + ai_trust + timing + structure + article + (1|participant)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: recall_total_score ~ ai_dependence + ai_trust + timing + structure +  
+    article + (1 | participant_id)
+   Data: df_ai
+
+REML criterion at convergence: 248.3
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.76850 -0.60086  0.03085  0.46474  2.42290 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 3.0223   1.738   
+ Residual                   0.9121   0.955   
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)  
+(Intercept)            3.98737    2.97782 20.26744   1.339   0.1954  
+ai_dependence         -0.93851    0.52547 20.00000  -1.786   0.0893 .
+ai_trust               1.12359    0.69039 20.00000   1.627   0.1193  
+timingpre_reading      0.00851    0.27866 44.00000   0.031   0.9758  
+timingsynchronous      0.07088    0.28087 44.00000   0.252   0.8019  
+structuresegmented     1.27148    0.85575 20.00000   1.486   0.1529  
+articlesemiconductors  0.04722    0.27642 44.00000   0.171   0.8651  
+articleuhi             0.44967    0.28087 44.00000   1.601   0.1165  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_dpnd a_trst tmngp_ tmngsy strctr artcls
+ai_dependnc -0.173                                          
+ai_trust    -0.676 -0.592                                   
+tmngpr_rdng -0.051  0.000  0.000                            
+tmngsynchrn -0.055  0.000  0.000  0.512                     
+strctrsgmnt -0.318 -0.399  0.469  0.000  0.000              
+artclsmcndc -0.049  0.000  0.000  0.001  0.063  0.000       
+articleuhi  -0.057  0.000  0.000  0.127  0.188  0.000  0.500
+
+--- OFFLOADING INTERPRETATION ---
+ai_dependence → recall: β = -0.939, p = 0.0893
+ai_trust → recall: β = 1.124, p = 0.1193
+✗ No offloading effect detected: Dependence doesn't harm recall
+
+====================================================================== 
+SUMMARY OF RECALL & AI BUFFER ANALYSES
+====================================================================== 
+
+A1) Recall → MCQ Relationship
+    All participants: β = 0.0005, p = 0.9434
+    ✗ Recall & MCQ are independent
+
+A2) What Predicts Recall? (AI only)
+    ✗ log_reading_time: β = 0.317, p = 0.5113
+    ✗ log_summary_time: β = 0.266, p = 0.3525
+    ✗ mental_effort: β = -0.134, p = 0.4910
+    ✗ ai_summary_accuracy: β = 0.248, p = 0.8144
+    ✗ ai_trust: β = 1.067, p = 0.1491
+    ✗ ai_dependence: β = -0.792, p = 0.1610
+    ✗ prior_knowledge: β = -0.234, p = 0.5218
+
+A3) Recall Confidence Calibration
+    Confidence → Recall: β = 0.143, p = 0.2288
+    ✗ Poor calibration
+
+B1) Summary Time → Summary Accuracy (AI Buffer)
+    log(summary_time): β = 0.0650, p = 0.0535
+    ✗ Effect not robust
+
+B2) MCQ Mechanism (with both tracks)
+    ✗ log_summary_time: β = -0.0086, p = 0.3594
+    ✓ ai_summary_accuracy: β = 0.5205, p = 0.0000
+    ✓ article_accuracy: β = 0.2839, p = 0.0000
+
+BONUS: Offloading Effect
+    ai_dependence → recall: β = -0.939, p = 0.0893
+    ✗ No offloading effect

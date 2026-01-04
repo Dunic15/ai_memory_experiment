@@ -1,0 +1,661 @@
+=============================================================================
+COMPREHENSIVE ANALYSIS REPORT - AI MEMORY EXPERIMENT
+Generated: 2026-01-03 18:30:37 
+=============================================================================
+
+
+############################################################
+DATA LOADING AND PREPARATION
+############################################################
+
+Data loaded:  108 rows x 18 columns
+
+AI-only subset:  72 observations
+  - Structure levels: integrated segmented 
+  - Timing levels: pre_reading synchronous post_reading 
+  - Participants: 24 
+  - Articles: crispr semiconductors uhi 
+
+
+############################################################
+SECTION A: TIMING EFFECTS ON LEARNING OUTCOMES (AI ONLY)
+############################################################
+
+
+=== A1: MCQ Accuracy ===
+
+--- Analysis: MCQ Accuracy ---
+
+ANOVA Table:
+Anova Table (Type 3 tests)
+
+Response: mcq_accuracy
+                 num Df den Df      MSE       F      ges    Pr(>F)    
+structure        1.0000 22.000 0.018525  4.6869 0.072175 0.0415117 *  
+timing           1.7666 38.866 0.018232 11.7686 0.253514 0.0001766 ***
+structure:timing 1.7666 38.866 0.018232  0.7567 0.021371 0.4607434    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Descriptive Statistics:
+# A tibble: 6 × 6
+  structure  timing           n  mean     sd     se
+  <fct>      <fct>        <int> <dbl>  <dbl>  <dbl>
+1 integrated pre_reading     12 0.750 0.124  0.0357
+2 integrated synchronous     12 0.542 0.124  0.0357
+3 integrated post_reading    12 0.607 0.0939 0.0271
+4 segmented  pre_reading     12 0.649 0.108  0.0310
+5 segmented  synchronous     12 0.524 0.173  0.0500
+6 segmented  post_reading    12 0.518 0.143  0.0414
+
+Pairwise Comparisons for Timing (Holm-adjusted):
+ contrast                   estimate     SE df t.ratio p.value
+ pre_reading - synchronous    0.1666 0.0418 22   3.982  0.0019
+ pre_reading - post_reading   0.1369 0.0370 22   3.700  0.0025
+ synchronous - post_reading  -0.0297 0.0301 22  -0.988  0.3341
+
+Results are averaged over the levels of: structure 
+P value adjustment: holm method for 3 tests 
+
+
+=== A2: Recall Total Score ===
+
+--- Analysis: Recall Total Score ---
+
+ANOVA Table:
+Anova Table (Type 3 tests)
+
+Response: recall_total_score
+                 num Df den Df    MSE      F       ges Pr(>F)
+structure        1.0000 22.000 10.746 0.3958 0.0150597 0.5357
+timing           1.8581 40.879  1.022 0.0256 0.0001747 0.9685
+structure:timing 1.8581 40.879  1.022 0.6180 0.0042011 0.5325
+
+Descriptive Statistics:
+# A tibble: 6 × 6
+  structure  timing           n  mean    sd    se
+  <fct>      <fct>        <int> <dbl> <dbl> <dbl>
+1 integrated pre_reading     12  5.42  2.19 0.633
+2 integrated synchronous     12  5.29  1.91 0.552
+3 integrated post_reading    12  5.17  2.46 0.711
+4 segmented  pre_reading     12  5.58  1.69 0.488
+5 segmented  synchronous     12  5.79  2.12 0.611
+6 segmented  post_reading    12  5.96  1.85 0.535
+
+Pairwise Comparisons for Timing (Holm-adjusted):
+ contrast                   estimate    SE df t.ratio p.value
+ pre_reading - synchronous   -0.0417 0.285 22  -0.146  1.0000
+ pre_reading - post_reading  -0.0625 0.244 22  -0.257  1.0000
+ synchronous - post_reading  -0.0208 0.311 22  -0.067  1.0000
+
+Results are averaged over the levels of: structure 
+P value adjustment: holm method for 3 tests 
+
+
+=== A3: Article Accuracy ===
+
+--- Analysis: Article Accuracy ---
+
+ANOVA Table:
+Anova Table (Type 3 tests)
+
+Response: article_accuracy
+                 num Df den Df      MSE      F      ges Pr(>F)
+structure        1.0000 22.000 0.062973 1.9850 0.027907 0.1728
+timing           1.9903 43.786 0.067801 0.3474 0.010651 0.7074
+structure:timing 1.9903 43.786 0.067801 0.5018 0.015312 0.6080
+
+Descriptive Statistics:
+# A tibble: 6 × 6
+  structure  timing           n  mean    sd     se
+  <fct>      <fct>        <int> <dbl> <dbl>  <dbl>
+1 integrated pre_reading     12 0.542 0.234 0.0677
+2 integrated synchronous     12 0.458 0.317 0.0915
+3 integrated post_reading    12 0.562 0.264 0.0762
+4 segmented  pre_reading     12 0.479 0.249 0.0719
+5 segmented  synchronous     12 0.438 0.264 0.0762
+6 segmented  post_reading    12 0.396 0.198 0.0572
+
+Pairwise Comparisons for Timing (Holm-adjusted):
+ contrast                   estimate     SE df t.ratio p.value
+ pre_reading - synchronous    0.0625 0.0772 22   0.810  1.0000
+ pre_reading - post_reading   0.0312 0.0750 22   0.416  1.0000
+ synchronous - post_reading  -0.0312 0.0726 22  -0.430  1.0000
+
+Results are averaged over the levels of: structure 
+P value adjustment: holm method for 3 tests 
+
+
+
+############################################################
+SECTION B: DOES SUMMARY ACCURACY PREDICT LEARNING? (AI ONLY)
+############################################################
+
+
+=== B1: AI Summary Accuracy → Learning Outcomes ===
+
+--- Model: MCQ ~ Summary Accuracy ---
+Formula: mcq_accuracy ~ ai_summary_accuracy + timing + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                       Estimate Std. Error       df   t value     Pr(>|t|)
+(Intercept)          0.34166049 0.05597358 34.82121  6.103960 5.748677e-07
+ai_summary_accuracy  0.46735210 0.05896930 52.43332  7.925346 1.581240e-10
+timingsynchronous   -0.04528863 0.02839585 58.16688 -1.594903 1.161536e-01
+timingpost_reading  -0.04481487 0.02662918 54.09655 -1.682923 9.815353e-02
+structuresegmented  -0.06296178 0.02271037 21.57128 -2.772380 1.123645e-02
+
+R² (marginal / conditional): 0.6460344 / 0.7107959 
+
+
+--- Model: Recall ~ Summary Accuracy ---
+Formula: recall_total_score ~ ai_summary_accuracy + timing + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                     Estimate Std. Error       df   t value     Pr(>|t|)
+(Intercept)         4.5408250  0.8817793 25.29033 5.1496163 2.449938e-05
+ai_summary_accuracy 0.8544905  0.8042438 14.60378 1.0624770 3.052739e-01
+timingsynchronous   0.2738768  0.3518979 37.52776 0.7782847 4.412809e-01
+timingpost_reading  0.2162615  0.3212089 37.55858 0.6732737 5.048953e-01
+structuresegmented  0.4979790  0.7608860 21.78773 0.6544726 5.196570e-01
+
+R² (marginal / conditional): 0.02092296 / 0.7775994 
+
+
+--- Model: Article Accuracy ~ Summary Accuracy ---
+Formula: article_accuracy ~ ai_summary_accuracy + timing + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                       Estimate Std. Error df    t value     Pr(>|t|)
+(Intercept)          0.66473475 0.14495659 67  4.5857503 2.034796e-05
+ai_summary_accuracy -0.13406450 0.15691666 67 -0.8543675 3.959460e-01
+timingsynchronous   -0.09811088 0.08472235 67 -1.1580284 2.509638e-01
+timingpost_reading  -0.05708535 0.07971811 67 -0.7160900 4.764243e-01
+structuresegmented  -0.08519534 0.06026439 67 -1.4136928 1.620818e-01
+
+R² (marginal / conditional): 0.04521841 / 0.04521841 
+
+
+
+############################################################
+SECTION C: EXPLAINING STRUCTURE → FALSE LURES (AI ONLY)
+############################################################
+
+
+=== C1: False Lure Accuracy ANOVA ===
+
+--- Analysis: False Lure Accuracy ---
+
+ANOVA Table:
+Anova Table (Type 3 tests)
+
+Response: false_lure_accuracy
+                 num Df den Df     MSE      F      ges  Pr(>F)  
+structure        1.0000 22.000 0.13984 4.1964 0.074680 0.05263 .
+timing           1.6383 36.042 0.11638 1.1291 0.028757 0.32473  
+structure:timing 1.6383 36.042 0.11638 0.4735 0.012264 0.58881  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Descriptive Statistics:
+# A tibble: 6 × 6
+  structure  timing           n  mean    sd     se
+  <fct>      <fct>        <int> <dbl> <dbl>  <dbl>
+1 integrated pre_reading     12 0.542 0.396 0.114 
+2 integrated synchronous     12 0.667 0.326 0.0940
+3 integrated post_reading    12 0.458 0.334 0.0965
+4 segmented  pre_reading     12 0.333 0.326 0.0940
+5 segmented  synchronous     12 0.417 0.289 0.0833
+6 segmented  post_reading    12 0.375 0.311 0.0897
+
+Pairwise Comparisons for Timing (Holm-adjusted):
+ contrast                   estimate     SE df t.ratio p.value
+ pre_reading - synchronous   -0.1042 0.0751 22  -1.387  0.4102
+ pre_reading - post_reading   0.0208 0.1080 22   0.193  0.8487
+ synchronous - post_reading   0.1250 0.0809 22   1.545  0.4102
+
+Results are averaged over the levels of: structure 
+P value adjustment: holm method for 3 tests 
+
+
+=== C2: Structure Effect on False Lures - Mechanism Models ===
+
+-- Base Model --
+
+--- Model: False Lures ~ Structure + Timing (Base) ---
+Formula: false_lures_selected ~ structure + timing + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                      Estimate Std. Error       df    t value   Pr(>|t|)
+(Intercept)         0.63947905  0.1902984 26.03046  3.3604014 0.00241131
+structuresegmented  0.47222222  0.2169520 21.99988  2.1766210 0.04052219
+timingsynchronous  -0.12288250  0.1889512 44.35297 -0.6503398 0.51882750
+timingpost_reading -0.04555465  0.1891228 45.32259 -0.2408734 0.81073956
+
+R² (marginal / conditional): 0.09397638 / 0.319644 
+
+
+-- Mechanism Model (adding effort/time) --
+
+--- Model: False Lures ~ Structure + Timing + Mechanisms ---
+Formula: false_lures_selected ~ structure + timing + mental_effort + reading_time_min + summary_time_sec + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                       Estimate  Std. Error       df    t value   Pr(>|t|)
+(Intercept)         0.492207339 0.698367758 56.98542  0.7047968 0.48380746
+structuresegmented  0.479275030 0.219588055 22.92398  2.1826098 0.03956735
+timingsynchronous  -0.034204647 0.205678621 47.27145 -0.1663014 0.86862903
+timingpost_reading  0.151334046 0.235763879 53.15046  0.6418882 0.52370465
+mental_effort      -0.040281764 0.097645817 43.44140 -0.4125293 0.68198037
+reading_time_min   -0.004271623 0.038202725 64.55102 -0.1118146 0.91131736
+summary_time_sec    0.003096487 0.002014876 62.84315  1.5368123 0.12935927
+
+R² (marginal / conditional): 0.1221352 / 0.3165412 
+
+
+-- Coefficient Comparison (Structure) --
+Base model structure coefficient: 0.4722222 
+Mechanism model structure coefficient: 0.479275 
+Change: 1.49 %
+
+
+
+############################################################
+SECTION D: EFFORT/TIME AS PROCESS VARIABLES (AI ONLY)
+############################################################
+
+
+=== D1: Mental Effort ===
+
+--- Analysis: Mental Effort ---
+
+ANOVA Table:
+Anova Table (Type 3 tests)
+
+Response: mental_effort
+                 num Df den Df     MSE      F      ges Pr(>F)
+structure        1.0000 22.000 1.46465 2.4276 0.055944 0.1335
+timing           1.3351 29.372 0.94571 0.8140 0.016841 0.4076
+structure:timing 1.3351 29.372 0.94571 1.4740 0.030085 0.2417
+
+Descriptive Statistics:
+# A tibble: 6 × 6
+  structure  timing           n  mean    sd    se
+  <fct>      <fct>        <int> <dbl> <dbl> <dbl>
+1 integrated pre_reading     12  5.92 0.669 0.193
+2 integrated synchronous     12  6    0.739 0.213
+3 integrated post_reading    12  6.08 0.793 0.229
+4 segmented  pre_reading     12  5.92 0.793 0.229
+5 segmented  synchronous     12  5.25 1.29  0.372
+6 segmented  post_reading    12  5.5  1.24  0.359
+
+Pairwise Comparisons for Timing (Holm-adjusted):
+ contrast                   estimate    SE df t.ratio p.value
+ pre_reading - synchronous     0.292 0.172 22   1.698  0.3110
+ pre_reading - post_reading    0.125 0.197 22   0.633  1.0000
+ synchronous - post_reading   -0.167 0.299 22  -0.558  1.0000
+
+Results are averaged over the levels of: structure 
+P value adjustment: holm method for 3 tests 
+
+
+=== D2: Summary Time ===
+
+--- Analysis: Summary Time (sec) ---
+
+ANOVA Table:
+Anova Table (Type 3 tests)
+
+Response: summary_time_sec
+                 num Df den Df    MSE       F      ges    Pr(>F)    
+structure        1.0000 22.000 2988.8  0.5040 0.010568    0.4852    
+timing           1.9848 43.665 1723.9 13.9375 0.252697 2.176e-05 ***
+structure:timing 1.9848 43.665 1723.9  0.3565 0.008576    0.7005    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Descriptive Statistics:
+# A tibble: 6 × 6
+  structure  timing           n  mean    sd    se
+  <fct>      <fct>        <int> <dbl> <dbl> <dbl>
+1 integrated pre_reading     12 142.   35.8 10.3 
+2 integrated synchronous     12  99.7  50.4 14.6 
+3 integrated post_reading    12  74.4  43.4 12.5 
+4 segmented  pre_reading     12 123.   56.0 16.2 
+5 segmented  synchronous     12 101.   53.7 15.5 
+6 segmented  post_reading    12  64.6  33.1  9.55
+
+Pairwise Comparisons for Timing (Holm-adjusted):
+ contrast                   estimate   SE df t.ratio p.value
+ pre_reading - synchronous      32.2 12.2 22   2.640  0.0261
+ pre_reading - post_reading     63.0 12.2 22   5.171  0.0001
+ synchronous - post_reading     30.8 11.4 22   2.701  0.0261
+
+Results are averaged over the levels of: structure 
+P value adjustment: holm method for 3 tests 
+
+
+=== D3: Reading Time ===
+
+--- Analysis: Reading Time (min) ---
+
+ANOVA Table:
+Anova Table (Type 3 tests)
+
+Response: reading_time_min
+                 num Df den Df    MSE      F       ges Pr(>F)
+structure        1.0000  22.00 8.7392 1.2818 0.0274912 0.2697
+timing           1.9573  43.06 4.7380 1.2092 0.0275179 0.3077
+structure:timing 1.9573  43.06 4.7380 0.1885 0.0043919 0.8244
+
+Descriptive Statistics:
+# A tibble: 6 × 6
+  structure  timing           n  mean    sd    se
+  <fct>      <fct>        <int> <dbl> <dbl> <dbl>
+1 integrated pre_reading     12  7.34  1.61 0.465
+2 integrated synchronous     12  7.48  2.25 0.650
+3 integrated post_reading    12  7.98  2.39 0.691
+4 segmented  pre_reading     12  6.11  2.16 0.625
+5 segmented  synchronous     12  6.93  3.30 0.953
+6 segmented  post_reading    12  7.40  2.65 0.766
+
+Pairwise Comparisons for Timing (Holm-adjusted):
+ contrast                   estimate    SE df t.ratio p.value
+ pre_reading - synchronous    -0.481 0.658 22  -0.732  0.8204
+ pre_reading - post_reading   -0.967 0.626 22  -1.543  0.4110
+ synchronous - post_reading   -0.485 0.578 22  -0.840  0.8204
+
+Results are averaged over the levels of: structure 
+P value adjustment: holm method for 3 tests 
+
+
+
+############################################################
+SECTION E: AI TRUST/DEPENDENCE AS MODERATORS (AI ONLY)
+############################################################
+
+
+=== E1: Trust/Dependence Predict Performance (Participant-level) ===
+
+-- Mean MCQ ~ Trust + Dependence + Prior Knowledge --
+
+Call:
+lm(formula = mean_mcq ~ ai_trust + ai_dependence + prior_knowledge_familiarity, 
+    data = df_ai_agg)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.15830 -0.05496 -0.02256  0.08746  0.17056 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                  0.561313   0.138570   4.051 0.000625 ***
+ai_trust                     0.028133   0.029486   0.954 0.351406    
+ai_dependence               -0.016450   0.023401  -0.703 0.490174    
+prior_knowledge_familiarity -0.007268   0.016749  -0.434 0.668987    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.08819 on 20 degrees of freedom
+Multiple R-squared:  0.05601,	Adjusted R-squared:  -0.08559 
+F-statistic: 0.3955 on 3 and 20 DF,  p-value: 0.7576
+
+
+-- Mean Summary Accuracy ~ Trust + Dependence + Prior Knowledge --
+
+Call:
+lm(formula = mean_ai_summary_accuracy ~ ai_trust + ai_dependence + 
+    prior_knowledge_familiarity, data = df_ai_agg)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.17894 -0.07397 -0.01565  0.08381  0.21465 
+
+Coefficients:
+                             Estimate Std. Error t value Pr(>|t|)  
+(Intercept)                  0.456430   0.185988   2.454   0.0234 *
+ai_trust                     0.077653   0.039575   1.962   0.0638 .
+ai_dependence               -0.009082   0.031408  -0.289   0.7754  
+prior_knowledge_familiarity -0.047082   0.022481  -2.094   0.0492 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1184 on 20 degrees of freedom
+Multiple R-squared:  0.2961,	Adjusted R-squared:  0.1905 
+F-statistic: 2.805 on 3 and 20 DF,  p-value: 0.06608
+
+
+-- Mean False Lures ~ Trust + Dependence + Prior Knowledge --
+
+Call:
+lm(formula = mean_false_lures ~ ai_trust + ai_dependence + prior_knowledge_familiarity, 
+    data = df_ai_agg)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.8209 -0.3729 -0.1711  0.5573  1.1072 
+
+Coefficients:
+                            Estimate Std. Error t value Pr(>|t|)
+(Intercept)                  1.56705    0.94011   1.667    0.111
+ai_trust                    -0.01883    0.20004  -0.094    0.926
+ai_dependence               -0.09231    0.15876  -0.581    0.567
+prior_knowledge_familiarity -0.07452    0.11363  -0.656    0.519
+
+Residual standard error: 0.5983 on 20 degrees of freedom
+Multiple R-squared:  0.05174,	Adjusted R-squared:  -0.0905 
+F-statistic: 0.3638 on 3 and 20 DF,  p-value: 0.7799
+
+
+=== E2: Moderation - Trust/Dependence × Timing ===
+
+-- Summary Accuracy ~ Timing × Trust + Structure --
+
+--- Model: Summary Accuracy ~ Timing × Trust ---
+Formula: ai_summary_accuracy ~ timing * ai_trust_c + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                                  Estimate Std. Error        df    t value
+(Intercept)                    0.833184491 0.07817538  3.780162 10.6578881
+timingsynchronous             -0.270333691 0.03920243 42.056639 -6.8958402
+timingpost_reading            -0.213758015 0.03954231 42.158878 -5.4058053
+ai_trust_c                     0.005393631 0.05058154 48.178390  0.1066324
+structuresegmented             0.017469933 0.05500729 21.000152  0.3175931
+timingsynchronous:ai_trust_c   0.070053204 0.05778173 42.489370  1.2123764
+timingpost_reading:ai_trust_c  0.125610078 0.05596071 42.132808  2.2446118
+                                  Pr(>|t|)
+(Intercept)                   5.879125e-04
+timingsynchronous             2.034728e-08
+timingpost_reading            2.797811e-06
+ai_trust_c                    9.155234e-01
+structuresegmented            7.539299e-01
+timingsynchronous:ai_trust_c  2.320667e-01
+timingpost_reading:ai_trust_c 3.010156e-02
+
+R² (marginal / conditional): 0.2974647 / 0.6862687 
+
+
+-- Summary Accuracy ~ Timing × Dependence + Structure --
+
+--- Model: Summary Accuracy ~ Timing × Dependence ---
+Formula: ai_summary_accuracy ~ timing * ai_dependence_c + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                                      Estimate Std. Error       df    t value
+(Intercept)                         0.85227207 0.08389627  3.58352 10.1586403
+timingsynchronous                  -0.27084294 0.03825318 42.01901 -7.0802730
+timingpost_reading                 -0.21585264 0.03856396 42.09048 -5.5972629
+ai_dependence_c                    -0.03512424 0.04063305 46.94894 -0.8644253
+structuresegmented                 -0.01896931 0.05660059 21.00013 -0.3351434
+timingsynchronous:ai_dependence_c   0.03919534 0.04343817 42.12785  0.9023249
+timingpost_reading:ai_dependence_c  0.11612146 0.04421826 42.27643  2.6260974
+                                       Pr(>|t|)
+(Intercept)                        9.082419e-04
+timingsynchronous                  1.113510e-08
+timingpost_reading                 1.495067e-06
+ai_dependence_c                    3.917496e-01
+structuresegmented                 7.408417e-01
+timingsynchronous:ai_dependence_c  3.720147e-01
+timingpost_reading:ai_dependence_c 1.197686e-02
+
+R² (marginal / conditional): 0.2613386 / 0.714656 
+
+
+
+############################################################
+SECTION F: CONFIDENCE CALIBRATION
+############################################################
+
+
+=== F1: Confidence-Recall Correlation ===
+
+Overall correlation (all participants):
+  r = 0.043 , 95% CI [ -0.147 , 0.23 ] , p = 0.6596 
+
+Correlation by experiment group:
+# A tibble: 2 × 3
+  experiment_group       r     n
+  <fct>              <dbl> <int>
+1 AI               -0.0440    72
+2 NoAI              0.301     36
+
+=== F2: Overconfidence Analysis ===
+
+-- AI vs NoAI Overconfidence Comparison --
+
+	Welch Two Sample t-test
+
+data:  mean_overconfidence by experiment_group
+t = 0.16124, df = 31.729, p-value = 0.8729
+alternative hypothesis: true difference in means between group AI and group NoAI is not equal to 0
+95 percent confidence interval:
+ -0.7126936  0.8351773
+sample estimates:
+  mean in group AI mean in group NoAI 
+        0.02041394        -0.04082788 
+
+
+Descriptive Statistics:
+# A tibble: 2 × 4
+  experiment_group     n    mean    sd
+  <fct>            <int>   <dbl> <dbl>
+1 AI                  24  0.0204 1.38 
+2 NoAI                12 -0.0408 0.881
+
+-- AI Only: Overconfidence by Structure × Timing --
+
+--- Analysis: Overconfidence ---
+
+ANOVA Table:
+Anova Table (Type 3 tests)
+
+Response: overconfidence
+                 num Df den Df    MSE      F       ges Pr(>F)
+structure        1.0000 22.000 5.1581 0.6888 0.0241847 0.4155
+timing           1.7961 39.514 0.7560 0.1563 0.0014781 0.8338
+structure:timing 1.7961 39.514 0.7560 0.8328 0.0078267 0.4310
+
+Descriptive Statistics:
+# A tibble: 6 × 6
+  structure  timing           n    mean    sd    se
+  <fct>      <fct>        <int>   <dbl> <dbl> <dbl>
+1 integrated pre_reading     12  0.119   1.46 0.420
+2 integrated synchronous     12  0.363   1.38 0.399
+3 integrated post_reading    12  0.184   1.81 0.524
+4 segmented  pre_reading     12 -0.205   1.51 0.436
+5 segmented  synchronous     12 -0.430   1.49 0.431
+6 segmented  post_reading    12 -0.0310  1.09 0.315
+
+Pairwise Comparisons for Timing (Holm-adjusted):
+ contrast                   estimate    SE df t.ratio p.value
+ pre_reading - synchronous  -0.00932 0.222 22  -0.042  1.0000
+ pre_reading - post_reading -0.11954 0.212 22  -0.563  1.0000
+ synchronous - post_reading -0.11022 0.275 22  -0.401  1.0000
+
+Results are averaged over the levels of: structure 
+P value adjustment: holm method for 3 tests 
+
+
+
+############################################################
+SECTION G: ARTICLE EFFECTS (ROBUSTNESS CHECKS)
+############################################################
+
+
+=== G1: MCQ Accuracy ~ Group × Article ===
+
+-- All Participants --
+
+--- Model: MCQ ~ Group × Article ---
+Formula: mcq_accuracy ~ experiment_group * article + (1|participant_id) 
+
+Fixed Effects:
+                                               Estimate Std. Error       df
+(Intercept)                                 0.648795833 0.02964557 101.1735
+experiment_groupNoAI                       -0.071404167 0.05134763 101.1735
+articlesemiconductors                      -0.124995833 0.04056333  68.0000
+articleuhi                                 -0.026779167 0.04056333  68.0000
+experiment_groupNoAI:articlesemiconductors -0.059537500 0.07025776  68.0000
+experiment_groupNoAI:articleuhi             0.008920833 0.07025776  68.0000
+                                              t value     Pr(>|t|)
+(Intercept)                                21.8850876 3.724639e-40
+experiment_groupNoAI                       -1.3906030 1.673971e-01
+articlesemiconductors                      -3.0814980 2.972718e-03
+articleuhi                                 -0.6601816 5.113674e-01
+experiment_groupNoAI:articlesemiconductors -0.8474153 3.997365e-01
+experiment_groupNoAI:articleuhi             0.1269729 8.993365e-01
+
+R² (marginal / conditional): 0.2218742 / 0.271604 
+
+
+-- AI Only: Summary Accuracy ~ Structure × Timing + Article --
+
+--- Model: Summary Accuracy ~ Structure × Timing + Article ---
+Formula: ai_summary_accuracy ~ structure * timing + article + (1|participant_id) 
+
+Fixed Effects:
+                                          Estimate Std. Error       df
+(Intercept)                            0.898386945 0.05553693 58.62652
+structuresegmented                    -0.031514501 0.07280151 52.38067
+timingsynchronous                     -0.298736217 0.05827299 42.00000
+timingpost_reading                    -0.212098637 0.05890531 42.00000
+articlesemiconductors                 -0.165165398 0.04171853 42.00000
+articleuhi                             0.043339416 0.04216955 42.00000
+structuresegmented:timingsynchronous   0.056070268 0.08321949 42.00000
+structuresegmented:timingpost_reading -0.003193431 0.08256335 42.00000
+                                          t value     Pr(>|t|)
+(Intercept)                           16.17638795 2.759489e-23
+structuresegmented                    -0.43288251 6.668774e-01
+timingsynchronous                     -5.12649551 7.053515e-06
+timingpost_reading                    -3.60067075 8.320621e-04
+articlesemiconductors                 -3.95904180 2.850249e-04
+articleuhi                             1.02774189 3.099540e-01
+structuresegmented:timingsynchronous   0.67376367 5.041529e-01
+structuresegmented:timingpost_reading -0.03867855 9.693299e-01
+
+R² (marginal / conditional): 0.4032901 / 0.6163871 
+
+
+-- Article Difficulty (MCQ by Article) --
+
+Article Difficulty (sorted by MCQ accuracy):
+# A tibble: 3 × 5
+  article            n mean_mcq sd_mcq mean_recall
+  <fct>          <int>    <dbl>  <dbl>       <dbl>
+1 semiconductors    36    0.480  0.170        5.28
+2 uhi               36    0.601  0.144        5.85
+3 crispr            36    0.625  0.134        5.35
+
+
+############################################################
+SUMMARY OF KEY FINDINGS
+############################################################
+
+See individual tables and plots in the comprehensive_outputs folder.
+  - Tables: CSV files with ANOVA results, fixed effects, and post-hocs
+  - Plots: PNG files with interaction plots
+  - This report: Complete text output of all analyses
+
+=============================================================================
+END OF COMPREHENSIVE ANALYSIS
+=============================================================================

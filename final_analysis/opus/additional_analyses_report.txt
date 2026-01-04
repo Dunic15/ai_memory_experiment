@@ -1,0 +1,595 @@
+====================================================================== 
+ADDITIONAL ANALYSES - ORDERED REQUEST
+====================================================================== 
+
+
+====================================================================== 
+A) AI vs NoAI ON RECALL AND ARTICLE ACCURACY
+====================================================================== 
+
+--- A1: Recall ~ Group ---
+
+Model: recall_total_score ~ experiment_group + article + (1|participant_id)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: recall_total_score ~ experiment_group + article + (1 | participant_id)
+   Data: df
+
+REML criterion at convergence: 379.4
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.23617 -0.56993 -0.02945  0.45631  2.39859 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 2.8110   1.6766  
+ Residual                   0.9222   0.9603  
+Number of obs: 108, groups:  participant_id, 36
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            5.39120    0.38342 43.16243  14.061   <2e-16 ***
+experiment_groupNoAI  -0.13194    0.62434 34.00000  -0.211   0.8339    
+articlesemiconductors -0.06944    0.22634 70.00000  -0.307   0.7599    
+articleuhi             0.50000    0.22634 70.00000   2.209   0.0304 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) ex_NAI artcls
+exprmnt_NAI -0.543              
+artclsmcndc -0.295  0.000       
+articleuhi  -0.295  0.000  0.500
+
+--- Estimated Marginal Means ---
+ experiment_group emmean   SE df lower.CL upper.CL
+ AI                 5.53 0.36 34     4.80     6.27
+ NoAI               5.40 0.51 34     4.37     6.44
+
+Results are averaged over the levels of: article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- AI vs NoAI Contrast ---
+ contrast  estimate    SE df lower.CL upper.CL t.ratio p.value
+ AI - NoAI    0.132 0.624 34    -1.14      1.4   0.211  0.8339
+
+Results are averaged over the levels of: article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- A2: Article Accuracy ~ Group ---
+
+Model: article_accuracy ~ experiment_group + article + (1|participant_id)
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: article_accuracy ~ experiment_group + article + (1 | participant_id)
+   Data: df
+
+REML criterion at convergence: 1.9
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-2.30729 -0.79621 -0.07503  0.50503  2.49464 
+
+Random effects:
+ Groups         Name        Variance  Std.Dev.
+ participant_id (Intercept) 0.0007348 0.02711 
+ Residual                   0.0514675 0.22686 
+Number of obs: 108, groups:  participant_id, 36
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            0.52943    0.04121 98.39587   12.85   <2e-16 ***
+experiment_groupNoAI   0.03076    0.04729 34.00000    0.65   0.5198    
+articlesemiconductors -0.09623    0.05347 70.00000   -1.80   0.0762 .  
+articleuhi            -0.05456    0.05347 70.00000   -1.02   0.3110    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) ex_NAI artcls
+exprmnt_NAI -0.382              
+artclsmcndc -0.649  0.000       
+articleuhi  -0.649  0.000  0.500
+
+--- Estimated Marginal Means ---
+ experiment_group emmean     SE df lower.CL upper.CL
+ AI                0.479 0.0273 34    0.424    0.535
+ NoAI              0.510 0.0386 34    0.431    0.588
+
+Results are averaged over the levels of: article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- AI vs NoAI Contrast ---
+ contrast  estimate     SE df lower.CL upper.CL t.ratio p.value
+ AI - NoAI  -0.0308 0.0473 34   -0.127   0.0653  -0.650  0.5198
+
+Results are averaged over the levels of: article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- SUMMARY A: AI vs NoAI ---
+Recall: NoAI - AI = -0.132, p = 0.8339 [ns]
+Article Accuracy: NoAI - AI = 0.0308, p = 0.5198 [ns]
+
+====================================================================== 
+B) TIMING EFFICIENCY - Controlling for Total Time (AI only)
+====================================================================== 
+
+Total time = reading_time_min*60 + summary_time_sec
+
+--- Total Time Descriptives by Timing ---
+# A tibble: 3 × 4
+  timing       mean_total sd_total     n
+  <fct>             <dbl>    <dbl> <int>
+1 post_reading       531.     157.    24
+2 pre_reading        536.     135.    24
+3 synchronous        533.     180.    24
+
+--- Model B1: MCQ ~ timing + structure + total_time_sec + article ---
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ timing + structure + total_time_sec + article +  
+    (1 | participant_id)
+   Data: df_ai
+
+REML criterion at convergence: -63.8
+
+Scaled residuals: 
+     Min       1Q   Median       3Q      Max 
+-1.64058 -0.70822  0.02115  0.72760  1.67323 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.002414 0.04913 
+ Residual                   0.011403 0.10678 
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                        Estimate Std. Error         df t value Pr(>|t|)    
+(Intercept)            6.320e-01  6.039e-02  6.477e+01  10.465 1.48e-15 ***
+timingpre_reading      1.434e-01  3.117e-02  4.346e+01   4.602 3.62e-05 ***
+timingsynchronous     -2.979e-02  3.141e-02  4.346e+01  -0.948   0.3482    
+structuresegmented    -6.777e-02  3.260e-02  2.251e+01  -2.079   0.0492 *  
+total_time_sec         2.973e-05  9.147e-05  6.500e+01   0.325   0.7462    
+articlesemiconductors -1.341e-01  3.098e-02  4.358e+01  -4.330 8.61e-05 ***
+articleuhi            -2.683e-02  3.159e-02  4.378e+01  -0.849   0.4003    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) tmngp_ tmngsy strctr ttl_t_ artcls
+tmngpr_rdng -0.261                                   
+tmngsynchrn -0.284  0.512                            
+strctrsgmnt -0.392 -0.004 -0.004                     
+total_tm_sc -0.810 -0.027 -0.025  0.159              
+artclsmcndc -0.212  0.003  0.065 -0.011 -0.069       
+articleuhi  -0.223  0.129  0.189 -0.017 -0.109  0.503
+
+--- Estimated Marginal Means (controlling for total time) ---
+ timing       emmean     SE   df lower.CL upper.CL
+ post_reading  0.560 0.0242 61.8    0.512    0.609
+ pre_reading   0.704 0.0240 61.3    0.656    0.752
+ synchronous   0.531 0.0241 61.5    0.482    0.579
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- Timing Contrasts (Holm-corrected) ---
+ contrast                   estimate     SE   df lower.CL upper.CL t.ratio
+ post_reading - pre_reading  -0.1434 0.0312 43.1  -0.2211  -0.0658  -4.602
+ post_reading - synchronous   0.0298 0.0314 43.1  -0.0485   0.1080   0.948
+ pre_reading - synchronous    0.1732 0.0309 43.1   0.0962   0.2502   5.605
+ p.value
+ <0.0001
+  0.3482
+ <0.0001
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: bonferroni method for 3 estimates 
+P value adjustment: holm method for 3 tests 
+
+--- Effect Sizes ---
+ contrast                   effect.size    SE   df lower.CL upper.CL
+ post_reading - pre_reading      -1.343 0.315 61.3   -1.974   -0.712
+ post_reading - synchronous       0.279 0.295 61.5   -0.311    0.869
+ pre_reading - synchronous        1.622 0.324 61.3    0.975    2.269
+
+Results are averaged over the levels of: structure, article 
+sigma used for effect sizes: 0.1068 
+Degrees-of-freedom method: inherited from kenward-roger when re-gridding 
+Confidence level used: 0.95 
+
+--- Comparison: Timing effect WITHOUT time control ---
+Without time control:
+ contrast                   estimate     SE df lower.CL upper.CL t.ratio
+ post_reading - pre_reading  -0.1437 0.0309 44   -0.221  -0.0668  -4.653
+ post_reading - synchronous   0.0295 0.0311 44   -0.048   0.1070   0.949
+ pre_reading - synchronous    0.1733 0.0306 44    0.097   0.2495   5.654
+ p.value
+ <0.0001
+  0.3479
+ <0.0001
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: bonferroni method for 3 estimates 
+P value adjustment: holm method for 3 tests 
+
+--- SUMMARY B: Timing Efficiency ---
+Does pre-reading still win when controlling for total time on task?
+
+====================================================================== 
+C) FALSE LURES MECHANISM - Binomial Models (AI only)
+====================================================================== 
+
+--- Model C1: Structure + Summary Accuracy + Timing ---
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: cbind(lures_selected, lures_not_selected) ~ ai_summary_accuracy +  
+    timing + structure + article + (1 | participant_id)
+   Data: df_ai_lure
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    155.0     173.2     -69.5     139.0        64 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.8985 -0.6800  0.1411  0.6888  1.6371 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.8834   0.9399  
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error z value Pr(>|z|)  
+(Intercept)           -2.96019    1.18207  -2.504   0.0123 *
+ai_summary_accuracy    2.15924    1.43750   1.502   0.1331  
+timingpre_reading     -0.27339    0.55730  -0.491   0.6237  
+timingsynchronous      0.04729    0.48718   0.097   0.9227  
+structuresegmented     1.24675    0.55780   2.235   0.0254 *
+articlesemiconductors  0.78938    0.54214   1.456   0.1454  
+articleuhi             0.66264    0.48669   1.362   0.1734  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_smm_ tmngp_ tmngsy strctr artcls
+a_smmry_ccr -0.867                                   
+tmngpr_rdng  0.282 -0.539                            
+tmngsynchrn -0.378  0.162  0.324                     
+strctrsgmnt -0.361  0.124 -0.057  0.019              
+artclsmcndc -0.612  0.462 -0.234  0.179  0.077       
+articleuhi  -0.200 -0.081  0.144  0.188  0.033  0.433
+
+--- Odds Ratios (Model C1) ---
+# A tibble: 7 × 8
+  effect term            estimate std.error statistic p.value conf.low conf.high
+  <chr>  <chr>              <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
+1 fixed  (Intercept)       0.0518    0.0612   -2.50    0.0123  0.00511     0.526
+2 fixed  ai_summary_acc…   8.66     12.5       1.50    0.133   0.518     145.   
+3 fixed  timingpre_read…   0.761     0.424    -0.491   0.624   0.255       2.27 
+4 fixed  timingsynchron…   1.05      0.511     0.0971  0.923   0.404       2.72 
+5 fixed  structuresegme…   3.48      1.94      2.24    0.0254  1.17       10.4  
+6 fixed  articlesemicon…   2.20      1.19      1.46    0.145   0.761       6.37 
+7 fixed  articleuhi        1.94      0.944     1.36    0.173   0.747       5.04 
+
+--- Model C2: Add Trust + Dependence ---
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: cbind(lures_selected, lures_not_selected) ~ ai_summary_accuracy +  
+    timing + structure + article + ai_trust + ai_dependence +  
+    (1 | participant_id)
+   Data: df_ai_lure
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    155.8     178.6     -67.9     135.8        62 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.9676 -0.7169  0.1685  0.5905  2.1670 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 0.6641   0.8149  
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error z value Pr(>|z|)   
+(Intercept)           -1.62781    2.11137  -0.771  0.44072   
+ai_summary_accuracy    2.01057    1.48683   1.352  0.17629   
+timingpre_reading     -0.25416    0.56262  -0.452  0.65145   
+timingsynchronous      0.02242    0.48906   0.046  0.96343   
+structuresegmented     1.64503    0.62521   2.631  0.00851 **
+articlesemiconductors  0.74199    0.54491   1.362  0.17330   
+articleuhi             0.66030    0.49017   1.347  0.17796   
+ai_trust               0.40792    0.49842   0.818  0.41312   
+ai_dependence         -0.66453    0.38138  -1.742  0.08143 . 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_smm_ tmngp_ tmngsy strctr artcls artclh a_trst
+a_smmry_ccr -0.224                                                 
+tmngpr_rdng  0.022 -0.547                                          
+tmngsynchrn -0.158  0.150  0.323                                   
+strctrsgmnt -0.289  0.049 -0.023 -0.009                            
+artclsmcndc -0.208  0.455 -0.242  0.181  0.036                     
+articleuhi  -0.119 -0.087  0.129  0.185  0.048  0.437              
+ai_trust    -0.563 -0.231  0.122 -0.061  0.478 -0.115  0.033       
+ai_dependnc -0.152  0.003  0.004  0.025 -0.485  0.000 -0.033 -0.604
+optimizer (Nelder_Mead) convergence code: 0 (OK)
+Model failed to converge with max|grad| = 0.00688876 (tol = 0.002, component 1)
+  See ?lme4::convergence and ?lme4::troubleshooting.
+
+
+--- Odds Ratios (Model C2) ---
+# A tibble: 9 × 8
+  effect term            estimate std.error statistic p.value conf.low conf.high
+  <chr>  <chr>              <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
+1 fixed  (Intercept)        0.196     0.415   -0.771  0.441    0.00313     12.3 
+2 fixed  ai_summary_acc…    7.47     11.1      1.35   0.176    0.405      138.  
+3 fixed  timingpre_read…    0.776     0.436   -0.452  0.651    0.257        2.34
+4 fixed  timingsynchron…    1.02      0.500    0.0459 0.963    0.392        2.67
+5 fixed  structuresegme…    5.18      3.24     2.63   0.00851  1.52        17.6 
+6 fixed  articlesemicon…    2.10      1.14     1.36   0.173    0.722        6.11
+7 fixed  articleuhi         1.94      0.949    1.35   0.178    0.741        5.06
+8 fixed  ai_trust           1.50      0.749    0.818  0.413    0.566        3.99
+9 fixed  ai_dependence      0.515     0.196   -1.74   0.0814   0.244        1.09
+
+--- Model C3: Summary Accuracy × Structure Interaction ---
+
+Generalized linear mixed model fit by maximum likelihood (Laplace
+  Approximation) [glmerMod]
+ Family: binomial  ( logit )
+Formula: cbind(lures_selected, lures_not_selected) ~ ai_summary_accuracy *  
+    structure + timing + article + (1 | participant_id)
+   Data: df_ai_lure
+
+      AIC       BIC    logLik -2*log(L)  df.resid 
+    153.6     174.1     -67.8     135.6        63 
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.8487 -0.6376  0.1675  0.6417  1.3808 
+
+Random effects:
+ Groups         Name        Variance Std.Dev.
+ participant_id (Intercept) 1.101    1.049   
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                                       Estimate Std. Error z value Pr(>|z|)   
+(Intercept)                             -4.4858     1.5991  -2.805  0.00503 **
+ai_summary_accuracy                      4.1015     1.9675   2.085  0.03711 * 
+structuresegmented                       3.9964     1.7203   2.323  0.02018 * 
+timingpre_reading                       -0.2189     0.5729  -0.382  0.70238   
+timingsynchronous                        0.1050     0.5097   0.206  0.83677   
+articlesemiconductors                    0.8806     0.5617   1.568  0.11696   
+articleuhi                               0.7621     0.5020   1.518  0.12899   
+ai_summary_accuracy:structuresegmented  -3.9018     2.2395  -1.742  0.08146 . 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_smm_ strctr tmngp_ tmngsy artcls artclh
+a_smmry_ccr -0.921                                          
+strctrsgmnt -0.679  0.625                                   
+tmngpr_rdng  0.216 -0.412  0.003                            
+tmngsynchrn -0.313  0.147  0.050  0.328                     
+artclsmcndc -0.529  0.412  0.134 -0.215  0.210              
+articleuhi  -0.221  0.012  0.134  0.158  0.196  0.440       
+a_smmry_cc:  0.613 -0.626 -0.937 -0.025 -0.052 -0.118 -0.134
+
+--- Odds Ratios (Model C3) ---
+# A tibble: 8 × 8
+  effect term            estimate std.error statistic p.value conf.low conf.high
+  <chr>  <chr>              <dbl>     <dbl>     <dbl>   <dbl>    <dbl>     <dbl>
+1 fixed  (Intercept)       0.0113    0.0180    -2.81  0.00503 0.000491     0.259
+2 fixed  ai_summary_acc…  60.4     119.         2.08  0.0371  1.28      2858.   
+3 fixed  structuresegme…  54.4      93.6        2.32  0.0202  1.87      1585.   
+4 fixed  timingpre_read…   0.803     0.460     -0.382 0.702   0.261        2.47 
+5 fixed  timingsynchron…   1.11      0.566      0.206 0.837   0.409        3.02 
+6 fixed  articlesemicon…   2.41      1.35       1.57  0.117   0.802        7.25 
+7 fixed  articleuhi        2.14      1.08       1.52  0.129   0.801        5.73 
+8 fixed  ai_summary_acc…   0.0202    0.0453    -1.74  0.0815  0.000251     1.63 
+
+--- Predicted Lure Probability by Structure × Summary Accuracy ---
+
+Predicted lure probability by structure:
+ structure   prob     SE  df asymp.LCL asymp.UCL
+ integrated 0.253 0.0760 Inf     0.134     0.427
+ segmented  0.541 0.0945 Inf     0.359     0.713
+
+Results are averaged over the levels of: timing, article 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale 
+
+Predicted lure probability by summary accuracy:
+ ai_summary_accuracy  prob     SE  df asymp.LCL asymp.UCL
+                0.50 0.300 0.0815 Inf     0.167     0.478
+                0.75 0.423 0.0700 Inf     0.295     0.563
+                1.00 0.558 0.1290 Inf     0.312     0.778
+
+Results are averaged over the levels of: timing, structure, article 
+Confidence level used: 0.95 
+Intervals are back-transformed from the logit scale 
+
+====================================================================== 
+D) MCQ DECOMPOSITION (AI only)
+   NOT causal mediation - just decomposition
+====================================================================== 
+
+--- Model D0: Timing Only (baseline) ---
+
+Timing coefficients WITHOUT summary accuracy:
+# A tibble: 2 × 7
+  effect term              estimate std.error statistic    df   p.value
+  <chr>  <chr>                <dbl>     <dbl>     <dbl> <dbl>     <dbl>
+1 fixed  timingpre_reading   0.144     0.0309     4.65   44.0 0.0000301
+2 fixed  timingsynchronous  -0.0295    0.0311    -0.949  44.0 0.348    
+
+--- Model D1: Full Decomposition ---
+
+Linear mixed model fit by REML. t-tests use Satterthwaite's method [
+lmerModLmerTest]
+Formula: mcq_accuracy ~ ai_summary_accuracy + article_accuracy + timing +  
+    structure + article + (1 | participant_id)
+   Data: df_ai
+
+REML criterion at convergence: -196.8
+
+Scaled residuals: 
+    Min      1Q  Median      3Q     Max 
+-1.7268 -0.5802 -0.1550  0.6407  2.2682 
+
+Random effects:
+ Groups         Name        Variance  Std.Dev.
+ participant_id (Intercept) 0.0006382 0.02526 
+ Residual                   0.0015106 0.03887 
+Number of obs: 72, groups:  participant_id, 24
+
+Fixed effects:
+                      Estimate Std. Error       df t value Pr(>|t|)    
+(Intercept)            0.14321    0.02984 63.97795   4.799 9.94e-06 ***
+ai_summary_accuracy    0.50599    0.03312 63.61219  15.279  < 2e-16 ***
+article_accuracy       0.28141    0.02067 56.77039  13.612  < 2e-16 ***
+timingpre_reading      0.02919    0.01340 51.72464   2.178   0.0340 *  
+timingsynchronous      0.01224    0.01164 43.63045   1.052   0.2988    
+structuresegmented    -0.03897    0.01392 22.23476  -2.801   0.0104 *  
+articlesemiconductors -0.03148    0.01268 49.17759  -2.481   0.0166 *  
+articleuhi            -0.02409    0.01161 43.41270  -2.075   0.0440 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Correlation of Fixed Effects:
+            (Intr) a_smm_ artcl_ tmngp_ tmngsy strctr artcls
+a_smmry_ccr -0.792                                          
+artcl_ccrcy -0.472  0.099                                   
+tmngpr_rdng  0.258 -0.532 -0.087                            
+tmngsynchrn -0.388  0.171  0.097  0.332                     
+strctrsgmnt -0.314  0.045  0.127 -0.028  0.018              
+artclsmcndc -0.570  0.453  0.136 -0.243  0.140  0.032       
+articleuhi  -0.201 -0.103  0.130  0.155  0.175  0.013  0.403
+
+Timing coefficients WITH summary + article accuracy:
+# A tibble: 2 × 7
+  effect term              estimate std.error statistic    df p.value
+  <chr>  <chr>                <dbl>     <dbl>     <dbl> <dbl>   <dbl>
+1 fixed  timingpre_reading   0.0292    0.0134      2.18  51.7  0.0340
+2 fixed  timingsynchronous   0.0122    0.0116      1.05  43.6  0.299 
+
+--- Model Fit (R²) ---
+Marginal R² (fixed effects only): 0.906
+Conditional R² (fixed + random): 0.934
+
+--- TIMING COEFFICIENT COMPARISON ---
+Pre-reading effect WITHOUT decomposition: β = 0.1437, p = 0.0000
+Pre-reading effect WITH decomposition: β = 0.0292, p = 0.0340
+Change in coefficient: -0.1145 (79.7% reduction)
+
+====================================================================== 
+E) LEAVE-ONE-ARTICLE-OUT ROBUSTNESS (AI only)
+====================================================================== 
+
+--- Timing Effects by Dropped Article ---
+
+  dropped_article              term    estimate  std.error      p.value
+1  semiconductors timingpre_reading  0.17248648 0.03556433 3.833836e-05
+2  semiconductors timingsynchronous  0.01964247 0.03477060 5.766068e-01
+3             uhi timingpre_reading  0.12631271 0.04677239 9.788941e-03
+4             uhi timingsynchronous -0.06013502 0.04616210 1.994569e-01
+5          crispr timingpre_reading  0.11634186 0.04651310 1.616966e-02
+6          crispr timingsynchronous -0.04622879 0.04825431 3.432854e-01
+
+--- ROBUSTNESS SUMMARY ---
+
+Pre-reading effect (vs Post-reading):
+  Drop semiconductors: β = 0.1725, p = 0.0000 [✓ SIG]
+  Drop uhi: β = 0.1263, p = 0.0098 [✓ SIG]
+  Drop crispr: β = 0.1163, p = 0.0162 [✓ SIG]
+
+====================================================================== 
+F) EQUIVALENCE TEST FOR TIMING ON RECALL (AI only)
+   SESOI: d = 0.30
+====================================================================== 
+
+Recall SD: 1.999
+SESOI (d = 0.30): ±0.600 raw units
+
+--- Timing Contrasts on Recall ---
+ contrast                      estimate        SE df   lower.CL  upper.CL
+ post_reading - pre_reading -0.00850976 0.2786570 44 -0.6843873 0.6673678
+ post_reading - synchronous -0.07088003 0.2808715 44 -0.7521289 0.6103688
+ pre_reading - synchronous  -0.06237028 0.2764247 44 -0.7328335 0.6080929
+ t.ratio p.value
+  -0.031  0.9995
+  -0.252  0.9655
+  -0.226  0.9723
+
+Results are averaged over the levels of: structure, article 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+Conf-level adjustment: tukey method for comparing a family of 3 estimates 
+P value adjustment: tukey method for comparing a family of 3 estimates 
+
+--- TOST Equivalence Tests ---
+
+Contrast: post_reading - pre_reading
+  Estimate: -0.009, 90% CI: [-0.477, 0.460]
+  SESOI bounds: [-0.600, 0.600]
+  TOST p-value: 0.0198
+  Decision: ✓ EQUIVALENT (effect is negligibly small)
+
+Contrast: post_reading - synchronous
+  Estimate: -0.071, 90% CI: [-0.543, 0.401]
+  SESOI bounds: [-0.600, 0.600]
+  TOST p-value: 0.0332
+  Decision: ✓ EQUIVALENT (effect is negligibly small)
+
+Contrast: pre_reading - synchronous
+  Estimate: -0.062, 90% CI: [-0.527, 0.402]
+  SESOI bounds: [-0.600, 0.600]
+  TOST p-value: 0.0292
+  Decision: ✓ EQUIVALENT (effect is negligibly small)
+
+
+====================================================================== 
+FINAL SUMMARY
+====================================================================== 
+
+A) AI vs NoAI Comparisons:
+   Recall: NoAI - AI = -0.132, p = 0.8339
+   Article Accuracy: NoAI - AI = 0.0308, p = 0.5198
+
+B) Timing Efficiency (controlling for total time):
+   Pre-reading advantage PERSISTS after controlling for time-on-task
+
+C) False Lures Mechanism:
+   Summary accuracy OR: 8.66 (p = 0.1331)
+   Structure (segmented) OR: 3.48 (p = 0.0254)
+
+D) MCQ Decomposition:
+   Pre-reading effect reduces by 79.7% when adding summary + article accuracy
+   Marginal R² = 0.906, Conditional R² = 0.934
+
+E) Leave-One-Article-Out Robustness:
+   ✓ Pre-reading effect is ROBUST across all article subsets
+
+F) Equivalence Test for Recall:
+   See individual contrast results above

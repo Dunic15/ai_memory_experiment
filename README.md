@@ -2,6 +2,19 @@
 
 This repo contains two versions of the same reading/memory experiment (AI-enabled vs control/no-AI) plus analysis-ready datasets and scripts to reproduce the final ANOVAs.
 
+## Thesis (project summary)
+
+This project supports my thesis on how **AI-generated summaries** shape learning and memory during reading. Using a controlled, web-based experiment, participants read three scientific articles and complete both **free recall** and **multiple-choice (MCQ)** tests. The study compares an **AI** condition (summaries available) against a **NoAI** control and, within the AI condition, manipulates:
+
+- **Timing** of summary access: `pre_reading`, `synchronous`, `post_reading`
+- **Structure** of the summary: `integrated` vs `segmented`
+
+**Research questions**
+- **RQ1:** Does the timing of AI summary presentation affect learning outcomes?
+- **RQ2:** Does summary structure affect susceptibility to misinformation (false lures)?
+- **RQ3:** Do individual differences in AI trust/dependence moderate these effects?
+
+For the full analysis write-up and interpretations, see `final_analysis/opus/COMPREHENSIVE_FINAL_ANALYSIS_REPORT.md`.
 ## Experiment Design (for analysis)
 
 - **Control factor (between-subjects):** `experiment_group`
@@ -154,4 +167,3 @@ For the exact mapping and computation logic, see:
 - `ai_experiment/docs/CSV_LOG_ANALYSIS_TUTORIAL.md`
 - `ai_experiment/data_analysis/analyze_participant.py`
 - `ai_experiment/false_lure_mapping.json` (and `ai_experiment/data_analysis/false_lure_mapping.json`)
-

@@ -1,0 +1,461 @@
+=============================================================================
+INDIVIDUAL DIFFERENCES ANALYSIS - AI MEMORY EXPERIMENT
+Generated: 2026-01-03 18:30:18 
+=============================================================================
+
+
+############################################################
+DATA LOADING AND PREPARATION
+############################################################
+
+Data loaded: 108 rows x 18 columns
+
+AI-only subset: 72 observations, 24 participants
+All data: 108 observations, 36 participants
+
+
+############################################################
+SECTION 1: DO TRUST/DEPENDENCE/PRIOR KNOWLEDGE PREDICT OUTCOMES?
+(Participant-level regressions, AI only)
+############################################################
+
+Participant-level data: 24 participants
+
+
+=== 1A: Mean MCQ ~ Trust + Dependence + Prior Knowledge ===
+
+
+Call:
+lm(formula = mean_mcq ~ ai_trust + ai_dependence + prior_knowledge, 
+    data = df_ai_agg)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.15830 -0.05496 -0.02256  0.08746  0.17056 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      0.561313   0.138570   4.051 0.000625 ***
+ai_trust         0.028133   0.029486   0.954 0.351406    
+ai_dependence   -0.016450   0.023401  -0.703 0.490174    
+prior_knowledge -0.007268   0.016749  -0.434 0.668987    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.08819 on 20 degrees of freedom
+Multiple R-squared:  0.05601,	Adjusted R-squared:  -0.08559 
+F-statistic: 0.3955 on 3 and 20 DF,  p-value: 0.7576
+
+
+Standardized coefficients:
+# Standardization method: refit
+
+Parameter       | Std. Coef. |        95% CI
+--------------------------------------------
+(Intercept)     |   2.65e-16 | [-0.44, 0.44]
+ai trust        |       0.24 | [-0.28, 0.76]
+ai dependence   |      -0.18 | [-0.70, 0.35]
+prior knowledge |      -0.09 | [-0.55, 0.36]
+
+=== 1B: Mean Summary Accuracy ~ Trust + Dependence + Prior Knowledge ===
+
+
+Call:
+lm(formula = mean_summary_accuracy ~ ai_trust + ai_dependence + 
+    prior_knowledge, data = df_ai_agg)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.17894 -0.07397 -0.01565  0.08381  0.21465 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)  
+(Intercept)      0.456430   0.185988   2.454   0.0234 *
+ai_trust         0.077653   0.039575   1.962   0.0638 .
+ai_dependence   -0.009082   0.031408  -0.289   0.7754  
+prior_knowledge -0.047082   0.022481  -2.094   0.0492 *
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.1184 on 20 degrees of freedom
+Multiple R-squared:  0.2961,	Adjusted R-squared:  0.1905 
+F-statistic: 2.805 on 3 and 20 DF,  p-value: 0.06608
+
+
+Standardized coefficients:
+# Standardization method: refit
+
+Parameter       | Std. Coef. |         95% CI
+---------------------------------------------
+(Intercept)     |  -1.75e-16 | [-0.38,  0.38]
+ai trust        |       0.42 | [-0.03,  0.88]
+ai dependence   |      -0.06 | [-0.52,  0.39]
+prior knowledge |      -0.40 | [-0.79,  0.00]
+
+=== 1C: Mean False Lures ~ Trust + Dependence + Prior Knowledge ===
+
+
+Call:
+lm(formula = mean_false_lures ~ ai_trust + ai_dependence + prior_knowledge, 
+    data = df_ai_agg)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-0.8209 -0.3729 -0.1711  0.5573  1.1072 
+
+Coefficients:
+                Estimate Std. Error t value Pr(>|t|)
+(Intercept)      1.56705    0.94011   1.667    0.111
+ai_trust        -0.01883    0.20004  -0.094    0.926
+ai_dependence   -0.09231    0.15876  -0.581    0.567
+prior_knowledge -0.07452    0.11363  -0.656    0.519
+
+Residual standard error: 0.5983 on 20 degrees of freedom
+Multiple R-squared:  0.05174,	Adjusted R-squared:  -0.0905 
+F-statistic: 0.3638 on 3 and 20 DF,  p-value: 0.7799
+
+
+Standardized coefficients:
+# Standardization method: refit
+
+Parameter       | Std. Coef. |        95% CI
+--------------------------------------------
+(Intercept)     |   2.87e-17 | [-0.44, 0.44]
+ai trust        |      -0.02 | [-0.55, 0.50]
+ai dependence   |      -0.15 | [-0.67, 0.38]
+prior knowledge |      -0.14 | [-0.60, 0.31]
+
+
+############################################################
+SECTION 2: DO TRUST/DEPENDENCE/PRIOR KNOWLEDGE MODERATE TIMING EFFECTS?
+(Trial-level mixed models, AI only)
+############################################################
+
+
+========== 2A: MODERATION OF TIMING ON SUMMARY ACCURACY ==========
+
+--- Model: Summary Accuracy ~ Timing × Trust ---
+Formula: ai_summary_accuracy ~ timing * trust_c + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                           Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)                  0.8332     0.0782  3.7802 10.6579   0.0006
+timingsynchronous           -0.2703     0.0392 42.0566 -6.8958   0.0000
+timingpost_reading          -0.2138     0.0395 42.1589 -5.4058   0.0000
+trust_c                      0.0054     0.0506 48.1784  0.1066   0.9155
+structuresegmented           0.0175     0.0550 21.0002  0.3176   0.7539
+timingsynchronous:trust_c    0.0701     0.0578 42.4894  1.2124   0.2321
+timingpost_reading:trust_c   0.1256     0.0560 42.1328  2.2446   0.0301
+
+R² (marginal / conditional): 0.2975 / 0.6863 
+
+*** SIGNIFICANT INTERACTION DETECTED - Computing simple slopes ***
+
+EMMs at -1 SD and +1 SD of ai_trust :
+ timing       emmean     SE   df lower.CL upper.CL
+ pre_reading   0.842 0.0732 2.89    0.604    1.080
+ synchronous   0.572 0.0733 2.90    0.334    0.809
+ post_reading  0.628 0.0733 2.91    0.391    0.866
+
+Results are averaged over the levels of: structure 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- Model: Summary Accuracy ~ Timing × Dependence ---
+Formula: ai_summary_accuracy ~ timing * dependence_c + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                                Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)                       0.8523     0.0839  3.5835 10.1586   0.0009
+timingsynchronous                -0.2708     0.0383 42.0190 -7.0803   0.0000
+timingpost_reading               -0.2159     0.0386 42.0905 -5.5973   0.0000
+dependence_c                     -0.0351     0.0406 46.9489 -0.8644   0.3917
+structuresegmented               -0.0190     0.0566 21.0001 -0.3351   0.7408
+timingsynchronous:dependence_c    0.0392     0.0434 42.1278  0.9023   0.3720
+timingpost_reading:dependence_c   0.1161     0.0442 42.2764  2.6261   0.0120
+
+R² (marginal / conditional): 0.2613 / 0.7147 
+
+*** SIGNIFICANT INTERACTION DETECTED - Computing simple slopes ***
+
+EMMs at -1 SD and +1 SD of ai_dependence :
+ timing       emmean     SE   df lower.CL upper.CL
+ pre_reading   0.843 0.0790 2.84    0.583    1.103
+ synchronous   0.572 0.0790 2.84    0.312    0.831
+ post_reading  0.627 0.0791 2.85    0.368    0.886
+
+Results are averaged over the levels of: structure 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- Model: Summary Accuracy ~ Timing × Prior Knowledge ---
+Formula: ai_summary_accuracy ~ timing * prior_knowledge_c + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                                     Estimate Std. Error      df t value
+(Intercept)                            0.8521     0.0758  3.8180 11.2435
+timingsynchronous                     -0.2713     0.0405 42.0310 -6.6985
+timingpost_reading                    -0.2110     0.0408 42.1324 -5.1677
+prior_knowledge_c                     -0.0193     0.0327 52.7359 -0.5892
+structuresegmented                    -0.0216     0.0521 21.0000 -0.4152
+timingsynchronous:prior_knowledge_c   -0.0561     0.0380 42.2092 -1.4776
+timingpost_reading:prior_knowledge_c  -0.0215     0.0385 42.3736 -0.5588
+                                     Pr(>|t|)
+(Intercept)                            0.0005
+timingsynchronous                      0.0000
+timingpost_reading                     0.0000
+prior_knowledge_c                      0.5582
+structuresegmented                     0.6822
+timingsynchronous:prior_knowledge_c    0.1469
+timingpost_reading:prior_knowledge_c   0.5792
+
+R² (marginal / conditional): 0.2918 / 0.6599 
+
+
+========== 2B: MODERATION OF TIMING ON MCQ ACCURACY ==========
+
+--- Model: MCQ ~ Timing × Trust ---
+Formula: mcq_accuracy ~ timing * trust_c + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                           Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)                  0.7384     0.0494  3.8874 14.9600   0.0001
+timingsynchronous           -0.1719     0.0279 42.0772 -6.1637   0.0000
+timingpost_reading          -0.1455     0.0281 42.2067 -5.1713   0.0000
+trust_c                     -0.0584     0.0336 53.3377 -1.7401   0.0876
+structuresegmented          -0.0688     0.0346 21.0001 -1.9876   0.0601
+timingsynchronous:trust_c    0.0483     0.0411 42.6187  1.1747   0.2466
+timingpost_reading:trust_c   0.1317     0.0398 42.1737  3.3072   0.0019
+
+R² (marginal / conditional): 0.3273 / 0.6428 
+
+*** SIGNIFICANT INTERACTION DETECTED - Computing simple slopes ***
+
+EMMs at -1 SD and +1 SD of ai_trust :
+ timing       emmean     SE   df lower.CL upper.CL
+ pre_reading   0.704 0.0462 2.96    0.556    0.852
+ synchronous   0.532 0.0463 2.98    0.384    0.680
+ post_reading  0.559 0.0463 2.99    0.411    0.706
+
+Results are averaged over the levels of: structure 
+Degrees-of-freedom method: kenward-roger 
+Confidence level used: 0.95 
+
+--- Model: MCQ ~ Timing × Dependence ---
+Formula: mcq_accuracy ~ timing * dependence_c + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                                Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)                       0.7388     0.0515  3.6379 14.3572   0.0002
+timingsynchronous                -0.1728     0.0304 42.0381 -5.6863   0.0000
+timingpost_reading               -0.1445     0.0306 42.1573 -4.7176   0.0000
+dependence_c                     -0.0265     0.0275 58.8550 -0.9642   0.3389
+structuresegmented               -0.0695     0.0333 21.0000 -2.0866   0.0493
+timingsynchronous:dependence_c    0.0258     0.0345 42.2197  0.7480   0.4586
+timingpost_reading:dependence_c   0.0545     0.0351 42.4617  1.5536   0.1277
+
+R² (marginal / conditional): 0.2791 / 0.5858 
+
+
+--- Model: MCQ ~ Timing × Prior Knowledge ---
+Formula: mcq_accuracy ~ timing * prior_knowledge_c + structure + (1|participant_id) + (1|article) 
+
+Fixed Effects:
+                                     Estimate Std. Error      df t value
+(Intercept)                            0.7392     0.0503  3.7044 14.6917
+timingsynchronous                     -0.1731     0.0308 42.0453 -5.6183
+timingpost_reading                    -0.1432     0.0310 42.1750 -4.6120
+prior_knowledge_c                     -0.0079     0.0226 59.8919 -0.3516
+structuresegmented                    -0.0712     0.0326 21.0000 -2.1848
+timingsynchronous:prior_knowledge_c   -0.0199     0.0289 42.2727 -0.6896
+timingpost_reading:prior_knowledge_c   0.0132     0.0293 42.4800  0.4516
+                                     Pr(>|t|)
+(Intercept)                            0.0002
+timingsynchronous                      0.0000
+timingpost_reading                     0.0000
+prior_knowledge_c                      0.7264
+structuresegmented                     0.0404
+timingsynchronous:prior_knowledge_c    0.4942
+timingpost_reading:prior_knowledge_c   0.6538
+
+R² (marginal / conditional): 0.2796 / 0.5691 
+
+
+
+############################################################
+SECTION 3: DOES PRIOR KNOWLEDGE CHANGE AI VS NOAI EFFECT?
+(Participant-level regression)
+############################################################
+
+=== Mean MCQ ~ Group × Prior Knowledge ===
+
+
+Call:
+lm(formula = mean_mcq ~ experiment_group * prior_knowledge, data = df_all_agg)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.18688 -0.05868 -0.01038  0.07665  0.20455 
+
+Coefficients:
+                                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                           0.616329   0.045440  13.564 8.14e-15 ***
+experiment_groupNoAI                 -0.107907   0.110792  -0.974    0.337    
+prior_knowledge                      -0.007551   0.017257  -0.438    0.665    
+experiment_groupNoAI:prior_knowledge  0.008197   0.045291   0.181    0.858    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 0.09151 on 32 degrees of freedom
+Multiple R-squared:  0.1926,	Adjusted R-squared:  0.117 
+F-statistic: 2.545 on 3 and 32 DF,  p-value: 0.07346
+
+
+Standardized coefficients:
+# Standardization method: refit
+
+Parameter                                 | Std. Coef. |         95% CI
+-----------------------------------------------------------------------
+(Intercept)                               |       0.30 | [-0.09,  0.69]
+experiment group [NoAI]                   |      -0.91 | [-1.59, -0.23]
+prior knowledge                           |      -0.08 | [-0.43,  0.27]
+experiment group [NoAI] × prior knowledge |       0.08 | [-0.84,  1.00]
+
+
+############################################################
+SECTION 4: ARE READING/SUMMARY TIME RELATED TO OUTCOMES?
+(Trial-level mixed models)
+############################################################
+
+
+========== 4A: READING TIME → MCQ (ALL PARTICIPANTS) ==========
+
+--- Model: MCQ ~ Reading Time + Group ---
+Fixed Effects:
+                     Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)            0.5623     0.0975 33.0796  5.7654   0.0000
+log_reading_time       0.0174     0.0416 86.5107  0.4191   0.6762
+experiment_groupNoAI  -0.0897     0.0320 33.8949 -2.8044   0.0083
+
+R² (marginal / conditional): 0.0628 / 0.3124 
+
+--- Model: MCQ ~ Reading Time × Group (moderation) ---
+Fixed Effects:
+                                      Estimate Std. Error      df t value
+(Intercept)                             0.5482     0.1275 62.6934  4.3006
+log_reading_time                        0.0243     0.0576 96.8288  0.4214
+experiment_groupNoAI                   -0.0589     0.1785 78.7348 -0.3299
+log_reading_time:experiment_groupNoAI  -0.0146     0.0835 81.5322 -0.1754
+                                      Pr(>|t|)
+(Intercept)                             0.0001
+log_reading_time                        0.6744
+experiment_groupNoAI                    0.7424
+log_reading_time:experiment_groupNoAI   0.8612
+
+========== 4B: SUMMARY TIME → OUTCOMES (AI ONLY) ==========
+
+--- Model: Summary Accuracy ~ Summary Time + Timing + Structure ---
+Fixed Effects:
+                   Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)          0.5281     0.1809 50.3824  2.9191   0.0052
+log_summary_time     0.0661     0.0338 63.6612  1.9529   0.0552
+timingsynchronous   -0.2494     0.0416 44.9372 -5.9964   0.0000
+timingpost_reading  -0.1641     0.0474 49.7912 -3.4623   0.0011
+structuresegmented  -0.0076     0.0528 21.8999 -0.1445   0.8865
+
+R² (marginal / conditional): 0.2702 / 0.6588 
+
+--- Model: MCQ ~ Summary Time + Timing + Structure ---
+Fixed Effects:
+                   Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)          0.6107     0.1260 55.4982  4.8482   0.0000
+log_summary_time     0.0263     0.0240 64.5071  1.0952   0.2775
+timingsynchronous   -0.1642     0.0318 45.3566 -5.1605   0.0000
+timingpost_reading  -0.1239     0.0357 51.5522 -3.4708   0.0011
+structuresegmented  -0.0670     0.0316 21.7625 -2.1208   0.0456
+
+R² (marginal / conditional): 0.2858 / 0.5497 
+
+
+############################################################
+SECTION 5: DOES SUMMARY ACCURACY EXPLAIN TIMING → MCQ EFFECT?
+(Comparing models with/without summary accuracy)
+############################################################
+
+
+=== Model 1: MCQ ~ Timing + Structure (base) ===
+Fixed Effects:
+                   Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)          0.7382     0.0484  3.8906 15.2439   0.0001
+timingsynchronous   -0.1726     0.0306 44.0506 -5.6357   0.0000
+timingpost_reading  -0.1431     0.0309 44.1820 -4.6367   0.0000
+structuresegmented  -0.0695     0.0321 22.0000 -2.1649   0.0415
+
+R² (marginal / conditional): 0.2774 / 0.555 
+AIC: -70.24 
+
+=== Model 2: MCQ ~ Timing + Structure + Summary Accuracy ===
+Fixed Effects:
+                    Estimate Std. Error      df t value Pr(>|t|)
+(Intercept)           0.3417     0.0560 34.8212  6.1040   0.0000
+timingsynchronous    -0.0453     0.0284 58.1669 -1.5949   0.1162
+timingpost_reading   -0.0448     0.0266 54.0966 -1.6829   0.0982
+structuresegmented   -0.0630     0.0227 21.5713 -2.7724   0.0112
+ai_summary_accuracy   0.4674     0.0590 52.4333  7.9253   0.0000
+
+R² (marginal / conditional): 0.646 / 0.7108 
+AIC: -107.25 
+
+=== Model Comparison ===
+Data: df_ai
+Models:
+mod5_base: mcq_accuracy ~ timing + structure + (1 | participant_id) + (1 | article)
+mod5_mech: mcq_accuracy ~ timing + structure + ai_summary_accuracy + (1 | participant_id) + (1 | article)
+          npar      AIC      BIC logLik -2*log(L)  Chisq Df Pr(>Chisq)    
+mod5_base    7  -90.563  -74.626 52.281   -104.56                         
+mod5_mech    8 -134.938 -116.725 75.469   -150.94 46.375  1  9.764e-12 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+=== Timing Coefficient Change ===
+Timing (synchronous):
+  Base model: -0.1726 
+  With summary accuracy: -0.0453 
+  Change: 73.8 %
+
+Timing (post_reading):
+  Base model: -0.1431 
+  With summary accuracy: -0.0448 
+  Change: 68.7 %
+
+Summary accuracy coefficient: 0.4674 , p = 0 
+
+=== Interpretation ===
+The timing effect on MCQ is PARTIALLY EXPLAINED by summary accuracy.
+When summary accuracy is added, timing coefficients shrink by >20%.
+
+
+############################################################
+SUMMARY OF KEY FINDINGS
+############################################################
+
+1) Individual Differences → Outcomes:
+   - See regression tables for trust/dependence/prior knowledge effects
+
+2) Moderation of Timing:
+   - Check interaction terms (timing × moderator) in tables
+
+3) Group × Prior Knowledge:
+   - Interaction plot saved
+
+4) Time-on-Task:
+   - Log-transformed reading/summary time (due to skew)
+   - See scatter plots for relationships
+
+5) Mechanism Test:
+   - Summary accuracy as potential mechanism for timing → MCQ
+   - Model comparison saved
+
+=============================================================================
+END OF INDIVIDUAL DIFFERENCES ANALYSIS
+=============================================================================
