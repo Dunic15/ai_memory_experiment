@@ -1,0 +1,1218 @@
+% A LaTeX template for MSc Thesis submissions to 
+% Politecnico di Milano (PoliMi) - School of Industrial and Information Engineering
+%
+% S. Bonetti, A. Gruttadauria, G. Mescolini, A. Zingaro
+% e-mail: template-tesi-ingind@polimi.it
+%
+% Last Revision: October 2021
+%
+% Copyright 2021 Politecnico di Milano, Italy. NC-BY
+
+\documentclass{Configuration_Files/PoliMi3i_thesis}
+
+%------------------------------------------------------------------------------
+%	REQUIRED PACKAGES AND  CONFIGURATIONS
+%------------------------------------------------------------------------------
+
+% CONFIGURATIONS
+\usepackage{parskip} % For paragraph layout
+\usepackage{setspace} % For using single or double spacing
+\usepackage{emptypage} % To insert empty pages
+\usepackage{multicol} % To write in multiple columns (executive summary)
+\setlength\columnsep{15pt} % Column separation in executive summary
+\setlength\parindent{0pt} % Indentation
+
+
+
+% PACKAGES FOR TITLES
+\usepackage{titlesec}
+% \titlespacing{\section}{left spacing}{before spacing}{after spacing}
+\titlespacing{\section}{0pt}{3.3ex}{2ex}
+\titlespacing{\subsection}{0pt}{3.3ex}{1.65ex}
+\titlespacing{\subsubsection}{0pt}{3.3ex}{1ex}
+\usepackage{color}
+
+% PACKAGES FOR LANGUAGE AND FONT
+\usepackage[english]{babel} % The document is in English  
+\usepackage[utf8]{inputenc} % UTF8 encoding
+\usepackage[T1]{fontenc} % Font encoding
+\usepackage[11pt]{moresize} % Big fonts
+
+% PACKAGES FOR IMAGES
+\usepackage{graphicx}
+\usepackage{transparent} % Enables transparent images
+\usepackage{eso-pic} % For the background picture on the title page
+\usepackage{subfig} % Numbered and caption subfigures using \subfloat.
+\usepackage{tikz} % A package for high-quality hand-made figures.
+\usetikzlibrary{}
+\graphicspath{{./Images/}} % Directory of the images
+\usepackage{caption} % Coloured captions
+\usepackage{xcolor} % Coloured captions
+\usepackage{amsthm,thmtools,xcolor} % Coloured "Theorem"
+\usepackage{float}
+
+% STANDARD MATH PACKAGES
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage[overload]{empheq} % For braced-style systems of equations.
+\usepackage{fix-cm} % To override original LaTeX restrictions on sizes
+
+% PACKAGES FOR TABLES
+\usepackage{tabularx}
+\usepackage{longtable} % Tables that can span several pages
+\usepackage{colortbl}
+
+% PACKAGES FOR ALGORITHMS (PSEUDO-CODE)
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% PACKAGES FOR REFERENCES & BIBLIOGRAPHY
+\usepackage[colorlinks=true,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=black,menucolor=black,runcolor=black,urlcolor=black]{hyperref} % Adds clickable links at references
+\usepackage{cleveref}
+\usepackage[square, numbers, sort&compress]{natbib} % Square brackets, citing references with numbers, citations sorted by appearance in the text and compressed
+\bibliographystyle{abbrvnat} % You may use a different style adapted to your field
+
+% OTHER PACKAGES
+\usepackage{pdfpages} % To include a pdf file
+\usepackage{afterpage}
+\usepackage{lipsum} % DUMMY PACKAGE
+\usepackage{fancyhdr} % For the headers
+\fancyhf{}
+
+% Input of configuration file. Do not change config.tex file unless you really know what you are doing. 
+\input{Configuration_Files/config}
+
+%----------------------------------------------------------------------------
+%	NEW COMMANDS DEFINED
+%----------------------------------------------------------------------------
+
+% EXAMPLES OF NEW COMMANDS
+\newcommand{\bea}{\begin{eqnarray}} % Shortcut for equation arrays
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\e}[1]{\times 10^{#1}}  % Powers of 10 notation
+
+%----------------------------------------------------------------------------
+%	ADD YOUR PACKAGES (be careful of package interaction)
+%----------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------
+%	ADD YOUR DEFINITIONS AND COMMANDS (be careful of existing commands)
+%----------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------
+%	BEGIN OF YOUR DOCUMENT
+%----------------------------------------------------------------------------
+
+\begin{document}
+
+\fancypagestyle{plain}{%
+  \fancyhf{}% clear all header and footer fields
+  \fancyfoot[C]{\thepage}% page number in the centre of the footer
+  \renewcommand{\headrulewidth}{0pt}% no header line
+  \renewcommand{\footrulewidth}{0pt}% no footer line
+}
+
+%----------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------
+
+\pagestyle{empty} % No page numbers
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the preamble pages
+
+\puttitle{
+    title = {Title of the Thesis}, % Insert the final thesis title
+    name = {Duccio Profeti \quad\quad Edoardo Pinzauti}, % Authors on one line
+    course = {  Management Engineering}, % Programme in English
+    ID = {XXXXX \quad\quad YYYYY}, % Student IDs on one line
+    advisor = { Prof. Sergio Terzi}, % Advisor in English
+    coadvisor = {}, % Leave empty if none
+    academicyear = {Academic Year: 2026--27}, % Academic year in English
+}
+%----------------------------------------------------------------------------
+%	PREAMBLE PAGES: ABSTRACT (inglese e italiano), EXECUTIVE SUMMARY
+%----------------------------------------------------------------------------
+\startpreamble
+\setcounter{page}{1} % Set page counter to 1
+
+% ABSTRACT IN ENGLISH
+\chapter*{Abstract} 
+Here goes the Abstract in English of your thesis followed by a list of keywords.
+The Abstract is a concise summary of the content of the thesis (single page of text)
+and a guide to the most important contributions included in your thesis.
+The Abstract is the very last thing you write.
+It should be a self-contained text and should be clear to someone who hasn't (yet) read the whole manuscript.
+The Abstract should contain the answers to the main scientific questions that have been addressed in your thesis.
+It needs to summarize the adopted motivations and the adopted methodological approach as well as the findings of your work and their relevance and impact.
+The Abstract is the part appearing in the record of your thesis inside POLITesi,
+the Digital Archive of PhD and Master Theses (Laurea Magistrale) of Politecnico di Milano.
+The Abstract will be followed by a list of four to six keywords.
+Keywords are a tool to help indexers and search engines to find relevant documents.
+To be relevant and effective, keywords must be chosen carefully.
+They should represent the content of your work and be specific to your field or sub-field.
+Keywords may be a single word or two to four words. 
+\\
+\\
+\textbf{Keywords:} here, the keywords, of your thesis % Keywords
+
+% ABSTRACT IN ITALIAN
+\chapter*{Abstract in lingua italiana}
+Qui va l'Abstract in lingua italiana della tesi seguito dalla lista di parole chiave.
+\\
+\\
+\textbf{Parole chiave:} qui, vanno, le parole chiave, della tesi % Keywords (italian)
+
+%----------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES/SYMBOLS
+%----------------------------------------------------------------------------
+
+% TABLE OF CONTENTS
+\thispagestyle{empty}
+\tableofcontents % Table of contents 
+\thispagestyle{empty}
+\cleardoublepage
+
+%-------------------------------------------------------------------------
+%	THESIS MAIN TEXT
+%-------------------------------------------------------------------------
+% In the main text of your thesis you can write the chapters in two different ways:
+%
+%(1) As presented in this template you can write:
+%    \chapter{Title of the chapter}
+%    *body of the chapter*
+%
+%(2) You can write your chapter in a separated .tex file and then include it in the main file with the following command:
+%    \chapter{Title of the chapter}
+%    \input{chapter_file.tex}
+%
+% Especially for long thesis, we recommend you the second option.
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+% Use only footer page numbers, no header
+\pagestyle{fancy}
+\fancyhf{}                % clear header & footer
+\fancyfoot[C]{\thepage}   % page number centered in footer
+\renewcommand{\headrulewidth}{0pt} % remove header line
+\renewcommand{\footrulewidth}{0pt} % optional: no footer line
+
+% --------------------------------------------------------------------------
+% NUMBERED CHAPTERS % Regular chapters following
+% -------------------------------------------------------------------------
+
+% --------------------------------------------------------------------------
+% NUMBERED CHAPTERS % Regular chapters following
+% ------------------------------------------------------------------------
+%=========================================================
+% THESIS STRUCTURE (MEMORY-FOCUSED) - MAIN FILE SKELETON
+%=========================================================
+
+\mainmatter
+
+%---------------------------------------------------------
+\chapter{Introduction}
+\label{ch:introduction}
+
+Generative AI systems have rapidly become part of everyday information work. Students and knowledge workers increasingly rely on AI tools to summarize long texts, extract key points, and provide explanations on demand. This shift is not only a change in \emph{access} to information, but also a change in the \emph{cognitive environment} in which learning and remembering take place: when a system produces an external representation of a text (e.g., a summary), it can act as a cue, a scaffold, or even a substitute for internal processing.
+
+From a cognitive perspective, the central question is whether such assistance strengthens memory by reducing extraneous load and guiding attention, or whether it weakens memory by encouraging shallow processing and cognitive offloading. Prior work suggests that external resources can both support performance and alter internal encoding strategies \citep{Risko2016CognitiveOffloading,Sparrow2011GoogleEffect}. However, evidence on generative AI specifically is still emerging, and there is limited understanding of \emph{which design choices} (when and how summaries are presented) shape memory outcomes \citep{Bai2023ChatGPTLearningMemory,Chan2024ConversationalAIFalseMemories}.
+
+This thesis addresses that gap through a controlled reading-and-memory experiment in which AI assistance is operationalized as pre-generated summaries that vary in \emph{structure} (integrated vs.\ segmented) and \emph{timing} (pre-reading vs.\ synchronous vs.\ post-reading). The study compares AI-assisted reading against a No-AI baseline and evaluates not only recognition accuracy, but also free recall quality and susceptibility to misinformation via experimentally planted false lures.
+
+\section{Motivation and Research Problem}
+\label{sec:motivation}
+The ability to learn from text depends on how readers encode information during reading and how they later retrieve it. Classic memory research shows that durable learning is supported by deeper semantic processing \citep{Craik1972LevelsOfProcessing}, the management of limited-capacity working memory resources \citep{Baddeley2012WorkingMemory}, and the availability of effective retrieval cues that match encoding conditions \citep{Tulving1973EncodingSpecificity}. In real learning contexts, readers often use external representations---notes, outlines, highlighted passages---to support these processes. Generative AI introduces a new, highly scalable form of external representation: a system can produce a structured summary of a text instantly and present it alongside the original material.
+
+This development is attractive because it promises efficiency and comprehension support. Summaries can reduce the need to search for key points, clarify causal relations, and provide an organized ``map'' of the content. At the same time, AI summaries may change how readers allocate attention and what they choose to encode. When an external representation is available, individuals may engage in \emph{cognitive offloading}---relying on the external artifact rather than internal memory---which can reduce the formation of detailed, well-integrated memory traces \citep{Risko2016CognitiveOffloading,Sparrow2011GoogleEffect}. In addition, because AI outputs are not guaranteed to be complete or perfectly accurate, reliance on summaries introduces a risk of \emph{source-monitoring} errors: people may later misattribute information to the original text, accept plausible but incorrect statements, or blend sources during reconstruction \citep{Johnson1993SourceMonitoring,Chan2024ConversationalAIFalseMemories}.
+
+Despite intense public interest, there is still a methodological need for controlled evidence on how AI-generated summaries affect memory under realistic reading constraints. Much existing work focuses on perceived usefulness or immediate task performance; fewer studies examine memory outcomes in a way that separates (i) recall versus recognition, (ii) item-specific versus relational understanding, and (iii) accurate memory versus acceptance of plausible misinformation. Moreover, even when AI assistance is studied, it is often treated as a single ``on/off'' factor rather than a configurable system whose design choices may matter.
+
+The research problem of this thesis is therefore twofold:
+\begin{itemize}
+  \item \textbf{Substantive problem:} to determine whether AI-generated summaries support or undermine memory for complex expository texts, and whether they change the \emph{quality} of what is remembered (specificity, mechanistic depth, and structural alignment) rather than only the amount.
+  \item \textbf{Design problem:} to identify how the \emph{structure} and \emph{timing} of summary presentation shape encoding and retrieval, including susceptibility to false memories and source confusions.
+\end{itemize}
+By isolating these factors experimentally, the thesis aims to move from broad claims about ``AI helps/hurts learning'' toward more precise conclusions about which AI configurations are beneficial, which are risky, and why.
+
+\section{Research Objectives}
+\label{sec:objectives}
+Following common master-thesis conventions, the work is organized around a small set of concrete objectives that translate the research problem into measurable outcomes.
+
+The main objectives are:
+\begin{itemize}
+  \item \textbf{O1 --- Establish a baseline comparison:} quantify differences in memory performance between AI-assisted reading and unaided reading under matched time constraints.
+  \item \textbf{O2 --- Test design dimensions of AI assistance:} evaluate how summary \emph{timing} (pre-reading, synchronous, post-reading) and summary \emph{structure} (integrated vs.\ segmented) influence recall quality and recognition accuracy.
+  \item \textbf{O3 --- Assess misinformation and source integrity:} measure susceptibility to false-lure acceptance and source-monitoring errors when AI-generated content is present.
+  \item \textbf{O4 --- Link outcomes to behavior and experience:} relate memory outcomes to behavioral logs (e.g., summary viewing time, reading time, interaction patterns) and to individual differences such as AI trust and perceived dependence.
+  \item \textbf{O5 --- Provide interpretable implications:} derive theoretical and practical implications for the design of AI-supported reading interfaces in education and knowledge work.
+\end{itemize}
+
+\section{Research Questions}
+\label{sec:research_questions}
+The thesis addresses the objectives through the following research questions (RQs), framed to be answerable using the experimental design and measures reported in this work:
+\begin{itemize}
+  \item \textbf{RQ1 (AI vs.\ No-AI):} Compared to unaided reading, does access to an AI-generated summary improve or degrade memory performance for expository texts (free recall quality and recognition accuracy)?
+  \item \textbf{RQ2 (Timing):} For AI-assisted participants, how does the timing of summary access (pre-reading, synchronous, post-reading) affect memory outcomes and behavioral indicators of reliance?
+  \item \textbf{RQ3 (Structure):} Does summary structure (integrated paragraph summary vs.\ segmented bullet summary) differentially support relational understanding versus item-specific recall, and does it affect susceptibility to misinformation?
+  \item \textbf{RQ4 (Moderators):} Do individual differences (e.g., prior knowledge, AI trust/dependence) moderate the relationship between AI assistance and memory outcomes?
+\end{itemize}
+Together, these questions connect a practical interface choice (how and when to show AI summaries) to theoretically meaningful constructs in memory research: depth of processing, cue-dependent retrieval, cognitive offloading, and source monitoring.
+
+\section{Scope and Focus of the Thesis}
+\label{sec:scope}
+This thesis focuses on memory for \emph{expository} reading materials under controlled laboratory conditions. The study is intentionally scoped to isolate the cognitive consequences of AI-generated summaries while keeping other variables constant.
+
+\textbf{What is in scope:}
+\begin{itemize}
+  \item A controlled reading-and-testing protocol with fixed exposure windows, enabling comparison across AI and No-AI conditions.
+  \item AI assistance operationalized as \emph{pre-generated} summaries (rather than interactive dialogue), enabling strict control over content, structure, and the inclusion of false lures.
+  \item Multiple outcome measures capturing complementary aspects of memory: free recall quality, recognition accuracy, misinformation acceptance, confidence, perceived effort, and behavioral interaction logs.
+\end{itemize}
+
+\textbf{What is out of scope:}
+\begin{itemize}
+  \item Long-term retention over days/weeks and educational outcomes such as course grades; the study evaluates memory within the experimental session.
+  \item Open-ended conversational use of AI systems where prompts, follow-up questions, and personalization introduce substantial variability.
+  \item Neuroimaging or physiological measures; the thesis relies on behavioral performance, self-report, and interaction logs.
+\end{itemize}
+
+These boundary conditions are important for interpreting the results: the thesis aims to make strong causal claims about the tested AI summary configurations, while avoiding overgeneralization to all possible AI tools and learning contexts.
+
+\section{Contribution of the Thesis}
+\label{sec:contribution}
+The thesis provides contributions at three levels---conceptual, methodological, and empirical---which is typical for an experimental master thesis in cognitive/behavioral research.
+
+\textbf{Conceptual contribution.} The thesis proposes the \emph{AI Buffer} model (Chapter~3) as a compact way to describe how AI-generated representations can act as an external buffer that interacts with encoding, retrieval, and metacognitive monitoring. The model is not intended as a universal theory of AI, but as a targeted framework for interpreting the effects of AI summaries under controlled conditions.
+
+\textbf{Methodological contribution.} The work develops and documents a browser-based experimental platform that implements strict timing control, counterbalancing, and fine-grained behavioral logging. The design includes a No-AI baseline and an AI condition with orthogonal manipulations of summary structure and timing, enabling direct evaluation of design choices rather than treating AI support as a unitary intervention.
+
+\textbf{Empirical contribution.} The experiment provides evidence on how AI-generated summaries influence recall quality, recognition accuracy, confidence calibration, and susceptibility to false-lure acceptance. By combining recall scoring grounded in constructive memory theory \citep{Bartlett1932Remembering} with a recognition test that includes planted misinformation and source-sensitive indices, the thesis offers a nuanced characterization of when AI assistance helps, when it harms, and what kinds of memory representations are affected.
+
+\section{Thesis Structure}
+\label{sec:thesis_structure}
+The remainder of the thesis is organized as follows:
+\begin{itemize}
+  \item \textbf{Chapter~2 (Literature Review)} synthesizes foundational theories of human memory and relevant work on cognitive offloading, external representations, and recent findings on generative AI and memory.
+  \item \textbf{Chapter~3 (Conceptual Framework and Hypotheses)} introduces the AI Buffer model and derives hypotheses linking summary structure and timing to predicted memory outcomes.
+  \item \textbf{Chapter~4 (Methodology)} describes the experimental design, materials, platform implementation, procedure, measures, and scoring methods (including the recall rubric and false-lure logic).
+  \item \textbf{Chapter~5 (Data Analysis)} outlines preprocessing steps, exclusion criteria, and the statistical models used to test the hypotheses.
+  \item \textbf{Chapter~6 (Results)} reports descriptive statistics and inferential results for recall, recognition, misinformation indices, and behavioral measures.
+  \item \textbf{Chapter~7 (Discussion)} interprets findings in light of the theoretical framework, considers alternative explanations and limitations, and discusses implications for AI interface design.
+  \item \textbf{Chapter~8 (Conclusion)} summarizes contributions, key takeaways, and directions for future research.
+  \item \textbf{Appendices} provide experimental materials, survey instruments, statistical outputs, and ethical protocol details.
+\end{itemize}
+
+
+%---------------------------------------------------------
+
+\chapter{Literature Review}
+
+
+\section{AI and Human Cognition}
+\subsection{Theoretical Foundations of Human Memory}
+
+The study of human memory has evolved through several major theoretical
+frameworks that describe how information is encoded, stored, and retrieved.
+The earliest comprehensive account is the \emph{modal model} proposed by
+Atkinson and Shiffrin \citep{Atkinson1968HumanMemory}, which conceptualizes memory as a
+system composed of three structural stores: sensory memory, short-term
+memory (STM), and long-term memory (LTM). According to this framework,
+information enters through high-capacity but rapidly decaying sensory
+registers, is filtered into STM through attentional control, and may be
+consolidated into LTM through rehearsal and elaborative processing. This
+model introduced the influential distinction between temporary and durable
+memory systems and highlighted the central role of control processes—
+particularly attention and rehearsal—in regulating information flow.
+
+A major theoretical shift occurred with Baddeley’s reconceptualization of
+STM as \emph{working memory} \citep{Baddeley2012WorkingMemory}. Rather than a passive buffer, 
+working memory is understood as an active cognitive workspace composed of
+multiple subsystems: the phonological loop, the visuospatial sketchpad, the
+episodic buffer, and the central executive. These components enable the 
+integration of multimodal information and support reasoning, decision-making,
+and sustained mental effort. Baddeley’s framework aligns with a large body
+of neuropsychological evidence demonstrating domain-specific maintenance
+mechanisms and executive control functions distributed across the cortex. 
+In contemporary cognitive science, working memory is viewed as a core system
+for managing cognitive load, coordinating complex tasks, and mediating
+interactions between attention and long-term memory.
+
+Building on these models, Tulving introduced the distinction between
+\emph{episodic} and \emph{semantic} memory \citep{Tulving1972EpisodicSemantic}. Episodic memory
+refers to the recollection of personally experienced, context-rich events,
+whereas semantic memory stores abstract, generalized knowledge about the
+world. This theoretical separation is supported by neuropsychological cases
+in which episodic memory deficits coexist with preserved semantic knowledge,
+indicating partially distinct neural substrates. Tulving further proposed
+the encoding specificity principle \citep{Tulving1973EncodingSpecificity}, 
+which posits that retrieval is most successful when cues available at encoding 
+are reinstated at recall—a principle foundational for experimental memory research 
+and highly relevant for understanding how artificial systems may augment or 
+interfere with human recall.
+
+Additional work has refined these classical perspectives. Papagno
+\citep{Papagno2015EpisodicMemory}, for example, examined how verbal and
+visuospatial information are maintained across working memory and long-term
+systems, showing that attentional control and linguistic context modulate
+encoding efficiency. Complementing this behavioral evidence, Craik and
+Lockhart’s \emph{Levels of Processing} framework \citep{Craik1972LevelsOfProcessing}
+emphasized that encoding durability depends not on storage location but on
+the \emph{depth} and \emph{semantic elaboration} of cognitive processing. 
+Deep, meaning-oriented processing leads to more durable memory traces than
+shallow perceptual encoding—a finding repeatedly confirmed in subsequent
+behavioral and neuroscientific studies.
+
+Neurophysiological research has expanded the field by examining the temporal
+and spatial dynamics of encoding and retrieval. Single-neuron recordings
+\citep{Rutishauser2021ArchitectureHumanMemory} demonstrate that hippocampal and
+medial temporal lobe neurons respond selectively to high-level concepts,
+forming the building blocks of both episodic and semantic representations.
+Electrophysiological evidence further shows that neural activation patterns
+during encoding predict later retrieval success, a phenomenon known as the 
+subsequent-memory effect \citep{Caplan2009EEGAssociativeOrder}. These findings 
+link classical cognitive theories to measurable neural mechanisms.
+
+Memory research has also expanded to encompass ecological and
+contextual dimensions. Studies using immersive virtual environments
+\citep{Plancher2018VREpisodicMemory} demonstrate that spatial and sensory richness 
+enhance episodic encoding, while real-life neuroscience approaches
+\citep{ShamayTsoory2019RealLifeNeuroscience} argue that memory should be studied 
+within dynamic, socially embedded environments rather than laboratory abstractions.
+These perspectives highlight the adaptability of human memory systems and
+their sensitivity to environmental structure and attentional framing.
+
+At the systems level, contemporary views emphasize that memory emerges from
+distributed interactions across cortical and hippocampal networks. The work
+of Moscovitch and colleagues \citep{Moscovitch2006CognitiveNeuroscienceRemoteMemory}
+proposes that the hippocampus continuously binds contextual information during
+encoding, while neocortical regions gradually extract semantic regularities
+over time. More recent neuroimaging evidence confirms that memory retrieval
+reinstates patterns of cortical activation originally present during encoding
+\citep{Liu2021TransformativeNeuralRepresentations}, supporting the idea that memory is a 
+dynamic process of reactivation and transformation.
+
+Taken together, these theoretical and empirical contributions establish three
+foundational principles: (1) memory is structured across interconnected but
+functionally specialized systems; (2) encoding and retrieval depend critically 
+on attentional control and the depth of cognitive processing; and (3) memory 
+operates as an adaptive, context-sensitive mechanism shaped by neural, behavioral, 
+and environmental interactions. These principles provide the conceptual basis 
+for analyzing how artificial intelligence systems may support, modify, or 
+extend human memory in contemporary professional and technological contexts.
+
+\subsection{Classical and Contemporary Models of Memory}
+
+
+Classical theories of memory laid the groundwork for understanding how humans
+encode, store, and retrieve information, but contemporary research has 
+substantially expanded this perspective by integrating neural, contextual, and 
+computational insights. Early cognitive models, such as those proposed by 
+Atkinson and Shiffrin \citep{Atkinson1968HumanMemory}, described memory as a set 
+of structural components—sensory memory, short-term memory, and long-term 
+memory—linked by attentional and rehearsal processes. This ``modal model'' 
+provided a foundational architecture that clarified how information moves 
+through different stores, introducing concepts such as control processes and 
+serial information flow that influenced decades of experimental research.
+
+A major theoretical development occurred when Baddeley reconceptualized 
+short-term memory as \emph{working memory}, a dynamic system responsible for the 
+temporary maintenance and manipulation of information 
+\citep{Baddeley2012WorkingMemory}. The multicomponent working memory model—
+including the phonological loop, visuospatial sketchpad, episodic buffer, and 
+central executive—extended earlier structural accounts by emphasizing the role 
+of executive control in coordinating cognitive tasks. This framework provided a 
+functional explanation for complex behaviors such as reasoning, language 
+processing, and decision-making, and became the dominant paradigm for 
+understanding the limits of human cognitive capacity.
+
+In parallel, Tulving's distinction between episodic and semantic memory 
+\citep{Tulving1972EpisodicSemantic} marked a turning point in the study of 
+long-term memory. Episodic memory, defined as the recollection of 
+autobiographical, context-rich events, contrasts with semantic memory, which 
+stores decontextualized knowledge about facts and concepts. This theoretical 
+division is supported by neuropsychological findings showing selective deficits 
+in episodic recollection following hippocampal damage, while semantic knowledge 
+may remain preserved. Tulving further proposed the encoding specificity principle
+\citep{Tulving1973EncodingSpecificity}, which states that retrieval success is 
+maximized when cues present at encoding are reinstated at recall. This principle 
+has profound implications for both memory theory and applied contexts, as it 
+suggests that memory performance depends as much on environmental alignment as 
+on internal processes.
+
+Beyond these classical theories, contemporary research has adopted a more 
+process-oriented perspective on memory. Craik and Lockhart’s 
+Levels of Processing framework \citep{Craik1972LevelsOfProcessing} reframed memory 
+durability as a function of semantic elaboration rather than storage location. 
+Shallow, perceptually oriented processing results in fragile representations, 
+while deep, meaning-based encoding yields robust and easily retrievable memory 
+traces. This model has been widely validated and provides an essential 
+theoretical basis for understanding how digital tools—including AI systems—may 
+alter encoding quality by shifting attention away from elaborative processing.
+
+Modern neuroscience has further transformed our understanding of memory by 
+revealing the distributed and dynamic nature of encoding and retrieval. 
+Electrophysiological evidence from single-neuron recordings 
+\citep{Rutishauser2021ArchitectureHumanMemory} shows that hippocampal and 
+medial temporal lobe neurons respond selectively to abstract, conceptual 
+representations, supporting flexible generalization across sensory modalities. 
+These findings bridge the gap between cognitive theories of memory and their 
+neural implementations, demonstrating how episodic and semantic 
+representations arise from coordinated network activity.
+
+Complementing these insights, neuroimaging research has identified the 
+\emph{subsequent memory effect}, in which greater neural activation during 
+encoding predicts successful later retrieval. Caplan et al.\ \citep{Caplan2009EEGAssociativeOrder}
+demonstrate this phenomenon using EEG, showing that increased synchronous 
+activity in hippocampal and cortical regions correlates with accurate recall of 
+associative information. Such findings reinforce the central role of deep 
+processing and contextual binding in forming durable memory representations.
+
+Contemporary theoretical models have also emphasized that memory is not a static 
+repository but a reconstructive and continuously updated system. 
+Moscovitch and colleagues \citep{Moscovitch2006CognitiveNeuroscienceRemoteMemory} 
+propose that episodic memory relies on hippocampal binding mechanisms throughout 
+the lifespan of a memory, while semantic knowledge emerges through neocortical 
+abstraction across repeated retrievals. This perspective challenges earlier 
+views suggesting that the hippocampus becomes unnecessary after consolidation; 
+instead, it positions memory as an active, evolving process distributed across 
+multiple neural systems.
+
+Recent work by Liu et al.\ \citep{Liu2021TransformativeNeuralRepresentations} further 
+demonstrates that long-term episodic memory depends on dynamic reactivation of 
+cortical networks initially engaged during encoding. These neural 
+representations undergo transformation over time, reflecting the integration of 
+new associative links and the reshaping of contextual details. This has 
+significant implications for models of forgetting, remembering, and the 
+interaction between episodic and semantic memory systems.
+
+Alongside neural findings, contemporary memory science increasingly emphasizes 
+the importance of ecological and embodied contexts. Immersive virtual reality 
+studies \citep{Plancher2018VREpisodicMemory} show that spatial richness and 
+embodied interaction enhance encoding of episodic details, highlighting the 
+sensitivity of memory systems to environmental structure. Similarly, 
+Shamay-Tsoory and Mendelsohn \citep{ShamayTsoory2019RealLifeNeuroscience} advocate 
+for a ``real-life neuroscience'' approach, arguing that laboratory tasks often 
+oversimplify memory processes that in daily life unfold amidst social 
+interaction, emotional dynamics, and multimodal sensory input.
+
+These ecological perspectives are complemented by computational frameworks such 
+as the Cognitive Paradigm Ontology \citep{Turner2012CognitiveParadigmOntology}, 
+which maps memory processes onto broader cognitive architectures and clarifies 
+their interactions with attention, metacognition, and decision-making. Memory is 
+increasingly viewed not as a discrete module but as a distributed component 
+embedded within cognitive, social, and perceptual systems.
+
+Contemporary behavioral research further reinforces the complex, 
+context-dependent nature of memory. Papagno \citep{Papagno2015EpisodicMemory} 
+highlights how linguistic resources and executive control shape episodic recall, 
+while studies on metacognition show that individuals regulate memory encoding 
+and retrieval strategies based on self-monitoring, confidence, and task 
+demands. These findings demonstrate that memory performance reflects not only 
+storage and retrieval mechanisms but also the individual's ability to manage 
+and monitor cognitive processes.
+
+Taken together, classical and contemporary perspectives converge on several 
+core insights: (1) memory is composed of multiple interacting systems with 
+distinct but integrated functions; (2) encoding and retrieval involve dynamic 
+neural and cognitive processes that evolve over time; (3) memory formation is 
+highly sensitive to context, embodiment, attention, and social cues; and 
+(4) memory representations are reconstructive and adaptive, rather than fixed. 
+These principles provide the conceptual grounding for examining how artificial 
+intelligence systems may support, disrupt, or transform human memory processes, 
+particularly in knowledge-intensive domains where cognitive load, complexity, 
+and temporal fragmentation are high.
+
+
+\subsection{Cognitive Effects of AI Systems}
+
+
+Artificial intelligence systems increasingly mediate how individuals acquire, 
+process, and retrieve information, positioning them as potential partners in 
+human memory and cognition. While classical theories describe memory as an 
+interaction between encoding, storage, and retrieval processes, AI introduces 
+an additional layer of externalized cognitive support that can both enhance and 
+distort these mechanisms. Contemporary research demonstrates that AI tools 
+influence human cognition through mechanisms such as elaborative prompting, 
+cognitive offloading, meta-cognitive feedback, and contextual cueing, while 
+also generating new risks related to dependency, reduced encoding depth, and 
+false memory formation.
+
+One of the most discussed cognitive effects of AI concerns its impact on 
+memory encoding and learning. Bai, Liu, and Su \citep{Bai2023ChatGPTLearningMemory}
+show that interacting with generative AI systems such as ChatGPT can improve 
+learning outcomes when users engage in reflective, dialogic interaction. 
+Through elaborative prompting and self-explanation, learners activate deeper 
+levels of semantic processing, consistent with the principles of the Levels of 
+Processing framework \citep{Craik1972LevelsOfProcessing}. These findings 
+suggest that AI systems can scaffold encoding by encouraging users to articulate, 
+refine, and reorganize conceptual knowledge. Complementing this behavioral 
+evidence, Haider et al.\ \citep{Haider2024AICognitiveFunctions} show that AI-assisted 
+learning can enhance short-term recall, long-term retention, and problem-solving 
+performance, while simultaneously reducing cognitive anxiety—a factor known to 
+impair the encoding and retrieval of episodic information.
+
+Beyond learning contexts, AI systems influence how individuals recall 
+information through externalized memory structures. The Memoro platform 
+\citep{Memoro2024RealTimeMemoryAugmentation}, for example, provides a real-time 
+conversational interface that prompts users to restate and verify information. 
+This process resembles the rehearsal mechanisms posited in classical memory 
+models \citep{Atkinson1968HumanMemory} and mirrors the retrieval practice effects 
+documented in cognitive psychology. By externalizing the rehearsal loop and 
+providing context-sensitive cues, AI systems can act as artificial partners in 
+memory consolidation, enhancing the durability of encoded information. 
+Similarly, neuroscience-inspired studies such as those at the MIT Media Lab 
+\citep{MITMediaLab2023BrainOnChatGPT} indicate that AI-assisted writing engages 
+neural systems associated with attentional control and semantic integration, 
+suggesting that AI-mediated cognition may directly affect the neural mechanisms 
+supporting memory formation.
+
+AI also influences meta-cognition—the monitoring and regulation of one’s own 
+cognitive processes. Sun, Zhang, and Li \citep{Sun2025GenerativeAICreativity} 
+demonstrate that generative AI can improve meta-cognitive calibration by 
+prompting users to evaluate alternative ideas, articulate reasoning strategies, 
+and reflect on uncertainty. These meta-cognitive interactions facilitate 
+deeper encoding and more accurate confidence judgments, linking AI-supported 
+cognition to traditional memory theories emphasizing the importance of 
+self-monitoring in retrieval success.
+
+However, the cognitive benefits of AI coexist with significant risks. One of 
+the most widely discussed is \emph{cognitive offloading}, the delegation of 
+memory and reasoning tasks to external systems. Research shows that habitual 
+offloading reduces internal encoding effort and shifts cognitive resources 
+toward navigation and search rather than semantic elaboration 
+\citep{Risko2016CognitiveOffloading, Sparrow2011GoogleEffect}. A recent 
+meta-analysis by Gong and Yang \citep{Gong2024GoogleEffectsMetaAnalysis} 
+confirms the robustness of the ``Google effect,'' showing that frequent 
+reliance on search tools weakens independent recall while increasing users’ 
+tendency to remember where information is stored rather than the content 
+itself. These findings raise concerns about how AI systems that automate 
+summarization, explanation, and retrieval may inadvertently weaken users’ 
+ability to encode and store information autonomously.
+
+Related to offloading is the risk of \emph{hollow expertise}, in which users 
+appear competent while relying on AI-generated knowledge without corresponding 
+internal representations. Oakley, Sejnowski, and Weinstein 
+\citep{Oakley2025MemoryParadox} argue that AI systems may create an illusion of 
+understanding by providing correct answers that bypass the cognitive effort 
+required for semantic integration. Without repeated engagement in elaborative 
+processing, knowledge structures become shallow and brittle, consistent with 
+theoretical concerns raised in the memory literature 
+\citep{Craik1972LevelsOfProcessing, Baddeley2012WorkingMemory}.
+
+Another significant risk concerns the emergence of \emph{false memories}. 
+Chan et al.\ \citep{Chan2024ConversationalAIFalseMemories} show that 
+large language model (LLM)-powered conversational interfaces can induce false 
+recollections in witness interviews by subtly altering phrasing, suggesting 
+details, or reinforcing user-generated inaccuracies. These findings extend 
+decades of research on memory suggestibility into the domain of AI, raising 
+concerns about epistemic reliability and the vulnerability of human memory to 
+algorithmic framing. They also highlight the importance of 
+source-monitoring processes \citep{Tulving1973EncodingSpecificity}, which may be 
+disrupted when AI systems blur the distinction between user-generated and 
+machine-generated content.
+
+Educational research further reveals that over-reliance on AI dialogue systems 
+may reduce independent cognitive effort. Zhai, Wibowo, and Li 
+\citep{Zhai2024OverRelianceAIDialogue} report that students who frequently rely on 
+AI for explanations exhibit diminished problem-solving capacity and weaker 
+long-term retention, reinforcing the idea that AI can reduce engagement in 
+active cognitive processes essential for durable memory formation.
+
+At a broader societal level, Gerlich \citep{Gerlich2025AIToolsSociety} argues 
+that AI systems reshape cognitive habits by encouraging externalization of 
+memory, modifying attention patterns, and altering the balance between internal 
+and external cognitive control. These changes may generate long-term 
+transformations in cognitive culture, influencing everything from note-taking 
+behavior to professional decision-making workflows.
+
+Finally, AI systems may affect the emotional and contextual dimensions of 
+memory. Research in neuromarketing \citep{Beyaria2024NeuromarketingAIEmotionMemory}
+shows that AI-enhanced digital experiences can increase emotional salience, 
+thereby strengthening certain types of encoding while weakening others. These 
+findings suggest that AI may modulate the kinds of memories individuals form, 
+not merely their accuracy or accessibility.
+
+In sum, current research points to a dual role of AI in cognition: as a 
+\emph{cognitive amplifier}, capable of enhancing encoding, retrieval, and 
+meta-cognitive monitoring through elaborative interaction; and as a 
+\emph{cognitive disruptor}, capable of weakening internal memory processes, 
+inducing false recollections, and fostering over-reliance. Understanding these 
+mechanisms is essential for integrating AI responsibly into memory-intensive 
+professional contexts, where accuracy, autonomy, and deep comprehension are 
+critical.
+\subsection{ Business and Organizational Perspectives on AI--Augmented Memory}
+
+
+
+Beyond individual cognition, the integration of AI into memory processes has significant implications for organizations and knowledge-intensive work. Modern enterprises increasingly rely on digital ecosystems in which AI systems support recall, contextual understanding, and information retrieval, effectively functioning as external memory infrastructures. These developments reshape not only how individuals encode and retrieve information, but also how organizations store, activate, and transfer knowledge across teams and projects.
+
+Several studies illustrate how AI tools act as cognitive extensions within professional environments. Productivity platforms such as Mem.ai, NotebookLM, and Copilot organize personal and collective knowledge into searchable, semantically structured archives, reducing cognitive load and improving contextual reinstatement during complex tasks \cite{Memoro2024RealTimeMemoryAugmentation,Gerlich2025AIToolsSociety}. By surfacing prior decisions, task histories, and relevant documents at appropriate moments, these systems externalize elements of working memory and enhance continuity in fast-moving workflows. This dynamic aligns with theories of cognitive offloading \cite{Sparrow2011GoogleEffect,Risko2016CognitiveOffloading}, while extending them into organizational settings where information fragmentation is a chronic challenge.
+
+The strategic value of AI-augmented memory is particularly evident in knowledge-intensive work. As the volume, velocity, and fragmentation of information increase, the capacity to retrieve prior insights, reconstruct decision rationales, and sustain continuity across projects becomes a critical organizational capability. Research in organizational cognition highlights the importance of knowledge continuity—the ability of firms to reactivate past experiences and integrate them into ongoing decision-making processes \cite{Zhang2024KnowledgeImbalanceAI}. AI systems that provide contextual, cue-based retrieval directly reinforce this capability by allowing workers to navigate vast and heterogeneous digital archives with minimal friction, thereby enhancing coordination, reducing redundancy, and preserving the rationale behind past choices.
+
+This perspective aligns with broader research on AI-enabled knowledge management systems, which emphasizes the complementary relationship between technological infrastructures and human expertise in sustaining organizational memory over time \cite{Pai2022AIKnowledgeManagement}. By structuring information, surfacing contextually relevant content, and supporting cross-project learning, AI systems function not merely as repositories but as active participants in organizational cognition.
+
+These transformations also raise concerns. Overreliance on AI for recall can lead to surface-level engagement, reduced independent retrieval, and erosion of internal knowledge structures, mirroring findings in cognitive psychology \cite{Firth2019OnlineBrain,Zhai2024OverRelianceAIDialogue}. Organizational dependence on AI memory systems may shift employees’ focus from active understanding toward passive consultation, increasing epistemic vulnerability and amplifying risks associated with opaque or erroneous outputs \cite{Pasquale2015BlackBoxSociety,Oakley2025MemoryParadox}. As memory becomes partially externalized, firms must consider how to preserve metacognitive awareness, source monitoring, and interpretive autonomy in hybrid human–AI environments.
+
+Emerging applications also demonstrate the potential for AI to enhance domain-specific memory-intensive tasks. In clinical and neurotechnology contexts, adaptive AI systems help restore or support memory in individuals affected by cognitive decline \cite{Guzzi2023DementiaAIFramework,Kucewicz2023BrainStimulationMemory}, while in educational settings, intelligent tutoring systems improve encoding and retrieval through personalized feedback loops \cite{Ma2014ITSMetaanalysis,Alshaikh2021ITS,Pane2014CognitiveTutorAlgebra}. These applied findings highlight that AI-augmented memory is not merely a theoretical construct but a rapidly expanding technological paradigm with direct implications for training, decision-making, and professional performance.
+
+Taken together, business interest in AI-augmented memory reflects a broader shift toward hybrid cognitive systems in which human abilities are complemented by algorithmic scaffolds. Organizations increasingly view memory not only as an individual capability but as a distributed resource that can be enhanced, preserved, and operationalized through AI. Understanding these dynamics is essential for conceptualizing how memory augmentation reshapes knowledge work and for designing AI systems that support—rather than replace—human cognitive agency.
+
+\subsection{ Applied AI--Memory Systems Across Sectors}
+
+
+The practical relevance of AI-augmented memory becomes evident when examining its adoption across sectors that rely heavily on information processing, recall accuracy, and adaptive reasoning. Applied AI–memory systems illustrate how algorithmic tools function as external buffers that support encoding, retrieval, and metacognitive regulation in real-world environments. They also provide concrete demonstrations of how memory augmentation reshapes human performance in healthcare, education, knowledge work, and extended reality interfaces.
+
+In healthcare and neurotechnology, AI-driven systems have emerged as powerful tools for diagnosis, rehabilitation, and cognitive support. Neuroadaptive frameworks integrate EEG or fMRI monitoring with machine learning to track attention, detect recall failures, and deliver personalized stimulation \cite{Guzzi2023DementiaAIFramework}. Direct interventions, including AI-guided electrical stimulation of the hippocampus, have been shown to improve episodic recall by synchronizing stimulation with neural activity \cite{Kucewicz2023BrainStimulationMemory}. These advances reveal how biological memory processes can be externally scaffolded, forming hybrid therapeutic loops that combine neural signals with algorithmic prediction.
+
+In education, memory augmentation manifests through intelligent tutoring systems (ITS) and generative AI tutors capable of adapting content to learners’ cognitive profiles. ITS platforms continuously monitor performance and dynamically adjust pacing and feedback, enhancing retention and metacognitive accuracy \cite{Ma2014ITSMetaanalysis,Alshaikh2021ITS}. Research on active learning further demonstrates that deep processing and elaboration produce more durable memory than passive instruction \cite{Freeman2014ActiveLearning}. Generative AI tutors have also been shown to reinforce encoding depth by sustaining reflective dialogue and guided recall \cite{Bai2023ChatGPTLearningMemory,Abrar2025Cognitive}. These systems collectively illustrate how AI transforms educational memory processes into interactive, personalized cognitive ecosystems.
+
+In the productivity domain, AI tools increasingly serve as organizational memory companions that unify fragmented digital information into coherent, context-aware retrieval systems. Platforms such as Mem.ai and NotebookLM offer semantic search, contextual summarization, and automated cue reinstatement, enabling workers to recall project histories, rationales, and cross-functional knowledge with minimal effort \cite{Memoro2024RealTimeMemoryAugmentation,Gerlich2025AIToolsSociety}. As these tools scale across enterprises, collective memory becomes distributed across human–AI networks, affecting how knowledge is preserved and reactivated in everyday work.
+
+A rapidly emerging frontier involves extended reality interfaces in which memory augmentation becomes embedded directly into perception. Systems like the AR Secretary Agent integrate LLMs with wearable XR devices to provide conversational recall, contextual reminders, and visual overlays synchronized with the user’s surroundings \cite{ElHaddad2025ARSecretaryAgent}. This creates an embodied form of memory augmentation where recollection becomes a continuous, multimodal process distributed between biological and computational components.
+
+Across these domains, applied AI–memory systems demonstrate a common transformation: memory is evolving from a purely internal cognitive function into a hybrid process supported by adaptive, context-aware, and interactive technologies. These applications underscore the need for updated theoretical frameworks capable of capturing the distributed, dynamic, and cross-sector nature of augmented memory in the age of AI.
+
+
+\subsection{Memory Research Gaps}
+
+Although research on human memory and artificial intelligence (AI) has expanded 
+significantly in recent years, important gaps remain in the theoretical and 
+empirical understanding of how AI systems interact with core cognitive 
+processes. Classical models of memory provide detailed accounts of encoding, 
+consolidation, and retrieval \citep{Atkinson1968HumanMemory, 
+Baddeley2012WorkingMemory, Tulving1972EpisodicSemantic}, while contemporary 
+perspectives emphasize the dynamic, distributed, and context-dependent nature 
+of mnemonic functioning 
+\citep{Moscovitch2006CognitiveNeuroscienceRemoteMemory, 
+Liu2021TransformativeNeuralRepresentations, 
+ShamayTsoory2019RealLifeNeuroscience}. However, these models were developed in 
+contexts where cognition operated largely without intelligent external agents. 
+As AI systems become embedded in everyday cognitive activities, existing 
+frameworks increasingly struggle to account for the hybrid nature of 
+human--AI memory interactions.
+
+At the most fundamental level, the literature lacks controlled experimental 
+evidence establishing whether AI-assisted cognition differs qualitatively from 
+unaided human memory processes. While AI tools are widely assumed to 
+\emph{support} memory, it remains unclear whether their presence enhances 
+encoding and retrieval, merely shifts the locus of memory to external systems, 
+or introduces new forms of distortion. This absence of a principled comparison 
+between AI-assisted and non-assisted memory represents a central gap in the 
+current literature.
+
+A closely related gap concerns the lack of an \emph{integrated cognitive theory} 
+explaining how AI systems influence the mechanisms of encoding and retrieval. 
+Empirical studies suggest that reflective interaction with AI can enhance 
+learning and promote deeper elaboration \citep{Bai2023ChatGPTLearningMemory, 
+Haider2024AICognitiveFunctions}, yet these findings remain weakly connected to 
+foundational frameworks such as the Levels of Processing theory 
+\citep{Craik1972LevelsOfProcessing} and the encoding specificity principle 
+\citep{Tulving1973EncodingSpecificity}. As a result, the field lacks a unifying 
+account of how intelligent external systems may extend, interrupt, or 
+reorganize classical memory operations.
+
+Beyond the mere presence of AI, a further gap concerns the limited experimental 
+evidence on how specific \emph{dimensions of AI support} shape memory 
+performance. Much of the existing research on AI’s cognitive effects is 
+observational or educational in nature 
+\citep{Zhai2024OverRelianceAIDialogue, Ma2014ITSMetaanalysis}, offering valuable 
+insights but lacking the precision required to isolate causal mechanisms. 
+Although platforms such as Memoro \citep{Memoro2024RealTimeMemoryAugmentation} 
+simulate rehearsal processes, and studies such as Chan et al.\ 
+\citep{Chan2024ConversationalAIFalseMemories} document AI-induced false memories, 
+few experiments systematically manipulate the \emph{structure} and 
+\emph{timing} of AI-generated support to assess their impact on recall accuracy, 
+false-alarm rates, confidence calibration, or source monitoring.
+
+A further unresolved issue emerges from the literature on \emph{cognitive 
+offloading}. Research has demonstrated robust effects of external memory aids on 
+human recall and metacognition 
+\citep{Sparrow2011GoogleEffect, Risko2016CognitiveOffloading, 
+Gong2024GoogleEffectsMetaAnalysis}, yet this work has focused primarily on search 
+engines and static digital tools. Interactive AI systems differ qualitatively 
+from such technologies in their ability to structure information, anticipate 
+user needs, and dynamically mediate metacognitive calibration. Consequently, 
+existing offloading theories do not fully capture the bidirectional and 
+adaptive nature of contemporary AI-assisted cognition.
+
+Finally, the literature identifies a growing concern related to \emph{source 
+monitoring and epistemic risk}. Evidence suggests that AI-generated content can 
+induce false memories \citep{Chan2024ConversationalAIFalseMemories} and foster 
+epistemic dependence when users struggle to distinguish between internal 
+knowledge and machine-generated output 
+\citep{Zhang2024KnowledgeImbalanceAI}. However, little empirical work has 
+examined how the presence of AI---and variations in its presentation---affects 
+users’ ability to accurately attribute the source of remembered information, 
+despite the importance of source monitoring for memory accuracy and 
+accountability.
+
+Taken together, these gaps point to the need for a theoretical and empirical 
+framework that clarifies whether and how AI assistance alters fundamental 
+memory processes relative to unaided cognition, and how specific properties of 
+AI support modulate these effects. Addressing this gap motivates the 
+development of the \emph{AI Buffer model} introduced in the following section 
+and informs the experimental design adopted in this thesis, which contrasts 
+AI-assisted and non-assisted memory while systematically manipulating the 
+structure and timing of AI-generated summaries.
+
+
+
+% NOTE: Keep your existing Literature Review structure here.
+% (You said you already have it, so I am not rewriting it.)
+
+
+%---------------------------------------------------------
+\chapter{Conceptual Framework and Hypotheses}
+\section{The AI Buffer Model}
+
+The increasing use of artificial intelligence (AI) systems as cognitive support
+tools challenges traditional assumptions about how memory processes are
+organized and supported. Classical models of human memory conceptualize
+encoding, storage, and retrieval as primarily internal processes, regulated by
+attentional control, rehearsal, and executive coordination
+\citep{Atkinson1968HumanMemory, Baddeley2012WorkingMemory, Tulving1972EpisodicSemantic}.
+However, contemporary AI applications increasingly provide persistent,
+content-based representations that accompany users during cognitive tasks,
+thereby introducing an external layer of informational support.
+
+To interpret the cognitive effects of such support, this thesis introduces the
+\emph{AI Buffer model} as a parsimonious conceptual lens. The AI Buffer refers to
+AI-generated external representations that persist during a task and have the
+potential to influence memory encoding, retrieval, and metacognitive monitoring.
+The model does not posit a new neurocognitive module, nor does it aim to provide
+a general theory of AI-augmented work. Rather, it characterizes a functional role
+that AI-generated representations may play in shaping memory-related behavior
+under controlled experimental conditions.
+
+
+The AI Buffer model is grounded in established theories of human memory. In the
+modal model of memory \citep{Atkinson1968HumanMemory}, short-term memory functions
+as a temporary buffer that regulates access to long-term storage through
+rehearsal and attentional control. Subsequent developments, particularly
+Baddeley’s working memory framework \citep{Baddeley2012WorkingMemory}, emphasized
+the active and multicomponent nature of this buffer, highlighting its role in
+managing cognitive load and integrating information across modalities.
+
+The AI Buffer extends these perspectives by considering how external,
+AI-generated representations may complement or partially substitute internal
+buffering processes. Unlike traditional external aids, such as static notes or
+search engines, AI systems can dynamically structure information, highlight
+conceptual relations, and provide context-sensitive cues. This view aligns with
+distributed cognition approaches, which emphasize that cognitive processes may
+span internal and external representational resources
+\citep{Gerlich2025AIToolsSociety}.
+
+At the same time, the AI Buffer remains compatible with the encoding specificity
+principle \citep{Tulving1973EncodingSpecificity}. By storing structured semantic
+content and contextual cues, AI-generated representations may facilitate
+retrieval by reinstating aspects of the original encoding context. However, such
+external cues may also interfere with source monitoring, particularly when users
+struggle to distinguish between internally encoded information and externally
+generated content.
+
+
+
+Within the proposed framework, the AI Buffer may influence memory through three
+primary mechanisms.
+
+First, during \emph{encoding}, the AI Buffer can shape attentional allocation and
+depth of processing. Integrated, relational representations may promote deeper
+semantic elaboration, consistent with the Levels of Processing framework
+\citep{Craik1972LevelsOfProcessing}, whereas segmented or item-based
+representations may encourage more superficial, item-specific encoding.
+
+Second, during \emph{maintenance and consolidation}, the AI Buffer may externalize
+rehearsal processes by allowing users to revisit, restate, or verify information.
+Evidence from AI-supported learning environments suggests that such reflective
+interaction can enhance retention when cognitive engagement is maintained
+\citep{Bai2023ChatGPTLearningMemory, Memoro2024RealTimeMemoryAugmentation}.
+
+Third, during \emph{retrieval}, the AI Buffer can function as a source of
+contextual and semantic cues, potentially facilitating access to stored
+representations. At the same time, reliance on external cues may reduce the need
+for internal reconstruction, increasing susceptibility to cognitive offloading
+\citep{Risko2016CognitiveOffloading, Sparrow2011GoogleEffect} and source-monitoring
+errors \citep{Chan2024ConversationalAIFalseMemories}.
+
+
+
+In the present thesis, the AI Buffer is operationalized through AI-generated
+summaries in a controlled memory experiment (Study~1). This operationalization
+allows systematic manipulation of the \emph{presence} of the AI Buffer (AI vs.\
+No-AI), as well as its \emph{structure} (integrated vs.\ segmented) and
+\emph{timing} (pre-reading, synchronous, post-reading). These dimensions enable
+direct examination of how different configurations of external AI-generated
+representations affect recall accuracy, recognition performance, source
+monitoring, confidence calibration, and cognitive load.
+
+Importantly, the AI Buffer model is introduced to interpret behavioral effects
+observed under experimental conditions and does not claim to generalize across
+all forms of AI interaction. Its purpose is to clarify how AI-generated
+representations interact with core memory processes, providing a conceptual
+foundation for the hypotheses tested in Study~1 and an interpretative reference
+point for subsequent discussion.
+
+\section{Conceptual Dimensions and Predictions}
+\label{sec:conceptual-dimensions}
+
+The AI Buffer model becomes empirically testable in Study~1 because it is
+expressed as a small set of manipulable \emph{conceptual dimensions}. These
+dimensions specify \emph{when} and \emph{how} an external AI-generated
+representation can interact with encoding and retrieval, without implying a
+single uniform ``AI effect''.
+
+\paragraph{Presence of the AI Buffer (AI vs No-AI).}
+The primary contrast is whether an external representation is present at all.
+When a summary is available, the learner has access to an additional, condensed
+representation of the text that can (i) provide extra semantic cues, (ii) reduce
+the cost of re-accessing information, and (iii) shift the balance between
+internal reconstruction and reliance on external support. Conceptually, this
+dimension is expected to affect cue availability and the degree of cognitive
+offloading, with the possibility that recognition-based outcomes benefit more
+directly from added cues than free recall.
+
+\paragraph{Timing of the AI Buffer (pre / synchronous / post).}
+Timing determines \emph{when} the external representation can influence
+processing. A pre-reading summary can function as an advance framework that
+guides attention during encoding. Synchronous access allows consultation during
+encoding but may also promote intermittent switching between sources. Post-reading
+access occurs after initial encoding and is expected to primarily support review,
+verification, and cue reinstatement before later retrieval. Conceptually, timing
+is expected to influence recognition and other cue-supported outcomes more than
+generative recall, because the timing manipulation primarily changes the
+availability and placement of retrieval cues around the encoding phase.
+
+\paragraph{Structure of the AI Buffer (integrated vs segmented).}
+Structure determines \emph{how} information is organized in the external
+representation. An integrated, paragraph-based summary emphasizes relations and
+coherence, potentially supporting relational integration and a situation-model
+representation. A segmented, bullet-based summary emphasizes discrete items and
+may reduce coherence cues, which can change how information is bound and how
+sources are attributed. Conceptually, structure is expected to shape the trade-off
+between relational understanding and item-based processing, and to matter
+especially for source monitoring and susceptibility to plausible but incorrect
+information.
+
+Together, these dimensions specify the ways in which the AI Buffer can interact
+with core memory processes in a controlled setting, motivating a set of
+directional hypotheses for Study~1.
+
+\section{From Conceptual Framework to Hypotheses}
+\label{sec:framework-to-hypotheses}
+
+The central expectation derived from the AI Buffer framework is that AI support
+will not uniformly enhance or impair memory. Instead, its effects should depend
+on \emph{when} the buffer is available (timing) and \emph{how} it organizes
+information (structure). Timing is expected to primarily influence encoding
+efficiency and cue-supported outcomes (such as multiple-choice recognition),
+whereas structure is expected to influence relational integration and
+source-monitoring integrity. Individual differences (e.g., prior knowledge and
+AI trust/dependence) are expected to modulate the degree to which participants
+rely on the buffer and the extent to which AI-provided cues are incorporated into
+memory judgments. These expectations are formalized below as directional
+hypotheses aligned with the research questions.
+
+\section{Hypotheses}
+\label{sec:hypotheses}
+
+\begin{enumerate}
+  \item \textbf{H1 (AI vs No-AI).} Relative to unaided reading, access to an AI-generated summary is expected to improve recognition performance, with weaker or no improvement expected for free recall quality.
+
+  \item \textbf{H2 (Timing; AI only).} Pre-reading access to the AI summary is expected to yield higher recognition performance than synchronous or post-reading access. Timing effects are expected to be larger for recognition-based outcomes than for free recall.
+
+  \item \textbf{H3 (Structure; AI only).} Integrated summaries are expected to better support coherent mental-model construction than segmented summaries, resulting in higher recall quality and stronger performance on article-dependent outcomes.
+
+  \item \textbf{H4 (Misinformation and source monitoring; AI only).} Segmented summaries are expected to increase susceptibility to misinformation relative to integrated summaries, operationalized as a higher rate of false-lure endorsement and reduced source-monitoring integrity.
+
+  \item \textbf{H5 (Moderators; exploratory).} Prior knowledge and AI trust/dependence are expected to moderate AI-buffer effects: higher prior knowledge should reduce reliance on the summary, whereas higher AI dependence/trust should be associated with greater summary reliance and increased vulnerability to incorporating AI-provided cues.
+\end{enumerate}
+
+
+
+
+% =========================
+% 4 | Methodology
+% =========================
+
+\chapter{Methodology}
+\label{ch:methodology}
+
+\section{General methodology}
+\label{sec:general-methodology}
+This thesis uses a controlled laboratory paradigm to study how external representations influence memory for expository texts. Study~1 implements a timed reading-and-testing protocol in which AI assistance is operationalized as pre-generated summaries that vary in \emph{structure} and \emph{timing} relative to reading.
+
+\section{Study 1: AI--Memory experiment design}
+\label{sec:study1-design}
+
+This study investigates whether and how AI assistance alters memory encoding and retrieval under controlled reading conditions. Specifically, it tests whether AI-generated summaries change memory performance relative to unaided reading, and whether different summary configurations shape cognitive outcomes.
+
+The methodological choices are grounded in established theories of memory and cognition, including levels of processing \citep{Craik1972LevelsOfProcessing}, working memory constraints \citep{Baddeley2012WorkingMemory}, encoding specificity \citep{Tulving1973EncodingSpecificity}, and cognitive offloading \citep{Risko2016CognitiveOffloading,Sparrow2011GoogleEffect}.
+
+\subsection{Participants and compensation}
+\label{subsec:participants}
+Thirty-six adults were retained for analysis (\(N_{\mathrm{AI}}=24\), \(N_{\mathrm{NoAI}}=12\)), including university students and early-career professionals. All participants provided informed consent prior to participation.
+
+Participants received a base compensation of 60~RMB plus a performance-based bonus of up to 60~RMB linked to recognition-test accuracy.
+
+\subsection{Experimental design}
+\label{subsec:design}
+AI assistance was operationalized as AI-generated summaries. The experiment used a mixed factorial design with an asymmetric structure:
+\begin{itemize}
+  \item \textbf{Summary structure (between-subjects):} No-AI baseline vs Integrated vs Segmented.
+  \item \textbf{Summary timing (within-subjects, AI only):} Pre-reading vs Synchronous vs Post-reading.
+\end{itemize}
+Participants in the AI-assisted groups experienced all three timing conditions exactly once (one per article). Timing order was implemented via one of the six possible permutations of the three timing conditions (e.g., Sync--Pre--Post; Pre--Sync--Post; etc.), sampled per participant. Article order was independently randomized, so the mapping between a given article and a given timing condition varied across participants.
+
+\paragraph{Structure conditions.}
+Participants were assigned to one of three structure conditions:
+\begin{itemize}
+  \item \textbf{A0 (No-AI baseline):} articles presented without any AI summary.
+  \item \textbf{A1 (Integrated summary):} a coherent paragraph-style summary (\(\sim\)250 words).
+  \item \textbf{A2 (Segmented summary):} a bullet-point summary (7--10 bullets; \(\sim\)250 words).
+\end{itemize}
+In the final AI sample, structure groups were balanced (\(n=12\) Integrated; \(n=12\) Segmented).
+
+\paragraph{Timing conditions (AI only).}
+\begin{itemize}
+  \item \textbf{Pre-reading:} a separate summary page shown \emph{before} reading (up to 3~min; participants could continue earlier), followed by a reading phase capped at 12~min.
+  \item \textbf{Synchronous:} the summary could be opened/closed on demand during the reading phase; the reading window was 15~min.
+  \item \textbf{Post-reading:} a reading phase capped at 12~min followed by a separate summary page shown \emph{after} reading (up to 3~min; participants could continue earlier).
+\end{itemize}
+The No-AI baseline used a reading phase capped at 15~min per article and had no timing manipulation.
+
+% If you use booktabs, add \usepackage{booktabs} in the preamble.
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{l l >{\raggedright\arraybackslash}X l}
+\hline
+\textbf{Condition} & \textbf{Summary timing} & \textbf{Summary access} & \textbf{Reading window} \\
+\hline
+No-AI & -- & None & 15 min \\
+Pre-reading & Before reading & Separate page, \(\leq\) 3 min (early continue allowed) & 12 min \\
+Synchronous & During reading & On-demand open/close & 15 min \\
+Post-reading & After reading & Separate page, \(\leq\) 3 min (early continue allowed) & 12 min \\
+\hline
+\end{tabularx}
+\caption{Implementation of timing conditions and exposure windows.}
+\label{tab:timing-implementation}
+\end{table}
+
+\subsection{Materials and platform}
+\label{subsec:materials}
+
+\subsubsection{Materials}
+\paragraph{Texts.}
+Participants read three expository articles of approximately 1{,}300 words each (topics included urban heat islands, CRISPR, and semiconductor supply chains), selected to be comparable in difficulty and conceptual density. Texts were presented in the participant's selected language (English or Simplified Chinese) using fixed, pre-generated stimulus content.
+
+\paragraph{AI summaries (structure, incompleteness, and false lures).}
+Summaries were generated and refined \emph{in advance} and were identical in informational content across A1 and A2, differing only in formatting (paragraph vs bullets). Summaries were intentionally incomplete (approximately 15--20\% of article information omitted) to discourage reliance on summaries alone.
+
+To assess susceptibility to misinformation and source-monitoring-related errors, each article’s summary contained two plausible but incorrect statements (\emph{false lures}). These false-lure concepts also appeared as distractor options in the recognition test; selecting them was counted as false-lure acceptance.
+
+\subsubsection{Platform and implementation}
+\label{subsubsec:platform}
+The experiment was delivered via a custom browser-based application built with a Python (Flask) backend and HTML/CSS/JavaScript front-end pages. All stimuli (articles, summaries, and MCQs) were preloaded into the platform in advance, ensuring that content was identical across participants and removing runtime variability due to on-the-fly AI generation.
+
+\paragraph{Participant management and device constraints.}
+Participants selected the study language (English or Simplified Chinese) at the beginning of the session. At login, participants provided demographic information and the system generated an anonymized participant identifier (e.g., \texttt{P001}) to link all subsequent responses. Mobile devices were blocked using a browser user-agent check at the start of the session, and the interface requested full-screen mode on study entry.
+
+\paragraph{Condition assignment and counterbalancing.}
+For AI participants, summary structure was assigned between subjects (integrated vs.\ segmented). Summary timing was implemented within subjects by sampling one of the six possible permutations of the three timing conditions. Article order was randomized independently, so the mapping between a given article and a given timing condition varied across participants. The resulting assignment (structure, timing order, and article order) was stored in the session and written to the participant log for analysis.
+
+\paragraph{Flow control and timing.}
+The platform enforced maximum durations for each phase using on-screen countdown timers and automatic redirects at timeout. Reading had a 12-minute cap in the pre- and post-reading conditions and a 15-minute cap in the synchronous condition; the No-AI baseline used a 15-minute cap. Pre- and post-reading summaries were shown on a dedicated summary page for up to 3 minutes (participants could continue earlier), whereas in the synchronous condition the summary could be opened and closed on demand during the reading phase. After each reading phase, a non-skippable 3-minute break preceded testing; between articles, a short break of up to 2 minutes could be ended early.
+
+Free recall lasted up to 5 minutes and MCQs lasted up to 7 minutes, with automatic submission at timeout. To reduce immediate skipping of recall, the continue button remained locked for the first 90 seconds. Throughout the session, back-navigation was disabled to prevent revisiting prior pages or materials.
+
+\paragraph{Behavioral logging and export.}
+The server recorded time-stamped events including reading completion time, scroll depth, page visibility changes, summary view counts and durations, recall responses, MCQ answers and response times, and post-article ratings. Data were exported as participant-level CSV logs and a separate participant file containing demographics and condition metadata.
+
+\subsection{Procedure}
+\label{subsec:procedure}
+Participants were tested individually in a controlled lab setting. Sessions lasted approximately 80--100 minutes.
+
+\begin{enumerate}
+  \item \textbf{Consent, language selection, and instructions.} Participants selected the study language (English or Simplified Chinese) and were instructed to avoid distractions and to maximize performance. AI-group instructions stated that AI summaries are generally helpful but may contain omissions or minor mistakes.
+  \item \textbf{Baseline questionnaires.} Demographics and a prior-knowledge questionnaire were administered. AI-group participants additionally completed an AI trust/dependence questionnaire.
+  \item \textbf{Three reading--testing blocks (one per article).} Each block followed this sequence:
+  \begin{enumerate}
+    \item \textbf{Summary exposure (AI only; timing-dependent):} pre-reading summary page (\(\leq\)3~min) \emph{or} on-demand access during reading \emph{or} post-reading summary page (\(\leq\)3~min).
+    \item \textbf{Article reading (timed):} No-AI read for up to 15~min; AI read for up to 12~min in pre/post conditions and up to 15~min in synchronous.
+    \item \textbf{Mandatory retention interval:} a non-skippable 3-minute break occurred after the reading phase (and, in post-reading, after the summary page), before testing began.
+    \item \textbf{Free recall (timed):} participants produced an open-ended recall response (entered as bullet points) for up to 5~minutes. To reduce immediate skipping, the continue button was time-locked for the first 90~seconds.
+    \item \textbf{Recognition test (timed):} a 14-item multiple-choice test per article (7~min time limit).
+    \item \textbf{Post-article ratings:} participants reported mental effort and perceived difficulty on 7-point scales, plus an overall confidence rating for the MCQ block; AI participants also completed brief AI-experience items.
+  \end{enumerate}
+  \item \textbf{Between-block breaks:} after each block, a short break of up to 2~minutes was available before the next article (self-paced; skippable).
+  \item \textbf{Manipulation checks and debrief.} After the third block, participants completed manipulation-check items (e.g., perceived coherence/connectivity) and were debriefed.
+\end{enumerate}
+
+\subsection{Measures and scoring}
+\label{subsec:measures}
+\paragraph{Free recall (0--10).}
+Free recall was scored as an index of episodic--semantic reconstruction of expository text rather than verbatim reproduction. In line with constructive memory theory \citep{Bartlett1932Remembering}, responses were evaluated for fidelity to the original conceptual structure (and penalized for plausible distortions), not for length or fluency.
+
+Each article recall received a single ordinal score from 0 to 10 based on five rubric dimensions:
+\begin{enumerate}
+  \item \textbf{Factual accuracy:} consistency with the article content; inventions, incorrect mechanisms, or misplaced causal relations reduced the score.
+  \item \textbf{Mechanistic reconstruction:} recall of causal or explanatory chains (e.g., linking albedo $\rightarrow$ heat storage $\rightarrow$ night-time release; or guide RNA $\rightarrow$ Cas enzyme $\rightarrow$ editing constraints), beyond outcome labels.
+  \item \textbf{Structural alignment:} preservation of the article's internal organization (e.g., causes vs.\ consequences; constraints vs.\ solutions; technical vs.\ social dimensions), reflecting whether relational structure was maintained.
+  \item \textbf{Specificity vs.\ gist:} preference for diagnostic, article-specific details (e.g., numeric ranges, named mechanisms, concrete constraints) over generic domain summaries, consistent with accounts of gist-dominated remembering \citep{BrainerdReyna2005ScienceFalseMemory}.
+  \item \textbf{Source monitoring integrity:} penalties for intrusions and, in particular, recall of experimentally planted false-lure statements, consistent with source-monitoring theory \citep{Johnson1993SourceMonitoring}.
+\end{enumerate}
+
+To improve scoring consistency, anchor bands were used: 9--10 (high accuracy, strong mechanisms, preserved structure, minimal distortion), 7--8 (mostly accurate with minor omissions), 5--6 (gist-level recall with limited mechanistic detail), 3--4 (headline-level/definitional recall), and 1--2 (fragmentary or largely reconstructed memory).
+
+% Add scoring workflow details:
+% - number of raters, training, blinding to condition, and inter-rater reliability (e.g., ICC).
+% - how disagreements were resolved (consensus vs third rater).
+
+\paragraph{Recognition performance.}
+Recognition was measured as proportion correct on the 14 MCQs per article. Items were categorized by information source (summary-sourced vs article-only), enabling separate accuracy indices. Misinformation susceptibility was indexed by the number of false-lure options selected (0--2 per article; 0--6 overall).
+
+\paragraph{Self-report and behavioral logs.}
+Participants provided recall confidence and perceived difficulty ratings (7-point scales) and post-article cognitive load/effort ratings. Behavioral measures were computed from server logs, including reading time, summary view time, number of summary openings, and interaction timestamps.
+
+\subsection{Data quality and exclusion criteria}
+\label{subsec:exclusions}
+Sessions were excluded prior to analysis if participants failed to complete the full protocol or showed clear non-compliance (e.g., implausibly short reading times indicating rushing, or non-substantive responses). The final analyzed sample comprised \(N=36\) complete sessions.
+
+\subsection{Methodological rationale}
+\label{subsec:rationale}
+This design enables comparison between unaided reading and multiple controlled modes of AI-assisted encoding, testing whether AI support enhances, restructures, or disrupts memory formation. Manipulating summary structure targets relational vs item-specific encoding, while manipulating timing probes schema activation and reliance on external representations during encoding. The inclusion of false lures provides a controlled test of misinformation acceptance and source-integrity errors under AI assistance.
+
+\chapter{Data Analysis}
+\label{ch:data-analysis}
+
+This chapter specifies the analysis procedures used to test the research questions. It describes (i) how raw study logs were converted into analysis datasets, (ii) how variables were defined and transformed, (iii) which statistical models were fit and why, and (iv) the conventions used for hypothesis testing and robustness checks. Consistent with thesis structure, this chapter reports procedures only; numerical outcomes are reported in the Results chapter and Appendix~C.
+
+\section{Data and variables}
+\label{sec:data-analysis-data}
+
+\paragraph{Raw data.}
+All participant responses and interaction events were recorded automatically by the experimental platform (see \Cref{subsubsec:platform}). After each session, the platform exported participant-level CSV files containing (i) condition assignments, (ii) questionnaire responses, (iii) free-recall text responses, (iv) item-level recognition responses, and (v) time-stamped behavioral logs (page entries, timers, and summary-view events). These CSV exports were treated as the source of truth for subsequent analysis.
+
+\paragraph{Analysis dataset (long format).}
+From the raw CSV exports, a single analysis dataset was constructed in \emph{long format}, with one row per participant \(\times\) article block. This representation preserves the repeated-measures structure of the design (three blocks per participant) and allows modelling at the block level while accounting for within-participant dependence. Each row contained: condition identifiers (\texttt{experiment\_group}, \texttt{structure}, \texttt{timing}, \texttt{article}); outcome variables (recall and recognition indices); post-block self-reports (e.g., mental effort and confidence); behavioral engagement measures derived from server logs; and participant-level covariates (prior knowledge; and, in the AI groups, trust/dependence indices replicated across the participant's three rows).
+
+\paragraph{Variable derivation and merging logic.}
+The dataset was built by joining (i) questionnaire exports, (ii) recognition-test response exports, (iii) free-recall responses and rubric scores, and (iv) event-log/timer exports using \texttt{participant\_id} and block identifiers (article and timing). Recognition indices were computed by scoring item responses and aggregating within block (overall accuracy and source-specific subsets). False-lure measures were computed by counting endorsement of pre-specified lure options within each block. Reading and summary exposure measures were derived from log timestamps and timer events; for synchronous timing, reading time was computed as net reading time excluding periods when the summary panel was open, and summary time was computed as cumulative summary-panel exposure. Internal consistency checks verified that each participant contributed exactly three blocks and that AI participants experienced each timing condition exactly once.
+
+\paragraph{Experimental factors.}
+Models used \texttt{experiment\_group} (AI vs No-AI), \texttt{structure} (Integrated vs Segmented; AI only), \texttt{timing} (Pre-reading vs Synchronous vs Post-reading; AI only), and \texttt{article} (text identity). Because the No-AI baseline has no timing manipulation, timing effects were evaluated within AI-assisted participants.
+
+\paragraph{Outcome variables.}
+The primary outcomes were \texttt{recall\_total\_score} (free-recall quality; rubric in \Cref{subsec:measures}) and \texttt{mcq\_accuracy} (recognition accuracy). Secondary outcomes included \texttt{article\_accuracy}, \texttt{ai\_summary\_accuracy} (AI only), \texttt{false\_lures\_selected} / \texttt{false\_lure\_accuracy} (AI only), \texttt{mental\_effort}, time-on-task measures (\texttt{reading\_time\_min}, \texttt{summary\_time\_sec}), and confidence ratings (\texttt{recall\_confidence}).
+
+\paragraph{Covariates and preprocessing.}
+When relevant, models included \texttt{prior\_knowledge\_familiarity} and, for AI-only analyses, \texttt{ai\_trust} and \texttt{ai\_dependence}. Skewed time measures were log-transformed using \(\log(x+1)\) when used as predictors. Categorical predictors were sum-coded (\texttt{contr.sum}) to support Type-III tests, and continuous moderators used in interaction models were mean-centered for interpretability.
+
+\section{Statistical models}
+\label{sec:data-analysis-models}
+
+\paragraph{Repeated-measures approach.}
+Because each participant contributed multiple blocks, trial-level outcomes are not independent. Primary analyses therefore used mixed-effects models with random intercepts for \texttt{participant\_id}. When appropriate, a random intercept for \texttt{article} was added to absorb systematic text-level differences.
+
+\paragraph{AI-only Structure \(\times\) Timing tests.}
+For each continuous dependent variable \(Y\) in the AI-assisted groups, the core model tested effects of summary \texttt{structure} and \texttt{timing}:
+\[
+  Y \sim \texttt{structure} \times \texttt{timing} + (1 \mid \texttt{participant\_id}) + (1 \mid \texttt{article}).
+\]
+When an interaction was supported, follow-up comparisons decomposed timing effects within each structure level using estimated marginal means.
+
+\paragraph{AI vs No-AI comparisons.}
+To compare AI-assisted reading to unaided reading under the asymmetric design, between-group models were fit on the long-format dataset with \texttt{experiment\_group} as the primary fixed effect, controlling for \texttt{article} and using a random intercept for \texttt{participant\_id}:
+\[
+  Y \sim \texttt{experiment\_group} + \texttt{article} + (1 \mid \texttt{participant\_id}).
+\]
+Moderation by prior knowledge was tested by adding the interaction term:
+\[
+  Y \sim \texttt{experiment\_group} \times \texttt{prior\_knowledge\_familiarity} + \texttt{article} + (1 \mid \texttt{participant\_id}).
+\]
+
+\paragraph{Mechanism-oriented models (summary accuracy as predictor).}
+To test whether performance covaries with alignment to the AI representation, additional mixed models included \texttt{ai\_summary\_accuracy} while controlling for experimental factors:
+\[
+  Y \sim \texttt{ai\_summary\_accuracy} + \texttt{timing} + \texttt{structure} + (1 \mid \texttt{participant\_id}) + (1 \mid \texttt{article}).
+\]
+These models are interpreted as associational mechanism tests rather than causal mediation claims.
+
+\paragraph{False-lure (misinformation) models.}
+False-lure endorsement was analyzed using generalized mixed models. The primary specification treated lure endorsement as a binomial outcome across lure opportunities with a logit link:
+\[
+  \texttt{cbind(false\_lures\_selected, no\_lures)} \sim \texttt{structure} + \texttt{timing} + \texttt{ai\_summary\_accuracy} + \texttt{article\_accuracy} + (1 \mid \texttt{participant\_id}) + (1 \mid \texttt{article}).
+\]
+Sensitivity models treated \texttt{false\_lures\_selected} as a Poisson count, and expanded models added engagement-related predictors (e.g., \texttt{mental\_effort}, \texttt{reading\_time\_min}, \texttt{summary\_time\_sec}) to verify that structure effects do not reduce to time-on-task differences.
+
+\paragraph{Moderation and calibration models.}
+Moderation within the AI groups was tested by adding \texttt{timing} \(\times\) moderator interactions (e.g., \texttt{ai\_trust}, \texttt{ai\_dependence}, \texttt{prior\_knowledge\_familiarity}) while controlling for \texttt{structure}. Metacognitive calibration was evaluated by modelling recall quality as a function of confidence and group:
+\[
+  \texttt{recall\_total\_score} \sim \texttt{recall\_confidence} \times \texttt{experiment\_group} + \texttt{article} + (1 \mid \texttt{participant\_id}).
+\]
+
+\section{Inference, diagnostics, and robustness}
+\label{sec:data-analysis-inference}
+
+\paragraph{Estimation and fixed-effect tests.}
+Linear mixed models were fit using restricted maximum likelihood (REML) for parameter estimation; when nested model comparisons were required, models were fit with maximum likelihood (ML). Fixed effects were evaluated using Type-III tests under sum coding; denominator degrees of freedom for \(F\)-tests were obtained via Satterthwaite approximation where applicable. For generalized models, fixed effects were evaluated using Wald/\(\chi^2\)-type tests as implemented by the modelling framework.
+
+\paragraph{Multiplicity control and reporting conventions.}
+All hypothesis tests were two-sided with \(\alpha = .05\). Post-hoc comparisons (e.g., pairwise timing contrasts; simple effects within structure; simple-slope contrasts) were corrected using the Holm procedure within each family of comparisons. Effect size metrics were pre-specified for reporting in the Results chapter (e.g., \(\eta^2\) variants for factorial effects; standardized mean differences for planned contrasts; and odds ratios/incidence-rate ratios for generalized models).
+
+\paragraph{Model diagnostics and sensitivity checks.}
+Model adequacy was assessed using residual diagnostics for linear models, convergence and random-effect variance checks for mixed models, and overdispersion/influence checks for generalized models. Robustness analyses verified that conclusions were not driven by idiosyncratic stimuli or modelling choices, including (i) counterbalancing verification across article--timing pairings, (ii) leave-one-article-out and leave-one-participant-out re-estimation, (iii) random-slope sensitivity where data support permitted, and (iv) distributional sensitivity for count outcomes (binomial vs Poisson). Robustness outputs are reported in Appendix~C.
+
+\section{Missing data handling and exclusion criteria}
+\label{sec:missingness-exclusions}
+% Intentionally left blank for now (briefly described in Methodology).
+
+\chapter{Results}
+
+\chapter{Discussion}
+
+\chapter{Conclusion}
+\label{ch:conclusion}
+
+\section{Summary of Contributions}
+\label{sec:summary_contributions}
+
+\section{Key Takeaways}
+\label{sec:key_takeaways}
+
+\section{Final Remarks}
+\label{sec:final_remarks}
+
+
+%=========================================================
+% END
+%=========================================================
+
+
+
+
+\chapter{Appendix A: Experimental Materials}
+\chapter{Appendix B: Statistical Outputs}
+
+
+
+-------------------------
+%	BIBLIOGRAPHY
+%-------------------------------------------------------------------------
+
+\addtocontents{toc}{\vspace{2em}} % Add a gap in the Contents, for aesthetics
+\bibliography{Thesis_bibliography} % The references information are stored in the file named "Thesis_bibliography.bib"
+
+%-------------------------------------------------------------------------
+%	APPENDICES
+%-------------------------------------------------------------------------
+
+
+
+\end{document}

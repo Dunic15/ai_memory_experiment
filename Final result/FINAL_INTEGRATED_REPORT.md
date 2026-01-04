@@ -60,12 +60,14 @@ This experiment investigated how AI-generated summaries affect learning and memo
 
 Pre-reading is optimal regardless of structure, but integrated + pre-reading yields the highest absolute performance (75%).
 
-### Mechanism: The Advance Organizer Effect
+### Mechanism: The Advance Organizer Effect and AI Buffer Model
 
 **Why does pre-reading work?** The summary functions as an **advance organizer** (Ausubel, 1960):
 - Activates relevant schemas before encoding
 - Provides a "cognitive map" that guides attention during reading
 - Reduces extraneous cognitive load (Cognitive Load Theory)
+
+**AI Buffer Framework:** This finding aligns with the **AI Buffer model** from your thesis framework. The AI-generated summary creates a temporary cognitive scaffold—an "AI Buffer"—that structures subsequent information processing. When this buffer is established *before* reading (pre-reading), it functions optimally as an advance organizer, enabling schema-consistent encoding. When the buffer is filled *during* or *after* reading, it cannot retroactively organize already-encoded information, explaining the timing asymmetry.
 
 **Supporting evidence from process variables:**
 
@@ -135,7 +137,7 @@ The highest false-lure endorsement occurs in **segmented + post-reading** (1.17 
 | Integrated | 0.542 | **0.667** | 0.458 | **0.556** |
 | Segmented | 0.333 | 0.417 | 0.375 | **0.375** |
 
-### Mechanism: Source Monitoring Failure
+### Mechanism: Source Monitoring Failure and AI Buffer Coherence
 
 **Why do segmented summaries increase false memories?**
 
@@ -143,6 +145,8 @@ The highest false-lure endorsement occurs in **segmented + post-reading** (1.17 
 2. **Reduced cross-checking:** Separated information discourages verification against the original text
 3. **Automation bias:** Segmentation may encourage passive acceptance of AI output
 4. **Misinformation effect:** Particularly strong in post-reading, where false claims can overwrite or distort memory traces
+
+**AI Buffer Framework:** The **AI Buffer model** provides a unified explanation for this structure effect. When the AI buffer is *integrated* (coherent, unified presentation), learners maintain clear source attributions—they know what came from the AI versus the original text. When the buffer is *segmented* (fragmented presentation), the boundary between AI-generated content and original material becomes blurred, leading to source monitoring failures. This suggests that the cognitive "wrapper" around AI content matters as much as the content itself.
 
 **Theoretical grounding:**
 - Source Monitoring Framework (Johnson et al., 1993)
@@ -206,6 +210,8 @@ The null effect is **confirmed as meaningful equivalence**, not merely underpowe
 1. **MCQ = cue-supported recognition:** Benefits from organized encoding and environmental structure (advance organizers help)
 2. **Recall = self-generated retrieval:** Requires internally generating information; timing doesn't strengthen the underlying memory trace enough to improve generation
 
+**AI Buffer Framework:** The MCQ-recall dissociation reveals a fundamental property of the AI Buffer: it enhances *familiarity-based* recognition ("I've seen this before") without strengthening *recollection-based* retrieval ("I can regenerate this from memory"). This aligns with dual-process theories (Jacoby, 1991) and suggests that cognitive offloading to AI tools may selectively affect different memory systems.
+
 **Cognitive interpretation:**
 - Pre-reading improves *how information is organized* during encoding
 - This organization helps when *external cues* are provided (MCQ)
@@ -242,9 +248,11 @@ This pattern aligns with Tulving's **Encoding Specificity Principle** (Tulving &
 
 AI summaries provide encoding that is **transfer-appropriate** for MCQ (recognition with cues) but not for free recall (generative retrieval without cues). The AI content becomes part of the encoded memory trace, making AI-related MCQ cues more effective.
 
-**Related Theory: Transactive Memory (Wegner, 1987)**
+**Cognitive Offloading and the AI Buffer**
 
-The AI summary may function as an **external memory system**, where learners encode *where* information is stored (the AI) rather than the information itself—a phenomenon increasingly relevant in the digital age (Sparrow, Liu, & Wegner, 2011, "Google effects on memory").
+The AI summary functions as an **external memory system** (Risko & Gilbert, 2016), where learners encode *where* information is stored (the AI) rather than the information itself. This connects to the broader literature on the "Google effect" (Sparrow, Liu, & Wegner, 2011; Gong & Yang, 2024) and digital cognitive offloading (Gerlich, 2025; Firth et al., 2019).
+
+**AI Buffer Framework:** This pattern represents a core prediction of the AI Buffer model: when AI provides organized information, learners develop a meta-cognitive representation of the AI as an information source rather than encoding the information directly. This is not necessarily problematic—it may reflect adaptive cognitive resource allocation—but it does have implications for what kinds of knowledge transfer we can expect from AI-assisted learning.
 
 ---
 
@@ -382,30 +390,33 @@ Article assignment does not systematically confound timing conditions.
 
 ---
 
-## Two Independent Cognitive Pathways
+## Two Independent Cognitive Pathways: The AI Buffer Model
 
-The data reveal two **separable causal pathways**:
+The data reveal two **separable causal pathways**, unified by the **AI Buffer framework** from your thesis:
 
 ```
-PATHWAY 1: Timing → Encoding Quality → MCQ Performance
+PATHWAY 1: Timing → AI Buffer Activation → MCQ Performance
 ┌─────────────────┐    ┌────────────────────┐    ┌──────────────┐
-│  Pre-reading    │ → │ Better schema      │ → │ Higher MCQ   │
-│  (vs. other)    │    │ activation +       │    │ accuracy     │
-│                 │    │ summary accuracy   │    │ (d = 1.35+)  │
+│  Pre-reading    │ → │ AI Buffer as       │ → │ Higher MCQ   │
+│  (vs. other)    │    │ advance organizer  │    │ accuracy     │
+│                 │    │ (schema priming)   │    │ (d = 1.35+)  │
 └─────────────────┘    └────────────────────┘    └──────────────┘
 
-PATHWAY 2: Structure → Representation Coherence → False Lures
+PATHWAY 2: Structure → AI Buffer Coherence → False Lures
 ┌─────────────────┐    ┌────────────────────┐    ┌──────────────┐
-│  Segmented      │ → │ Fragmented mental  │ → │ More false   │
-│  (vs. integrated)│   │ model + source     │    │ lure errors  │
-│                 │    │ confusion          │    │ (OR ≈ 6×)    │
+│  Segmented      │ → │ AI Buffer boundary │ → │ More false   │
+│  (vs. integrated)│   │ blurring (source   │    │ lure errors  │
+│                 │    │ confusion)         │    │ (OR ≈ 6×)    │
 └─────────────────┘    └────────────────────┘    └──────────────┘
 ```
 
-**Critical insight:** These pathways are largely **independent**. You can:
-- ✅ Maximize MCQ performance with pre-reading
-- ✅ Minimize false memories with integrated format
-- ⚠️ But improving one doesn't automatically improve the other
+**Critical insight:** The AI Buffer model unifies these findings:
+- **Pathway 1:** *When* the buffer is activated determines its effectiveness as an advance organizer
+- **Pathway 2:** *How* the buffer is presented determines source monitoring accuracy
+- These pathways are largely **independent**—you can:
+  - ✅ Maximize MCQ performance with pre-reading (buffer timing)
+  - ✅ Minimize false memories with integrated format (buffer coherence)
+  - ⚠️ But improving one doesn't automatically improve the other
 
 ---
 
@@ -684,10 +695,7 @@ The pre-reading benefit also aligns with **Mayer's Cognitive Theory of Multimedi
 - **Signaling Principle:** Learning is improved when cues highlight the organization of essential material
 - **Segmenting Principle:** Learning is improved when a complex lesson is presented in learner-paced segments rather than as a continuous unit
 
-> *"People learn better when they receive pretraining that introduces the names and characteristics of key concepts."* — Mayer (2009)
-
 **Key references:**
-- Mayer, R. E. (2009). *Multimedia Learning* (2nd ed.). Cambridge University Press.
 - Mayer, R. E. (Ed.). (2014). *The Cambridge Handbook of Multimedia Learning* (2nd ed.). Cambridge University Press.
 - Mayer was awarded the E.L. Thorndike Award for career achievement in educational psychology (2000).
 
@@ -843,8 +851,6 @@ Our false-lure manipulation closely parallels the **Deese-Roediger-McDermott (DR
 
 **Fuzzy-Trace Theory** (Brainerd & Reyna, 1990s–present) provides a dual-process account of memory that explains why our structure manipulation affects false lure susceptibility:
 
-> *"Memory stores two types of representations: verbatim traces (exact, detailed) and gist traces (meaning-based, fuzzy). False memories are supported by gist and suppressed by verbatim."* — Brainerd & Reyna (2002)
-
 **Core principles:**
 1. **Parallel storage:** Verbatim and gist traces are encoded simultaneously but independently
 2. **Opponent processes:** Gist supports false memory (semantic similarity), while verbatim suppresses it (exact details differ)
@@ -855,7 +861,6 @@ Our false-lure manipulation closely parallels the **Deese-Roediger-McDermott (DR
 - **Segmented format:** Primarily encodes **gist** (general meaning), which supports false recognition of semantically related lures
 
 **Key references:**
-- Brainerd, C. J., & Reyna, V. F. (2002). Fuzzy-trace theory and false memory. *Current Directions in Psychological Science*, 11(5), 164–169.
 - Reyna, V. F., & Brainerd, C. J. (1995). Fuzzy-trace theory: An interim synthesis. *Learning and Individual Differences*, 7(1), 1–75.
 
 ### Split-Attention Effect
@@ -876,7 +881,7 @@ The structure effect also relates to the **Split-Attention Effect** (Chandler & 
 - Tarmizi & Sweller (1988): Split-attention in mathematics instruction hindered learning
 
 **Related phenomena:**
-- **Spatial Contiguity Principle:** Corresponding information is easier to learn when presented close together (Mayer, 2009)
+- **Spatial Contiguity Principle:** Corresponding information is easier to learn when presented close together
 - **Redundancy Effect:** Unnecessary repetition increases cognitive load when information is already integrated
 
 **Key references:**
@@ -950,12 +955,10 @@ Our observed **OR = 5.93** (segmented vs. integrated) is consistent with:
 
 The dissociation between MCQ (recognition) and recall aligns with **dual-process theories of memory**:
 
-**Familiarity vs. Recollection (Jacoby, 1991; Yonelinas, 2002):**
+**Familiarity vs. Recollection (Jacoby, 1991):**
 - **MCQ (recognition):** Can be solved via familiarity-based processes (a feeling of "knowing" without specific details)
 - **Recall:** Requires recollection-based retrieval (actively reconstructing specific information)
 - Pre-reading improves *encoding organization*, which benefits familiarity but may not strengthen recollection
-
-> *"Familiarity is a relatively fast, automatic process that provides information about the general similarity between a test item and studied items. Recollection is a slower, more controlled process that provides specific information about the source or context of the studied item."* — Yonelinas (2002)
 
 **Process Dissociation Procedure (Jacoby, 1991):**
 Jacoby developed a method to separately estimate familiarity and recollection contributions to memory performance. His research demonstrated that these are dissociable processes with different characteristics:
@@ -965,7 +968,6 @@ Jacoby developed a method to separately estimate familiarity and recollection co
 
 **Key references:**
 - Jacoby, L. L. (1991). A process dissociation framework: Separating automatic from intentional uses of memory. *Journal of Memory and Language*, 30(5), 513–541.
-- Yonelinas, A. P. (2002). The nature of recollection and familiarity: A review of 30 years of research. *Journal of Memory and Language*, 46(3), 441–517.
 
 ### Levels of Processing and Retrieval Mode
 
@@ -973,13 +975,12 @@ Jacoby developed a method to separately estimate familiarity and recollection co
 - Pre-reading may promote *semantic elaboration* sufficient for recognition
 - But insufficient for the *self-generated retrieval* required for recall
 
-**Transfer-Appropriate Processing (Morris, Bransford, & Franks, 1977):**
+**Transfer-Appropriate Processing:**
 - Memory performance depends on the match between encoding and retrieval processes
 - Pre-reading creates encoding that is **transfer-appropriate for recognition** (MCQ) but not for free recall
 - The summary provides organizational cues that help when external cues are provided (MCQ) but don't help when retrieval must be self-initiated (recall)
 
 **Key references:**
-- Morris, C. D., Bransford, J. D., & Franks, J. J. (1977). Levels of processing versus transfer appropriate processing. *Journal of Verbal Learning and Verbal Behavior*, 16(5), 519–533.
 - Blaxton, T. A. (1989). Investigating dissociations among memory measures: Support for a transfer-appropriate processing framework. *Journal of Experimental Psychology: Learning, Memory, and Cognition*, 15(4), 657–668.
 
 ### Generation Effect: Why Recall Requires Different Encoding
@@ -1027,7 +1028,6 @@ The **Spacing Effect** (Ebbinghaus, 1885; Cepeda et al., 2006) may also explain 
 | **Roediger & Karpicke (2006)** | Study vs. test conditions | Testing improved recall but not always recognition | Different task demands for recognition vs. recall |
 | **Jacoby (1991)** | Process dissociation procedure | Familiarity and recollection are separable | Supports MCQ-recall dissociation |
 | **Kintsch & van Dijk (1978)** | Text comprehension | Macrostructure helps recognition; microstructure needed for recall | Summary provides macrostructure |
-| **Morris et al. (1977)** | Transfer-appropriate processing | Memory depends on encoding-retrieval match | Pre-reading is transfer-appropriate for MCQ |
 | **Slamecka & Graf (1978)** | Generation effect | Self-generated information recalled better | Recall requires active generation |
 
 ### Implications for Educational Design
@@ -1041,45 +1041,63 @@ This dissociation has important implications:
 
 ---
 
-## Summary: Theoretical Integration
+# 📖 Summary: Theoretical Integration with AI Buffer Model
 
-| Finding | Primary Theory | Supporting Theories | Key Mechanism |
-|---------|---------------|---------------------|---------------|
-| **Pre-reading → MCQ** | Advance Organizer Theory (Ausubel) | Cognitive Load Theory, Schema Theory, Mayer's Multimedia Learning, Levels of Processing, Forward Testing Effect | Schema activation + reduced extraneous load + deeper semantic processing |
-| **Segmented → False Lures** | Source Monitoring Framework (Johnson et al.) | Split-Attention Effect, Misinformation Effect, DRM Paradigm, Fuzzy-Trace Theory, Seductive Details | Source confusion + fragmented representation + gist-based false recognition |
-| **Timing ≠ Recall** | Dual-Process Memory (Jacoby) | Transfer-Appropriate Processing, Generation Effect, Spacing Effect, Levels of Processing | Familiarity ≠ recollection; recognition ≠ generative retrieval |
+| Finding | Primary Theory | AI Buffer Mechanism | Key Supporting Theories |
+|---------|---------------|---------------------|-------------------------|
+| **Pre-reading → MCQ** | Advance Organizer Theory (Ausubel) | Buffer timing: Pre-activation enables schema-consistent encoding | Cognitive Load Theory, Mayer's Multimedia Learning, Levels of Processing, Forward Testing Effect |
+| **Segmented → False Lures** | Source Monitoring Framework (Johnson et al.) | Buffer coherence: Fragmented presentation blurs source boundaries | Split-Attention Effect, Misinformation Effect, DRM Paradigm, Fuzzy-Trace Theory |
+| **Timing ≠ Recall** | Dual-Process Memory (Jacoby) | Buffer limitation: Enhances familiarity without strengthening recollection | Transfer-Appropriate Processing, Generation Effect |
+
+**The AI Buffer Model Unifies All Three Findings:**
+
+The AI Buffer represents a temporary cognitive scaffold created when learners interact with AI-generated content. Its effectiveness depends on:
+1. **Timing** (when the buffer is activated relative to learning)
+2. **Coherence** (how unified vs. fragmented the buffer presentation is)
+3. **Process alignment** (whether the buffer supports the specific memory process required)
+
+This framework connects to broader concerns about cognitive offloading in the digital age (Risko & Gilbert, 2016; Firth et al., 2019; Gerlich, 2025) and AI-specific memory effects (Bai et al., 2023; Chan et al., 2024; Gong & Yang, 2024).
 
 ### Comprehensive Reference List
 
-**Advance Organizers and Pre-reading:**
-- Ausubel, D. P. (1960, 1968)
-- Mayer, R. E. (1979, 2009, 2014)
-- Luiten, Ames, & Ackerson (1980)
-- Hartley & Davies (1976)
+**References Mentioned in This Report:**
 
-**Cognitive Load Theory:**
-- Sweller, J. (1988, 1998)
-- Miller, G. A. (1956)
-- Chandler & Sweller (1991, 1992)
+*Advance Organizers (Main Finding 1):*
+- Ausubel, D. P. (1960). The use of advance organizers. *Journal of Educational Psychology*, 51(5), 267–272.
+- Ausubel, D. P. (1968). *Educational Psychology: A Cognitive View*. Holt, Rinehart & Winston.
+- Mayer, R. E., & Bromage, B. K. (1980). Different recall protocols for technical texts. *Journal of Educational Psychology*, 72(2), 209–225.
 
-**Testing and Retrieval:**
-- Roediger & Karpicke (2006)
-- Roediger & Butler (2011)
-- Chan et al. (2018)
-- Szpunar, McDermott, & Roediger (2008)
+*Cognitive Load Theory:*
+- Sweller, J. (1988). Cognitive load during problem solving. *Cognitive Science*, 12(2), 257–285.
+- Chandler, P., & Sweller, J. (1992). The split-attention effect. *British Journal of Educational Psychology*, 62(2), 233–246.
 
-**False Memory:**
-- Roediger & McDermott (1995)
-- Loftus et al. (1978); Loftus (2005)
-- Johnson, Hashtroudi, & Lindsay (1993)
-- Brainerd & Reyna (2002)
+*False Memory (Main Finding 2):*
+- Johnson, M. K., Hashtroudi, S., & Lindsay, D. S. (1993). Source monitoring. *Psychological Bulletin*, 114(1), 3–28.
+- Roediger, H. L., & McDermott, K. B. (1995). Creating false memories. *Journal of Experimental Psychology: LMC*, 21(4), 803–814.
+- Loftus, E. F., & Palmer, J. C. (1974). Reconstruction of automobile destruction. *JVLVB*, 13(5), 585–589.
+- Loftus, E. F. (2005). Planting misinformation in the human mind. *Learning & Memory*, 12(4), 361–366.
 
-**Memory Processes:**
-- Craik & Lockhart (1972)
-- Jacoby (1991)
-- Morris, Bransford, & Franks (1977)
+*Dual-Process Memory:*
+- Jacoby, L. L. (1991). A process dissociation framework. *Journal of Memory and Language*, 30(5), 513–541.
+- Slamecka, N. J., & Graf, P. (1978). The generation effect. *Journal of Experimental Psychology: HLM*, 4(6), 592–604.
+
+*Testing Effect / Validation Studies:*
+- Roediger, H. L., & Karpicke, J. D. (2006). Test-enhanced learning. *Psychological Science*, 17(3), 249–255.
+- Szpunar, K. K., Khan, N. Y., & Schacter, D. L. (2013). Interpolated memory tests. *PNAS*, 110(16), 6313–6317.
+- Chan, J. C. K., et al. (2018). Testing potentiates new learning. *Journal of Memory and Language*, 102, 46–57.
+- Lindsay, D. S., & Johnson, M. K. (1989). The eyewitness suggestibility effect. *Memory & Cognition*, 17(3), 349–358.
+- Frenda, S. J., Nichols, R. M., & Loftus, E. F. (2011). Current issues in misinformation research. *Current Directions in Psychological Science*, 20(1), 20–23.
+- Hartley, J., & Davies, I. K. (1976). Preinstructional strategies. *Review of Educational Research*, 46(2), 239–265.
+- Lorch, R. F., & Lorch, E. P. (1996). Effects of headings on text recall. *Contemporary Educational Psychology*, 21(3), 261–278.
+- Jing, H. G., Szpunar, K. K., & Schacter, D. L. (2016). Interpolated testing influences focused attention. *Journal of Experimental Psychology: Applied*, 22(3), 305–318.
+- Pociask, F. D., & Morrison, G. R. (2008). Controlling split attention. *ETR&D*, 56(4), 379–399.
+- Koriat, A. (1997). Monitoring one's own knowledge. *Journal of Experimental Psychology: General*, 126(4), 349–370.
+- Nelson, T. O., & Narens, L. (1990). Metamemory: A theoretical framework. *Psychology of Learning and Motivation*, 26, 125–173.
+
+**Already in Your Thesis:**
+- Atkinson & Shiffrin (1968), Baddeley (2012), Craik & Lockhart (1972), Tulving (1972)
+- Bai et al. (2023), Chan et al. (2024), Firth et al. (2019), Gerlich (2025), Gong & Yang (2024), Risko & Gilbert (2016)
 - Slamecka & Graf (1978)
-- Yonelinas (2002)
 
 ---
 
@@ -1180,7 +1198,7 @@ This section reviews prior experiments with designs similar to ours that provide
 |-------------|------------------|-------------------|
 | **Pre-reading → Better MCQ** | Mayer & Bromage (1980); Hartley & Davies (1976); Szpunar et al. (2013) | ✅ Our d = 1.35–1.62 exceeds typical advance organizer effects (d ≈ 0.21–0.50), likely due to AI summary comprehensiveness |
 | **Segmented → More False Lures** | Chandler & Sweller (1992); Frenda et al. (2011); Roediger & McDermott (1995) | ✅ Our OR = 5.93 is consistent with misinformation OR ≈ 3–5 and DRM false recognition rates (~40–55%) |
-| **Timing ≠ Recall** | Roediger & Karpicke (2006); Jacoby (1991); Morris et al. (1977) | ✅ MCQ-recall dissociation is well-documented in dual-process and transfer-appropriate processing literature |
+| **Timing ≠ Recall** | Roediger & Karpicke (2006); Jacoby (1991) | ✅ MCQ-recall dissociation is well-documented in dual-process and transfer-appropriate processing literature |
 | **Total time constant** | Cepeda et al. (2006); Bahrick et al. (1993) | ✅ Time-on-task doesn't explain our effects; spacing/organization matters more |
 
 ### Novel Contributions Beyond Prior Research
@@ -1247,37 +1265,7 @@ While our findings are consistent with prior research, we contribute several **n
 | **Segmented → False Lures** | Source Monitoring Framework (Johnson et al.) | Split-Attention Effect, Misinformation Effect, DRM Paradigm, Fuzzy-Trace Theory, Seductive Details | Source confusion + fragmented representation + gist-based false recognition |
 | **Timing ≠ Recall** | Dual-Process Memory (Jacoby) | Transfer-Appropriate Processing, Generation Effect, Spacing Effect, Levels of Processing | Familiarity ≠ recollection; recognition ≠ generative retrieval |
 
-### Comprehensive Reference List
-
-**Advance Organizers and Pre-reading:**
-- Ausubel, D. P. (1960, 1968)
-- Mayer, R. E. (1979, 2009, 2014)
-- Luiten, Ames, & Ackerson (1980)
-- Hartley & Davies (1976)
-
-**Cognitive Load Theory:**
-- Sweller, J. (1988, 1998)
-- Miller, G. A. (1956)
-- Chandler & Sweller (1991, 1992)
-
-**Testing and Retrieval:**
-- Roediger & Karpicke (2006)
-- Roediger & Butler (2011)
-- Chan et al. (2018)
-- Szpunar, McDermott, & Roediger (2008)
-
-**False Memory:**
-- Roediger & McDermott (1995)
-- Loftus et al. (1978); Loftus (2005)
-- Johnson, Hashtroudi, & Lindsay (1993)
-- Brainerd & Reyna (2002)
-
-**Memory Processes:**
-- Craik & Lockhart (1972)
-- Jacoby (1991)
-- Morris, Bransford, & Franks (1977)
-- Slamecka & Graf (1978)
-- Yonelinas (2002)
+*See Section "Theoretical Integration with AI Buffer Model" above for the comprehensive 19-reference list.*
 
 ---
 
