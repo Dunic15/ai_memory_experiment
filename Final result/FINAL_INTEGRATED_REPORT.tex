@@ -18,6 +18,9 @@
 \usepackage{natbib}
 \usepackage{float}
 
+% Graphics search paths (support compiling from repo root or report folder)
+\graphicspath{{report_assets/}{Final result/report_assets/}}
+
 % Page geometry
 \geometry{margin=2.5cm}
 
@@ -82,7 +85,7 @@ This experiment investigated how AI-generated summaries affect learning and memo
 \end{tcolorbox}
 
 % ============================================
-\section{Two Main Findings}
+\section{Main Findings}
 % ============================================
 
 % --------------------------------------------
@@ -90,31 +93,33 @@ This experiment investigated how AI-generated summaries affect learning and memo
 % --------------------------------------------
 
 \subsubsection{The Finding}
-\textbf{Presenting AI summaries \textit{before} reading produces dramatically better recognition-based learning compared to synchronous or post-reading presentation.} This is the largest and most robust effect in the experiment.
+\textbf{When ``AI-assisted memory'' is indexed to the information provided by the AI summary (\textit{AI-summary-sourced} questions; \textit{ai\_summary\_accuracy}), pre-reading access produces substantially higher accuracy than synchronous or post-reading access.} This summary-specific advantage is consistent with (and statistically accounts for) the overall MCQ timing benefit.
 
 \subsubsection{Statistical Evidence}
 
-\paragraph{Descriptive Statistics (AI Group, n = 24 per timing):}
+\paragraph{Primary outcome (AI group; AI-summary-sourced accuracy, $n = 24$ per timing):}
 
 \begin{table}[H]
 \centering
 \begin{tabular}{lc}
 \toprule
-\textbf{Timing Condition} & \textbf{MCQ Accuracy (Mean $\pm$ SD)} \\
+\textbf{Timing Condition} & \textbf{AI Summary Accuracy (Mean $\pm$ SD)} \\
 \midrule
-\textbf{Pre-reading} & \textbf{0.699 $\pm$ 0.125} \\
-Synchronous & 0.533 $\pm$ 0.147 \\
-Post-reading & 0.562 $\pm$ 0.127 \\
+\textbf{Pre-reading} & \textbf{0.833 $\pm$ 0.141} \\
+Synchronous & 0.568 $\pm$ 0.239 \\
+Post-reading & 0.641 $\pm$ 0.196 \\
 \bottomrule
 \end{tabular}
-\caption{MCQ Accuracy by Timing Condition}
+\caption{AI Summary Accuracy by Timing Condition}
 \end{table}
 
-\paragraph{Mixed ANOVA (Structure $\times$ Timing, AI Group):}
+\noindent\textit{See Supplementary Figure \ref{fig:mf1-plots} for the corresponding plots.}
+
+\paragraph{Mixed ANOVA (Structure $\times$ Timing; AI-summary-sourced accuracy, AI Group):}
 \begin{itemize}
-    \item \textbf{Timing main effect:} $F(1.77, 38.87) = 11.77$, $p = .00018$, $\eta^2_G = .254$
-    \item Structure main effect: $F(1, 22) = 4.69$, $p = .0415$, $\eta^2_G = .072$
-    \item Interaction: $F(1.77, 38.87) = 0.76$, $p = .461$ (ns)
+    \item \textbf{Timing main effect:} $F(2, 44) = 14.00$, $p = 1.97\times 10^{-5}$, $\eta^2_p = .389$
+    \item Structure main effect: $F(1, 22) = 0.06$, $p = .802$ (ns)
+    \item Interaction: $F(2, 44) = 0.61$, $p = .547$ (ns)
 \end{itemize}
 
 \paragraph{Post-hoc Pairwise Comparisons (Holm-corrected):}
@@ -123,17 +128,47 @@ Post-reading & 0.562 $\pm$ 0.127 \\
 \centering
 \begin{tabular}{lccc}
 \toprule
-\textbf{Comparison} & \textbf{Difference} & \textbf{p-value} & \textbf{Cohen's $d$} \\
+\textbf{Comparison} & \textbf{Difference} & \textbf{p-value} & \textbf{Cohen's $d_z$} \\
 \midrule
-Pre vs Synchronous & +0.167 & .0019 & 1.62 (very large) \\
-Pre vs Post & +0.137 & .0025 & 1.35 (very large) \\
-Synchronous vs Post & $-$0.029 & .449 & 0.21 (small) \\
+Pre vs Synchronous & +0.266 & .00052 & $d_z = 0.91$ \\
+Pre vs Post & +0.193 & .00057 & $d_z = 0.87$ \\
+Synchronous vs Post & $-$0.073 & .148 & $d_z = -0.31$ \\
 \bottomrule
 \end{tabular}
-\caption{Pairwise Comparisons for MCQ Accuracy}
+\caption{Pairwise Comparisons for AI Summary Accuracy}
 \end{table}
 
-\\subsubsection{Mechanism: Advance Organizers and Cognitive Load}
+\paragraph{Overall MCQ accuracy (for context).}
+The same ordering appears for \textit{overall} MCQ accuracy (all questions): pre-reading $0.699 \pm 0.125$, synchronous $0.533 \pm 0.147$, post-reading $0.562 \pm 0.127$; Mixed ANOVA shows a significant timing effect ($F(1.77, 38.87) = 11.77$, $p = .00018$).
+
+\subsubsection{Mechanism: Summary-Specific Encoding and Advance Organizers}
+
+\paragraph{Summary-specific mechanism (model-based evidence).}
+AI summary accuracy strongly predicts overall MCQ accuracy in a mixed-effects model controlling for timing and structure ($\beta = 0.472$, $p < .001$). When \textit{ai\_summary\_accuracy} is added to the model, the pre-reading MCQ advantage shrinks substantially (pre--sync: $\Delta = 0.172 \rightarrow 0.043$; pre--post: $\Delta = 0.143 \rightarrow 0.044$) and is no longer significant after Holm correction ($p = .352$). Model fit improves markedly ($\chi^2(1) = 46.38$, $p < .001$).
+
+\paragraph{Boundary condition: article-only comprehension.}
+Timing does \textit{not} affect article-only accuracy ($p = .706$), consistent with the timing manipulation primarily changing learning for summary-covered information rather than broadly improving article-only comprehension.
+
+\paragraph{Not just ``more time'': timing remains after controlling summary exposure.}\par
+\begin{table}[H]
+\centering
+\makebox[\textwidth][c]{%
+\begin{tabular}{lcc}
+\toprule
+\textbf{Model} & \textbf{Pre--Sync Estimate} & \textbf{Pre--Post Estimate} \\
+\midrule
+Base (timing only) & 0.271*** & 0.214*** \\
+$+$ log(summary\_time) & 0.258*** & 0.164** \\
+\textbf{Reduction} & \textbf{5\%} & \textbf{23\%} \\
+\bottomrule
+\end{tabular}
+}
+\caption{Timing contrasts on AI-summary accuracy with and without summary time control}
+\end{table}
+
+\textbf{Summary time effect:} $\beta = 0.062$, $p = .031$.
+
+\textbf{Interpretation:} Timing remains highly significant even after controlling for summary time. Pre-reading wins because of \textbf{quality of processing}, not just quantity of time.
 
 Why does pre-reading work? The summary functions as an \textbf{advance organizer} \citep{ausubel1960}, providing a high-level framework that guides attention during reading and reduces extraneous cognitive load \citep{sweller1988,chandler1992}.
 
@@ -147,11 +182,11 @@ Why does pre-reading work? The summary functions as an \textbf{advance organizer
 
 
 % --------------------------------------------
-\subsection{Main Finding 2: Segmented Summaries Increase False Memory}
+\subsection{Main Finding 2: Integrated Summaries Reduce False Memory Endorsement}
 % --------------------------------------------
 
 \subsubsection{The Finding}
-\textbf{Summary structure---not timing---is the primary driver of susceptibility to false AI-generated claims.} Segmented summaries approximately \textbf{double} the probability of endorsing false lures compared to integrated summaries.
+\textbf{Summary structure---not timing---is the primary driver of susceptibility to false AI-generated claims. Integrated summaries yield higher false-lure accuracy (better rejection of misinformation) and fewer false lures selected, whereas segmented summaries approximately \textbf{double} the probability of endorsing false lures.}
 
 \subsubsection{Statistical Evidence}
 
@@ -169,6 +204,28 @@ Integrated & 0.58 $\pm$ 0.69 & $\sim$25--29\% \\
 \end{tabular}
 \caption{False Lure Endorsement by Structure}
 \end{table}
+
+\paragraph{Converging measure: False-lure accuracy (correct rejections; higher = better).}
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+\textbf{Structure} & \textbf{False-Lure Accuracy (Mean $\pm$ SD)} \\
+\midrule
+\textbf{Integrated} & \textbf{0.556 $\pm$ 0.354} \\
+Segmented & 0.375 $\pm$ 0.302 \\
+\bottomrule
+\end{tabular}
+\caption{False-Lure Accuracy by Structure (AI Group)}
+\end{table}
+
+\noindent\textit{See Supplementary Figure \ref{fig:mf2-plots} for a visualization of the structure differences.}
+
+\paragraph{Mixed ANOVA (Structure $\times$ Timing; AI Group):}
+\begin{itemize}
+    \item False lures selected: structure main effect $F(1, 22) = 4.74$, $p = .041$; timing and interaction ns.
+    \item False-lure accuracy: structure main effect $F(1, 22) = 4.20$, $p = .053$; timing and interaction ns.
+\end{itemize}
 
 \paragraph{Binomial GLMM (Full Model):}
 
@@ -194,13 +251,739 @@ Why do segmented summaries increase false memories?
     \item \textbf{Weaker source monitoring cues:} Fragmented presentation reduces contextual cues used to attribute information to its correct source \citep{johnson1993}
     \item \textbf{Reduced cross-checking:} Separated information discourages verification against the original article
     \item \textbf{Split-attention costs:} Dividing attention across separated elements taxes cognitive resources and impairs integration \citep{sweller1988,chandler1992}
-    \item \textbf{Automation bias and misinformation:} Readers may accept AI-generated content with insufficient verification, increasing susceptibility to misinformation \citep{gerlich2025,loftus2005,chan2024}
+    \item \textbf{Automation bias and misinformation:} Readers may accept AI-generated content with insufficient verification, increasing susceptibility to misinformation \citep{zhai2024,gerlich2025,loftuspalmer1974,loftus2005,chan2024}
 \end{enumerate}
 
-Overall, these results align with established accounts in which presentation format affects information integration and source attribution. Integrated summaries better support coherent mental model construction, whereas segmented summaries increase the risk of misattributing plausible but incorrect information \citep{johnson1993,sweller1988,chandler1992,loftus2005}.
+Overall, these results align with established accounts in which presentation format affects information integration and source attribution. Integrated summaries better support coherent mental model construction---reflected in both \textit{higher false-lure accuracy} and \textit{fewer misguidances}---whereas segmented summaries increase the risk of misattributing plausible but incorrect information \citep{johnson1993,sweller1988,chandler1992,loftus2005}.
+
+% --------------------------------------------
+\subsection{Process Evidence: Pre-reading Increases Summary Engagement Without Increasing Total Time}
+% --------------------------------------------
+
+\subsubsection{The Finding}
+\textbf{The timing manipulation changed how participants allocated time between the AI summary and the article.} Pre-reading produced the greatest summary viewing time and summary share, synchronous was intermediate, and post-reading was lowest. Total reading time did not differ across timing conditions, indicating a redistribution of attention rather than increased overall engagement.
+
+This pattern is consistent with the idea that earlier access increases exposure to an advance organizer, which may support downstream encoding during article reading.
+
+\subsubsection{Statistical Evidence}
+
+\begin{table}[H]
+\centering
+\small
+{\setlength{\tabcolsep}{5pt}
+\begin{tabular}{lrrrr}
+\toprule
+\textbf{Timing} & \textbf{Summary Time (s)} & \textbf{Reading Time (min)} & \textbf{Total Time (s)} & \textbf{Summary Share (\%)} \\
+\midrule
+Pre-reading & 132.5 & 6.72 & 535.8 & 24.9 \\
+Synchronous & 100.3 & 7.19 & 531.6 & 19.5 \\
+Post-reading & 69.5 & 7.69 & 530.8 & 13.7 \\
+\bottomrule
+\end{tabular}}
+\caption{Time allocation by timing (AI group; means). Summary share (\%) = summary\_time\_sec / (summary\_time\_sec + reading\_time\_min$\times$60) $\times$ 100.}
+\end{table}
+
+\noindent\textit{See Supplementary Figures \ref{fig:mf3-summary-exposure} and \ref{fig:mf3-total-time} for plots of summary exposure and time-on-task.}
+
+\paragraph{Mixed ANOVA (Structure $\times$ Timing; AI group).}
+\textbf{Main effects.}
+\begin{itemize}
+    \item \textbf{Summary time (s):} main effect of timing, $F(2, 43.25) = 13.32$, $p < .001$, $\eta^2_p = .381$; no structure effect, no interaction.
+    \item \textbf{Summary share:} main effect of timing, $F(2, 43.25) = 16.20$, $p < .001$, $\eta^2_p = .428$; no structure effect, no interaction.
+    \item \textbf{Reading time (min):} no timing effect, $F(2, 43.25) = 1.16$, $p = .324$; no structure effect, no interaction.
+\end{itemize}
+
+\textbf{Post hocs (Holm-corrected).}
+Pre-reading $>$ synchronous $>$ post-reading for both summary time and summary share (all adjusted $p \le .021$). Reading time shows no pairwise differences (all adjusted $p > .32$).
+
+\paragraph{Structure $\times$ timing descriptives (AI group).}
+\begin{table}[H]
+\centering
+\small
+{\setlength{\tabcolsep}{6pt}
+\begin{tabular}{lccc}
+\toprule
+\multicolumn{4}{l}{\textbf{Panel A. Reading time (min)}} \\
+\textbf{Structure} & \textbf{Pre-reading} & \textbf{Synchronous} & \textbf{Post-reading} \\
+\midrule
+Integrated & 7.34 & 7.45 & 7.98 \\
+Segmented & 6.11 & 6.93 & 7.40 \\
+\addlinespace[0.3em]
+\multicolumn{4}{l}{\textbf{Panel B. Summary share (\%)}} \\
+\textbf{Structure} & \textbf{Pre-reading} & \textbf{Synchronous} & \textbf{Post-reading} \\
+\midrule
+Integrated & 24.6 & 19.0 & 14.1 \\
+Segmented & 25.1 & 20.0 & 13.2 \\
+\bottomrule
+\end{tabular}}
+\caption{Structure $\times$ timing descriptives (AI group).}
+\end{table}
+
+\paragraph{Overall context.}
+Across AI trials, average reading time is 7.20 minutes (vs.\ 8.26 in No-AI), and the summary occupies 19.3\% of total reading time on average (integrated 19.2\%, segmented 19.5\%).
+
+\paragraph{Does longer article reading improve article-only learning?}
+Reading time did not predict article-only accuracy in the AI group (mixed model controlling for timing and structure; $F(1, 64.37) = 0.07$, $p = .787$), suggesting that timing effects are not driven by greater article reading. Reading time was log-transformed to reduce skew.
+
+\textbf{Theoretical Connection: Advance Organizers and Load Allocation}\\[0.3cm]
+These results align with advance-organizer and cognitive-load accounts: earlier access increases exposure to a high-level scaffold before or during reading, which may support schema-consistent encoding while reading the article \citep{ausubel1960,sweller1988,chandler1992}.
+
+Critically, timing changed how time was allocated rather than how much time was spent, isolating attention distribution as the key process affected by the manipulation.
+
+\paragraph{Link to the learning advantage.}
+The ordering of summary engagement (pre-reading $>$ synchronous $>$ post-reading) matches the ordering of the timing benefit on learning outcomes, consistent with a mechanism in which earlier access increases exposure to the organizer at the point where it can shape encoding during the article phase. However, because timing remains significant even after controlling for summary time, this process evidence should be interpreted as \textit{contributory} rather than as a complete explanation: the advantage is likely driven by both exposure and higher-quality processing when the organizer is encountered earlier.
+
+\paragraph{Connection to prior advance-organizer research.}
+Classic work shows that presenting an organizer before a technical text improves downstream comprehension and memory organization \citep{mayerbromage1980,hartleydavies1976}. Preview structures such as headings and topic sentences similarly guide attention and improve organization \citep{lorchlorch1996}. The present time-allocation results provide a direct process trace consistent with these accounts: participants devoted the greatest share of attention to the organizer under pre-reading, despite no increase in total time-on-task.
+
+% --------------------------------------------
+\subsection{Robustness Note (Primary Effects)}
+% --------------------------------------------
+
+Robustness checks confirm the primary effects across alternative model specifications and sensitivity analyses (see the Experimental Design Robustness section).
 
 % ============================================
-\section{Secondary Findings}
+\section{Integrated Interpretation}
+% ============================================
+
+\subsection{Two Independent Cognitive Pathways: Timing and Structure Effects}
+
+The results support two largely independent pathways consistent with established cognitive theories:
+
+\begin{itemize}
+    \item \textbf{Timing $\rightarrow$ AI-summary-sourced accuracy (and overall MCQ):} Pre-reading summaries function as advance organizers that prime schemas and guide attention during encoding, primarily improving learning for summary-covered information \citep{ausubel1960,sweller1988,chandler1992}.
+    \item \textbf{Structure $\rightarrow$ false-lure endorsement:} Segmented formats increase split-attention and weaken source-monitoring cues, elevating susceptibility to plausible but incorrect information \citep{johnson1993,chandler1992,loftus2005}.
+\end{itemize}
+
+A broader synthesis using the proposed \textit{AI Buffer} concept is developed in the Discussion chapter, where it is explicitly presented as an interpretive framework rather than as an empirical result.
+
+\subsection{The Optimal Design Configuration}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Dimension} & \textbf{Optimal Choice} & \textbf{Rationale} \\
+\midrule
+Timing & Pre-reading & Highest AI-summary accuracy; large MCQ benefit ($d > 1.3$) \\
+Structure & Integrated & Dramatically lower false-lure risk (OR = 6$\times$ safer) \\
+Format & Coherent paragraphs & Supports source monitoring \\
+\bottomrule
+\end{tabular}
+\caption{Optimal AI Summary Design}
+\end{table}
+
+\textbf{Expected outcomes for Pre-reading + Integrated:}
+\begin{itemize}
+    \item MCQ accuracy: $\sim$0.75 (highest)
+    \item False lures selected: $\sim$0.58/article (lower is better)
+    \item False-lure accuracy: $\sim$0.56 (higher is better)
+\end{itemize}
+
+% ============================================
+\section{Experimental Design Robustness}
+% ============================================
+
+\subsection{Design Integrity and Internal Validity}
+
+\noindent\textit{See Supplementary Figures \ref{fig:robustness-plots} and \ref{fig:robustness-loao} for the corresponding plots.}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Design Feature} & \textbf{Status} & \textbf{Evidence} \\
+\midrule
+Sample size & N = 36 (24 AI, 12 No-AI) & 108 article-level observations \\
+Within-subjects balance & \checkmark Complete & Each AI participant: 3 trials \\
+Between-subjects balance & \checkmark Complete & 12 integrated, 12 segmented \\
+Article exposure & \checkmark Complete & All participants see all 3 articles \\
+\bottomrule
+\end{tabular}
+\caption{Design Integrity Summary}
+\end{table}
+
+These checks confirm full coverage of articles and balanced assignment across structure and timing, reducing the risk that effects are artifacts of missing cells or uneven exposure.
+
+\subsection{Article Difficulty Analysis (9.1)}
+
+\paragraph{Difficulty index (overall MCQ accuracy; all participants, $n = 36$ per article).}
+\begin{table}[H]
+\centering
+\begin{tabular}{lc}
+\toprule
+\textbf{Article} & \textbf{Overall MCQ Accuracy (Mean $\pm$ SD)} \\
+\midrule
+Semiconductors & 0.480 $\pm$ 0.170 (hardest) \\
+UHI & 0.601 $\pm$ 0.144 \\
+CRISPR & 0.625 $\pm$ 0.134 (easiest) \\
+\bottomrule
+\end{tabular}
+\caption{Article Difficulty Index (Overall MCQ Accuracy; All Participants)}
+\end{table}
+
+The difficulty gradient is stable (Semiconductors hardest, CRISPR easiest), indicating that article difficulty varies substantially but in a consistent direction across the sample.
+
+\paragraph{AI group breakdown (for reference).}
+\begin{table}[H]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Article} & \textbf{MCQ Accuracy} & \textbf{Summary Acc.} & \textbf{False Lures} \\
+\midrule
+Semiconductors & 0.524 (hardest) & 0.562 & 0.833 \\
+UHI & 0.622 & 0.760 & 0.958 (most) \\
+CRISPR & 0.649 (easiest) & 0.719 & 0.667 (fewest) \\
+\bottomrule
+\end{tabular}
+\caption{Article-Level Performance (AI Group; selected outcomes)}
+\end{table}
+
+The same ordering appears across outcomes in the AI group, suggesting that difficulty differences are article-driven rather than condition-specific.
+
+\textbf{Observation:} Semiconductors is consistently the most difficult article across outcomes.
+
+\subsection{Design Validity Checks}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llll}
+\toprule
+\textbf{Check} & \textbf{Question} & \textbf{Result} & \textbf{Evidence} \\
+\midrule
+Counterbalancing & Article independent of timing? & \checkmark Yes & $\chi^2(4) = 3.00$, $p = .558$ \\
+Interaction & Timing depend on article? & \checkmark No & $F < 1.88$, $p > .12$ \\
+LOAO Robustness & Effect survives dropping any article? & \checkmark Yes & All $p < .02$ \\
+\bottomrule
+\end{tabular}
+\caption{Design Validity Summary}
+\end{table}
+
+Together, these checks show that timing effects are not driven by article assignment, do not vary by article, and persist when any single article is removed.
+
+\subsubsection{9.2 Counterbalancing Check}
+\paragraph{Counterbalancing distribution (Timing $\times$ Article).}
+\begin{table}[H]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Timing} & \textbf{CRISPR} & \textbf{Semiconductors} & \textbf{UHI} \\
+\midrule
+Pre-reading & 8 & 9 & 7 \\
+Synchronous & 10 & 8 & 6 \\
+Post-reading & 6 & 7 & 11 \\
+\bottomrule
+\end{tabular}
+\caption{Article $\times$ Timing Distribution (counterbalancing)}
+\end{table}
+
+The distribution is near-uniform across timing conditions, avoiding systematic alignment of any article with a single timing condition.
+
+\textbf{Chi-square test:} $\chi^2(4) = 3.00$, $p = .558$
+
+\textbf{Result:} Counterbalancing is adequate ($p > .05$). Article assignment does not confound timing conditions.
+
+\subsubsection{9.3 Timing $\times$ Article Interaction}
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Outcome} & \textbf{Timing $\times$ Article F} & \textbf{p} \\
+\midrule
+Summary Accuracy & $F(4, 59.8) = 1.88$ & .125 (ns) \\
+MCQ Accuracy & $F(4, 60.5) = 1.34$ & .264 (ns) \\
+\bottomrule
+\end{tabular}
+\caption{Timing $\times$ Article interaction tests (AI group)}
+\end{table}
+
+Non-significant interactions indicate that the timing effect generalizes across articles rather than being driven by a single topic.
+
+\textbf{Result:} Timing effects are consistent across all three articles—no significant interaction.
+
+\subsubsection{9.4 Leave-One-Article-Out Robustness}
+\paragraph{Leave-one-article-out robustness (MCQ timing effect).}
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{Dropped Article} & \textbf{Pre--Sync $\Delta$ (MCQ)} & \textbf{p} \\
+\midrule
+Semiconductors & 0.172 & $<.001$ \\
+UHI & 0.126 & .010 \\
+CRISPR & 0.116 & .016 \\
+\bottomrule
+\end{tabular}
+\caption{Leave-one-article-out robustness for the pre-reading MCQ advantage}
+\end{table}
+
+Each leave-one-article-out estimate remains positive and significant, indicating the timing advantage is not driven by any single article.
+
+\textbf{Result:} The pre-reading timing effect is robust regardless of which article is excluded.
+
+\subsection{Robustness of Primary Effects}
+
+\paragraph{MCQ Timing Effect:}
+\begin{itemize}
+    \item 83\% of participants show pre-reading advantage
+    \item Effect persists in leave-one-article-out analyses
+    \item Random-slopes models: improved fit, estimates unchanged
+    \item Survives Holm correction ($p < .005$)
+\end{itemize}
+
+\paragraph{False Lure Structure Effect:}
+\begin{itemize}
+    \item Consistent across binomial and Poisson models
+    \item No separation issues detected
+    \item Profile-likelihood CI excludes OR = 1: [1.63, 21.5]
+    \item Overdispersion ratio $\approx$ 0.80 (no concern)
+\end{itemize}
+
+% ============================================
+\section{Theoretical Grounding}
+% ============================================
+
+\subsection{Main Finding 1: Pre-Reading Timing Effect}
+
+\subsubsection{Advance Organizer Theory}
+
+The pre-reading advantage aligns with \textbf{Ausubel's Advance Organizer Theory} \citep{ausubel1960,ausubel1968}:
+
+\begin{quote}
+``The most important single factor influencing learning is what the learner already knows. Ascertain this and teach him accordingly.'' --- David Ausubel
+\end{quote}
+
+\textbf{Core mechanism:} Advance organizers provide a cognitive framework that:
+\begin{enumerate}
+    \item Activates relevant prior knowledge (schema priming)
+    \item Creates ``ideational scaffolding'' for new information
+    \item Guides selective attention during subsequent reading
+    \item Facilitates meaningful learning over rote memorization \citep{craik1972}
+\end{enumerate}
+
+Empirical validation comes from Mayer \& Bromage (1980), who found pre-reading outlines improved problem-solving by $\sim$25\%, and Hartley \& Davies (1976), who demonstrated pre-organizer benefits for recall.
+
+\subsubsection{Cognitive Load Theory}
+
+The pre-reading effect aligns with \textbf{Cognitive Load Theory} \citep{sweller1988}:
+\begin{itemize}
+    \item \textbf{Intrinsic load:} Reduced because summary simplifies article processing
+    \item \textbf{Extraneous load:} Reduced because learners don't need to ``figure out what matters'' \citep{chandler1992}
+    \item \textbf{Germane load:} Increased because resources are freed for schema construction
+\end{itemize}
+
+The working memory model \citep{baddeley2012,atkinson1968} provides the cognitive architecture: the AI summary reduces demands on the central executive by pre-organizing information before it enters the phonological loop and visuospatial sketchpad.
+
+\subsubsection{Quantitative Alignment}
+
+Our observed effect size ($d = 1.35$--$1.62$) is larger than typical advance organizer effects ($d \approx 0.20$--$0.50$), likely because:
+\begin{enumerate}
+    \item AI summaries are more comprehensive than traditional organizers
+    \item The MCQ outcome is particularly sensitive to schema-guided encoding
+    \item The within-subjects design increased statistical power
+\end{enumerate}
+
+\subsection{Main Finding 2: Integrated Structure and False Memory Resistance}
+
+\subsubsection{Source Monitoring Framework}
+
+The structure effect aligns with the \textbf{Source Monitoring Framework} \citep{johnson1993,lindsayjohnson1989}:
+
+\begin{quote}
+``Source monitoring refers to the set of processes involved in making attributions about the origins of memories, knowledge, and beliefs.''
+\end{quote}
+
+\textbf{Empirical pattern:} Integrated summaries show higher false-lure accuracy (0.556 vs.\ 0.375) and fewer false lures selected (0.58 vs.\ 1.06) than segmented summaries.
+
+\textbf{Core mechanism:} Segmented summaries increase source confusion because:
+\begin{enumerate}
+    \item Fragmented presentation disrupts coherent mental model construction
+    \item Spatial separation increases misattribution risk \citep{chandler1992}
+    \item Reduced cross-referencing makes verification harder
+\end{enumerate}
+
+Recent research demonstrates that conversational AI can amplify false memories in witness interviews \citep{chan2024}, extending classical misinformation effects to AI-generated content.
+
+\subsubsection{The DRM Paradigm}
+
+Our false-lure manipulation parallels the \textbf{Deese-Roediger-McDermott Paradigm} \citep{roediger1995}:
+\begin{itemize}
+    \item Critical lures falsely recognized at 40--60\% (similar to our 54\% segmented rate)
+    \item False recognition confidence often as high as for true items
+    \item Effect robust across age groups and cultures
+\end{itemize}
+
+Meta-analytic evidence \citep{frenda2011} suggests misinformation effects typically produce OR $\approx$ 3--5, consistent with our OR = 5.93 for the structure effect.
+
+\subsubsection{Fuzzy-Trace Theory}
+
+\textbf{Fuzzy-Trace Theory} \citep{brainerdreyna2005} explains the mechanism:
+\begin{itemize}
+    \item \textbf{Integrated format:} Encourages better verbatim encoding, enabling rejection of false claims
+    \item \textbf{Segmented format:} Primarily encodes gist, which supports false recognition
+\end{itemize}
+
+\subsection{Main Finding 3: Pre-reading Increases Summary Engagement Without Increasing Total Time}
+
+\subsubsection{Advance Organizer Exposure}
+
+Advance organizers are most effective when encountered \textit{before} the target material because they provide a framework that guides subsequent selection, integration, and encoding \citep{ausubel1960,mayerbromage1980,hartleydavies1976}. Preview structures (e.g., headings and topic sentences) similarly guide attention and improve organization \citep{lorchlorch1996}. The observed increase in summary viewing time and share under pre-reading indicates greater exposure to the organizer at the point where it can shape processing during the article phase.
+
+\subsubsection{Allocation of Attention (Not Time-on-Task)}
+
+Cognitive load accounts emphasize that learning depends on how limited cognitive resources are allocated, not simply on total time spent \citep{sweller1988}. Because total time did not change across timing conditions, the process evidence is best interpreted as a redistribution of attention toward the summary rather than increased overall engagement. This aligns with the idea that early access reduces extraneous load by clarifying what to attend to during reading, thereby lowering search and integration costs during the article phase \citep{chandler1992}.
+
+% ============================================
+\section{Summary Table: All Key Statistics}
+% ============================================
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{lllll}
+\toprule
+\textbf{Finding} & \textbf{Test} & \textbf{Statistic} & \textbf{p-value} & \textbf{Effect Size} \\
+\midrule
+Timing $\rightarrow$ AI Summary Accuracy & Mixed ANOVA & $F(2, 44) = 14.00$ & $1.97\times 10^{-5}$ & $\eta^2_p = .389$ \\
+Timing $\rightarrow$ MCQ & Mixed ANOVA & $F(1.77, 38.87) = 11.77$ & .00018 & $\eta^2_G = .254$ \\
+Pre vs Sync (MCQ) & Holm-corrected & $\Delta = 0.167$ & .0019 & $d = 1.62$ \\
+Pre vs Post (MCQ) & Holm-corrected & $\Delta = 0.137$ & .0025 & $d = 1.35$ \\
+Structure $\rightarrow$ Lures & Binomial GLMM & OR = 5.93 & .007 & CI [1.63, 21.5] \\
+Structure $\rightarrow$ False-lure accuracy & Mixed ANOVA & $F(1, 22) = 4.20$ & .053 & $\eta^2_p = .160$ \\
+Timing $\rightarrow$ Summary Time & Mixed ANOVA & $F(2, 43.25) = 13.32$ & $3.10\times 10^{-5}$ & $\eta^2_p = .381$ \\
+Timing $\rightarrow$ Summary Share & Mixed ANOVA & $F(2, 43.25) = 16.20$ & $5.62\times 10^{-6}$ & $\eta^2_p = .428$ \\
+AI vs No-AI (MCQ) & Independent t & --- & .008 & $d = 0.57$ \\
+Counterbalancing & Chi-square & $\chi^2(4) = 3.00$ & .558 & (ns) \\
+\bottomrule
+\end{tabular}
+\caption{Summary of All Key Statistical Results}
+\end{table}
+
+% ============================================
+\section{Conclusions and Design Implications}
+% ============================================
+
+\subsection{For Educational Technology Design}
+
+\begin{enumerate}
+    \item \textbf{Default to pre-reading summaries} when the goal is comprehension/MCQ performance
+    \item \textbf{Use integrated (not segmented) format} to minimize false memory risk
+    \item \textbf{Treat false lures as a structural UI risk}, not a user trait problem
+    \item \textbf{Instrument summary engagement:} timing shifts attention allocation without increasing total time
+\end{enumerate}
+
+\subsection{For Future Research}
+
+\begin{enumerate}
+    \item Test \textbf{delayed retention} (24h, 1 week) to assess consolidation
+    \item Manipulate \textbf{summary factuality} directly to test safety/performance trade-offs
+    \item Use \textbf{process tracing} (eye-tracking, think-aloud) to isolate source-monitoring mechanisms
+    \item Explore \textbf{verification affordances} (citations, uncertainty markers) as misinformation countermeasures
+\end{enumerate}
+
+\subsection{Final Takeaway}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=mainblue,title=Core Message]
+\textbf{AI can meaningfully improve learning outcomes when aligned with cognitive principles of timing, structure, and task demands.}
+
+\begin{itemize}
+    \item \textbf{Pre-reading timing} enhances comprehension quality through schema activation
+    \item \textbf{Integrated structure} protects against false memory through coherent representation
+    \item \textbf{Timing reallocates attention} toward the summary (greater exposure) without increasing time-on-task
+    \item The optimal design is \textbf{pre-reading + integrated}: maximum learning benefit with manageable misinformation risk
+\end{itemize}
+
+\textbf{Importantly, this study demonstrates that AI-generated summaries can produce large and reliable learning benefits, comparable to or exceeding classic instructional interventions, when embedded within cognitively informed designs.}
+\end{tcolorbox}
+
+% ============================================
+\section{Summary: Theoretical Integration}
+% ============================================
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{2.5cm}p{3.5cm}p{5cm}p{4cm}}
+\toprule
+\textbf{Finding} & \textbf{Primary Theory} & \textbf{Supporting Theories} & \textbf{Key Mechanism} \\
+\midrule
+\textbf{Pre-reading $\rightarrow$ AI-Summary Learning} & Advance Organizer Theory (Ausubel) & Cognitive Load Theory; Levels of Processing & Schema activation + reduced extraneous load + organizer-driven encoding \\
+\textbf{Integrated $\rightarrow$ False Memory Resistance} & Source Monitoring Framework (Johnson et al.) & Split-Attention Effect; Misinformation Effect; DRM Paradigm; Fuzzy-Trace Theory & Stronger source cues + coherent representation reduces gist-based false recognition \\
+\textbf{Timing $\rightarrow$ Summary Engagement} & Advance Organizer Exposure & Cognitive Load Theory; Preview/headings & Increased organizer exposure + attention redistribution without more time-on-task \\
+\bottomrule
+\end{tabular}
+\caption{Summary of Theoretical Integration}
+\end{table}
+
+\subsection{Comprehensive Reference List}
+
+\textbf{Timing and Advance Organizers:}
+\begin{itemize}[noitemsep]
+    \item Ausubel, D. P. (1960, 1968)
+    \item Mayer \& Bromage (1980)
+    \item Hartley \& Davies (1976)
+    \item Lorch \& Lorch (1996)
+    \item Craik \& Lockhart (1972)
+\end{itemize}
+
+\textbf{Load, Integration, and Attention Allocation:}
+\begin{itemize}[noitemsep]
+    \item Sweller, J. (1988)
+    \item Chandler \& Sweller (1992)
+    \item Pociask \& Morrison (2008)
+\end{itemize}
+
+\textbf{Source Monitoring, False Memory, and Misinformation:}
+\begin{itemize}[noitemsep]
+    \item Roediger \& McDermott (1995)
+    \item Brainerd \& Reyna (2005)
+    \item Loftus \& Palmer (1974); Loftus (2005)
+    \item Johnson, Hashtroudi, \& Lindsay (1993)
+    \item Lindsay \& Johnson (1989)
+    \item Frenda, Nichols, \& Loftus (2011)
+    \item Chan et al. (2024)
+\end{itemize}
+
+\textbf{AI Over-Reliance and Cognitive Offloading (Context):}
+\begin{itemize}[noitemsep]
+    \item Zhai et al. (2024)
+    \item Gerlich (2025)
+    \item Risko \& Gilbert (2016)
+    \item Sparrow et al. (2011)
+\end{itemize}
+
+% ============================================
+\section{Prior Experiments with Similar Designs: Empirical Validation}
+% ============================================
+
+This section highlights prior experiments that align with our three primary results: timing/advance organizers improve learning, structure affects misinformation vulnerability, and earlier access changes attention allocation toward the organizer.
+
+\subsection{Pre-Reading/Advance Organizer Studies}
+
+\textbf{Mayer \& Bromage (1980):}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Pre-reading outline vs. post-reading outline for technical passages
+    \item \textbf{Finding:} Pre-reading outline improved conceptual problem-solving by $\sim$25\%
+    \item \textbf{Similarity:} Same timing manipulation (pre vs. post), similar outcome pattern
+    \item \textbf{Our replication:} Pre-reading improved MCQ by +16.7\% vs. synchronous, +13.7\% vs. post-reading
+\end{itemize}
+
+\textbf{Hartley \& Davies (1976):}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Pre-organizer vs. no organizer for educational texts
+    \item \textbf{Finding:} Pre-organizers improved retention of main ideas
+    \item \textbf{Similarity:} Pre-reading scaffold enhances subsequent learning
+    \item \textbf{Our replication:} Pre-reading produced highest summary accuracy and MCQ performance
+\end{itemize}
+
+\textbf{Lorch \& Lorch (1996):}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Topic sentences before vs. after paragraphs
+    \item \textbf{Finding:} Pre-topic sentences improved text memory organization
+    \item \textbf{Similarity:} Analogous ``preview'' manipulation affecting text comprehension
+    \item \textbf{Our replication:} Pre-reading AI summary functions as a comprehensive topic preview
+\end{itemize}
+
+\subsection{Process Evidence: Attention Allocation and Organizer Exposure}
+
+Most classic organizer studies evaluate outcomes (test performance, comprehension) rather than the allocation process itself. Our third main finding extends this literature by directly measuring organizer engagement: pre-reading produces the highest summary viewing time and share, while total time remains constant. This provides a process-level trace consistent with organizer and cognitive-load accounts.
+
+\subsection{False Memory and Misinformation Studies}
+
+\textbf{Roediger \& McDermott (1995) -- DRM Paradigm:}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Word lists with semantically related critical lures
+    \item \textbf{Finding:} $\sim$40--55\% false recognition of critical lures
+    \item \textbf{Similarity:} Our false lures are semantically plausible and produce similar rates (54\% in segmented)
+    \item \textbf{Our contribution:} Extended DRM-like effects to AI-generated educational misinformation
+\end{itemize}
+
+\textbf{Loftus \& Palmer (1974):}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Post-event leading questions (``How fast were the cars going when they \textit{smashed}?'')
+    \item \textbf{Finding:} Wording of post-event information altered memory
+    \item \textbf{Similarity:} Post-reading AI summary can distort memory of article content
+    \item \textbf{Our parallel:} Post-reading + segmented shows highest false lure endorsement
+\end{itemize}
+
+\textbf{Lindsay \& Johnson (1989):}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Source monitoring for misinformation from different sources
+    \item \textbf{Finding:} Poor source monitoring increased misinformation susceptibility
+    \item \textbf{Similarity:} Our structure manipulation affects source monitoring ability
+    \item \textbf{Our contribution:} Demonstrated that UI design (integrated vs. segmented) affects source monitoring
+\end{itemize}
+
+\textbf{Frenda, Nichols, \& Loftus (2011):}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Review of misinformation effect across various conditions
+    \item \textbf{Finding:} OR $\approx$ 3--5 for misinformation effects in various formats
+    \item \textbf{Our replication:} OR = 5.93 for segmented vs. integrated format
+\end{itemize}
+
+\subsection{Split-Attention and Integration Studies}
+
+\textbf{Chandler \& Sweller (1992):}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Integrated vs. split-source instructional materials
+    \item \textbf{Finding:} Integrated instruction improved learning and reduced cognitive load
+    \item \textbf{Similarity:} Same integrated vs. segmented manipulation
+    \item \textbf{Our contribution:} Extended to AI-generated content and false memory outcomes
+\end{itemize}
+
+\textbf{Pociask \& Morrison (2008):}
+\begin{itemize}[noitemsep]
+    \item \textbf{Design:} Split-attention vs. integrated materials for cognitive and psychomotor tasks \citep{pociask2008}
+    \item \textbf{Finding:} Integrated materials produced higher test scores
+    \item \textbf{Similarity:} Same structure manipulation, similar learning benefit
+    \item \textbf{Our parallel:} Integrated format produces both better learning and lower false memory
+\end{itemize}
+
+\subsection{Summary: How Prior Research Validates Our Findings}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{p{3.5cm}p{5cm}p{6cm}}
+\toprule
+\textbf{Our Finding} & \textbf{Prior Validation} & \textbf{Effect Consistency} \\
+\midrule
+\textbf{Pre-reading $\rightarrow$ Better MCQ} & Mayer \& Bromage (1980); Hartley \& Davies (1976); Lorch \& Lorch (1996) & \checkmark~Our $d = 1.35$--$1.62$ exceeds typical advance organizer effects ($d \approx 0.21$--$0.50$), likely due to AI summary comprehensiveness \\
+\textbf{Timing $\rightarrow$ Summary engagement} & Ausubel (1960); Lorch \& Lorch (1996); Chandler \& Sweller (1992) & \checkmark~Pre-reading increases summary exposure (time/share) without increasing total time-on-task \\
+\textbf{Segmented $\rightarrow$ More False Lures} & Chandler \& Sweller (1992); Frenda et al. (2011); Roediger \& McDermott (1995) & \checkmark~Our OR = 5.93 is consistent with misinformation OR $\approx$ 3--5 and DRM false recognition rates ($\sim$40--55\%) \\
+\bottomrule
+\end{tabular}
+\caption{How Prior Research Validates Our Findings}
+\end{table}
+
+\subsection{Novel Contributions Beyond Prior Research}
+
+While our findings are consistent with prior research, we contribute several \textbf{novel extensions}:
+
+\begin{enumerate}
+    \item \textbf{AI-generated content context:} Prior research used human-created organizers; we extend to AI-generated summaries
+    \item \textbf{False lure methodology:} We combine DRM-like false recognition with realistic educational misinformation
+    \item \textbf{Timing $\times$ Structure manipulation:} Most studies manipulate one factor; we examine their independent and joint effects
+    \item \textbf{Process evidence:} We directly measure summary exposure (time and share) to validate the timing mechanism
+    \item \textbf{Practical AI design implications:} We translate theoretical findings into concrete UI/UX recommendations for AI-assisted learning tools
+\end{enumerate}
+
+\vspace{1cm}
+\hrule
+\vspace{0.5cm}
+\noindent\textit{Report generated from synthesis of: EXPANDED\_INTERPRETIVE\_REPORT.md, AI\_memory results.xlsx, Kortic.docx}
+
+% ============================================
+\section{References}
+% ============================================
+
+\noindent\textit{Note: References marked with $\dagger$ are already in your thesis bibliography.}
+
+\begin{thebibliography}{99}
+
+% === ADVANCE ORGANIZERS (Main Finding 1) ===
+\bibitem[Ausubel, 1960]{ausubel1960}
+Ausubel, D. P. (1960). The use of advance organizers in the learning and retention of meaningful verbal material. \textit{Journal of Educational Psychology}, 51(5), 267--272.
+
+\bibitem[Ausubel, 1968]{ausubel1968}
+Ausubel, D. P. (1968). \textit{Educational Psychology: A Cognitive View}. Holt, Rinehart \& Winston.
+
+\bibitem[Mayer \& Bromage, 1980]{mayerbromage1980}
+Mayer, R. E., \& Bromage, B. K. (1980). Different recall protocols for technical texts due to advance organizers. \textit{Journal of Educational Psychology}, 72(2), 209--225.
+
+% === COGNITIVE LOAD THEORY (Structure Effect) ===
+\bibitem[Sweller, 1988]{sweller1988}
+Sweller, J. (1988). Cognitive load during problem solving: Effects on learning. \textit{Cognitive Science}, 12(2), 257--285.
+
+\bibitem[Chandler \& Sweller, 1992]{chandler1992}
+Chandler, P., \& Sweller, J. (1992). The split-attention effect as a factor in the design of instruction. \textit{British Journal of Educational Psychology}, 62(2), 233--246.
+
+% === FALSE MEMORY (Main Finding 2) ===
+\bibitem[Johnson et al., 1993]{johnson1993}
+Johnson, M. K., Hashtroudi, S., \& Lindsay, D. S. (1993). Source monitoring. \textit{Psychological Bulletin}, 114(1), 3--28.
+
+\bibitem[Roediger \& McDermott, 1995]{roediger1995}
+Roediger, H. L., \& McDermott, K. B. (1995). Creating false memories: Remembering words not presented in lists. \textit{Journal of Experimental Psychology: Learning, Memory, and Cognition}, 21(4), 803--814.
+
+\bibitem[Brainerd \& Reyna, 2005$\dagger$]{brainerdreyna2005}
+Brainerd, C. J., \& Reyna, V. F. (2005). \textit{The Science of False Memory}. Oxford University Press.
+
+\bibitem[Loftus \& Palmer, 1974]{loftuspalmer1974}
+Loftus, E. F., \& Palmer, J. C. (1974). Reconstruction of automobile destruction: An example of the interaction between language and memory. \textit{Journal of Verbal Learning and Verbal Behavior}, 13(5), 585--589.
+
+\bibitem[Loftus, 2005]{loftus2005}
+Loftus, E. F. (2005). Planting misinformation in the human mind: A 30-year investigation of the malleability of memory. \textit{Learning \& Memory}, 12(4), 361--366.
+
+% === MEMORY PROCESSES (Other Findings) ===
+\bibitem[Jacoby, 1991]{jacoby1991}
+Jacoby, L. L. (1991). A process dissociation framework: Separating automatic from intentional uses of memory. \textit{Journal of Memory and Language}, 30(5), 513--541.
+
+% === MISINFORMATION VALIDATION ===
+\bibitem[Lindsay \& Johnson, 1989]{lindsayjohnson1989}
+Lindsay, D. S., \& Johnson, M. K. (1989). The eyewitness suggestibility effect and memory for source. \textit{Memory \& Cognition}, 17(3), 349--358.
+
+\bibitem[Frenda et al., 2011]{frenda2011}
+Frenda, S. J., Nichols, R. M., \& Loftus, E. F. (2011). Current issues and advances in misinformation research. \textit{Current Directions in Psychological Science}, 20(1), 20--23.
+
+% === ADDITIONAL VALIDATION STUDIES (Section 9) ===
+\bibitem[Hartley \& Davies, 1976]{hartleydavies1976}
+Hartley, J., \& Davies, I. K. (1976). Preinstructional strategies: The role of pretests, behavioral objectives, overviews and advance organizers. \textit{Review of Educational Research}, 46(2), 239--265.
+
+\bibitem[Lorch \& Lorch, 1996]{lorchlorch1996}
+Lorch, R. F., \& Lorch, E. P. (1996). Effects of headings on text recall and summarization. \textit{Contemporary Educational Psychology}, 21(3), 261--278.
+
+\bibitem[Pociask \& Morrison, 2008]{pociask2008}
+Pociask, F. D., \& Morrison, G. R. (2008). Controlling split attention and redundancy in physical therapy instruction. \textit{Educational Technology Research and Development}, 56(4), 379--399.
+
+% === ALREADY IN YOUR THESIS (marked with $\dagger$) ===
+\bibitem[Atkinson \& Shiffrin, 1968$\dagger$]{atkinson1968}
+Atkinson, R. C., \& Shiffrin, R. M. (1968). Human memory: A proposed system and its control processes. \textit{The Psychology of Learning and Motivation}, 2, 89--195.
+
+\bibitem[Baddeley, 2012$\dagger$]{baddeley2012}
+Baddeley, A. D. (2012). Working memory: Theories, models, and controversies. \textit{Annual Review of Psychology}, 63, 1--29.
+
+\bibitem[Craik \& Lockhart, 1972$\dagger$]{craik1972}
+Craik, F. I. M., \& Lockhart, R. S. (1972). Levels of processing: A framework for memory research. \textit{Journal of Verbal Learning and Verbal Behavior}, 11(6), 671--684.
+
+\bibitem[Tulving \& Thomson, 1973$\dagger$]{tulvingthomson1973}
+Tulving, E., \& Thomson, D. M. (1973). Encoding specificity and retrieval processes in episodic memory. \textit{Psychological Review}, 80(5), 352--373.
+
+\bibitem[Bai et al., 2023$\dagger$]{bai2023}
+Bai, L., Liu, X., \& Su, J. (2023). ChatGPT: The cognitive effects on learning and memory. \textit{Brain-X}, 4(1), 12--25.
+
+\bibitem[Chan et al., 2024$\dagger$]{chan2024}
+Chan, S., Pataranutaporn, P., Suri, A., Zulfikar, W., Maes, P., \& Loftus, E. F. (2024). Conversational AI powered by large language models amplifies false memories in witness interviews. \textit{arXiv preprint arXiv:2408.04681}.
+
+\bibitem[Firth et al., 2019$\dagger$]{firth2019}
+Firth, J., Torous, J., Stubbs, B., et al. (2019). The ``online brain'': How the Internet may be changing our cognition. \textit{World Psychiatry}, 18(2), 119--129.
+
+\bibitem[Gerlich, 2025$\dagger$]{gerlich2025}
+Gerlich, M. (2025). AI tools in society: Impacts on cognitive offloading and the future of critical thinking. \textit{Societies}, 15(1), 6.
+
+\bibitem[Zhai et al., 2024$\dagger$]{zhai2024}
+Zhai, C., Wibowo, S., \& Li, L. D. (2024). The effects of over-reliance on AI dialogue systems on students' cognitive abilities: A systematic review. \textit{Smart Learning Environments}, 11, 28.
+
+\bibitem[Gong \& Yang, 2024$\dagger$]{gong2024}
+Gong, C., \& Yang, Y. (2024). Google effects on memory: A meta-analytical review. \textit{Frontiers in Public Health}, 12, 1332030.
+
+\bibitem[Sparrow et al., 2011$\dagger$]{sparrow2011}
+Sparrow, B., Liu, J., \& Wegner, D. M. (2011). Google effects on memory: Cognitive consequences of having information at our fingertips. \textit{Science}, 333(6043), 776--778.
+
+\bibitem[Risko \& Gilbert, 2016$\dagger$]{risko2016}
+Risko, E. F., \& Gilbert, S. J. (2016). Cognitive offloading. \textit{Trends in Cognitive Sciences}, 20(9), 676--688.
+
+% === METACOGNITION ===
+\bibitem[Koriat, 1997]{koriat1997}
+Koriat, A. (1997). Monitoring one's own knowledge during study: A cue-utilization approach to judgments of learning. \textit{Journal of Experimental Psychology: General}, 126(4), 349--370.
+
+\bibitem[Nelson \& Narens, 1990]{nelson1990}
+Nelson, T. O., \& Narens, L. (1990). Metamemory: A theoretical framework and new findings. \textit{The Psychology of Learning and Motivation}, 26, 125--173.
+
+\end{thebibliography}
+
+\clearpage
+% ============================================
+\section{Other Findings}
 % ============================================
 
 % --------------------------------------------
@@ -280,7 +1063,7 @@ Recall Score & 5.535 & 5.403 & +0.132 & ns ($p > .50$) \\
 \textbf{Interpretation:} AI selectively enhances performance on tasks that align with AI-provided information (MCQs referencing the summary), but does not improve generative recall.
 
 \textbf{Theoretical Connection: Encoding Specificity Principle}\\[0.3cm]
-This pattern aligns with Tulving's \textbf{Encoding Specificity Principle} \citep{tulving1972}:
+This pattern aligns with Tulving's \textbf{Encoding Specificity Principle} \citep{tulvingthomson1973}:
 \begin{quote}
 ``What is stored is determined by what is perceived and how it is encoded, and what is stored determines what retrieval cues are effective.''
 \end{quote}
@@ -288,37 +1071,7 @@ This pattern aligns with Tulving's \textbf{Encoding Specificity Principle} \cite
 AI summaries provide encoding that is \textbf{transfer-appropriate} for MCQ (recognition with cues) but not for free recall (generative retrieval without cues). The AI content becomes part of the encoded memory trace, making AI-related MCQ cues more effective.
 
 \textbf{Related Theory: Cognitive Offloading and External Memory Aids}\\[0.3cm]
-The AI summary functions as an \textbf{external memory aid} \citep{gerlich2025,risko2016}, where learners encode \textit{where} information is stored (the AI) rather than the information itself---a phenomenon increasingly relevant in the digital age \citep{gong2024,firth2019}. Recent research on AI and cognition \citep{bai2023} confirms that generative AI tools alter how users encode and retrieve information, consistent with cognitive offloading accounts.
-
-% --------------------------------------------
-\subsection{Secondary Finding C: Time Allocation Explains Pre-Reading Benefit}
-% --------------------------------------------
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lccc}
-\toprule
-\textbf{Timing} & \textbf{Summary Time (sec)} & \textbf{Reading Time (min)} & \textbf{Total Time (sec)} \\
-\midrule
-Pre-reading & 132.5 & 6.72 & 535.9 \\
-Synchronous & 100.3 & 7.20 & 532.5 \\
-Post-reading & 69.5 & 7.69 & 530.8 \\
-\bottomrule
-\end{tabular}
-\caption{Time Allocation Across Conditions}
-\end{table}
-
-\textbf{Key insight:} Total time is constant ($\sim$531--536 sec). Pre-reading works because participants:
-\begin{enumerate}
-    \item \textbf{Invest more time in the summary upfront} (+63 sec vs post-reading, $p < .001$)
-    \item \textbf{Read the article more efficiently afterward} ($-$0.97 min vs post-reading)
-    \item \textbf{Total time remains constant} (no ``worked longer'' confound)
-\end{enumerate}
-
-\textbf{ANOVA for Summary Time:} $F(1.98, 43.66) = 13.94$, $p = .000022$, $\eta^2_G = .253$
-
-\textbf{Theoretical Connection: Germane Load Optimization}\\[0.3cm]
-This finding challenges simple \textbf{time-on-task} theories (Carroll, 1963) and supports \textbf{encoding quality} accounts. Pre-reading shifts cognitive resources from extraneous processing (figuring out what matters) to germane processing (building schemas). The result is more efficient subsequent reading---doing more learning in less time.
+The AI summary functions as an \textbf{external memory aid} \citep{gerlich2025,risko2016}, where learners encode \textit{where} information is stored (the AI) rather than the information itself---a phenomenon increasingly relevant in the digital age \citep{sparrow2011,gong2024,firth2019}. Recent research on AI and cognition \citep{bai2023} confirms that generative AI tools alter how users encode and retrieve information, consistent with cognitive offloading accounts.
 
 % --------------------------------------------
 \subsection{Secondary Finding D: Mental Effort Is Not a Confound}
@@ -341,79 +1094,16 @@ Segmented & 5.56 \\
 
 \textbf{Mixed ANOVA (Structure $\times$ Timing):}
 \begin{itemize}
-    \item Timing: $F(1.34, 29.37) = 0.81$, $p = .408$ (ns)
+    \item Timing: $F(2, 42.24) = 1.50$, $p = .236$ (ns)
     \item Structure: $F(1, 22) = 2.43$, $p = .133$ (ns)
+    \item Interaction: $F(2, 42.16) = 2.32$, $p = .111$ (ns)
 \end{itemize}
 
 Mental effort does not differ by timing condition, ruling it out as an explanation for the timing effect on MCQ.
 
 \textbf{Implication:} The timing effect on MCQ is not due to participants \textit{working harder} in pre-reading conditions. Instead, it reflects \textbf{qualitative differences in encoding} (schema activation, organization) rather than quantitative differences in effort expenditure.
 
-\textbf{Ruling Out Desirable Difficulties:} The finding also rules out that pre-reading creates ``desirable difficulties'' (Bjork, 1994)---the benefit comes from facilitation, not from increased challenge.
-
-% --------------------------------------------
-\subsection{Secondary Finding E: Trust vs Dependence Patterns}
-% --------------------------------------------
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lccc}
-\toprule
-\textbf{Trait} & \textbf{Integrated} & \textbf{Segmented} & \textbf{Difference} \\
-\midrule
-AI Trust & 5.17 & 4.72 & +0.44 \\
-AI Dependence & 5.00 & 5.31 & $-$0.31 \\
-\bottomrule
-\end{tabular}
-\caption{Trust and Dependence by Structure}
-\end{table}
-
-\textbf{Interpretation:}
-\begin{itemize}
-    \item \textbf{Integrated users:} Higher trust, lower dependence $\rightarrow$ active engagement
-    \item \textbf{Segmented users:} Lower trust, higher dependence $\rightarrow$ passive reliance
-\end{itemize}
-
-This pattern is consistent with:
-\begin{itemize}
-    \item Integrated format encouraging \textbf{verification} (more effort, more trust, less passive dependence)
-    \item Segmented format encouraging \textbf{shortcut-taking} (less effort, more reliance without verification)
-\end{itemize}
-
-\textbf{Theoretical Connections:}\\[0.3cm]
-\textbf{Automation Bias and Cognitive Offloading} \citep{gerlich2025,risko2016}: Users may over-rely on automated systems, accepting their outputs without verification. The segmented format may exacerbate this by making verification more cognitively costly (split-attention effect). Research on AI's impact on cognition \citep{bai2023,firth2019} suggests that external AI systems increasingly function as cognitive prostheses.
-
-\textbf{Paradoxical Trust-Dependence Pattern:} The finding that segmented users show \textit{lower trust but higher dependence} aligns with research on \textbf{algorithm aversion}---users may distrust AI while still relying on it due to cognitive convenience.
-
-\textbf{Interpretation:} Segmented layouts may increase reliance on system output while simultaneously making verification more effortful, producing dependence without commensurate trust. This pattern is consistent with automation-bias and cognitive-offloading accounts \citep{gerlich2025,risko2016}.
-
-% --------------------------------------------
-\subsection{Secondary Finding F: Article Difficulty Doesn't Confound Timing}
-% --------------------------------------------
-
-\textbf{Counterbalancing check (Timing $\times$ Article):}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lccc}
-\toprule
-\textbf{Timing} & \textbf{CRISPR} & \textbf{Semiconductors} & \textbf{UHI} \\
-\midrule
-Pre-reading & 8 & 9 & 7 \\
-Synchronous & 10 & 8 & 6 \\
-Post-reading & 6 & 7 & 11 \\
-\bottomrule
-\end{tabular}
-\caption{Article $\times$ Timing Distribution}
-\end{table}
-
-\textbf{Chi-square test:} $\chi^2(4) = 3.00$, $p = .558$
-
-Article assignment does not systematically confound timing conditions.
-
-\textbf{Aptitude-Treatment Interaction:} The lack of Timing $\times$ Article interaction ($p > .12$ in all analyses) suggests that the pre-reading benefit is \textbf{robust across difficulty levels}---it helps with both easy (CRISPR) and hard (Semiconductors) articles.
-
-\textbf{Practical Implication:} Pre-reading AI summaries are effective regardless of content difficulty, suggesting broad applicability across educational domains.
+\textbf{Ruling Out Desirable Difficulties:} The finding also rules out that pre-reading creates ``desirable difficulties''---the benefit comes from facilitation, not from increased challenge.
 
 % --------------------------------------------
 \subsection{Secondary Finding G: Calibration Is Poor But AI Doesn't Worsen It}
@@ -443,604 +1133,171 @@ No AI & 4.08 \\
 
 \textbf{Fluency-Based Metacognition:} If AI summaries made content feel ``too easy,'' we would expect inflated confidence. The null effect suggests participants maintain realistic (if imperfect) calibration despite AI assistance.
 
+\clearpage
 % ============================================
-\section{Integrated Interpretation}
-% ============================================
-
-\subsection{Two Independent Cognitive Pathways: Timing and Structure Effects}
-
-The results support two largely independent pathways consistent with established cognitive theories:
-
-\begin{itemize}
-    \item \textbf{Timing $\rightarrow$ MCQ performance:} Pre-reading summaries function as advance organizers that prime schemas and guide attention during encoding, improving recognition-based performance \citep{ausubel1960,sweller1988,chandler1992}.
-    \item \textbf{Structure $\rightarrow$ false-lure endorsement:} Segmented formats increase split-attention and weaken source-monitoring cues, elevating susceptibility to plausible but incorrect information \citep{johnson1993,chandler1992,loftus2005}.
-\end{itemize}
-
-A broader synthesis using the proposed \textit{AI Buffer} concept is developed in the Discussion chapter, where it is explicitly presented as an interpretive framework rather than as an empirical result.
-
-\subsection{The Optimal Design Configuration}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lll}
-\toprule
-\textbf{Dimension} & \textbf{Optimal Choice} & \textbf{Rationale} \\
-\midrule
-Timing & Pre-reading & Large MCQ benefit ($d > 1.3$), advance organizer effect \\
-Structure & Integrated & Dramatically lower false-lure risk (OR = 6$\times$ safer) \\
-Format & Coherent paragraphs & Supports source monitoring \\
-\bottomrule
-\end{tabular}
-\caption{Optimal AI Summary Design}
-\end{table}
-
-\textbf{Expected outcomes for Pre-reading + Integrated:}
-\begin{itemize}
-    \item MCQ accuracy: $\sim$0.75 (highest)
-    \item False lures: $\sim$0.58/article (acceptable)
-    \item Recall: $\sim$5.4 (unchanged)
-\end{itemize}
-
-% ============================================
-\section{Experimental Design Robustness}
+\section{Supplementary Figures}
 % ============================================
 
-\subsection{Design Integrity and Internal Validity}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lll}
-\toprule
-\textbf{Design Feature} & \textbf{Status} & \textbf{Evidence} \\
-\midrule
-Sample size & N = 36 (24 AI, 12 No-AI) & 108 article-level observations \\
-Within-subjects balance & \checkmark Complete & Each AI participant: 3 trials \\
-Between-subjects balance & \checkmark Complete & 12 integrated, 12 segmented \\
-Article exposure & \checkmark Complete & All participants see all 3 articles \\
-\bottomrule
-\end{tabular}
-\caption{Design Integrity Summary}
-\end{table}
-
-\subsection{Article Difficulty Analysis}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Article} & \textbf{MCQ Accuracy} & \textbf{Recall} & \textbf{Summary Acc.} & \textbf{False Lures} \\
-\midrule
-Semiconductors & 0.480 (hardest) & 5.28 & 0.562 & 0.833 \\
-UHI & 0.601 & 5.85 (best) & 0.760 & 0.958 (most) \\
-CRISPR & 0.625 (easiest) & 5.35 & 0.719 & 0.667 (fewest) \\
-\bottomrule
-\end{tabular}
-\caption{Article-Level Performance (AI Group)}
-\end{table}
-
-\subsection{Design Validity Checks}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{llll}
-\toprule
-\textbf{Check} & \textbf{Question} & \textbf{Result} & \textbf{Evidence} \\
-\midrule
-Counterbalancing & Article independent of timing? & \checkmark Yes & $\chi^2(4) = 3.00$, $p = .558$ \\
-Interaction & Timing depend on article? & \checkmark No & $F < 1.88$, $p > .12$ \\
-LOAO Robustness & Effect survives dropping any article? & \checkmark Yes & All $p < .02$ \\
-\bottomrule
-\end{tabular}
-\caption{Design Validity Summary}
-\end{table}
-
-\subsection{Robustness of Primary Effects}
-
-\paragraph{MCQ Timing Effect:}
-\begin{itemize}
-    \item 83\% of participants show pre-reading advantage
-    \item Effect persists in leave-one-article-out analyses
-    \item Random-slopes models: improved fit, estimates unchanged
-    \item Survives Holm correction ($p < .005$)
-\end{itemize}
-
-\paragraph{False Lure Structure Effect:}
-\begin{itemize}
-    \item Consistent across binomial and Poisson models
-    \item No separation issues detected
-    \item Profile-likelihood CI excludes OR = 1: [1.63, 21.5]
-    \item Overdispersion ratio $\approx$ 0.80 (no concern)
-\end{itemize}
-
-% ============================================
-\section{Theoretical Grounding}
-% ============================================
-
-\subsection{Main Finding 1: Pre-Reading Timing Effect}
-
-\subsubsection{Advance Organizer Theory}
-
-The pre-reading advantage aligns with \textbf{Ausubel's Advance Organizer Theory} \citep{ausubel1960,ausubel1968}:
-
-\begin{quote}
-``The most important single factor influencing learning is what the learner already knows. Ascertain this and teach him accordingly.'' --- David Ausubel
-\end{quote}
-
-\textbf{Core mechanism:} Advance organizers provide a cognitive framework that:
-\begin{enumerate}
-    \item Activates relevant prior knowledge (schema priming)
-    \item Creates ``ideational scaffolding'' for new information
-    \item Guides selective attention during subsequent reading
-    \item Facilitates meaningful learning over rote memorization \citep{craik1972}
-\end{enumerate}
-
-Empirical validation comes from Mayer \& Bromage (1980), who found pre-reading outlines improved problem-solving by $\sim$25\%, and Hartley \& Davies (1976), who demonstrated pre-organizer benefits for recall.
-
-\subsubsection{Cognitive Load Theory}
-
-The pre-reading effect aligns with \textbf{Cognitive Load Theory} \citep{sweller1988}:
-\begin{itemize}
-    \item \textbf{Intrinsic load:} Reduced because summary simplifies article processing
-    \item \textbf{Extraneous load:} Reduced because learners don't need to ``figure out what matters'' \citep{chandler1992}
-    \item \textbf{Germane load:} Increased because resources are freed for schema construction
-\end{itemize}
-
-The working memory model \citep{baddeley2012,atkinson1968} provides the cognitive architecture: the AI summary reduces demands on the central executive by pre-organizing information before it enters the phonological loop and visuospatial sketchpad.
-
-\subsubsection{Quantitative Alignment}
-
-Our observed effect size ($d = 1.35$--$1.62$) is larger than typical advance organizer effects ($d \approx 0.20$--$0.50$), likely because:
-\begin{enumerate}
-    \item AI summaries are more comprehensive than traditional organizers
-    \item The MCQ outcome is particularly sensitive to schema-guided encoding
-    \item The within-subjects design increased statistical power
-\end{enumerate}
-
-\subsection{Main Finding 2: Segmented Structure and False Memory}
-
-\subsubsection{Source Monitoring Framework}
-
-The structure effect aligns with the \textbf{Source Monitoring Framework} \citep{johnson1993,lindsayjohnson1989}:
-
-\begin{quote}
-``Source monitoring refers to the set of processes involved in making attributions about the origins of memories, knowledge, and beliefs.''
-\end{quote}
-
-\textbf{Core mechanism:} Segmented summaries increase source confusion because:
-\begin{enumerate}
-    \item Fragmented presentation disrupts coherent mental model construction
-    \item Spatial separation increases misattribution risk \citep{chandler1992}
-    \item Reduced cross-referencing makes verification harder
-\end{enumerate}
-
-Recent research demonstrates that conversational AI can amplify false memories in witness interviews \citep{chan2024}, extending classical misinformation effects to AI-generated content.
-
-\subsubsection{The DRM Paradigm}
-
-Our false-lure manipulation parallels the \textbf{Deese-Roediger-McDermott Paradigm} \citep{roediger1995}:
-\begin{itemize}
-    \item Critical lures falsely recognized at 40--60\% (similar to our 54\% segmented rate)
-    \item False recognition confidence often as high as for true items
-    \item Effect robust across age groups and cultures
-\end{itemize}
-
-Meta-analytic evidence \citep{frenda2011} suggests misinformation effects typically produce OR $\approx$ 3--5, consistent with our OR = 5.93 for the structure effect.
-
-\subsubsection{Fuzzy-Trace Theory}
-
-\textbf{Fuzzy-Trace Theory} explains the mechanism:
-\begin{itemize}
-    \item \textbf{Integrated format:} Encourages better verbatim encoding, enabling rejection of false claims
-    \item \textbf{Segmented format:} Primarily encodes gist, which supports false recognition
-\end{itemize}
-
-\subsection{The MCQ-Recall Dissociation (Secondary Finding A)}
-
-\subsubsection{Dual-Process Memory Theories}
-
-The dissociation aligns with dual-process theories of recognition memory \citep{jacoby1991}:
-\begin{itemize}
-    \item \textbf{MCQ (recognition):} Solved via familiarity-based processes---the AI Buffer provides retrieval cues that enhance familiarity signals
-    \item \textbf{Recall:} Requires recollection-based retrieval---active reconstruction that the buffer cannot support
-\end{itemize}
-
-This distinction is foundational in memory research, with neuroimaging evidence showing distinct neural substrates for familiarity and recollection.
-
-\subsubsection{Generation Effect and Levels of Processing}
-
-The \textbf{Generation Effect} \citep{slamecka1978} explains why recall doesn't benefit:
-\begin{quote}
-``Information that is self-generated is remembered better than information that is simply read or heard.''
-\end{quote}
-
-Free recall requires \textbf{active generation}, not just recognition. Pre-reading provides passive exposure that helps recognize answers but doesn't create generative retrieval pathways. The \textbf{Levels of Processing} framework \citep{craik1972} further explains this: AI summaries promote semantic (deep) encoding that benefits recognition, but recall additionally requires self-generated elaboration.
-
-The \textbf{Testing Effect} literature \citep{roediger2006} confirms that active retrieval practice---not passive re-exposure---strengthens recall. The AI Buffer provides exposure, not practice.
-
-% ============================================
-\section{Summary Table: All Key Statistics}
-% ============================================
-
-\begin{table}[H]
-\centering
-\small
-\begin{tabular}{lllll}
-\toprule
-\textbf{Finding} & \textbf{Test} & \textbf{Statistic} & \textbf{p-value} & \textbf{Effect Size} \\
-\midrule
-Timing $\rightarrow$ MCQ & Mixed ANOVA & $F(1.77, 38.87) = 11.77$ & .00018 & $\eta^2_G = .254$ \\
-Pre vs Sync (MCQ) & Holm-corrected & $\Delta = 0.167$ & .0019 & $d = 1.62$ \\
-Pre vs Post (MCQ) & Holm-corrected & $\Delta = 0.137$ & .0025 & $d = 1.35$ \\
-Structure $\rightarrow$ Lures & Binomial GLMM & OR = 5.93 & .007 & CI [1.63, 21.5] \\
-Timing $\rightarrow$ Recall & Mixed ANOVA & $F(1.86, 40.88) = 0.03$ & .969 & $\eta^2_G < .001$ \\
-Timing $\rightarrow$ Summary Time & Mixed ANOVA & $F(1.98, 43.66) = 13.94$ & .000022 & $\eta^2_G = .253$ \\
-AI vs No-AI (MCQ) & Independent t & --- & .008 & $d = 0.57$ \\
-Counterbalancing & Chi-square & $\chi^2(4) = 3.00$ & .558 & (ns) \\
-\bottomrule
-\end{tabular}
-\caption{Summary of All Key Statistical Results}
-\end{table}
-
-% ============================================
-\section{Conclusions and Design Implications}
-% ============================================
-
-\subsection{For Educational Technology Design}
-
-\begin{enumerate}
-    \item \textbf{Default to pre-reading summaries} when the goal is comprehension/MCQ performance
-    \item \textbf{Use integrated (not segmented) format} to minimize false memory risk
-    \item \textbf{Treat false lures as a structural UI risk}, not a user trait problem
-    \item \textbf{Evaluate learning with multiple outcome types} (MCQ $\neq$ recall)
-\end{enumerate}
-
-\subsection{For Future Research}
-
-\begin{enumerate}
-    \item Test \textbf{delayed retention} (24h, 1 week) to assess consolidation
-    \item Manipulate \textbf{summary factuality} directly to test safety/performance trade-offs
-    \item Use \textbf{process tracing} (eye-tracking, think-aloud) to isolate source-monitoring mechanisms
-    \item Explore \textbf{verification affordances} (citations, uncertainty markers) as misinformation countermeasures
-\end{enumerate}
-
-\subsection{Final Takeaway}
-
-\begin{tcolorbox}[colback=blue!5!white,colframe=mainblue,title=Core Message]
-\textbf{AI can meaningfully improve learning outcomes when aligned with cognitive principles of timing, structure, and task demands.}
-
-\begin{itemize}
-    \item \textbf{Pre-reading timing} enhances comprehension quality through schema activation
-    \item \textbf{Integrated structure} protects against false memory through coherent representation
-    \item The optimal design is \textbf{pre-reading + integrated}: maximum learning benefit with manageable misinformation risk
-\end{itemize}
-
-\textbf{Importantly, this study demonstrates that AI-generated summaries can produce large and reliable learning benefits, comparable to or exceeding classic instructional interventions, when embedded within cognitively informed designs.}
-\end{tcolorbox}
-
-% ============================================
-\section{Summary: Theoretical Integration}
-% ============================================
-
-\begin{table}[H]
-\centering
-\small
-\begin{tabular}{p{2.5cm}p{3.5cm}p{5cm}p{4cm}}
-\toprule
-\textbf{Finding} & \textbf{Primary Theory} & \textbf{Supporting Theories} & \textbf{Key Mechanism} \\
-\midrule
-\textbf{Pre-reading $\rightarrow$ MCQ} & Advance Organizer Theory (Ausubel) & Cognitive Load Theory, Schema Theory, Mayer's Multimedia Learning, Levels of Processing, Forward Testing Effect & Schema activation + reduced extraneous load + deeper semantic processing \\
-\textbf{Segmented $\rightarrow$ False Lures} & Source Monitoring Framework (Johnson et al.) & Split-Attention Effect, Misinformation Effect, DRM Paradigm, Fuzzy-Trace Theory, Seductive Details & Source confusion + fragmented representation + gist-based false recognition \\
-\textbf{Timing $\neq$ Recall} & Dual-Process Memory (Jacoby) & Transfer-Appropriate Processing, Generation Effect, Spacing Effect, Levels of Processing & Familiarity $\neq$ recollection; recognition $\neq$ generative retrieval \\
-\bottomrule
-\end{tabular}
-\caption{Summary of Theoretical Integration}
-\end{table}
-
-\subsection{Comprehensive Reference List}
-
-\textbf{Advance Organizers and Pre-reading:}
-\begin{itemize}[noitemsep]
-    \item Ausubel, D. P. (1960, 1968)
-    \item Mayer, R. E. (1979, 2014)
-    \item Luiten, Ames, \& Ackerson (1980)
-    \item Hartley \& Davies (1976)
-\end{itemize}
-
-\textbf{Cognitive Load Theory:}
-\begin{itemize}[noitemsep]
-    \item Sweller, J. (1988, 1998)
-    \item Miller, G. A. (1956)
-    \item Chandler \& Sweller (1991, 1992)
-\end{itemize}
-
-\textbf{Testing and Retrieval:}
-\begin{itemize}[noitemsep]
-    \item Roediger \& Karpicke (2006)
-    \item Roediger \& Butler (2011)
-    \item Chan et al. (2018)
-    \item Szpunar, McDermott, \& Roediger (2008)
-\end{itemize}
-
-\textbf{False Memory:}
-\begin{itemize}[noitemsep]
-    \item Roediger \& McDermott (1995)
-    \item Loftus et al. (1978); Loftus (2005)
-    \item Johnson, Hashtroudi, \& Lindsay (1993)
-\end{itemize}
-
-\textbf{Memory Processes:}
-\begin{itemize}[noitemsep]
-    \item Craik \& Lockhart (1972)
-    \item Jacoby (1991)
-    \item Slamecka \& Graf (1978)
-\end{itemize}
-
-% ============================================
-\section{Prior Experiments with Similar Designs: Empirical Validation}
-% ============================================
-
-This section reviews prior experiments with designs similar to ours that provide independent validation of our findings.
-
-\subsection{Pre-Reading/Advance Organizer Studies}
-
-\textbf{Mayer \& Bromage (1980):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Pre-reading outline vs. post-reading outline for technical passages
-    \item \textbf{Finding:} Pre-reading outline improved conceptual problem-solving by $\sim$25\%
-    \item \textbf{Similarity:} Same timing manipulation (pre vs. post), similar outcome pattern
-    \item \textbf{Our replication:} Pre-reading improved MCQ by +16.7\% vs. synchronous, +13.7\% vs. post-reading
-\end{itemize}
-
-\textbf{Hartley \& Davies (1976):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Pre-organizer vs. no organizer for educational texts
-    \item \textbf{Finding:} Pre-organizers improved recall of main ideas
-    \item \textbf{Similarity:} Pre-reading scaffold enhances subsequent learning
-    \item \textbf{Our replication:} Pre-reading produced highest summary accuracy and MCQ performance
-\end{itemize}
-
-\textbf{Lorch \& Lorch (1996):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Topic sentences before vs. after paragraphs
-    \item \textbf{Finding:} Pre-topic sentences improved text memory organization
-    \item \textbf{Similarity:} Analogous ``preview'' manipulation affecting text comprehension
-    \item \textbf{Our replication:} Pre-reading AI summary functions as a comprehensive topic preview
-\end{itemize}
-
-\subsection{Video Lecture and Multimedia Studies}
-
-\textbf{Szpunar, Khan, \& Schacter (2013):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Interpolated testing during video lectures vs. continuous viewing
-    \item \textbf{Finding:} Testing reduced mind-wandering and improved final quiz performance
-    \item \textbf{Similarity:} Pre-engagement with content improves subsequent learning
-    \item \textbf{Our parallel:} Pre-reading engagement with summary improves article comprehension
-\end{itemize}
-
-\textbf{Jing, Szpunar, \& Schacter (2016):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Tested vs. non-tested video lecture segments
-    \item \textbf{Finding:} Testing improved focused attention and information integration
-    \item \textbf{Similarity:} Active engagement before/during learning enhances outcomes
-    \item \textbf{Our parallel:} Pre-reading creates active engagement that persists through reading
-\end{itemize}
-
-\subsection{False Memory and Misinformation Studies}
-
-\textbf{Roediger \& McDermott (1995) -- DRM Paradigm:}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Word lists with semantically related critical lures
-    \item \textbf{Finding:} $\sim$40--55\% false recognition of critical lures
-    \item \textbf{Similarity:} Our false lures are semantically plausible and produce similar rates (54\% in segmented)
-    \item \textbf{Our contribution:} Extended DRM-like effects to AI-generated educational misinformation
-\end{itemize}
-
-\textbf{Loftus \& Palmer (1974):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Post-event leading questions (``How fast were the cars going when they \textit{smashed}?'')
-    \item \textbf{Finding:} Wording of post-event information altered memory
-    \item \textbf{Similarity:} Post-reading AI summary can distort memory of article content
-    \item \textbf{Our parallel:} Post-reading + segmented shows highest false lure endorsement
-\end{itemize}
-
-\textbf{Lindsay \& Johnson (1989):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Source monitoring for misinformation from different sources
-    \item \textbf{Finding:} Poor source monitoring increased misinformation susceptibility
-    \item \textbf{Similarity:} Our structure manipulation affects source monitoring ability
-    \item \textbf{Our contribution:} Demonstrated that UI design (integrated vs. segmented) affects source monitoring
-\end{itemize}
-
-\textbf{Frenda, Nichols, \& Loftus (2011):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Review of misinformation effect across various conditions
-    \item \textbf{Finding:} OR $\approx$ 3--5 for misinformation effects in various formats
-    \item \textbf{Our replication:} OR = 5.93 for segmented vs. integrated format
-\end{itemize}
-
-\subsection{Split-Attention and Integration Studies}
-
-\textbf{Chandler \& Sweller (1992):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Integrated vs. split-source instructional materials
-    \item \textbf{Finding:} Integrated instruction improved learning and reduced cognitive load
-    \item \textbf{Similarity:} Same integrated vs. segmented manipulation
-    \item \textbf{Our contribution:} Extended to AI-generated content and false memory outcomes
-\end{itemize}
-
-\textbf{Pociask \& Morrison (2004):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Split-attention vs. integrated materials for cognitive and psychomotor tasks
-    \item \textbf{Finding:} Integrated materials produced higher test scores
-    \item \textbf{Similarity:} Same structure manipulation, similar learning benefit
-    \item \textbf{Our parallel:} Integrated format produces both better learning and lower false memory
-\end{itemize}
-
-\subsection{Testing Effect and Retrieval Practice Studies}
-
-\textbf{Roediger \& Karpicke (2006):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Study-study-study-test vs. study-test-test-test conditions
-    \item \textbf{Finding:} Testing improved long-term retention more than repeated study
-    \item \textbf{Similarity:} Active engagement (testing/pre-reading) enhances memory
-    \item \textbf{Our contribution:} Pre-reading AI summary may function as a form of pre-testing
-\end{itemize}
-
-\textbf{Chan, Manley, Davis, \& Szpunar (2018):}
-\begin{itemize}[noitemsep]
-    \item \textbf{Design:} Testing old material before learning new material
-    \item \textbf{Finding:} Prior testing potentiated new learning (forward testing effect)
-    \item \textbf{Similarity:} Engaging with summary before reading potentiates article learning
-    \item \textbf{Our parallel:} Pre-reading produces the highest MCQ performance
-\end{itemize}
-
-\subsection{Summary: How Prior Research Validates Our Findings}
-
-\begin{table}[H]
-\centering
-\small
-\begin{tabular}{p{3.5cm}p{5cm}p{6cm}}
-\toprule
-\textbf{Our Finding} & \textbf{Prior Validation} & \textbf{Effect Consistency} \\
-\midrule
-\textbf{Pre-reading $\rightarrow$ Better MCQ} & Mayer \& Bromage (1980); Hartley \& Davies (1976); Szpunar et al. (2013) & \checkmark~Our $d = 1.35$--$1.62$ exceeds typical advance organizer effects ($d \approx 0.21$--$0.50$), likely due to AI summary comprehensiveness \\
-\textbf{Segmented $\rightarrow$ More False Lures} & Chandler \& Sweller (1992); Frenda et al. (2011); Roediger \& McDermott (1995) & \checkmark~Our OR = 5.93 is consistent with misinformation OR $\approx$ 3--5 and DRM false recognition rates ($\sim$40--55\%) \\
-\textbf{Timing $\neq$ Recall} & Roediger \& Karpicke (2006); Jacoby (1991) & \checkmark~MCQ-recall dissociation is well-documented in dual-process and transfer-appropriate processing literature \\
-\textbf{Total time constant} & Cepeda et al. (2006); Bahrick et al. (1993) & \checkmark~Time-on-task doesn't explain our effects; spacing/organization matters more \\
-\bottomrule
-\end{tabular}
-\caption{How Prior Research Validates Our Findings}
-\end{table}
-
-\subsection{Novel Contributions Beyond Prior Research}
-
-While our findings are consistent with prior research, we contribute several \textbf{novel extensions}:
-
-\begin{enumerate}
-    \item \textbf{AI-generated content context:} Prior research used human-created organizers; we extend to AI-generated summaries
-    \item \textbf{False lure methodology:} We combine DRM-like false recognition with realistic educational misinformation
-    \item \textbf{Timing $\times$ Structure manipulation:} Most studies manipulate one factor; we examine their independent and joint effects
-    \item \textbf{Practical AI design implications:} We translate theoretical findings into concrete UI/UX recommendations for AI-assisted learning tools
-\end{enumerate}
-
-\vspace{1cm}
-\hrule
-\vspace{0.5cm}
-\noindent\textit{Report generated from synthesis of: EXPANDED\_INTERPRETIVE\_REPORT.md, AI\_memory results.xlsx, Kortic.docx}
-
-% ============================================
-\section{References}
-% ============================================
-
-\noindent\textit{Note: References marked with $\dagger$ are already in your thesis bibliography.}
-
-\begin{thebibliography}{99}
-
-% === ADVANCE ORGANIZERS (Main Finding 1) ===
-\bibitem[Ausubel, 1960]{ausubel1960}
-Ausubel, D. P. (1960). The use of advance organizers in the learning and retention of meaningful verbal material. \textit{Journal of Educational Psychology}, 51(5), 267--272.
-
-\bibitem[Ausubel, 1968]{ausubel1968}
-Ausubel, D. P. (1968). \textit{Educational Psychology: A Cognitive View}. Holt, Rinehart \& Winston.
-
-\bibitem[Mayer \& Bromage, 1980]{mayerbromage1980}
-Mayer, R. E., \& Bromage, B. K. (1980). Different recall protocols for technical texts due to advance organizers. \textit{Journal of Educational Psychology}, 72(2), 209--225.
-
-% === COGNITIVE LOAD THEORY (Structure Effect) ===
-\bibitem[Sweller, 1988]{sweller1988}
-Sweller, J. (1988). Cognitive load during problem solving: Effects on learning. \textit{Cognitive Science}, 12(2), 257--285.
-
-\bibitem[Chandler \& Sweller, 1992]{chandler1992}
-Chandler, P., \& Sweller, J. (1992). The split-attention effect as a factor in the design of instruction. \textit{British Journal of Educational Psychology}, 62(2), 233--246.
-
-% === FALSE MEMORY (Main Finding 2) ===
-\bibitem[Johnson et al., 1993]{johnson1993}
-Johnson, M. K., Hashtroudi, S., \& Lindsay, D. S. (1993). Source monitoring. \textit{Psychological Bulletin}, 114(1), 3--28.
-
-\bibitem[Roediger \& McDermott, 1995]{roediger1995}
-Roediger, H. L., \& McDermott, K. B. (1995). Creating false memories: Remembering words not presented in lists. \textit{Journal of Experimental Psychology: Learning, Memory, and Cognition}, 21(4), 803--814.
-
-\bibitem[Loftus \& Palmer, 1974]{loftuspalmer1974}
-Loftus, E. F., \& Palmer, J. C. (1974). Reconstruction of automobile destruction: An example of the interaction between language and memory. \textit{Journal of Verbal Learning and Verbal Behavior}, 13(5), 585--589.
-
-\bibitem[Loftus, 2005]{loftus2005}
-Loftus, E. F. (2005). Planting misinformation in the human mind: A 30-year investigation of the malleability of memory. \textit{Learning \& Memory}, 12(4), 361--366.
-
-% === DUAL-PROCESS MEMORY (MCQ-Recall Dissociation) ===
-\bibitem[Jacoby, 1991]{jacoby1991}
-Jacoby, L. L. (1991). A process dissociation framework: Separating automatic from intentional uses of memory. \textit{Journal of Memory and Language}, 30(5), 513--541.
-
-\bibitem[Slamecka \& Graf, 1978]{slamecka1978}
-Slamecka, N. J., \& Graf, P. (1978). The generation effect: Delineation of a phenomenon. \textit{Journal of Experimental Psychology: Human Learning and Memory}, 4(6), 592--604.
-
-% === TESTING EFFECT / VALIDATION STUDIES ===
-\bibitem[Roediger \& Karpicke, 2006]{roediger2006}
-Roediger, H. L., \& Karpicke, J. D. (2006). Test-enhanced learning: Taking memory tests improves long-term retention. \textit{Psychological Science}, 17(3), 249--255.
-
-\bibitem[Szpunar et al., 2013]{szpunar2013}
-Szpunar, K. K., Khan, N. Y., \& Schacter, D. L. (2013). Interpolated memory tests reduce mind wandering and improve learning of online lectures. \textit{Proceedings of the National Academy of Sciences}, 110(16), 6313--6317.
-
-\bibitem[Chan et al., 2018]{chanetal2018}
-Chan, J. C. K., Manley, K. D., Davis, S. D., \& Szpunar, K. K. (2018). Testing potentiates new learning across a retention interval and a lag. \textit{Journal of Memory and Language}, 102, 46--57.
-
-% === MISINFORMATION VALIDATION ===
-\bibitem[Lindsay \& Johnson, 1989]{lindsayjohnson1989}
-Lindsay, D. S., \& Johnson, M. K. (1989). The eyewitness suggestibility effect and memory for source. \textit{Memory \& Cognition}, 17(3), 349--358.
-
-\bibitem[Frenda et al., 2011]{frenda2011}
-Frenda, S. J., Nichols, R. M., \& Loftus, E. F. (2011). Current issues and advances in misinformation research. \textit{Current Directions in Psychological Science}, 20(1), 20--23.
-
-% === ADDITIONAL VALIDATION STUDIES (Section 9) ===
-\bibitem[Hartley \& Davies, 1976]{hartleydavies1976}
-Hartley, J., \& Davies, I. K. (1976). Preinstructional strategies: The role of pretests, behavioral objectives, overviews and advance organizers. \textit{Review of Educational Research}, 46(2), 239--265.
-
-\bibitem[Lorch \& Lorch, 1996]{lorchlorch1996}
-Lorch, R. F., \& Lorch, E. P. (1996). Effects of headings on text recall and summarization. \textit{Contemporary Educational Psychology}, 21(3), 261--278.
-
-\bibitem[Jing et al., 2016]{jing2016}
-Jing, H. G., Szpunar, K. K., \& Schacter, D. L. (2016). Interpolated testing influences focused attention and improves integration of information during a video-recorded lecture. \textit{Journal of Experimental Psychology: Applied}, 22(3), 305--318.
-
-\bibitem[Pociask \& Morrison, 2008]{pociask2008}
-Pociask, F. D., \& Morrison, G. R. (2008). Controlling split attention and redundancy in physical therapy instruction. \textit{Educational Technology Research and Development}, 56(4), 379--399.
-
-% === ALREADY IN YOUR THESIS (marked with $\dagger$) ===
-\bibitem[Atkinson \& Shiffrin, 1968$\dagger$]{atkinson1968}
-Atkinson, R. C., \& Shiffrin, R. M. (1968). Human memory: A proposed system and its control processes. \textit{The Psychology of Learning and Motivation}, 2, 89--195.
-
-\bibitem[Baddeley, 2012$\dagger$]{baddeley2012}
-Baddeley, A. D. (2012). Working memory: Theories, models, and controversies. \textit{Annual Review of Psychology}, 63, 1--29.
-
-\bibitem[Craik \& Lockhart, 1972$\dagger$]{craik1972}
-Craik, F. I. M., \& Lockhart, R. S. (1972). Levels of processing: A framework for memory research. \textit{Journal of Verbal Learning and Verbal Behavior}, 11(6), 671--684.
-
-\bibitem[Tulving, 1972$\dagger$]{tulving1972}
-Tulving, E. (1972). Episodic and semantic memory. In E. Tulving \& W. Donaldson (Eds.), \textit{Organization of Memory}. Academic Press.
-
-\bibitem[Bai et al., 2023$\dagger$]{bai2023}
-Bai, L., Liu, X., \& Su, J. (2023). ChatGPT: The cognitive effects on learning and memory. \textit{Brain-X}, 4(1), 12--25.
-
-\bibitem[Chan et al., 2024$\dagger$]{chan2024}
-Chan, S., Pataranutaporn, P., Suri, A., Zulfikar, W., Maes, P., \& Loftus, E. F. (2024). Conversational AI powered by large language models amplifies false memories in witness interviews. \textit{arXiv preprint arXiv:2408.04681}.
-
-\bibitem[Firth et al., 2019$\dagger$]{firth2019}
-Firth, J., Torous, J., Stubbs, B., et al. (2019). The ``online brain'': How the Internet may be changing our cognition. \textit{World Psychiatry}, 18(2), 119--129.
-
-\bibitem[Gerlich, 2025$\dagger$]{gerlich2025}
-Gerlich, M. (2025). AI tools in society: Impacts on cognitive offloading and the future of critical thinking. \textit{Societies}, 15(1), 6.
-
-\bibitem[Gong \& Yang, 2024$\dagger$]{gong2024}
-Gong, C., \& Yang, Y. (2024). Google effects on memory: A meta-analytical review. \textit{Frontiers in Public Health}, 12, 1332030.
-
-\bibitem[Risko \& Gilbert, 2016$\dagger$]{risko2016}
-Risko, E. F., \& Gilbert, S. J. (2016). Cognitive offloading. \textit{Trends in Cognitive Sciences}, 20(9), 676--688.
-
-% === METACOGNITION ===
-\bibitem[Koriat, 1997]{koriat1997}
-Koriat, A. (1997). Monitoring one's own knowledge during study: A cue-utilization approach to judgments of learning. \textit{Journal of Experimental Psychology: General}, 126(4), 349--370.
-
-\bibitem[Nelson \& Narens, 1990]{nelson1990}
-Nelson, T. O., \& Narens, L. (1990). Metamemory: A theoretical framework and new findings. \textit{The Psychology of Learning and Motivation}, 26, 125--173.
-
-\end{thebibliography}
+\subsection{Main Findings}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/slide1_main_finding_1_ai_summary_accuracy.png}
+        \vspace{2pt}
+        \scriptsize (A) AI-summary-sourced accuracy by timing (AI group).
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_mcq_accuracy.png}
+        \vspace{2pt}
+        \scriptsize (B) Overall MCQ accuracy by structure $\times$ timing.
+    \end{minipage}
+
+    \vspace{8pt}
+    \begin{minipage}{0.78\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_article_accuracy.png}
+        \vspace{2pt}
+        \scriptsize (C) Article-only accuracy by structure $\times$ timing (boundary condition).
+    \end{minipage}
+
+    \caption{Main Finding 1: Timing effects are strongest for AI-summary-sourced learning, mirrored in overall MCQ accuracy, and absent for article-only accuracy.}
+    \label{fig:mf1-plots}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\linewidth]{report_assets/timing_decomposition.png}
+    \caption{Mechanism check: the overall MCQ timing coefficients shrink substantially when summary-related mechanisms are included (decomposition plot).}
+    \label{fig:mf1-decomposition}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_false_lure_accuracy.png}
+        \vspace{2pt}
+        \scriptsize (A) False-lure accuracy by structure $\times$ timing (AI only).
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/ORD_plot2_lure_prob_by_structure.png}
+        \vspace{2pt}
+        \scriptsize (B) Predicted false-lure probability by summary accuracy and structure (model-based).
+    \end{minipage}
+    \caption{Main Finding 2: Integrated presentation reduces misinformation risk; segmented format increases false-lure endorsement.}
+    \label{fig:mf2-plots}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_summary_time_sec.png}
+        \vspace{2pt}
+        \scriptsize (A) Summary viewing time by structure $\times$ timing (AI only).
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_summary_prop.png}
+        \vspace{2pt}
+        \scriptsize (B) Summary share of total time by structure $\times$ timing (AI only).
+    \end{minipage}
+    \caption{Main Finding 3: Pre-reading increases summary exposure (absolute and relative) compared to synchronous and post-reading access.}
+    \label{fig:mf3-summary-exposure}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_reading_time_min.png}
+        \vspace{2pt}
+        \scriptsize (A) Article reading time by structure $\times$ timing (AI only).
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_total_time_sec.png}
+        \vspace{2pt}
+        \scriptsize (B) Total time by structure $\times$ timing (AI only).
+    \end{minipage}
+    \caption{Main Finding 3: Timing redistributes attention toward the summary without increasing overall time-on-task.}
+    \label{fig:mf3-total-time}
+\end{figure}
+
+\subsection{Experimental Design Robustness}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/ORD_plot3_article_difficulty.png}
+        \vspace{2pt}
+        \scriptsize (A) Article difficulty gradient (overall MCQ accuracy).
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/EXP_fig_counterbalancing_timing_by_article.png}
+        \vspace{2pt}
+        \scriptsize (B) Timing $\times$ article counterbalancing distribution.
+    \end{minipage}
+    \caption{Design robustness: materials differ in difficulty, but assignment is counterbalanced and does not confound timing.}
+    \label{fig:robustness-plots}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\linewidth]{report_assets/slide4_robustness_leave_one_article_out.png}
+    \caption{Leave-one-article-out robustness: the pre-reading advantage remains positive and significant when any single article is removed.}
+    \label{fig:robustness-loao}
+\end{figure}
+
+\subsection{Other Findings (Exploratory / Secondary)}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_recall_total_score.png}
+        \vspace{2pt}
+        \scriptsize (A) Recall total score by structure $\times$ timing (AI only).
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/A1_plot_mental_effort.png}
+        \vspace{2pt}
+        \scriptsize (B) Mental effort by structure $\times$ timing (AI only).
+    \end{minipage}
+    \caption{Secondary outcomes: recall is stable across timing, and mental effort does not differ meaningfully by condition.}
+    \label{fig:other-recall-effort}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/F2_plot_overconfidence.png}
+        \vspace{2pt}
+        \scriptsize (A) Overconfidence / calibration by group.
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.49\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{report_assets/H3_plot_recall_calibration_by_group.png}
+        \vspace{2pt}
+        \scriptsize (B) Recall calibration by group (additional view).
+    \end{minipage}
+    \caption{Calibration outcomes: confidence is imperfectly calibrated, and AI does not reliably worsen calibration.}
+    \label{fig:other-calibration}
+\end{figure}
 
 \end{document}

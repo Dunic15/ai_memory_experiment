@@ -152,97 +152,7 @@ Three scientific articles were used, counterbalanced across conditions:
 <a name="3-section-a-timing-effects"></a>
 # 3. SECTION A: TIMING EFFECTS ON LEARNING OUTCOMES (AI Group Only)
 
-This section examines how the **timing** of AI summary presentation affects three primary learning outcomes.
-
-<a name="31-mcq-accuracy-analysis"></a>
-## 3.1 MCQ Accuracy Analysis
-
-### 3.1.1 ANOVA Results
-
-A 2×3 mixed ANOVA was conducted with Structure (between) and Timing (within) as factors.
-
-| Effect | F | df | p-value | η²(ges) | Interpretation |
-|--------|---|----|---------|---------|----|
-| **Structure** | 4.69 | 1, 22 | **.042*** | .072 | Small-medium effect |
-| **Timing** | 11.77 | 1.77, 38.87 | **<.001**** | .254 | Large effect |
-| Interaction | 0.76 | 1.77, 38.87 | .461 | .021 | No interaction |
-
-> **Interpretation**: Both timing and structure significantly affect MCQ accuracy. The timing effect is particularly large (η² = .254), explaining about 25% of the within-person variance. Critically, there is **no interaction**, meaning the timing effect operates similarly across both structure conditions.
-
-### 3.1.2 Descriptive Statistics by Condition
-
-| Structure | Timing | Mean | SD | n |
-|-----------|--------|------|-----|---|
-| Integrated | Pre-reading | **0.750** | 0.124 | 12 |
-| Integrated | Synchronous | 0.542 | 0.124 | 12 |
-| Integrated | Post-reading | 0.607 | 0.094 | 12 |
-| Segmented | Pre-reading | **0.649** | 0.108 | 12 |
-| Segmented | Synchronous | 0.524 | 0.173 | 12 |
-| Segmented | Post-reading | 0.518 | 0.143 | 12 |
-
-### 3.1.3 Post-Hoc Pairwise Comparisons (Holm-Corrected)
-
-| Contrast | Δ (Difference) | SE | p-value | Cohen's d |
-|----------|---------------|-----|---------|-----------|
-| **Pre-reading vs Synchronous** | **+0.167** | — | **.002*** | **1.62** |
-| **Pre-reading vs Post-reading** | **+0.137** | — | **.003*** | **1.35** |
-| Synchronous vs Post-reading | -0.030 | — | .334 | 0.28 |
-
-> **Key Finding**: Pre-reading timing produces significantly higher MCQ accuracy than both synchronous and post-reading conditions. The effect sizes are **very large** (d > 1.0), indicating practically meaningful differences. There is no significant difference between synchronous and post-reading.
-
-### 3.1.4 Visual Interpretation
-
-```
-MCQ Accuracy by Timing Condition
-================================
-
-Pre-reading    ████████████████████████████████████████  0.70 ← OPTIMAL
-Post-reading   ████████████████████████████████          0.56
-Synchronous    ██████████████████████████████            0.53
-
-                0.0   0.2   0.4   0.6   0.8   1.0
-```
-
-### 3.1.5 What This Means
-
-The **"Preview Effect"** is robust and substantial:
-- Reading the AI summary **before** the article creates a cognitive scaffold
-- This scaffold helps learners organize incoming information during reading
-- The result is better encoding and subsequent recognition performance
-- This effect is **not** due to simply spending more time (see Section 10)
-
-<a name="32-recall-total-score-analysis"></a>
-## 3.2 Recall Total Score Analysis
-
-### 3.2.1 ANOVA Results
-
-| Effect | F | df | p-value | η²(ges) | Interpretation |
-|--------|---|----|---------|---------|----|
-| Structure | 0.40 | 1, 22 | .536 | .015 | No effect |
-| Timing | 0.03 | 1.86, 40.88 | .969 | <.001 | **Null effect** |
-| Interaction | 0.62 | 1.86, 40.88 | .533 | .004 | No interaction |
-
-### 3.2.2 Equivalence Test (TOST)
-
-To confirm that the null effect on recall is meaningful (not just underpowered), Two One-Sided Tests (TOST) were conducted.
-
-**SESOI (Smallest Effect Size of Interest):** d = 0.30 (±0.60 raw units)
-
-| Contrast | Estimate | 90% CI | TOST p | Decision |
-|----------|----------|--------|--------|----------|
-| Post - Pre | -0.009 | [-0.48, 0.46] | .020 | ✓ **EQUIVALENT** |
-| Post - Sync | -0.071 | [-0.54, 0.40] | .033 | ✓ **EQUIVALENT** |
-| Pre - Sync | -0.062 | [-0.53, 0.40] | .029 | ✓ **EQUIVALENT** |
-
-> **Interpretation**: The TOST results confirm that timing conditions produce **equivalent** recall performance. This is not a Type II error (failure to detect)—the null effect is **real and interpretable**.
-
-### 3.2.3 What This Means
-
-**Dissociation Between Memory Systems:**
-- **MCQ (Recognition)**: Sensitive to timing — benefits from pre-reading
-- **Recall (Generative Memory)**: Insensitive to timing — equally good/poor in all conditions
-
-This pattern suggests that AI summary timing affects **cue-dependent retrieval** (recognition) but not **self-generated retrieval** (recall). The AI summary provides retrieval cues that help with MCQ but doesn't strengthen the memory trace itself.
+This section examines how the **timing** of AI summary presentation affects learning outcomes. Detailed MCQ and recall analyses (Sections 3.1–3.2) are moved to the end as supplementary results.
 
 <a name="33-article-accuracy-analysis"></a>
 ## 3.3 Article Accuracy Analysis
@@ -676,11 +586,11 @@ Trust and dependence are **participant-level traits** (measured once). They shou
 
 | Model | Pre-Sync Estimate | Pre-Post Estimate |
 |-------|-------------------|-------------------|
-| Base (timing only) | 0.271*** | 0.214*** |
-| + log(summary_time) | 0.258*** | 0.164** |
-| **Reduction** | **5%** | **23%** |
+| Base (timing only) | 0.271*** | 0.212*** |
+| + log(summary_time) | 0.249*** | 0.164** |
+| **Reduction** | **8%** | **23%** |
 
-The summary time effect: β = 0.062, p = .031*
+The summary time effect: β = 0.066, p = .048*
 
 > **Interpretation**: Timing remains highly significant even after controlling for summary time. Pre-reading wins because of **quality of processing**, not just quantity of time.
 
@@ -1004,6 +914,100 @@ Importantly, our null findings are equally informative:
 4. Develop **personalized AI interfaces** that adapt to user trust levels
 
 ---
+
+# OTHER RESULTS (SUPPLEMENTARY)
+
+The following sections are complete analyses but are not central to the thesis narrative, so they are placed here for readability.
+
+<a name="31-mcq-accuracy-analysis"></a>
+## 3.1 MCQ Accuracy Analysis
+
+### 3.1.1 ANOVA Results
+
+A 2×3 mixed ANOVA was conducted with Structure (between) and Timing (within) as factors.
+
+| Effect | F | df | p-value | η²(ges) | Interpretation |
+|--------|---|----|---------|---------|----|
+| **Structure** | 4.69 | 1, 22 | **.042*** | .072 | Small-medium effect |
+| **Timing** | 11.77 | 1.77, 38.87 | **<.001**** | .254 | Large effect |
+| Interaction | 0.76 | 1.77, 38.87 | .461 | .021 | No interaction |
+
+> **Interpretation**: Both timing and structure significantly affect MCQ accuracy. The timing effect is particularly large (η² = .254), explaining about 25% of the within-person variance. Critically, there is **no interaction**, meaning the timing effect operates similarly across both structure conditions.
+
+### 3.1.2 Descriptive Statistics by Condition
+
+| Structure | Timing | Mean | SD | n |
+|-----------|--------|------|-----|---|
+| Integrated | Pre-reading | **0.750** | 0.124 | 12 |
+| Integrated | Synchronous | 0.542 | 0.124 | 12 |
+| Integrated | Post-reading | 0.607 | 0.094 | 12 |
+| Segmented | Pre-reading | **0.649** | 0.108 | 12 |
+| Segmented | Synchronous | 0.524 | 0.173 | 12 |
+| Segmented | Post-reading | 0.518 | 0.143 | 12 |
+
+### 3.1.3 Post-Hoc Pairwise Comparisons (Holm-Corrected)
+
+| Contrast | Δ (Difference) | SE | p-value | Cohen's d |
+|----------|---------------|-----|---------|-----------|
+| **Pre-reading vs Synchronous** | **+0.167** | — | **.002*** | **1.62** |
+| **Pre-reading vs Post-reading** | **+0.137** | — | **.003*** | **1.35** |
+| Synchronous vs Post-reading | -0.030 | — | .334 | 0.28 |
+
+> **Key Finding**: Pre-reading timing produces significantly higher MCQ accuracy than both synchronous and post-reading conditions. The effect sizes are **very large** (d > 1.0), indicating practically meaningful differences. There is no significant difference between synchronous and post-reading.
+
+### 3.1.4 Visual Interpretation
+
+```
+MCQ Accuracy by Timing Condition
+================================
+
+Pre-reading    ████████████████████████████████████████  0.70 ← OPTIMAL
+Post-reading   ████████████████████████████████          0.56
+Synchronous    ██████████████████████████████            0.53
+
+                0.0   0.2   0.4   0.6   0.8   1.0
+```
+
+### 3.1.5 What This Means
+
+The **"Preview Effect"** is robust and substantial:
+- Reading the AI summary **before** the article creates a cognitive scaffold
+- This scaffold helps learners organize incoming information during reading
+- The result is better encoding and subsequent recognition performance
+- This effect is **not** due to simply spending more time (see Section 10)
+
+<a name="32-recall-total-score-analysis"></a>
+## 3.2 Recall Total Score Analysis
+
+### 3.2.1 ANOVA Results
+
+| Effect | F | df | p-value | η²(ges) | Interpretation |
+|--------|---|----|---------|---------|----|
+| Structure | 0.40 | 1, 22 | .536 | .015 | No effect |
+| Timing | 0.03 | 1.86, 40.88 | .969 | <.001 | **Null effect** |
+| Interaction | 0.62 | 1.86, 40.88 | .533 | .004 | No interaction |
+
+### 3.2.2 Equivalence Test (TOST)
+
+To confirm that the null effect on recall is meaningful (not just underpowered), Two One-Sided Tests (TOST) were conducted.
+
+**SESOI (Smallest Effect Size of Interest):** d = 0.30 (±0.60 raw units)
+
+| Contrast | Estimate | 90% CI | TOST p | Decision |
+|----------|----------|--------|--------|----------|
+| Post - Pre | -0.009 | [-0.48, 0.46] | .020 | ✓ **EQUIVALENT** |
+| Post - Sync | -0.071 | [-0.54, 0.40] | .033 | ✓ **EQUIVALENT** |
+| Pre - Sync | -0.062 | [-0.53, 0.40] | .029 | ✓ **EQUIVALENT** |
+
+> **Interpretation**: The TOST results confirm that timing conditions produce **equivalent** recall performance. This is not a Type II error (failure to detect)—the null effect is **real and interpretable**.
+
+### 3.2.3 What This Means
+
+**Dissociation Between Memory Systems:**
+- **MCQ (Recognition)**: Sensitive to timing — benefits from pre-reading
+- **Recall (Generative Memory)**: Insensitive to timing — equally good/poor in all conditions
+
+This pattern suggests that AI summary timing affects **cue-dependent retrieval** (recognition) but not **self-generated retrieval** (recall). The AI summary provides retrieval cues that help with MCQ but doesn't strengthen the memory trace itself.
 
 <a name="14-technical-appendix"></a>
 # 14. TECHNICAL APPENDIX

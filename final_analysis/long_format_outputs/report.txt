@@ -1,6 +1,6 @@
 Long-format analyses (A–G)
 Long source: Analysis long finals-.xlsx
-Generated: 2026-01-02 16:15:07
+Generated: 2026-01-05 14:03:34
 
 A) Timing → learning outcomes (AI only)
 - MCQ accuracy: Timing p < .001; Interaction p = 0.670
@@ -19,8 +19,10 @@ C) Structure → false lures (AI only)
 
 D) Effort/time as process variables (AI only)
 - Mental effort: Timing p = 0.236; Interaction p = 0.111
-- Summary time (sec): Timing p = 0.005; Interaction p = 0.390
-- Reading time (min): Timing p = 0.027; Interaction p = 0.786
+- Summary time (sec): Timing p < .001; Interaction p = 0.717
+- Summary time proportion: Timing p < .001; Interaction p = 0.879
+- Reading time (min): Timing p = 0.324; Interaction p = 0.826
+- Total time (sec): Timing p = 0.992; Interaction p = 0.745
 
 E) AI trust/dependence (AI only)
 - AI summary accuracy moderation by ai_trust: interaction p = 0.090
@@ -32,6 +34,7 @@ E) AI trust/dependence (AI only)
 E3) Group × prior knowledge (participant mean MCQ)
 - Group×prior_knowledge interaction p = 0.858
 E4) Time-on-task models (log-transformed due to skew)
+- AI only: article_accuracy ~ log_reading_time p = 0.518
 
 H) Recall-focused analyses (mixed models)
 H1) MCQ accuracy ~ recall_total_score
@@ -39,8 +42,8 @@ H1) MCQ accuracy ~ recall_total_score
 - AI only (controls timing/structure): recall_total_score beta = 0.003, p = 0.706
 
 H2) Recall total score predictors
-- All participants: reading_time p = 0.631; effort p = 0.209; prior knowledge p = 0.256
-- AI only: ai_summary_accuracy p = 0.875; summary_time p = 0.333; trust p = 0.151; dependence p = 0.163
+- All participants: reading_time p = 0.705; effort p = 0.202; prior knowledge p = 0.257
+- AI only: ai_summary_accuracy p = 0.822; summary_time p = 0.344; trust p = 0.150; dependence p = 0.161
 
 H3) Recall confidence calibration models
 - All participants: confidence p = 0.010; confidence×group p = 0.110
@@ -48,8 +51,10 @@ H3) Recall confidence calibration models
 - AI only: confidence×dependence p = 0.457
 
 I) Buffer / cue interpretation checks (AI only)
-- Summary time -> summary accuracy: p = 0.035
-- MCQ model: summary_time p = 0.419; ai_summary_accuracy p < .001; article_accuracy p < .001
+I0) Timing contrasts on AI summary accuracy (base vs +log(summary_time))
+- log(summary_time) effect: beta = 0.066, p = 0.056
+- Summary time -> summary accuracy: p = 0.068
+- MCQ model: summary_time p = 0.367; ai_summary_accuracy p < .001; article_accuracy p < .001
 
 F) Confidence calibration
 - Correlation (all): r = 0.043, p = 0.660

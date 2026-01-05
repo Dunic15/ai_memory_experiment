@@ -258,6 +258,15 @@ df_ai <- df %>%
     timing = factor(timing, levels = c("pre_reading", "synchronous", "post_reading"))
   )
 
+# Derived time-allocation measures (AI only)
+df_ai <- df_ai %>%
+  mutate(
+    reading_time_sec = reading_time_min * 60,
+    total_time_sec = reading_time_sec + summary_time_sec,
+    summary_prop = summary_time_sec / total_time_sec,
+    reading_prop = reading_time_sec / total_time_sec
+  )
+
 
 # -----------------------------------------------------------------------------
 # A) Timing → learning outcomes (AI only)
@@ -475,7 +484,9 @@ log_line("D) Effort/time as process variables (AI only)")
 
 res_D1_effort <- run_mixed_anova_lmer("mental_effort", "Mental effort", "mental_effort")
 res_D1_summary_time <- run_mixed_anova_lmer("summary_time_sec", "Summary time (sec)", "summary_time_sec")
+res_D1_summary_prop <- run_mixed_anova_lmer("summary_prop", "Summary time proportion", "summary_prop")
 res_D1_reading_time <- run_mixed_anova_lmer("reading_time_min", "Reading time (min)", "reading_time_min")
+res_D1_total_time <- run_mixed_anova_lmer("total_time_sec", "Total time (sec)", "total_time_sec")
 
 log_line("")
 
@@ -739,6 +750,21 @@ plot_mcq_sumtime <- ggplot(df_time_ai_mcq, aes(x = log_summary_time, y = mcq_acc
   theme_minimal(base_size = 12)
 save_plot(plot_mcq_sumtime, "E4B_plot_mcq_accuracy_by_log_summary_time.png")
 
+# E4C) Does reading time predict article-only accuracy? (AI only)
+df_time_ai_article <- df_ai %>%
+  filter(!is.na(reading_time_min), !is.na(article_accuracy)) %>%
+  mutate(
+    log_reading_time = log(reading_time_min + 1),
+    participant_id = factor(participant_id),
+    article = factor(article)
+  )
+m_article_read <- lmer(article_accuracy ~ log_reading_time + timing + structure + (1|participant_id) + (1|article),
+                       data = df_time_ai_article, REML = TRUE)
+write_table(fixed_effects_table(m_article_read), "E4C_article_accuracy_log_reading_time_fixed_effects.csv")
+anova_article_read <- anova_table_lmer(m_article_read)
+write_table(anova_article_read, "E4C_article_accuracy_log_reading_time_anova.csv")
+log_line(paste0("- AI only: article_accuracy ~ log_reading_time p ", format_p(anova_article_read$p[anova_article_read$effect == "log_reading_time"])))
+
 log_line("")
 
 
@@ -961,6 +987,129 @@ log_line("")
 # -----------------------------------------------------------------------------
 
 log_line("I) Buffer / cue interpretation checks (AI only)")
+
+# I0) Does timing remain significant for AI-summary accuracy after controlling summary time?
+log_line("I0) Timing contrasts on AI summary accuracy (base vs +log(summary_time))")
+
+df_i0 <- df_ai %>%
+  filter(!is.na(ai_summary_accuracy), !is.na(summary_time_sec)) %>%
+  mutate(log_summary_time = log(summary_time_sec + 1))
+
+m_i0_base <- lmer(
+  ai_summary_accuracy ~ timing + structure + (1|participant_id) + (1|article),
+  data = df_i0,
+  REML = TRUE
+)
+
+m_i0_full <- lmer(
+  ai_summary_accuracy ~ log_summary_time + timing + structure + (1|participant_id) + (1|article),
+  data = df_i0,
+  REML = TRUE
+)
+
+write_table(fixed_effects_table(m_i0_base), "I0_ai_summary_accuracy_timing_only_fixed_effects.csv")
+write_table(fixed_effects_table(m_i0_full), "I0_ai_summary_accuracy_timing_plus_log_summary_time_fixed_effects.csv")
+
+emm_i0_base <- emmeans(m_i0_base, ~ timing)
+pairs_i0_base <- pairs(emm_i0_base, adjust = "holm") %>% as.data.frame()
+emm_i0_full <- emmeans(m_i0_full, ~ timing)
+pairs_i0_full <- pairs(emm_i0_full, adjust = "holm") %>% as.data.frame()
+
+write_table(pairs_i0_base, "I0_ai_summary_accuracy_timing_only_pairwise_holm.csv")
+write_table(pairs_i0_full, "I0_ai_summary_accuracy_timing_plus_log_summary_time_pairwise_holm.csv")
+
+extract_pre_contrasts <- function(pairs_df) {
+  pairs_df %>%
+    mutate(
+      contrast = gsub("\\s+", " ", contrast),
+      contrast = gsub("pre_reading", "Pre-reading", contrast),
+      contrast = gsub("synchronous", "Synchronous", contrast),
+      contrast = gsub("post_reading", "Post-reading", contrast)
+    ) %>%
+    filter(grepl("^Pre-reading - (Synchronous|Post-reading)$", contrast)) %>%
+    select(contrast, estimate, SE, df, t.ratio, p.value) %>%
+    arrange(contrast)
+}
+
+sig_stars <- function(p) {
+  if (is.na(p)) return("")
+  if (p < 0.001) return("***")
+  if (p < 0.01) return("**")
+  if (p < 0.05) return("*")
+  ""
+}
+
+format_est_sig <- function(est, p) {
+  paste0(sprintf("%.3f", est), sig_stars(p))
+}
+
+pre_base <- extract_pre_contrasts(pairs_i0_base)
+pre_full <- extract_pre_contrasts(pairs_i0_full)
+
+get_est <- function(d, contrast_label) {
+  v <- d$estimate[d$contrast == contrast_label]
+  if (length(v) == 0) return(NA_real_)
+  v[[1]]
+}
+get_p <- function(d, contrast_label) {
+  v <- d$p.value[d$contrast == contrast_label]
+  if (length(v) == 0) return(NA_real_)
+  v[[1]]
+}
+
+pre_sync_label <- "Pre-reading - Synchronous"
+pre_post_label <- "Pre-reading - Post-reading"
+
+base_pre_sync <- get_est(pre_base, pre_sync_label)
+base_pre_post <- get_est(pre_base, pre_post_label)
+full_pre_sync <- get_est(pre_full, pre_sync_label)
+full_pre_post <- get_est(pre_full, pre_post_label)
+
+reduction_pre_sync <- if (!is.na(base_pre_sync) && base_pre_sync != 0) (base_pre_sync - full_pre_sync) / base_pre_sync else NA_real_
+reduction_pre_post <- if (!is.na(base_pre_post) && base_pre_post != 0) (base_pre_post - full_pre_post) / base_pre_post else NA_real_
+
+summary_i0 <- data.frame(
+  model = c("Base (timing only)", "+ log(summary_time)", "Reduction"),
+  pre_sync = c(
+    format_est_sig(base_pre_sync, get_p(pre_base, pre_sync_label)),
+    format_est_sig(full_pre_sync, get_p(pre_full, pre_sync_label)),
+    if (is.na(reduction_pre_sync)) "NA" else paste0(round(100 * reduction_pre_sync), "%")
+  ),
+  pre_post = c(
+    format_est_sig(base_pre_post, get_p(pre_base, pre_post_label)),
+    format_est_sig(full_pre_post, get_p(pre_full, pre_post_label)),
+    if (is.na(reduction_pre_post)) "NA" else paste0(round(100 * reduction_pre_post), "%")
+  )
+)
+write_table(summary_i0, "I0_timing_contrasts_summary_ai_summary_accuracy.csv")
+
+log_summary_row <- fixed_effects_table(m_i0_full) %>% filter(term == "log_summary_time")
+if (nrow(log_summary_row) == 1) {
+  log_line(paste0(
+    "- log(summary_time) effect: beta = ",
+    sprintf("%.3f", log_summary_row$Estimate[[1]]),
+    ", p ",
+    format_p(log_summary_row$p)
+  ))
+}
+
+m_i0_base_ml <- lmer(
+  ai_summary_accuracy ~ timing + structure + (1|participant_id) + (1|article),
+  data = df_i0,
+  REML = FALSE
+)
+m_i0_full_ml <- lmer(
+  ai_summary_accuracy ~ log_summary_time + timing + structure + (1|participant_id) + (1|article),
+  data = df_i0,
+  REML = FALSE
+)
+lrt_i0 <- anova(m_i0_base_ml, m_i0_full_ml)
+lrt_i0_df <- as.data.frame(lrt_i0)
+lrt_i0_df$model <- rownames(lrt_i0_df)
+rownames(lrt_i0_df) <- NULL
+write_table(lrt_i0_df, "I0_model_comparison_base_vs_log_summary_time_ml.csv")
+
+write_table(fixed_effects_table(m_i0_full_ml), "I0_ai_summary_accuracy_timing_plus_log_summary_time_fixed_effects_ml.csv")
 
 # I1) Summary time -> AI summary accuracy controlling for timing/structure/article
 df_i1 <- df_ai %>%
