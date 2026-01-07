@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
+\usepackage{grffile}
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{longtable}
@@ -19,7 +20,9 @@
 \usepackage{float}
 
 % Graphics search paths (support compiling from repo root or report folder)
-\graphicspath{{report_assets/}{Final result/report_assets/}}
+% Note: the project contains a directory with a space in its name ("Final result").
+% Using \detokenize makes the path robust on TeX systems that struggle with spaces.
+\graphicspath{{report_assets/}{\detokenize{Final result/report_assets/}}{Final\ result/report_assets/}}
 
 % Page geometry
 \geometry{margin=2.5cm}
@@ -83,6 +86,9 @@ This experiment investigated how AI-generated summaries affect learning and memo
 \begin{tcolorbox}[colback=blue!5!white,colframe=mainblue,title=Key Takeaway]
 \textbf{AI can meaningfully improve learning outcomes when aligned with cognitive principles of timing, structure, and task demands.}
 \end{tcolorbox}
+
+\paragraph{Baseline (AI vs No-AI).}
+Across all MCQs, the AI group outperformed the No-AI group (AI: $0.598 \pm 0.085$, No-AI: $0.510 \pm 0.098$; $F(1, 34) = 7.86$, $p = .008$, $\eta^2_p = .188$), establishing a general recognition benefit of AI assistance.
 
 % ============================================
 \section{Main Findings}
@@ -257,7 +263,7 @@ Why do segmented summaries increase false memories?
 Overall, these results align with established accounts in which presentation format affects information integration and source attribution. Integrated summaries better support coherent mental model construction---reflected in both \textit{higher false-lure accuracy} and \textit{fewer misguidances}---whereas segmented summaries increase the risk of misattributing plausible but incorrect information \citep{johnson1993,sweller1988,chandler1992,loftus2005}.
 
 % --------------------------------------------
-\subsection{Process Evidence: Pre-reading Increases Summary Engagement Without Increasing Total Time}
+\subsection{Main Finding 3 (Process Evidence): Pre-reading Increases Summary Engagement Without Increasing Total Time}
 % --------------------------------------------
 
 \subsubsection{The Finding}
@@ -336,11 +342,72 @@ The ordering of summary engagement (pre-reading $>$ synchronous $>$ post-reading
 \paragraph{Connection to prior advance-organizer research.}
 Classic work shows that presenting an organizer before a technical text improves downstream comprehension and memory organization \citep{mayerbromage1980,hartleydavies1976}. Preview structures such as headings and topic sentences similarly guide attention and improve organization \citep{lorchlorch1996}. The present time-allocation results provide a direct process trace consistent with these accounts: participants devoted the greatest share of attention to the organizer under pre-reading, despite no increase in total time-on-task.
 
-% --------------------------------------------
-\subsection{Robustness Note (Primary Effects)}
-% --------------------------------------------
+\paragraph{Robustness note (primary effects).}
+Design and modelling sensitivity checks (including counterbalancing, article-interaction tests, leave-one-article-out re-estimation, and alternative model specifications) support the stability of the primary conclusions; see Section~\ref{sec:design-robustness}.
 
-Robustness checks confirm the primary effects across alternative model specifications and sensitivity analyses (see the Experimental Design Robustness section).
+% ============================================
+\section{Secondary Finding: Post-Block Trust/Dependence Support the Timing Mechanism}
+% ============================================
+
+\subsection{How This Supports the Main Findings}
+
+Trust and dependence were assessed \textit{after each reading block} (as post-block states, not pre-task traits). This provides converging subjective evidence about perceived reliance under the six AI assistance conditions.
+
+\begin{itemize}
+    \item \textbf{Supports Main Finding 3 (process evidence):} Pre-reading is the condition with the highest summary engagement (summary share), and it is also the condition with the highest perceived reliance (both trust and dependence). Together, these results support the interpretation that pre-reading summaries function as a stronger scaffold/organizer during encoding.
+    \item \textbf{Complements Main Finding 1 (timing advantage):} The same timing ordering observed in learning outcomes (pre-reading best) is mirrored in subjective reliance, consistent with the idea that earlier access increases reliance on the organizer at the point where it can shape encoding.
+    \item \textbf{Boundary for Main Finding 2 (misinformation):} Although dependence is higher in segmented, trust does not reliably differ by structure, and exploratory models show trust/dependence do not predict false-lure selection. Therefore, the structure-driven misinformation effect should not be framed as a simple ``over-trust'' account with these post-block measures.
+\end{itemize}
+
+\subsection{Statistical Evidence (AI Group; Mixed Design Models)}
+
+\begin{itemize}
+    \item \textbf{Trust:} timing $F(2, 43) = 7.90$, $p = .001$; structure $p = .222$; interaction $p = .194$.
+    \item \textbf{Dependence:} structure $F(1, 22) = 6.21$, $p = .021$; timing $F(2, 43) = 7.74$, $p = .001$; interaction $p = .559$.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llcc}
+\toprule
+\textbf{Structure} & \textbf{Timing} & \textbf{Trust} & \textbf{Dependence} \\
+\midrule
+Integrated & Pre-reading & 4.17 & 4.25 \\
+Integrated & Synchronous & 3.58 & 3.83 \\
+Integrated & Post-reading & 3.92 & 3.67 \\
+Segmented & Pre-reading & 4.83 & 5.33 \\
+Segmented & Synchronous & 4.17 & 4.50 \\
+Segmented & Post-reading & 4.00 & 4.58 \\
+\bottomrule
+\end{tabular}
+\caption{Post-block trust and dependence ratings by AI assistance condition (means)}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{A1_plot_ai_trust.png}
+        \vspace{2pt}
+        \scriptsize (A) Trust by structure $\times$ timing (AI group).
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{A1_plot_ai_dependence.png}
+        \vspace{2pt}
+        \scriptsize (B) Dependence by structure $\times$ timing (AI group).
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.32\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{A1_plot_summary_prop.png}
+        \vspace{2pt}
+        \scriptsize (C) Summary share by structure $\times$ timing (AI group).
+    \end{minipage}
+    \caption{Converging evidence for pre-reading reliance: post-block trust, post-block dependence, and summary share by structure and timing (AI group). Error bars indicate $\pm$SE.}
+    \label{fig:secondary-trust-dep}
+\end{figure}
 
 % ============================================
 \section{Integrated Interpretation}
@@ -383,11 +450,14 @@ Format & Coherent paragraphs & Supports source monitoring \\
 % ============================================
 \section{Experimental Design Robustness}
 % ============================================
-
-\subsection{Design Integrity and Internal Validity}
+\label{sec:design-robustness}
 
 \noindent\textit{See Supplementary Figures \ref{fig:robustness-plots} and \ref{fig:robustness-loao} for the corresponding plots.}
 
+\paragraph{Goal of these checks.}
+Because timing is manipulated \emph{within} participants while articles differ in baseline difficulty, we verify that (i) timing is not confounded with article assignment, (ii) timing effects generalize across articles, and (iii) conclusions are stable under reasonable alternative model choices (e.g., adding time-on-task covariates or using count models where appropriate).
+
+\paragraph{Design integrity (complete cells).}
 \begin{table}[H]
 \centering
 \begin{tabular}{lll}
@@ -405,8 +475,7 @@ Article exposure & \checkmark Complete & All participants see all 3 articles \\
 
 These checks confirm full coverage of articles and balanced assignment across structure and timing, reducing the risk that effects are artifacts of missing cells or uneven exposure.
 
-\subsection{Article Difficulty Analysis (9.1)}
-
+\paragraph{Stimulus variability (article difficulty).}
 \paragraph{Difficulty index (overall MCQ accuracy; all participants, $n = 36$ per article).}
 \begin{table}[H]
 \centering
@@ -443,8 +512,7 @@ The same ordering appears across outcomes in the AI group, suggesting that diffi
 
 \textbf{Observation:} Semiconductors is consistently the most difficult article across outcomes.
 
-\subsection{Design Validity Checks}
-
+\paragraph{Counterbalancing and generalization across articles.}
 \begin{table}[H]
 \centering
 \begin{tabular}{llll}
@@ -461,7 +529,6 @@ LOAO Robustness & Effect survives dropping any article? & \checkmark Yes & All $
 
 Together, these checks show that timing effects are not driven by article assignment, do not vary by article, and persist when any single article is removed.
 
-\subsubsection{9.2 Counterbalancing Check}
 \paragraph{Counterbalancing distribution (Timing $\times$ Article).}
 \begin{table}[H]
 \centering
@@ -483,7 +550,6 @@ The distribution is near-uniform across timing conditions, avoiding systematic a
 
 \textbf{Result:} Counterbalancing is adequate ($p > .05$). Article assignment does not confound timing conditions.
 
-\subsubsection{9.3 Timing $\times$ Article Interaction}
 \begin{table}[H]
 \centering
 \begin{tabular}{lcc}
@@ -501,7 +567,6 @@ Non-significant interactions indicate that the timing effect generalizes across 
 
 \textbf{Result:} Timing effects are consistent across all three articles—no significant interaction.
 
-\subsubsection{9.4 Leave-One-Article-Out Robustness}
 \paragraph{Leave-one-article-out robustness (MCQ timing effect).}
 \begin{table}[H]
 \centering
@@ -521,22 +586,11 @@ Each leave-one-article-out estimate remains positive and significant, indicating
 
 \textbf{Result:} The pre-reading timing effect is robust regardless of which article is excluded.
 
-\subsection{Robustness of Primary Effects}
-
-\paragraph{MCQ Timing Effect:}
+\paragraph{Additional robustness evidence from the broader analysis set.}
 \begin{itemize}
-    \item 83\% of participants show pre-reading advantage
-    \item Effect persists in leave-one-article-out analyses
-    \item Random-slopes models: improved fit, estimates unchanged
-    \item Survives Holm correction ($p < .005$)
-\end{itemize}
-
-\paragraph{False Lure Structure Effect:}
-\begin{itemize}
-    \item Consistent across binomial and Poisson models
-    \item No separation issues detected
-    \item Profile-likelihood CI excludes OR = 1: [1.63, 21.5]
-    \item Overdispersion ratio $\approx$ 0.80 (no concern)
+    \item \textbf{No time-on-task confound for timing:} timing does not affect reading time (\(F(2, 43.25)=1.16\), \(p=.324\)), total time (\(F(2, 43.25)=0.01\), \(p=.992\)), or mental effort (\(F(2, 42.24)=1.50\), \(p=.236\)). Thus, the timing effects on learning are unlikely to be explained by simply spending more time or reporting higher effort.
+    \item \textbf{AI vs No-AI benefit generalizes across articles:} the group effect on MCQ accuracy does not depend on article (\(F(2,68)=0.56\), \(p=.573\)).
+    \item \textbf{Structure effect on misinformation is not explained by engagement:} in a sensitivity model treating \texttt{false\_lures\_selected} as a Poisson count and adding \texttt{mental\_effort}, \texttt{reading\_time\_min}, and \texttt{summary\_time\_sec}, structure remains significant (\(p=.031\)) while the added covariates are not (\(p \ge .139\)).
 \end{itemize}
 
 % ============================================
@@ -623,7 +677,7 @@ Meta-analytic evidence \citep{frenda2011} suggests misinformation effects typica
     \item \textbf{Segmented format:} Primarily encodes gist, which supports false recognition
 \end{itemize}
 
-\subsection{Main Finding 3: Pre-reading Increases Summary Engagement Without Increasing Total Time}
+\subsection{Main Finding 3 (Process Evidence): Pre-reading Increases Summary Engagement Without Increasing Total Time}
 
 \subsubsection{Advance Organizer Exposure}
 
@@ -1144,14 +1198,14 @@ No AI & 4.08 \\
     \centering
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/slide1_main_finding_1_ai_summary_accuracy.png}
+        \includegraphics[width=\linewidth]{slide1_main_finding_1_ai_summary_accuracy.png}
         \vspace{2pt}
         \scriptsize (A) AI-summary-sourced accuracy by timing (AI group).
     \end{minipage}
     \hfill
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_mcq_accuracy.png}
+        \includegraphics[width=\linewidth]{A1_plot_mcq_accuracy.png}
         \vspace{2pt}
         \scriptsize (B) Overall MCQ accuracy by structure $\times$ timing.
     \end{minipage}
@@ -1159,7 +1213,7 @@ No AI & 4.08 \\
     \vspace{8pt}
     \begin{minipage}{0.78\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_article_accuracy.png}
+        \includegraphics[width=\linewidth]{A1_plot_article_accuracy.png}
         \vspace{2pt}
         \scriptsize (C) Article-only accuracy by structure $\times$ timing (boundary condition).
     \end{minipage}
@@ -1170,7 +1224,7 @@ No AI & 4.08 \\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.92\linewidth]{report_assets/timing_decomposition.png}
+    \includegraphics[width=0.92\linewidth]{timing_decomposition.png}
     \caption{Mechanism check: the overall MCQ timing coefficients shrink substantially when summary-related mechanisms are included (decomposition plot).}
     \label{fig:mf1-decomposition}
 \end{figure}
@@ -1179,14 +1233,14 @@ No AI & 4.08 \\
     \centering
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_false_lure_accuracy.png}
+        \includegraphics[width=\linewidth]{A1_plot_false_lure_accuracy.png}
         \vspace{2pt}
         \scriptsize (A) False-lure accuracy by structure $\times$ timing (AI only).
     \end{minipage}
     \hfill
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/ORD_plot2_lure_prob_by_structure.png}
+        \includegraphics[width=\linewidth]{ORD_plot2_lure_prob_by_structure.png}
         \vspace{2pt}
         \scriptsize (B) Predicted false-lure probability by summary accuracy and structure (model-based).
     \end{minipage}
@@ -1198,14 +1252,14 @@ No AI & 4.08 \\
     \centering
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_summary_time_sec.png}
+        \includegraphics[width=\linewidth]{A1_plot_summary_time_sec.png}
         \vspace{2pt}
         \scriptsize (A) Summary viewing time by structure $\times$ timing (AI only).
     \end{minipage}
     \hfill
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_summary_prop.png}
+        \includegraphics[width=\linewidth]{A1_plot_summary_prop.png}
         \vspace{2pt}
         \scriptsize (B) Summary share of total time by structure $\times$ timing (AI only).
     \end{minipage}
@@ -1217,14 +1271,14 @@ No AI & 4.08 \\
     \centering
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_reading_time_min.png}
+        \includegraphics[width=\linewidth]{A1_plot_reading_time_min.png}
         \vspace{2pt}
         \scriptsize (A) Article reading time by structure $\times$ timing (AI only).
     \end{minipage}
     \hfill
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_total_time_sec.png}
+        \includegraphics[width=\linewidth]{A1_plot_total_time_sec.png}
         \vspace{2pt}
         \scriptsize (B) Total time by structure $\times$ timing (AI only).
     \end{minipage}
@@ -1238,14 +1292,14 @@ No AI & 4.08 \\
     \centering
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/ORD_plot3_article_difficulty.png}
+        \includegraphics[width=\linewidth]{ORD_plot3_article_difficulty.png}
         \vspace{2pt}
         \scriptsize (A) Article difficulty gradient (overall MCQ accuracy).
     \end{minipage}
     \hfill
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/EXP_fig_counterbalancing_timing_by_article.png}
+        \includegraphics[width=\linewidth]{EXP_fig_counterbalancing_timing_by_article.png}
         \vspace{2pt}
         \scriptsize (B) Timing $\times$ article counterbalancing distribution.
     \end{minipage}
@@ -1255,7 +1309,7 @@ No AI & 4.08 \\
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.92\linewidth]{report_assets/slide4_robustness_leave_one_article_out.png}
+    \includegraphics[width=0.92\linewidth]{slide4_robustness_leave_one_article_out.png}
     \caption{Leave-one-article-out robustness: the pre-reading advantage remains positive and significant when any single article is removed.}
     \label{fig:robustness-loao}
 \end{figure}
@@ -1266,14 +1320,14 @@ No AI & 4.08 \\
     \centering
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_recall_total_score.png}
+        \includegraphics[width=\linewidth]{A1_plot_recall_total_score.png}
         \vspace{2pt}
         \scriptsize (A) Recall total score by structure $\times$ timing (AI only).
     \end{minipage}
     \hfill
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/A1_plot_mental_effort.png}
+        \includegraphics[width=\linewidth]{A1_plot_mental_effort.png}
         \vspace{2pt}
         \scriptsize (B) Mental effort by structure $\times$ timing (AI only).
     \end{minipage}
@@ -1285,14 +1339,14 @@ No AI & 4.08 \\
     \centering
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/F2_plot_overconfidence.png}
+        \includegraphics[width=\linewidth]{F2_plot_overconfidence.png}
         \vspace{2pt}
         \scriptsize (A) Overconfidence / calibration by group.
     \end{minipage}
     \hfill
     \begin{minipage}{0.49\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{report_assets/H3_plot_recall_calibration_by_group.png}
+        \includegraphics[width=\linewidth]{H3_plot_recall_calibration_by_group.png}
         \vspace{2pt}
         \scriptsize (B) Recall calibration by group (additional view).
     \end{minipage}

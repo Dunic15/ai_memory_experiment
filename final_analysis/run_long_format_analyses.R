@@ -227,6 +227,16 @@ log_line("")
 
 df <- read_sheet_with_embedded_header(long_xlsx)
 
+# Prefer per-reading trust/dependence if present
+if ("trust_new" %in% names(df)) {
+  df$ai_trust <- df$trust_new
+  log_line("Note: Using trust_new as ai_trust (post-reading ratings).")
+}
+if ("dependence_new" %in% names(df)) {
+  df$ai_dependence <- df$dependence_new
+  log_line("Note: Using dependence_new as ai_dependence (post-reading ratings).")
+}
+
 # Cast variables
 df <- df %>%
   mutate(
@@ -490,12 +500,142 @@ res_D1_total_time <- run_mixed_anova_lmer("total_time_sec", "Total time (sec)", 
 
 log_line("")
 
+# -----------------------------------------------------------------------------
+# D2) Post-block trust/dependence (AI only)
+# -----------------------------------------------------------------------------
+
+log_line("D2) Post-block trust/dependence (AI only)")
+
+res_D2_trust <- run_mixed_anova_lmer("ai_trust", "AI trust", "ai_trust")
+res_D2_dependence <- run_mixed_anova_lmer("ai_dependence", "AI dependence", "ai_dependence")
+
+log_line("")
+
 
 # -----------------------------------------------------------------------------
 # E) AI trust/dependence predictors + moderation (AI only)
 # -----------------------------------------------------------------------------
 
 log_line("E) AI trust/dependence (AI only)")
+
+# E0) Exploratory within/between-person associations (AI only)
+log_line("E0) Trust/Dependence within-between associations (AI only; exploratory)")
+
+df_ai_wb <- df_ai %>%
+  group_by(participant_id) %>%
+  mutate(
+    trust_mean = mean(ai_trust, na.rm = TRUE),
+    trust_within = ai_trust - trust_mean,
+    dep_mean = mean(ai_dependence, na.rm = TRUE),
+    dep_within = ai_dependence - dep_mean
+  ) %>%
+  ungroup()
+
+get_p_term <- function(fe, term) {
+  p <- fe$p[fe$term == term]
+  if (length(p) == 0) return(NA_real_)
+  p[[1]]
+}
+
+run_within_between_model <- function(dv, label, prefix) {
+  d <- df_ai_wb %>% filter(!is.na(.data[[dv]]))
+  m <- lmer(
+    as.formula(paste0(
+      dv, " ~ trust_within + trust_mean + dep_within + dep_mean + timing + structure + (1|participant_id) + (1|article)"
+    )),
+    data = d,
+    REML = TRUE
+  )
+  fe <- fixed_effects_table(m)
+  write_table(fe, paste0("E0_", prefix, "_within_between_fixed_effects.csv"))
+
+  log_line(paste0(
+    "- ", label, " (within/between): trust_within p ", format_p(get_p_term(fe, "trust_within")),
+    "; trust_mean p ", format_p(get_p_term(fe, "trust_mean")),
+    "; dep_within p ", format_p(get_p_term(fe, "dep_within")),
+    "; dep_mean p ", format_p(get_p_term(fe, "dep_mean"))
+  ))
+}
+
+run_within_between_model("ai_summary_accuracy", "AI summary accuracy", "ai_summary_accuracy")
+run_within_between_model("mcq_accuracy", "MCQ accuracy", "mcq_accuracy")
+run_within_between_model("reading_time_min", "Reading time (min)", "reading_time_min")
+run_within_between_model("summary_time_sec", "Summary time (sec)", "summary_time_sec")
+run_within_between_model("summary_prop", "Summary time proportion", "summary_prop")
+
+log_line("")
+
+# E0b) Trust <-> dependence coupling (within/between; exploratory)
+log_line("E0b) Trust <-> dependence coupling (within/between; exploratory)")
+
+m_dep_from_trust <- lmer(
+  ai_dependence ~ trust_within + trust_mean + timing + structure + (1|participant_id) + (1|article),
+  data = df_ai_wb,
+  REML = TRUE
+)
+fe_dep_from_trust <- fixed_effects_table(m_dep_from_trust)
+write_table(fe_dep_from_trust, "E0b_ai_dependence_from_trust_fixed_effects.csv")
+log_line(paste0(
+  "- Dependence ~ trust (within/between): trust_within p ", format_p(get_p_term(fe_dep_from_trust, "trust_within")),
+  "; trust_mean p ", format_p(get_p_term(fe_dep_from_trust, "trust_mean"))
+))
+
+m_trust_from_dep <- lmer(
+  ai_trust ~ dep_within + dep_mean + timing + structure + (1|participant_id) + (1|article),
+  data = df_ai_wb,
+  REML = TRUE
+)
+fe_trust_from_dep <- fixed_effects_table(m_trust_from_dep)
+write_table(fe_trust_from_dep, "E0b_ai_trust_from_dependence_fixed_effects.csv")
+log_line(paste0(
+  "- Trust ~ dependence (within/between): dep_within p ", format_p(get_p_term(fe_trust_from_dep, "dep_within")),
+  "; dep_mean p ", format_p(get_p_term(fe_trust_from_dep, "dep_mean"))
+))
+
+log_line("")
+
+# E0c) False-lure outcomes ~ trust/dependence (AI only; exploratory)
+log_line("E0c) False-lure outcomes ~ trust/dependence (AI only; exploratory)")
+
+# Count outcome (Poisson GLMM)
+df_ai_lures <- df_ai %>% filter(!is.na(false_lures_selected), !is.na(ai_trust), !is.na(ai_dependence))
+if (nrow(df_ai_lures) > 0) {
+  m_lures_td <- tryCatch(
+    glmer(
+      false_lures_selected ~ ai_trust + ai_dependence + timing + structure + (1|participant_id) + (1|article),
+      data = df_ai_lures,
+      family = poisson,
+      control = glmerControl(optimizer = "bobyqa")
+    ),
+    error = function(e) NULL
+  )
+  if (!is.null(m_lures_td)) {
+    fe_lures_td <- fixed_effects_table(m_lures_td)
+    write_table(fe_lures_td, "E0c_false_lures_selected_trust_dependence_fixed_effects.csv")
+    log_line(paste0(
+      "- false_lures_selected ~ trust/dependence: trust p ", format_p(get_p_term(fe_lures_td, "ai_trust")),
+      "; dependence p ", format_p(get_p_term(fe_lures_td, "ai_dependence"))
+    ))
+  }
+}
+
+# Accuracy outcome (Gaussian LMM)
+df_ai_lure_acc <- df_ai %>% filter(!is.na(false_lure_accuracy), !is.na(ai_trust), !is.na(ai_dependence))
+if (nrow(df_ai_lure_acc) > 0) {
+  m_lure_acc_td <- lmer(
+    false_lure_accuracy ~ ai_trust + ai_dependence + timing + structure + (1|participant_id) + (1|article),
+    data = df_ai_lure_acc,
+    REML = TRUE
+  )
+  fe_lure_acc_td <- fixed_effects_table(m_lure_acc_td)
+  write_table(fe_lure_acc_td, "E0c_false_lure_accuracy_trust_dependence_fixed_effects.csv")
+  log_line(paste0(
+    "- false_lure_accuracy ~ trust/dependence: trust p ", format_p(get_p_term(fe_lure_acc_td, "ai_trust")),
+    "; dependence p ", format_p(get_p_term(fe_lure_acc_td, "ai_dependence"))
+  ))
+}
+
+log_line("")
 
 # E1) Participant-level aggregation regressions
 ai_participant <- df_ai %>%
@@ -506,8 +646,8 @@ ai_participant <- df_ai %>%
     mean_false_lures_selected = mean(false_lures_selected, na.rm = TRUE),
     mean_mental_effort = mean(mental_effort, na.rm = TRUE),
     mean_summary_time_sec = mean(summary_time_sec, na.rm = TRUE),
-    ai_trust = first(ai_trust),
-    ai_dependence = first(ai_dependence),
+    ai_trust = mean(ai_trust, na.rm = TRUE),
+    ai_dependence = mean(ai_dependence, na.rm = TRUE),
     prior_knowledge_familiarity = first(prior_knowledge_familiarity),
     structure = first(structure),
     .groups = "drop"

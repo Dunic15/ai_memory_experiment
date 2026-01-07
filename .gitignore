@@ -22,6 +22,13 @@ experiment_data/
 translation_cache/
 *.json
 
+# Generated analysis outputs (reproducible)
+final_analysis/long_format_outputs/
+final_analysis/anova_outputs/
+final_analysis/opus/all_plots/
+final_analysis/opus/all_tables/
+report_assets/
+
 # IDE
 .vscode/
 .idea/
@@ -31,6 +38,12 @@ translation_cache/
 # OS
 .DS_Store
 Thumbs.db
+
+# Misc caches
+.matplotlib_cache/
+.mplconfig/
+.Rhistory
+.Rapp.history
 
 # Environment
 .env

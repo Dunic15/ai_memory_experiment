@@ -286,40 +286,43 @@ Mental effort does not differ by timing condition, ruling it out as an explanati
 \textbf{Ruling Out Desirable Difficulties:} The finding also rules out that pre-reading creates ``desirable difficulties'' (Bjork, 1994)---the benefit comes from facilitation, not from increased challenge.
 
 % --------------------------------------------
-\subsection{Secondary Finding E: Trust vs Dependence Patterns}
+\subsection{Secondary Finding E: Post-block Trust and Dependence by Condition}
 % --------------------------------------------
 
 \begin{table}[H]
 \centering
-\begin{tabular}{lccc}
+\begin{tabular}{llcc}
 \toprule
-\textbf{Trait} & \textbf{Integrated} & \textbf{Segmented} & \textbf{Difference} \\
+\textbf{Structure} & \textbf{Timing} & \textbf{Trust} & \textbf{Dependence} \\
 \midrule
-AI Trust & 5.17 & 4.72 & +0.44 \\
-AI Dependence & 5.00 & 5.31 & $-$0.31 \\
+Integrated & Pre-reading & 4.17 & 4.25 \\
+Integrated & Synchronous & 3.58 & 3.83 \\
+Integrated & Post-reading & 3.92 & 3.67 \\
+Segmented & Pre-reading & 4.83 & 5.33 \\
+Segmented & Synchronous & 4.17 & 4.50 \\
+Segmented & Post-reading & 4.00 & 4.58 \\
 \bottomrule
 \end{tabular}
-\caption{Trust and Dependence by Structure}
+\caption{Post-block trust and dependence ratings by AI assistance condition}
 \end{table}
+
+\textbf{Mixed ANOVA (Structure $\times$ Timing):}
+\begin{itemize}
+    \item \textbf{Trust:} Timing $F(2, 44) = 7.96$, $p = .001$; Structure $F(1, 22) = 1.58$, $p = .222$; Interaction $F(2, 44) = 1.72$, $p = .191$.
+    \item \textbf{Dependence:} Structure $F(1, 22) = 6.21$, $p = .021$; Timing $F(2, 44) = 7.84$, $p = .001$; Interaction $F(2, 44) = 0.62$, $p = .543$.
+\end{itemize}
+
+\textbf{Post-hoc timing comparisons (Holm-corrected):}
+\begin{itemize}
+    \item Pre-reading $>$ synchronous and post-reading for both trust and dependence.
+    \item Synchronous vs post-reading is ns for both.
+\end{itemize}
 
 \textbf{Interpretation:}
 \begin{itemize}
-    \item \textbf{Integrated users:} Higher trust, lower dependence $\rightarrow$ active engagement
-    \item \textbf{Segmented users:} Lower trust, higher dependence $\rightarrow$ passive reliance
+    \item There is no reliable structure effect on trust; the "excessive trust in segmented" explanation is not supported.
+    \item Dependence is higher in segmented and in pre-reading. This aligns with the pre-reading advantage in summary accuracy, but structure differences in summary accuracy are not reliable, so treat the dependence pattern as descriptive.
 \end{itemize}
-
-This pattern is consistent with:
-\begin{itemize}
-    \item Integrated format encouraging \textbf{verification} (more effort, more trust, less passive dependence)
-    \item Segmented format encouraging \textbf{shortcut-taking} (less effort, more reliance without verification)
-\end{itemize}
-
-\textbf{Theoretical Connections:}\\[0.3cm]
-\textbf{Automation Bias and Cognitive Offloading} \citep{gerlich2025,risko2016}: Users may over-rely on automated systems, accepting their outputs without verification. The segmented format may exacerbate this by making verification more cognitively costly (split-attention effect). Research on AI's impact on cognition \citep{bai2023,firth2019} suggests that external AI systems increasingly function as cognitive prostheses.
-
-\textbf{Paradoxical Trust-Dependence Pattern:} The finding that segmented users show \textit{lower trust but higher dependence} aligns with research on \textbf{algorithm aversion}---users may distrust AI while still relying on it due to cognitive convenience.
-
-\textbf{Interpretation:} Segmented layouts may increase reliance on system output while simultaneously making verification more effortful, producing dependence without commensurate trust. This pattern is consistent with automation-bias and cognitive-offloading accounts \citep{gerlich2025,risko2016}.
 
 % --------------------------------------------
 \subsection{Secondary Finding F: Article Difficulty Doesn't Confound Timing}

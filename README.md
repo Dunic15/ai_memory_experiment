@@ -14,7 +14,12 @@ This project supports my thesis on how **AI-generated summaries** shape learning
 - **RQ2:** Does summary structure affect susceptibility to misinformation (false lures)?
 - **RQ3:** Do individual differences in AI trust/dependence moderate these effects?
 
-For the full analysis write-up and interpretations, see `final_analysis/opus/COMPREHENSIVE_FINAL_ANALYSIS_REPORT.md`.
+For the final write-up assets, see:
+- `Final result/EXPANDED_INTERPRETIVE_REPORT.md`
+- `Final result/FINAL_INTEGRATED_REPORT.tex`
+- Figures: `Final result/report_assets/`
+
+Older/archival analysis notes live in `final_analysis/opus/`.
 ## Experiment Design (for analysis)
 
 - **Control factor (between-subjects):** `experiment_group`
@@ -63,7 +68,8 @@ For the full web-app flow details, see `ai_experiment/README.md` and `no_ai_expe
 
 - `ai_experiment/` — AI-enabled experiment app (see `ai_experiment/README.md`)
 - `no_ai_experiment/` — control/no-AI experiment app (see `no_ai_experiment/README.md`)
-- `final_analysis/` — analysis-ready spreadsheets + scripts + generated outputs
+- `final_analysis/` — analysis-ready spreadsheets + scripts (outputs are regenerated)
+- `Final result/` — final report assets (figures + report docs)
 
 ## Data Files
 
@@ -91,7 +97,7 @@ If you need a phase-by-phase schema of the raw log CSVs (all logged variables), 
 - `ai_experiment/docs/DATA_GUIDE.md`
 - `ai_experiment/docs/CSV_LOG_ANALYSIS_TUTORIAL.md`
 
-Below is the codebook for the **analysis-ready** datasets used in `final_analysis/run_anovas.py`.
+Below is the codebook for the **analysis-ready** datasets used in `final_analysis/run_mixed_anovas.py` / `final_analysis/run_long_format_analyses.R`.
 
 ### Long dataset: `final_analysis/Analysis long finals*.xlsx` (trial-level; 1 row per participant × timing)
 
@@ -167,3 +173,21 @@ For the exact mapping and computation logic, see:
 - `ai_experiment/docs/CSV_LOG_ANALYSIS_TUTORIAL.md`
 - `ai_experiment/data_analysis/analyze_participant.py`
 - `ai_experiment/false_lure_mapping.json` (and `ai_experiment/data_analysis/false_lure_mapping.json`)
+
+## Reproducing Analyses (after cleanup)
+
+This repo is periodically “deep cleaned” to remove large, reproducible artifacts (e.g., local virtualenvs and generated plots/tables).
+
+**Python env (optional)**
+- Create a venv: `python3 -m venv .venv && source .venv/bin/activate`
+- Install deps (needs network): `pip install -r ai_experiment/requirements.txt` (and/or `no_ai_experiment/requirements.txt`)
+
+**R analyses (regenerates outputs)**
+- Long-format mixed models + descriptives/plots: `Rscript final_analysis/run_long_format_analyses.R` (writes `final_analysis/long_format_outputs/`)
+- Legacy ANOVA outputs: `Rscript final_analysis/run_mixed_anovas.R` (writes `final_analysis/anova_outputs/`)
+
+Generated folders that may be absent (and are ignored by git):
+- `final_analysis/long_format_outputs/`
+- `final_analysis/anova_outputs/`
+- `final_analysis/opus/all_plots/`, `final_analysis/opus/all_tables/`
+- `report_assets/` (duplicate of `Final result/report_assets/`)
