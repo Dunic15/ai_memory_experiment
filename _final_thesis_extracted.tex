@@ -1,0 +1,472 @@
+% A LaTeX template for MSc Thesis submissions to 
+% Politecnico di Milano (PoliMi) - School of Industrial and Information Engineering
+%
+% S. Bonetti, A. Gruttadauria, G. Mescolini, A. Zingaro
+% e-mail: template-tesi-ingind@polimi.it
+%
+% Last Revision: October 2021
+%
+% Copyright 2021 Politecnico di Milano, Italy. NC-BY
+
+\documentclass{Configuration_Files/PoliMi3i_thesis
+
+%------------------------------------------------------------------------------
+%	REQUIRED PACKAGES AND  CONFIGURATIONS
+%------------------------------------------------------------------------------
+
+% CONFIGURATIONS
+\usepackage{parskip % For paragraph layout
+\usepackage{setspace % For using single or double spacing
+\usepackage{emptypage % To insert empty pages
+\usepackage{multicol % To write in multiple columns (executive summary)
+\setlength\columnsep{15pt % Column separation in executive summary
+\setlength\parindent{0pt % Indentation
+
+
+
+% PACKAGES FOR TITLES
+\usepackage{titlesec
+% \titlespacing{\section{left spacing{before spacing{after spacing
+\titlespacing{\section{0pt{3.3ex{2ex
+\titlespacing{\subsection{0pt{3.3ex{1.65ex
+\titlespacing{\subsubsection{0pt{3.3ex{1ex
+\usepackage{color
+
+% PACKAGES FOR LANGUAGE AND FONT
+\usepackage[english]{babel % The document is in English  
+\usepackage[utf8]{inputenc % UTF8 encoding
+\usepackage[T1]{fontenc % Font encoding
+\usepackage[11pt]{moresize % Big fonts
+
+% PACKAGES FOR IMAGES
+\usepackage{graphicx
+\usepackage{transparent % Enables transparent images
+\usepackage{eso-pic % For the background picture on the title page
+\usepackage{subfig % Numbered and caption subfigures using \subfloat.
+\usepackage{tikz % A package for high-quality hand-made figures.
+\usetikzlibrary{
+\graphicspath{{./Images/ % Directory of the images
+\usepackage{caption % Coloured captions
+\usepackage{xcolor % Coloured captions
+\usepackage{amsthm,thmtools,xcolor % Coloured "Theorem"
+\usepackage{float
+
+% STANDARD MATH PACKAGES
+\usepackage{amsmath
+\usepackage{amsthm
+\usepackage{amssymb
+\usepackage{amsfonts
+\usepackage{bm
+\usepackage[overload]{empheq % For braced-style systems of equations.
+\usepackage{fix-cm % To override original LaTeX restrictions on sizes
+
+% PACKAGES FOR TABLES
+\usepackage{tabularx
+\usepackage{longtable % Tables that can span several pages
+\usepackage{colortbl
+
+% PACKAGES FOR ALGORITHMS (PSEUDO-CODE)
+\usepackage{algorithm
+\usepackage{algorithmic
+
+% PACKAGES FOR REFERENCES & BIBLIOGRAPHY
+\usepackage[colorlinks=true,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=black,menucolor=black,runcolor=black,urlcolor=black]{hyperref % Adds clickable links at references
+\usepackage{cleveref
+\usepackage[square, numbers, sort&compress]{natbib % Square brackets, citing references with numbers, citations sorted by appearance in the text and compressed
+\bibliographystyle{abbrvnat % You may use a different style adapted to your field
+
+% OTHER PACKAGES
+\usepackage{pdfpages % To include a pdf file
+\usepackage{afterpage
+\usepackage{lipsum % DUMMY PACKAGE
+\usepackage{fancyhdr % For the headers
+\fancyhf{
+
+% Input of configuration file. Do not change config.tex file unless you really know what you are doing. 
+\input{Configuration_Files/config
+
+%----------------------------------------------------------------------------
+%	NEW COMMANDS DEFINED
+%----------------------------------------------------------------------------
+
+% EXAMPLES OF NEW COMMANDS
+\newcommand{\bea{\begin{eqnarray % Shortcut for equation arrays
+\newcommand{\eea{\end{eqnarray
+\newcommand{\e[1]{\times 10^{#1  % Powers of 10 notation
+
+%----------------------------------------------------------------------------
+%	ADD YOUR PACKAGES (be careful of package interaction)
+%----------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------
+%	ADD YOUR DEFINITIONS AND COMMANDS (be careful of existing commands)
+%----------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------
+%	BEGIN OF YOUR DOCUMENT
+%----------------------------------------------------------------------------
+
+\begin{document
+
+\fancypagestyle{plain{%
+  \fancyhf{% clear all header and footer fields
+  \fancyfoot[C]{\thepage% page number in the centre of the footer
+  \renewcommand{\headrulewidth{0pt% no header line
+  \renewcommand{\footrulewidth{0pt% no footer line
+
+
+%----------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------
+
+\pagestyle{empty % No page numbers
+\frontmatter % Use roman page numbering style (i, ii, iii, iv...) for the preamble pages
+
+\puttitle{
+    title = {Title of the Thesis, % Insert the final thesis title
+    name = {Duccio Profeti \quad\quad Edoardo Pinzauti, % Authors on one line
+    course = {  Management Engineering, % Programme in English
+    ID = {XXXXX \quad\quad YYYYY, % Student IDs on one line
+    advisor = { Prof. Sergio Terzi, % Advisor in English
+    coadvisor = {, % Leave empty if none
+    academicyear = {Academic Year: 2026--27, % Academic year in English
+
+%----------------------------------------------------------------------------
+%	PREAMBLE PAGES: ABSTRACT (inglese e italiano), EXECUTIVE SUMMARY
+%----------------------------------------------------------------------------
+\startpreamble
+\setcounter{page{1 % Set page counter to 1
+
+% ABSTRACT IN ENGLISH
+\chapter*{Abstract 
+Here goes the Abstract in English of your thesis followed by a list of keywords.
+The Abstract is a concise summary of the content of the thesis (single page of text)
+and a guide to the most important contributions included in your thesis.
+The Abstract is the very last thing you write.
+It should be a self-contained text and should be clear to someone who hasn't (yet) read the whole manuscript.
+The Abstract should contain the answers to the main scientific questions that have been addressed in your thesis.
+It needs to summarize the adopted motivations and the adopted methodological approach as well as the findings of your work and their relevance and impact.
+The Abstract is the part appearing in the record of your thesis inside POLITesi,
+the Digital Archive of PhD and Master Theses (Laurea Magistrale) of Politecnico di Milano.
+The Abstract will be followed by a list of four to six keywords.
+Keywords are a tool to help indexers and search engines to find relevant documents.
+To be relevant and effective, keywords must be chosen carefully.
+They should represent the content of your work and be specific to your field or sub-field.
+Keywords may be a single word or two to four words. 
+\\
+\\
+\textbf{Keywords: here, the keywords, of your thesis % Keywords
+
+% ABSTRACT IN ITALIAN
+\chapter*{Abstract in lingua italiana
+Qui va l'Abstract in lingua italiana della tesi seguito dalla lista di parole chiave.
+\\
+\\
+\textbf{Parole chiave: qui, vanno, le parole chiave, della tesi % Keywords (italian)
+
+%----------------------------------------------------------------------------
+%	LIST OF CONTENTS/FIGURES/TABLES/SYMBOLS
+%----------------------------------------------------------------------------
+
+% TABLE OF CONTENTS
+\thispagestyle{empty
+\tableofcontents % Table of contents 
+\thispagestyle{empty
+\cleardoublepage
+
+%-------------------------------------------------------------------------
+%	THESIS MAIN TEXT
+%-------------------------------------------------------------------------
+% In the main text of your thesis you can write the chapters in two different ways:
+%
+%(1) As presented in this template you can write:
+%    \chapter{Title of the chapter
+%    *body of the chapter*
+%
+%(2) You can write your chapter in a separated .tex file and then include it in the main file with the following command:
+%    \chapter{Title of the chapter
+%    \input{chapter_file.tex
+%
+% Especially for long thesis, we recommend you the second option.
+
+\addtocontents{toc{\vspace{2em % Add a gap in the Contents, for aesthetics
+\mainmatter % Begin numeric (1,2,3...) page numbering
+
+% Use only footer page numbers, no header
+\pagestyle{fancy
+\fancyhf{                % clear header & footer
+\fancyfoot[C]{\thepage   % page number centered in footer
+\renewcommand{\headrulewidth{0pt % remove header line
+\renewcommand{\footrulewidth{0pt % optional: no footer line
+
+% --------------------------------------------------------------------------
+% NUMBERED CHAPTERS % Regular chapters following
+% -------------------------------------------------------------------------
+
+% --------------------------------------------------------------------------
+% NUMBERED CHAPTERS % Regular chapters following
+% -------------------------------------------------------------------------
+
+
+\chapter{Introduction
+\chapter{Introduction
+\label{ch:introduction
+
+\section{Context: AI and the Transformation of Knowledge-Intensive Work
+Generative AI systems have rapidly become part of everyday information work. Students and professionals in knowledge-intensive roles increasingly rely on AI tools to summarize long texts, extract key points, and provide explanations on demand:contentReference[oaicite:0]{index=0. This shift represents not only a change in \emph{access to information, but also a fundamental change in the \emph{cognitive environment in which learning, decision-making, and remembering take place. When an AI system produces an external representation of information (for example, a summary or recommendation), it can act as a cue, a scaffold, or even a substitute for an individual\'92s internal processing:contentReference[oaicite:1]{index=1.
+
+From a cognitive perspective, a central question is whether such AI assistance strengthens human memory by reducing extraneous load and guiding attention, or whether it instead weakens memory by encouraging shallow processing and excessive offloading of cognitive effort:contentReference[oaicite:2]{index=2. Prior studies on external memory aids suggest that tools like search engines or note-taking can both support performance and alter how people encode information internally \citep{Risko2016CognitiveOffloading,Sparrow2011GoogleEffect. However, empirical evidence on generative AI specifically is still emerging, and little is known about \emph{which design choices \'97 for instance, when and how AI-generated summaries are presented \'97 will shape memory outcomes for complex tasks:contentReference[oaicite:3]{index=3. At the same time, from an organizational perspective, AI\'92s integration into workplaces is fundamentally reshaping how knowledge-intensive work is carried out. In domains such as product management, AI tools provide capabilities (e.g. predictive analytics, natural language trend analysis) that enable more data-driven and real-time decision-making:contentReference[oaicite:4]{index=4. Product managers are no longer confined to coordinating between teams; they are increasingly acting as AI-informed strategists who leverage AI-generated insights rather than relying solely on intuition or past experience:contentReference[oaicite:5]{index=5. Routine tasks (data gathering, basic analyses, status reporting) can be automated, freeing human experts to focus on higher-level responsibilities like providing vision, context, and ethical judgment:contentReference[oaicite:6]{index=6. As a result, AI is not replacing knowledge workers but \emph{augmenting them: it elevates their roles from process managers to insight-driven decision leaders:contentReference[oaicite:7]{index=7. This transformation, however, brings new challenges in skills and accountability. Professionals must develop new competencies (e.g. data literacy and AI fluency) to work effectively alongside AI:contentReference[oaicite:8]{index=8, and organizations must confront questions about how tasks and responsibilities should be redistributed when an AI agent becomes part of the team.
+
+\section{Motivation and Research Problem
+\label{sec:motivation
+The dual emergence of AI-augmented cognition and AI-driven workplaces creates a compelling need to understand the implications for both individuals and organizations. At the individual level, the ability to learn from text and complex information depends on how people encode information during study and how they later retrieve it. Classic memory research shows that durable learning is supported by deeper semantic processing \citep{Craik1972LevelsOfProcessing, effective management of limited working-memory resources \citep{Baddeley2012WorkingMemory, and the availability of retrieval cues that match the conditions of encoding \citep{Tulving1973EncodingSpecificity. In practice, knowledge workers often use external representations\'97such as notes, outlines, or highlighted passages\'97to support these memory processes. Generative AI introduces a new, highly scalable form of external representation: a system can instantly produce a structured summary or analysis of a document and present it alongside the original material:contentReference[oaicite:9]{index=9. This capability promises to offload some cognitive work by providing an ever-present external memory aid.
+
+This development is attractive from a productivity standpoint because it promises efficiency and improved comprehension. AI-generated summaries, for example, can reduce the need to manually search for key points, clarify complex relationships, and provide an organized \'93map\'94 of the content to the reader:contentReference[oaicite:10]{index=10. At the same time, the availability of an external AI-provided representation may change how users allocate their attention and what they choose to mentally encode. When a detailed summary or recommendation is readily available, individuals may engage in \emph{cognitive offloading\'97relying on the external artifact rather than committing information to internal memory. Such offloading can reduce the formation of detailed, well-integrated memory traces \citep{Risko2016CognitiveOffloading,Sparrow2011GoogleEffect. In addition, because AI outputs are not guaranteed to be complete or perfectly accurate, over-reliance on AI summaries introduces the risk of \emph{source-monitoring errors: people may later misattribute AI-provided information to the original source, accept plausible but incorrect statements as true, or blend AI content with human-generated content during recall \citep{Johnson1993SourceMonitoring,Chan2024ConversationalAIFalseMemories. These potential downsides highlight the need to carefully examine how AI-generated external representations affect core cognitive outcomes like memory accuracy, depth of understanding, and the susceptibility to misinformation.
+
+At the organizational level, the widespread adoption of AI tools in knowledge-intensive work raises questions about how human roles and decision processes are being reconfigured. Companies are embracing AI in roles like product management with the expectation of faster analyses and more objective decision-making:contentReference[oaicite:11]{index=11. Yet it remains unclear how this affects the practice of decision-making itself: for instance, do product managers shift from intuitive judgment to evidence-based choices guided by AI, and what do they lose or gain in the process? Early evidence suggests that AI integration can indeed change day-to-day workflows and even the skill profile of jobs, pushing product managers to become more data-driven and technically adept:contentReference[oaicite:12]{index=12:contentReference[oaicite:13]{index=13. There is also an emerging concern about how accountability is handled when AI is involved in decisions. If an AI system produces a faulty analysis or biased recommendation, who is responsible for catching and correcting it? Many organizations have yet to establish clear norms: a recent industry survey found that in a large share of companies, there is \emph{no clear ownership of responsibility for AI-related decisions and ethics, with product managers, engineers, and executives all having overlapping expectations:contentReference[oaicite:14]{index=14. This ambiguity can lead to gaps in oversight and hesitation in fully trusting AI outputs:contentReference[oaicite:15]{index=15:contentReference[oaicite:16]{index=16. In sum, there is a pressing need to understand not just whether AI tools can improve performance, but how they shape human decision practices and perceptions of responsibility in real-world settings.
+
+Based on these observations, the research problem addressed in this thesis is twofold: it spans both the cognitive and the organizational domains of AI\'92s impact on knowledge-intensive work. Specifically:
+\begin{itemize
+  \item \textbf{Cognitive problem: to determine how AI-generated external representations (such as on-demand summaries) affect human memory for complex information, and whether they change not only the amount of information remembered but also the \emph{quality of what is remembered (e.g. level of detail, depth of understanding, and alignment with source material).
+  \item \textbf{Organizational problem: to examine how the adoption of AI tools reshapes decision-making practices and role responsibilities in product management. This includes understanding whether and how AI assistance changes the way product managers make decisions, how tasks are allocated between human and AI, and how accountability and perceived responsibility are managed when AI is involved in the decision process.
+\end{itemize
+By addressing both of these dimensions, the thesis aims to move beyond broad claims that "AI changes how we work" and provide a more precise account of \emph{when and why AI assistance is beneficial or detrimental. In the cognitive realm, this means isolating the conditions under which AI support helps versus harms learning and memory. In the organizational realm, it means identifying concrete changes in workflows and decision roles. Ultimately, this dual focus seeks to reveal the mechanisms through which AI reshapes knowledge practices at multiple levels, from the way an individual remembers information to the way a team or organization distributes knowledge and makes decisions.
+
+\section{Research Gap and Thesis Positioning
+\label{sec:research_gap
+Although AI tools are proliferating in both personal and professional spheres, current research has notable gaps in understanding their impacts. On the cognitive side, despite intense public and scientific interest, there is still a lack of rigorous, controlled evidence on how generative AI assistance influences memory and learning under realistic task constraints:contentReference[oaicite:17]{index=17. Much of the existing work on AI in education and knowledge work has focused on users\'92 perceptions of usefulness or on immediate task performance improvements, rather than on longer-term memory outcomes. Few studies have examined memory in a nuanced way that separates, for example, recall (free retrieval of information) from recognition, or item-specific learning (facts and details) from relational understanding (connections and meaning):contentReference[oaicite:18]{index=18. Moreover, AI assistance is often treated in a binary manner (either present or absent), without investigating how different designs of assistance might lead to different outcomes. In other words, we know little about whether factors like the timing of AI-provided information or the format of an AI-generated summary could influence a user\'92s cognitive processing and retention of information. This thesis addresses that gap by systematically varying those factors and measuring their effects on memory, thereby contributing new empirical data to this under-explored intersection of AI and cognitive psychology.
+
+On the organizational side, research on AI adoption in management and decision-making is still emerging and similarly siloed. Many publications and industry reports describe the potential of AI to improve efficiency, data analysis, and decision quality in organizations:contentReference[oaicite:19]{index=19:contentReference[oaicite:20]{index=20. However, there is a relative paucity of scholarly studies examining how AI actually alters human roles, collaborative practices, and structures of responsibility within teams. The evolving role of the product manager in the AI era, for instance, has been noted in conceptual terms:contentReference[oaicite:21]{index=21:contentReference[oaicite:22]{index=22, but detailed empirical insights are only beginning to surface (e.g. through surveys or case studies). We still lack an integrated theoretical framework to explain how cognitive changes induced by AI tools at the individual level (such as reliance on external memory aids) might scale up to influence organizational behavior (such as shifts in how decisions are made and who is accountable for them). There is a clear research gap in linking the micro-level effects of AI on human cognition to the macro-level effects on managerial and organizational processes. This thesis positions itself at this intersection. By bringing together perspectives from cognitive science and management science, the work aims to bridge these disciplines and provide a more holistic understanding of AI\'92s impact on knowledge-intensive work. In doing so, the thesis responds to calls for multi-level analysis of AI in organizations, connecting what happens in users\'92 minds with what happens in their workflows and structures when AI becomes part of the picture.
+
+In summary, the thesis is positioned to contribute to two bodies of literature that have remained largely separate: (1) the literature on AI as a cognitive tool (examining how AI as an external \'93memory\'94 or assistant affects human learning and memory), and (2) the literature on AI in management and organizations (examining how AI tools change the nature of work and decision-making). By designing research that spans these levels, the thesis seeks to fill the identified gaps and provide insights that are both theoretically grounded and practically relevant.
+
+\section{Research Questions and Multi-Level Perspective
+\label{sec:research_questions
+Based on the research gaps and dual focus described above, the thesis formulates the following research questions (RQs). These questions are designed to be addressed through a multi-level approach, combining experimental investigation and organizational analysis:
+
+\begin{itemize
+  \item \textbf{RQ1: How do AI-generated external representations influence core human memory processes during knowledge-intensive tasks?
+  \item \textbf{RQ2: How does the adoption of AI tools shape decision-making practices, role configuration, and perceived responsibility in product management?
+  \item \textbf{RQ3: How can changes in organizational decision-making practices enabled by AI be explained through underlying cognitive mechanisms of AI-assisted memory?
+\end{itemize
+
+These questions reflect the two levels of analysis in this thesis. RQ1 is an individual-level question, examining the cognitive effects of AI assistance on memory and learning. RQ2 is an organizational-level question, examining how AI impacts the way a key managerial role is performed and how decisions are made within that context. RQ3 explicitly bridges these levels by asking how the macro-level changes (in decision practices and structures) might be rooted in or illuminated by micro-level cognitive mechanisms (such as memory offloading, cueing, and changes in attention). In combination, the RQs adopt a multi-level perspective: they seek to connect what happens \emph{within the mind of an AI-augmented worker (RQ1) with what happens \emph{around that worker in their organizational role and context (RQ2), and to articulate the linkages between the two (RQ3). Answering these questions will require integrating experimental findings with broader analysis, as detailed in the subsequent chapters.
+
+\section{Contribution of the Thesis
+\label{sec:contribution
+The thesis provides contributions at three levels\'97theoretical, methodological, and managerial\'97reflecting both its scientific and practical orientation as an interdisciplinary study in Management Engineering. 
+
+\textbf{Theoretical contribution. The thesis proposes a conceptual model of human\'96AI memory interaction, termed the \emph{AI Buffer model (presented in Chapter~3). This model offers a compact way to describe how AI-generated external representations can function as persistent external memory buffers that interact with human encoding, retrieval, and metacognitive monitoring processes:contentReference[oaicite:23]{index=23:contentReference[oaicite:24]{index=24. The model is not intended as a universal theory of AI\'92s role in cognition, but rather as a targeted framework for interpreting the effects of AI-generated summaries under controlled conditions (such as those in the experimental study). By formalizing the concept of AI tools as an extension of human memory, the theoretical framework helps explain not only when AI assistance might improve memory (e.g. by providing effective retrieval cues), but also when it might impair memory (e.g. by encouraging surface processing or introducing source confusion). Furthermore, this thesis extends theoretical insight to the organizational level by discussing how the same cognitive principles (like externalization of memory and cognitive offloading) can manifest in team knowledge practices. In this way, the work bridges cognitive theory and management theory, suggesting that frameworks from cognitive science can shed light on how AI influences organizational learning and decision processes.
+
+\textbf{Methodological contribution. The research develops and employs a rigorous multi-method approach, centered on a controlled experiment and complemented by cross-context analysis. A custom browser-based experimental platform was developed to implement precise timing control, content presentation, and logging for the cognitive study. This platform allowed the thesis to enforce fixed reading times, present AI-generated summaries at specified moments, and record fine-grained behavioral data (e.g. when participants consulted the AI summary), all within a realistic reading task. The experimental design includes a No-AI baseline condition and multiple AI-assisted conditions with orthogonal manipulations of summary \emph{structure (integrated paragraph vs. segmented bullet-point format) and \emph{timing of availability (pre-reading, synchronous during reading, or post-reading):contentReference[oaicite:25]{index=25:contentReference[oaicite:26]{index=26. This design enables a direct evaluation of how specific AI assistance configurations affect memory outcomes, rather than treating \'93AI support\'94 as a single monolithic intervention. In addition, the thesis\'92s multi-level perspective is reflected methodologically by how the findings from the experiment are interpreted alongside existing survey results and case evidence from industry. While the thesis does not conduct a new field study on product management, it methodologically integrates quantitative experimental data with qualitative insights from the management domain. This combined approach showcases how experimental cognitive research can be bridged with organizational analysis, setting a precedent for future studies to link laboratory and field evidence in studying AI\'92s impacts.
+
+\textbf{Managerial contribution. On a practical level, the thesis yields insights and guidelines relevant to organizations and professionals adopting AI tools. First, the findings about memory and learning inform the design of AI-assisted knowledge systems: for example, by identifying which types of AI-generated summaries actually improve users\'92 retention versus which might lead to over-reliance, the work provides guidance for developing AI features in educational or knowledge management software (Chapter~7 discusses these implications). Second, the thesis offers specific insights for the field of product management in the AI era. It highlights the evolving skill requirements for product managers (such as the importance of AI literacy and data interpretation skills) and emphasizes the enduring importance of human judgment. The results reinforce that, even as AI handles more analytics, human expertise in providing strategic direction, contextual understanding, and ethical oversight remains indispensable:contentReference[oaicite:27]{index=27:contentReference[oaicite:28]{index=28. Concretely, the thesis suggests that organizations should train product managers to effectively collaborate with AI\'97leveraging AI\'92s strengths in data processing while also knowing its limitations\'97and establish clear guidelines for accountability (so that responsibilities for decisions involving AI are well-defined). These managerial contributions translate the research into value for practitioners: product managers can better understand how to integrate AI tools into their workflow without eroding their own critical thinking and memory of important information, and organizations can better support their teams in this transition. Overall, the thesis contributes to management practice by elucidating how to harness AI\'92s benefits (improved decision quality, efficiency) while mitigating risks (cognitive complacency, unclear responsibility), thereby helping firms navigate the transformation of knowledge-intensive work.
+
+\section{Scope, Definitions, and Assumptions
+\label{sec:scope
+Given the broad topic of AI in knowledge-intensive work, it is important to clarify the scope of this thesis and define key terms and assumptions. This work specifically focuses on text-based knowledge tasks and the product management domain, and it establishes certain boundaries to make the research feasible and the findings interpretable.
+
+\textbf{Definitions. Throughout the thesis, the term \textbf{AI tools refers primarily to modern artificial intelligence systems capable of generating content or analyses in response to user input. In particular, we consider tools based on large language models (LLMs) and related technologies that can produce summaries, recommendations, or predictions. The outputs of such AI tools (e.g. a summary of an article or a prioritized list of product features) are treated as \textbf{external representations -- that is, information artifacts external to the human mind that represent some aspects of knowledge or data. An AI-generated summary, for example, is an external representation of a source document\'92s content. A key property of the AI-generated representations in our context is their \textbf{persistence: once generated, the summary or output persists (is continuously available) during the user\'92s task and can be revisited as needed:contentReference[oaicite:29]{index=29:contentReference[oaicite:30]{index=30. This is distinct from more ephemeral cues or hints; the persistence of AI outputs means they can function as an ongoing external memory store or \emph{buffer that users might rely on. We also frequently refer to knowledge-intensive work, by which we mean activities or roles that centrally involve acquiring, processing, and using information (as opposed to manual labor or purely routine tasks). Product management in a technology company is one example of knowledge-intensive work: it requires continuous learning, analysis of information, and decision-making based on that information.
+
+\textbf{Scope of the research. This thesis centers on a controlled examination of AI\'92s impact on memory in an experimental setting, and a focused analysis of AI\'92s impact on decision-making in the context of product management. The following points outline what is included in scope:
+\begin{itemize
+  \item A laboratory-controlled \emph{reading and memory experiment with human participants, using expository texts. The experiment uses a fixed reading-and-testing protocol with set time windows, enabling careful comparison between conditions where AI summary assistance is present versus absent.
+  \item AI assistance in the experiment is operationalized as a \emph{pre-generated text summary rather than an interactive AI chat. This approach allows strict control over the assistance content, format, and timing (including the insertion of controlled misinformation in some summaries to test false memory effects).
+  \item Multiple outcome measures are collected to capture complementary aspects of cognitive performance: free recall quality, recognition accuracy, susceptibility to misinformation (false memory), confidence calibration in memory, perceived cognitive effort, and behavioral interaction logs. This multi-faceted measurement provides a nuanced view of how AI assistance affects memory.
+  \item On the organizational side, the thesis scopes its analysis to the role of a \emph{digital product manager as a representative case of a knowledge-intensive position undergoing AI-driven transformation. Insights about decision practices, role changes, and responsibility are drawn from existing studies and reports on product management in the AI era, providing a concrete domain for discussing organizational implications.
+\end{itemize
+
+\textbf{Out of scope. To maintain a clear focus, several related aspects fall outside the scope of this thesis:
+\begin{itemize
+  \item The study does not evaluate \emph{long-term retention of knowledge over weeks or months, nor broader educational outcomes like job performance or course grades. Memory effects are assessed within the timeframe of the experimental session (on the order of minutes to an hour).
+  \item The thesis does not involve open-ended, interactive use of AI systems (e.g. iterative conversations with ChatGPT). Allowing free-form AI interactions could introduce substantial variability in the content and strategy of assistance. Instead, the assistance is standardized (a fixed summary) to enable experimental control.
+  \item The research does not incorporate neurophysiological measures (such as fMRI or EEG) or detailed physiological tracking. All measurements are behavioral or self-reported (augmented by computer logs). This choice aligns with the thesis\'92s focus on observable performance and user-perceived effects.
+  \item In examining the organizational context, the thesis does not conduct new field experiments or surveys within companies. The discussion of product management relies on synthesizing existing data (e.g. survey findings from prior research) and theoretical reasoning, rather than primary data collection in industry. Thus, detailed analysis of other roles or industries beyond product management is not attempted.
+\end{itemize
+
+These boundary conditions are important for interpreting the conclusions of the thesis. By narrowing the scope in the above ways, the research can make strong causal claims about the specific AI assistance configurations tested in the experiment, without overgeneralizing to all forms of AI or all work contexts. Likewise, focusing on product management as an exemplar ensures the organizational analysis is grounded, but the findings in that domain may not automatically generalize to every knowledge-intensive profession. The assumptions and definitions given here provide a clear context for the reader: the thesis explores a scenario where an AI acts as a persistent assistant for a reader/knowledge worker, and extrapolates insights to an organizational role that exemplifies knowledge-intensive decision-making. Within this defined scope, the subsequent chapters will detail the methodology, analysis, and interpretations that lead to the thesis\'92s findings.
+
+\section{Structure of the Thesis
+\label{sec:thesis_structure
+The remainder of the thesis is organized as follows:
+\begin{itemize
+  \item \textbf{Chapter~2 (Literature Review) establishes the theoretical foundation for the research. It synthesizes relevant literature on human memory (including levels of processing, working memory, and external memory aids) and reviews prior work on cognitive offloading and external representations. In addition, it surveys recent findings on generative AI in learning contexts and examines emerging literature on AI adoption in managerial roles\'97laying the groundwork for understanding both individual and organizational aspects of AI\'92s impact:contentReference[oaicite:31]{index=31:contentReference[oaicite:32]{index=32.
+  \item \textbf{Chapter~3 (Conceptual Framework and Hypotheses) introduces the conceptual frameworks and models that guide the investigation. At the cognitive level, it presents the AI Buffer model and uses it to derive specific hypotheses linking AI summary \emph{structure and \emph{timing to predicted memory outcomes. At the organizational level, it delineates a perspective on how cognitive effects (like memory offloading) might influence decision-making practices, informing the inquiry of RQ3. This chapter thus formalizes the multi-level perspective that connects individual and organizational analysis.
+  \item \textbf{Chapter~4 (Methodology) describes the research design and procedures. It details the experimental methodology for the cognitive study, including the materials (reading texts and AI summaries), the platform implementation, participant recruitment, and the procedure for the reading and memory tasks. The chapter also explains the measures used (such as the recall scoring rubric and the false-lure recognition test) and any analytical techniques for the organizational component. Any assumptions or limitations of the methods are noted to ensure transparency.
+  \item \textbf{Chapter~5 (Data Analysis) reports how the data were processed and analyzed. This includes preprocessing steps (e.g. exclusion criteria for participants or trials), descriptive statistics, and the statistical modeling approach for the experimental data. For the memory experiment, mixed-effects models are used to account for within-participant and between-participant factors. If applicable, this chapter also outlines how qualitative or secondary data regarding product management were analyzed or integrated.
+  \item \textbf{Chapter~6 (Results) presents the results of the study. It first provides the outcomes of the controlled experiment, including recall performance, recognition accuracy, false memory indices, and any notable interaction effects of summary timing or structure. These results address RQ1 and the cognitive aspect of RQ3. The chapter then (if relevant) summarizes key findings from the product management perspective (for RQ2), for example by highlighting patterns from existing survey data or illustrating scenarios of AI\'96human role interaction. Together, the results offer a multi-level picture of AI\'92s effects.
+  \item \textbf{Chapter~7 (Discussion) interprets the findings in light of the theoretical frameworks and prior literature. It discusses whether the hypotheses were supported and what the results imply about the cognitive mechanisms at play when AI aids memory. The discussion also considers alternative explanations and the limitations of the study (such as generalizability beyond the lab or the specific domain studied). Critically, this chapter integrates the insights from the cognitive and organizational levels: it explores how the experimental findings about memory and offloading can help explain or inform the changes in product management practices. The implications for design of AI interfaces (e.g. how to present AI assistance to maximize benefit and minimize harm) are articulated, as are implications for organizational policy (e.g. training and defining AI-related responsibilities). 
+  \item \textbf{Chapter~8 (Conclusion) concludes the thesis by summarizing the key contributions and findings. It revisits the research questions to provide direct answers based on the results. The chapter also reflects on the theoretical and managerial contributions, emphasizing how the work advanced understanding at both levels. Finally, it outlines directions for future research, suggesting how subsequent studies might build on this thesis\'97be it by exploring longer-term effects, applying the insights to other roles and industries, or investigating new questions raised by the multi-level findings.
+  \item \textbf{Appendices contain supplementary material that supports the main chapters. This includes experimental materials (such as the full text of articles and AI summaries used in the study), survey instruments or questionnaires if any were used, detailed statistical tables or model outputs, and documentation related to ethical approvals or protocol details.
+\end{itemize
+
+
+.
+
+
+
+
+\chapter{Literature Review
+
+\section{Theoretical Foundations of Human Memory
+Understanding how humans encode and retain knowledge is a necessary starting point for evaluating AI\'92s impact on cognition. Classic research in cognitive science has established several foundational frameworks describing how information is stored and retrieved in memory. The earliest comprehensive account is the \emph{modal model proposed by Atkinson and Shiffrin, which conceptualizes memory as a system of three stores: sensory memory, short-term memory (STM), and long-term memory (LTM) \citep{Atkinson1968HumanMemory. Information enters through high-capacity, rapidly decaying sensory registers, is filtered into STM via attention, and can be consolidated into LTM through rehearsal and elaboration. This model introduced the influential distinction between temporary and durable memory systems and highlighted the role of control processes\'97particularly attention and rehearsal\'97in regulating information flow.
+
+A major shift occurred with Baddeley\'92s reconceptualization of STM as \emph{working memory \citep{Baddeley2012WorkingMemory. Rather than a passive buffer, working memory is an active workspace composed of multiple subsystems (a phonological loop, visuospatial sketchpad, episodic buffer, and a central executive) that together support reasoning, decision-making, and complex task execution. This framework, supported by neuropsychological evidence for domain-specific maintenance mechanisms, portrays working memory as a core system for managing cognitive load and integrating information across modalities. It emphasizes the central executive\'92s role in coordinating attention and controlling the flow of information between short-term and long-term stores.
+
+Building on these models, Tulving distinguished between \emph{episodic and \emph{semantic memory \citep{Tulving1972EpisodicSemantic. Episodic memory refers to recollection of personally experienced events (rich in context and detail), whereas semantic memory refers to generalized world knowledge. Neuropsychological cases of patients with impaired episodic recall but intact factual knowledge support this separation, suggesting partially distinct neural substrates. Tulving also proposed the \emph{encoding specificity principle \citep{Tulving1973EncodingSpecificity, which posits that retrieval success is greatest when contextual cues at recall match those present at encoding\'97a principle highly relevant to how external aids or AI systems might cue human memory.
+
+Other influential theories include Craik and Lockhart\'92s \emph{Levels of Processing framework \citep{Craik1972LevelsOfProcessing, which argued that the durability of a memory trace depends on the depth of processing rather than which memory store it resides in. Deep, semantic processing of information produces more persistent memory traces than shallow, perceptual processing\'97a finding confirmed by many subsequent studies. Neurophysiological research has since provided biological grounding for these ideas: for example, single-neuron recordings show that hippocampal neurons respond selectively to specific concepts, linking to the formation of episodic and semantic representations \citep{Rutishauser2021ArchitectureHumanMemory, and strong neural activation during encoding predicts higher likelihood of later recall (the \'93subsequent memory\'94 effect \citep{Caplan2009EEGAssociativeOrder). Such findings bridge cognitive theory and neural mechanism, connecting concepts like depth of processing to measurable brain activity.
+
+Contemporary perspectives emphasize that memory is an adaptive, reconstructive process. It is influenced by context and distributed across brain networks rather than stored as static copies. Studies in ecologically rich settings show that multisensory, context-heavy experiences can enhance episodic encoding \citep{Plancher2018VREpisodicMemory, and that remembering reactivates many of the same cortical patterns that were engaged during the original experience \citep{Liu2021TransformativeNeuralRepresentations. In sum, memory operates across multiple interacting systems with specialized functions; effective encoding and retrieval depend on attentional control and meaningful processing; and recall is a dynamic process shaped by environmental context and cues. These principles provide a basis for analyzing how artificial systems may support, modify, or extend human memory in knowledge work.
+
+\section{External Representations, Learning, and Cognitive Load
+Humans do not learn in isolation; external representations and prior knowledge structures can significantly affect memory performance. When reading expository texts (such as technical reports or research articles), people actively construct a mental representation of content that integrates new information with existing knowledge. According to discourse comprehension theory, readers form a hierarchical \emph{situation model of a text, establishing local coherence between consecutive ideas and global coherence across the whole discourse \citep{vanDijk1983Discourse. This process places substantial demands on attention and working memory: readers must organize details, maintain the \'93big picture,\'94 and avoid overload of their limited cognitive resources.
+
+Because of these cognitive demands, providing external supports or previews can improve learning outcomes. Decades of research in educational psychology show that giving learners an overview or outline of a text \emph{before reading facilitates comprehension and recall of the main ideas. Such pre-reading aids, termed \emph{advance organizers \citep{Ausubel1960AdvanceOrganizers, Ausubel1968EducationalPsychology, activate relevant schemas and highlight the conceptual framework of the material. Empirical studies find that students who receive a summary or outline before delving into a complex text tend to understand and remember it better than those who do not. For example, presenting a brief summary or learning objectives in advance helps learners mentally organize incoming information and improves subsequent comprehension tests \citep{MayerBromage1980AdvanceOrganizersRecall. Clear structural cues within a text (such as informative section headings) likewise guide attention and help readers remember the content\'92s organization \citep{LorchLorch1996HeadingsRecall. These findings imply that an upfront overview serves as a schema to orient encoding: seeing the \'93big picture\'94 first enables readers to select and integrate details more efficiently.
+
+The benefits of well-designed external representations can be explained through cognitive load theory. According to Sweller\'92s theory of cognitive load, working memory has limited capacity, so formats that reduce unnecessary processing (extraneous load) yield better learning \citep{Sweller1988CognitiveLoad. A related phenomenon is the \emph{split-attention effect: when related pieces of information are spatially or temporally separated, learners must split their attention and mentally integrate them, which imposes extra cognitive load and can impair learning \citep{ChandlerSweller1992SplitAttention. Interface designs that instead integrate information in one place alleviate this burden. Applying these principles to AI support, the timing and format of AI-provided information are critical. Presenting an AI-generated summary \emph{within or alongside an article\'92s text (an integrated format) may minimize visual scanning and context-switching, helping the reader maintain a continuous train of thought. In contrast, providing the summary as a separate, segmented list (e.g., on a different screen or page) forces the user to toggle between sources, increasing the coordination overhead. Research confirms that such format differences can affect performance: when information is split across disparate sources, learners expend more mental effort to piece it together, often reducing efficiency and accuracy \citep{PociaskMorrison2008SplitAttentionRedundancy. An integrated presentation, by keeping related content contiguous, supports coherence in the reader\'92s mental model and makes it easier to cross-check summary statements against the source text. A disjointed presentation, on the other hand, risks shallow processing: if summary points are isolated from context, users might accept plausible-sounding AI statements at face value without sufficient verification:contentReference[oaicite:0]{index=0:contentReference[oaicite:1]{index=1. In summary, external representations like advance organizers or well-placed AI summaries can lighten cognitive load and improve learning, whereas poorly structured aids (e.g., ill-timed interruptions or separated displays) may hinder comprehension.
+
+\section{Generative AI as a Cognitive Partner
+Artificial intelligence systems are increasingly interwoven with how individuals acquire, process, and retrieve information, effectively becoming partners in human cognition. Modern generative AI tools (such as large language model chatbots) can dynamically contribute to learning and memory processes by prompting users to think deeper, offloading certain tasks, and providing context-specific guidance. Emerging research indicates that these systems can have measurable enhancing effects on cognition when used appropriately.
+
+One benefit of AI assistance is its potential to prompt deeper processing and elaboration during learning. For example, \citet{Bai2023ChatGPTLearningMemory found that students who interact with a conversational AI (ChatGPT) by asking questions and explaining answers achieve better learning outcomes than those studying the same material without AI support. The dialogue with the AI forces learners to articulate and refine their understanding, invoking the kind of elaborative rehearsal that strengthens memory traces (consistent with the Levels of Processing principle). Similarly, \citet{Haider2024AICognitiveFunctions report that AI-assisted learning can enhance short-term recall, long-term retention, and problem-solving performance, while also reducing learners\'92 anxiety. The AI in these scenarios acts as a cognitive \emph{scaffold\'97encouraging users to engage in self-explanation, consider alternative solutions, and reflect on their knowledge gaps. Such interactions align with established pedagogical practices (like the Socratic method or guided inquiry) that are known to improve memory and understanding.
+
+Beyond initial encoding, AI can shape how people consolidate and recall information by providing external memory supports. One illustrative system is \emph{Memoro, a real-time AI \'93study assistant\'94 that periodically prompts users to restate and verify information during a learning task \citep{Memoro2024RealTimeMemoryAugmentation. By externalizing the rehearsal process and giving immediate feedback, this AI system helps to consolidate new knowledge and integrate it with the user\'92s existing memory\'97much like proven techniques of retrieval practice in human learning. Likewise, preliminary neuroscience evidence suggests that AI-mediated activities can influence brain engagement. For instance, studies at MIT Media Lab observed that when writers used an AI-based text assistant, it modulated neural activity in regions associated with attention and semantic processing (the \'93Brain on ChatGPT\'94 effect), hinting that AI-supported cognition may extend even to neural processing patterns:contentReference[oaicite:2]{index=2.
+
+AI tools can also support \emph{metacognition, i.e. the monitoring and regulation of one\'92s own cognitive processes. \citet{Sun2025GenerativeAICreativity demonstrated that generative AI can improve users\'92 metacognitive calibration in creative tasks by prompting them to evaluate alternatives, articulate their reasoning, and reflect on uncertainties. These AI-driven reflections lead users to recognize gaps in their knowledge and adjust their learning strategies. In turn, this facilitates deeper encoding of material and more accurate confidence judgments about what they know. The ability of AI to prompt self-monitoring echoes traditional memory theories that emphasize the importance of metacognitive processes (such as \'93feeling of knowing\'94 judgments and source memory confidence) for effective learning and recall. In summary, when used interactively, AI systems have the potential to function as cognitive amplifiers\'97encouraging more active processing, reinforcing memory through rehearsal and feedback, and helping users calibrate their understanding.
+
+\section{Cognitive Offloading and Memory Trade-offs
+The cognitive benefits of AI are coupled with significant trade-offs. Perhaps the most discussed concern is \emph{cognitive offloading\'97the tendency for people to rely on external aids (like computers or AI assistants) instead of remembering information themselves. A large body of work shows that individuals quickly learn to offload memory tasks to digital sources and that doing so changes what and how they remember. Sparrow et al.\'92s seminal study on the \'93Google effect\'94 demonstrated that when people expect information will be available via search, they are less likely to remember the information itself and more likely to remember how to find it again \citep{Sparrow2011GoogleEffect. Follow-up experiments and meta-analyses confirm this pattern: frequent reliance on search engines or databases leads to decreased recall of content details but can improve memory for where or how to retrieve that content \citep{Risko2016CognitiveOffloading, Gong2024GoogleEffectsMetaAnalysis. In essence, as we shift the burden of memory onto readily accessible external systems, our brains adapt by focusing on indexing strategies (\'93know-who\'94 or \'93know-where\'94) at the expense of retaining the facts themselves.
+
+By extension, AI systems that automatically generate answers or summaries on demand may encourage even more offloading of cognitive effort. If an AI assistant can produce an immediate explanation or decision recommendation, a user might invest less effort in internally understanding or memorizing the underlying information. This trade-off raises the concern of an \emph{illusion of competence or \'93hollow expertise\'94 \citep{Oakley2025MemoryParadox: with AI help, a person might appear more knowledgeable or capable of handling complex tasks, but without the AI, their actual mastery of the subject matter is shallow. Oakley et al. argue that while AI can supply correct answers or relevant facts, it bypasses the effortful semantic processing that true understanding requires, resulting in learning that is superficial and fragile. This echoes earlier warnings from depth-of-processing theory: information not deeply processed (because an external aid did the heavy lifting) tends not to be well retained. In practical terms, over-reliance on AI might leave users with a weaker internal grasp of their domain, even as they become adept at using the AI. The convenience of an ever-present AI \'93memory\'94 could thus induce complacency and reduce the incentive to engage in the kind of active learning and repetition that strengthens long-term memory.
+
+These considerations suggest a fundamental cognitive trade-off in using AI support: what we gain in efficiency and breadth of information access, we may lose in personal retention and integrative understanding. Users might come to remember fewer raw details (since the AI can always provide them), and instead remember mainly the pathways to get information (or the fact that \'93the AI will know\'94). Over time, habitual heavy use of AI for answers could subtly restructure memory processes\'97shifting people\'92s skills from knowledge acquisition toward skill in query formulation and result interpretation. While this shift can optimize task performance in the moment, it may leave individuals with a less robust store of knowledge to draw on independently. In knowledge work settings, that could translate into professionals who excel at leveraging AI tools but might struggle with problem-solving if those tools are unavailable or fail. Thus, striking the right balance in cognitive offloading is important: leveraging AI for what it does well (speed, storage, pattern processing) without foregoing the deeper learning and expertise that come from human effort.
+
+\section{Source Monitoring and Misinformation Risks
+Closely related to cognitive offloading are issues of source memory and misinformation when working with AI-generated content. Because AI systems can produce outputs that mix information from multiple sources (and sometimes errors), users face the challenge of discerning which memories or facts came from the AI versus from an original source or their own knowledge. \emph{Source monitoring is the process of attributing memories to their origins \citep{Johnson1993SourceMonitoring, and it is prone to error even in purely human contexts. With AI in the loop, source-monitoring difficulties can be amplified: content provided by an AI can become interwoven with a person\'92s own thoughts during a task, and later the person may incorrectly recall that content as something they learned or thought of independently.
+
+Recent studies demonstrate how AI assistance can inadvertently lead to false memories. \citet{Chan2024ConversationalAIFalseMemories showed that when people engaged in a dialogue with a conversational AI that subtly introduced incorrect details, a significant number of participants later \'93remembered\'94 those false details as if they were true. In that experiment, the AI played the role of an interviewer asking about an event; by suggesting fictitious elements (e.g., naming a detail that never occurred), it planted misinformation that participants often incorporated into their own recollection of the event. This finding extends decades of research on the human misinformation effect \'96 where misleading information presented after an event can distort one\'92s memory of the event \'96 into the realm of AI-mediated interaction. It highlights a new epistemic risk: when an AI-generated summary or explanation is presented, users might have difficulty later distinguishing whether a particular detail came from the original material they were studying or was introduced by the AI. If the AI\'92s output is not clearly delineated or if the user isn\'92t actively tracking sources, the line between \'93what I read\'94 and \'93what the AI said\'94 can blur.
+
+Indeed, without clear source cues, people may conflate AI-provided information with their own knowledge and become overconfident in its accuracy. Zhang et al. \citep{Zhang2024KnowledgeImbalanceAI warn of a \'93knowledge imbalance\'94 that arises when users defer too readily to AI: in their observations, individuals sometimes trusted an AI\'92s answers even for questions those individuals could have answered correctly on their own, leading to an erosion of self-reliant problem-solving. In such cases, users often exhibited high confidence in answers that were suggested by the AI, neglecting to verify them. Over time, this dynamic can impair judgment\'97people might default to AI advice and lose practice in independent analytical thinking, all while maintaining strong confidence in outcomes that are actually dependent on the AI\'92s correctness. This overconfidence, coupled with poor source discrimination, is dangerous: it means that if the AI introduces a subtle falsehood, the user is less likely to catch it and more likely to firmly believe it. Empirical work by Zhai et al. \citep{Zhai2024OverRelianceAIDialogue underscores this point: their review found that students who leaned heavily on AI tutors for answers (versus those who used AI sparingly and continued to work through problems themselves) showed weaker long-term retention and problem-solving ability. The AI-heavy users often failed to develop accurate metacognitive awareness of their own knowledge gaps, assuming the AI\'92s guidance was always correct.
+
+In light of these findings, researchers emphasize the need to design AI interfaces and usage practices that support source monitoring. Potential mitigations include clearly labeling AI-generated content, encouraging users to actively cross-check AI-provided information against original sources, and training users in skills of \'93dialectical\'94 reasoning with AI (treating the AI\'92s outputs as hypotheses to be vetted rather than truths to be taken at face value). These strategies align with broader calls for improving AI literacy and critical thinking in human\'96AI collaboration. The bottom line is that AI assistance, if not managed carefully, can introduce subtle memory distortions and inflated confidence. As we integrate AI into cognitive tasks, maintaining an awareness of \'93what came from where\'94 and preserving healthy skepticism toward AI outputs are crucial steps to guard against misinformation and ensure that human knowledge remains accurate and well-calibrated.
+
+\section{AI Adoption in Management and AI Literacy
+The implications of AI on memory and cognition extend beyond individuals to the realm of organizations and management. In knowledge-intensive workplaces, professionals are increasingly expected to incorporate AI tools into their decision-making and creative processes. Successful integration of AI requires not only technical implementation but also human understanding of AI capabilities and limitations. This has led to a growing recognition of \emph{AI literacy as a crucial skill for managers and knowledge workers. AI literacy can be defined as the ability to understand, use, and critically evaluate AI systems effectively. As AI becomes embedded in day-to-day workflows, managers must grasp basic concepts of how AI algorithms function, what outputs mean, and what ethical considerations arise, so that they can leverage these tools appropriately.
+
+Recent work highlights the importance of cultivating AI literacy in organizations. In many ways it is analogous to digital literacy, but with an added emphasis on data, algorithms, and ethics. For example, \citet{Wang2023AILiteracy propose frameworks for measuring and improving AI literacy among professionals, arguing that without such literacy, there is a risk of misuse or disillusionment with AI deployments. Especially for those in leadership and product roles, a solid understanding of AI\'92s strengths and weaknesses is necessary to fully harness its potential. Managers need to know what tasks AI can automate or augment, how to interpret AI-generated insights, and how to question the outputs appropriately. This knowledge enables them to integrate AI into workflows in a way that genuinely adds value rather than creating new problems.
+
+Product managers provide a case in point. As AI-driven features and analytics become central to product development, product managers must be conversant in AI concepts to coordinate effectively with technical teams and to set realistic goals. They need to appreciate, for instance, the difference between a predictive model\'92s accuracy on training data and its performance in the wild, or the trade-offs between a simpler, explainable model and a more complex, opaque one. AI literacy for a manager also includes understanding ethical and societal implications (such as privacy concerns, bias in algorithms, or regulatory constraints) since these factors increasingly influence product strategy and public acceptance. In short, broad-based AI education and training within organizations are becoming as important as training in other core management competencies. By improving AI literacy, organizations ensure that their workforce can adopt AI in an informed manner\'97maximizing benefits while remaining alert to risks and limitations.
+
+Beyond individual knowledge and skills, the adoption of AI in management often requires cultural and process changes. Companies that successfully adopt AI tend to promote interdisciplinary collaboration, where domain experts work closely with data scientists. They may establish guidelines or committees for AI ethics and governance (discussed further in Section 2.8). They also encourage experimentation with AI tools, coupled with sharing best practices and lessons learned across the organization. In essence, becoming an \'93AI-ready\'94 organization involves both upskilling people (improving AI literacy) and evolving organizational practices to integrate human expertise with AI\'92s capabilities.
+
+\section{Augmentation vs.\ Automation of Knowledge Work
+When introducing AI into knowledge work, a central strategic question is the extent to which AI should \emph{augment human workers versus \emph{automate tasks entirely. Early discussions around AI often revolved around automation\'97the possibility of algorithms taking over human jobs. However, recent perspectives suggest that the more impactful role of AI, especially in complex domains, is to complement and extend human abilities rather than replace them. In other words, AI can assume routine, repetitive components of work, while humans focus on higher-level reasoning, creativity, and oversight. This human\'96AI partnership approach is commonly termed \'93augmented intelligence\'94 to contrast it with full automation.
+
+In the context of product development and other management fields, the distinction between augmentation and automation is particularly salient. Many tasks that product managers and knowledge workers perform can be partially automated by AI. For example, AI can automatically gather and analyze large datasets (market trends, customer feedback, web analytics), generate routine reports, or handle scheduling and logistical updates. By offloading these time-consuming chores, AI frees up human experts\'92 cognitive and temporal resources. \citet{Kaplan2021Augmenting note that AI is increasingly viewed as a colleague or co-worker that handles the grunt work\'97data processing, basic analysis, information retrieval\'97thus allowing human professionals to concentrate on strategic decision-making, problem-solving, and innovation. The automation of repetitive tasks (data cleaning, simple number-crunching, form-filling, etc.) means that product managers, for instance, can spend more time on interpreting insights, formulating strategy, and creative thinking rather than on manual information compiling:contentReference[oaicite:3]{index=3. This shift not only improves efficiency but can also improve job satisfaction by removing drudgery and enabling humans to do what they do best.
+
+At the same time, AI\'92s role goes beyond taking tasks off human plates; it also actively \emph{augments human decision-making by providing insights that humans might not easily discern. Advanced AI systems can sift through massive amounts of data far faster than any individual, highlighting patterns or anomalies that warrant attention. For example, an AI might detect a subtle change in customer sentiment across millions of social media posts, or forecast market demand by analyzing signals across disparate data sources. Humans are then tasked with interpreting these AI-identified patterns, adding context, and making judgment calls that incorporate values and business intuition. In this way, AI becomes a powerful decision support tool. Kaplan and Haenlein observe that AI\'92s predictive analytics can enhance managerial decision-making by offering data-driven foresight\'97forecasting customer preferences, market trends, or potential operational risks\'97that managers can incorporate into their planning:contentReference[oaicite:4]{index=4. The human manager, augmented with these AI-generated insights, can reach decisions that are better informed than those based on intuition or limited information alone.
+
+Embracing augmentation does not mean ignoring automation where it makes sense. Rather, organizations are learning to apply AI to the appropriate level of the task. Straightforward, well-defined tasks with clear rules and success criteria are often ripe for full automation (with humans only monitoring exceptions). In contrast, tasks that require complex trade-offs, creativity, empathy, or ethical judgment tend to benefit from AI augmentation but still need human involvement. The frontier of AI in knowledge work is thus a shifting boundary: as AI capabilities improve, the line of what can be automated moves, but there remains a large space where human insight and decision-making are essential. The most effective teams are those where human and AI strengths are consciously and thoughtfully combined. Practically, this might involve workflows where an AI system provides a set of recommendations or a distilled analysis, and the human expert vets these outputs, explores \'93unknown unknowns\'94 the AI might have missed, and makes the final call.
+
+In summary, the current consensus in management science is that AI should be deployed to \emph{augment human workers wherever possible, automating sub-tasks to increase efficiency while enhancing human capabilities in analysis and creativity. This augmentation paradigm casts AI as a \'93cognitive collaborator.\'94 Rather than viewing the technology as a threat to be resisted or a magic box that replaces human judgment, leading organizations treat it as a tool that\'97when properly managed\'97extends human reach. Such an approach requires clear definition of roles: understanding which decisions and responsibilities remain with humans, and designing AI systems whose outputs are interpretable and useful for those human decision-makers.
+
+\section{AI-Driven Decision Support and Governance
+As AI systems become embedded in strategic decision processes, they offer both great opportunities and new governance challenges. On the opportunity side, AI\'92s strengths in data analysis and pattern recognition can markedly improve the quality and speed of business decisions. Many organizations now use AI-driven decision support systems to guide choices in areas ranging from marketing (e.g., customer targeting) to operations (e.g., inventory optimization) to finance (e.g., risk assessment). By analyzing far more variables and historical data than a human could, AI can uncover non-obvious insights. For instance, an AI might identify emerging market micro-trends or correlations between product usage and customer retention that inform strategic pivots. In product management, AI tools can prioritize feature development by predicting which improvements will yield the highest customer satisfaction or ROI, based on large-scale data. When applied with clear goals, such AI decision aids have been reported to improve efficiency and alignment: teams can rally around data-backed objectives, and iterative product decisions can be made faster with AI analytics filtering the noise from the signal:contentReference[oaicite:5]{index=5. In short, AI can function as an \'93extra brain\'94 in the boardroom\'97one that contributes evidence and options for human leaders to consider.
+
+On the governance side, however, integrating AI into decision-making raises critical considerations of accountability, transparency, and ethics. Unlike traditional decision-support tools, many modern AI systems (especially those based on machine learning) operate as complex, non-transparent models. This opacity can lead to a \'93black-box\'94 problem in organizational settings \citep{Pasquale2015BlackBoxSociety: if a recommendation is generated by an algorithm that few understand, how do decision-makers trust it, and who is responsible if it leads to a bad outcome? There is a growing consensus that organizations must implement AI governance frameworks to address these issues. Such frameworks often include principles and procedures to ensure that AI systems are used responsibly. Key elements include algorithmic \textbf{transparency (striving to make AI decision criteria explainable to humans), \textbf{fairness (mitigating biases in AI predictions or suggestions), and \textbf{accountability (assigning human oversight to every AI-driven decision).
+
+Managers, particularly product managers and project leaders who deploy AI, are now seen as crucial gatekeepers of ethical AI use. They need to ensure that AI-generated decisions are not blindly rubber-stamped but are subject to critical evaluation. \citet{Kaplan2021Augmenting emphasize that product managers should take responsibility for verifying that AI-driven decisions are transparent, explainable, and aligned with the organization\'92s ethical guidelines:contentReference[oaicite:6]{index=6. In practice, this might involve requiring AI tools to provide rationale or evidence for their recommendations (for example, highlighting which data points most influenced a prediction), and having a human review committee for high-stakes decisions. It also means being vigilant about bias: if an AI model suggests a course of action that could unintentionally discriminate against a group of users or customers, the manager must recognize and correct this. Consequently, many companies are instituting AI ethics checklists or review boards. They are also investing in tools that can audit AI outputs for bias and consistency.
+
+Furthermore, maintaining a human-centered approach in AI-augmented decision-making is important for organizational learning. Human experts should be encouraged to question AI outputs and to bring in external context that the AI might lack. For example, an AI might optimize a metric (like short-term engagement in an app) in a way that conflicts with longer-term goals (like user well-being or brand reputation); human judgment is required to detect and avert such misalignment. As Pasquale warns, blind faith in opaque AI systems can erode the quality of decisions and even create legal and reputational risks \citep{Pasquale2015BlackBoxSociety. Therefore, organizations must foster a culture where AI is used as an insightful advisor, not an infallible oracle. This culture includes training employees to maintain healthy skepticism and to verify AI-provided information against other sources when possible:contentReference[oaicite:7]{index=7:contentReference[oaicite:8]{index=8. In essence, just as individuals must monitor the source of information in memory tasks, organizations need policies and norms that promote \emph{source monitoring for AI outputs: always asking \'93Where does this recommendation come from? What data or assumptions is it based on? Does it make sense in context?\'94
+
+In conclusion, AI offers powerful decision-support capabilities that can enhance managerial decision-making and strategic planning. To realize these benefits sustainably, organizations must invest in AI governance\'97ensuring transparency, fairness, and accountability. This dual focus on capability and responsibility is now a hallmark of mature AI adoption. Companies that treat AI as a partner in decision processes, and simultaneously institute robust oversight for that partnership, are more likely to gain long-term competitive advantage and avoid the pitfalls of algorithmic missteps.
+
+\section{Product Management and Organizational Memory
+The interplay between AI, human cognition, and decision-making comes into sharp focus in the domain of product management. Product managers (PMs) serve as integrators of knowledge across an organization: they gather user requirements, market research, technical constraints, and business objectives, and make decisions that drive product development. In essence, a product manager acts as a steward of the organization\'92s collective knowledge about the product and its environment. AI technologies are transforming how this organizational memory is maintained and utilized, while also reshaping the PM\'92s role itself.
+
+One significant impact of AI is the creation of an augmented \emph{organizational memory. Modern enterprises are deploying intelligent knowledge management platforms that use AI to capture, organize, and retrieve information across the company. These systems function as external collective memory repositories. For example, AI-driven platforms can automatically index and semantically link documents, meeting notes, customer feedback, and decision logs, making them searchable and contextually accessible to employees on demand. This means that when a product manager faces a decision\'97say, revisiting why a certain feature was implemented a year ago or looking for relevant insights from past user research\'97the AI system can surface that historical information almost instantly. By bringing forward prior meeting notes or analogous project cases at the right moment, AI helps ensure that lessons learned in the past are not lost in the shuffle:contentReference[oaicite:9]{index=9:contentReference[oaicite:10]{index=10. It reduces the need for PMs (or anyone) to rely on remembering institutional knowledge or tracking down the right person; much of that knowledge becomes queryable and persistent beyond individual memory.
+
+This augmentation of organizational memory has clear benefits for product management. It improves \textbf{knowledge continuity: the organization\'92s experience and rationale for decisions remain available even as team members change or new projects begin. Researchers in organizational cognition stress that the ability to reactivate and leverage past knowledge is critical for effective decision-making in fast-paced industries. AI support directly reinforces this capability by enabling PMs to navigate vast archives of information with minimal effort and to quickly reconstruct the context behind previous decisions. For instance, an AI assistant might, upon noticing a PM starting a project similar to a past one, proactively suggest: \'93Here are key takeaways and pitfalls from the last time we did something similar.\'94 In doing so, AI serves as a bridge between past and present, linking fragmented pieces of organizational knowledge so that insights are not forgotten but instead continuously inform ongoing work:contentReference[oaicite:11]{index=11:contentReference[oaicite:12]{index=12. In effect, the locus of institutional memory becomes distributed across a human\'96AI network: humans contribute intuition, creativity, and critical judgment, while AI contributes exhaustive recall, speed, and consistency in retrieving information.
+
+AI\'92s growing role in organizational memory and decision support is likewise altering the product manager\'92s job profile. Far from rendering the PM obsolete, AI tends to amplify the importance of the human element in leadership. A recent cross-national survey of 74 product management professionals in the U.S. and China provides real-world evidence of this evolution. The study found that AI integration is \emph{shifting the focus of product managers\'92 work rather than eliminating it. Routine coordination and execution tasks are increasingly automated or streamlined by AI, allowing PMs to devote more attention to data-driven strategy, technical oversight, and cross-disciplinary leadership:contentReference[oaicite:13]{index=13. In other words, AI frees product managers to engage more deeply with strategic decision-making and creative problem-solving\'97areas where human judgment remains essential. Participants in the survey reported measurable improvements in efficiency, team alignment, and product iteration speed when AI tools were thoughtfully applied to tasks like decision support, collaboration, and workflow management:contentReference[oaicite:14]{index=14. These improvements underscore AI\'92s role as a performance booster in product development cycles.
+
+However, the same study also highlights that the infusion of AI raises the \emph{responsibility and skill threshold for product managers. Far from diminishing the need for human insight, AI\'92s presence makes the PM\'92s oversight more critical. Product managers now must ensure that algorithmic recommendations are fair and unbiased, that AI-driven features operate transparently for users, and that automated decisions do not erode customer trust:contentReference[oaicite:15]{index=15. In short, AI has elevated the ethical and governance dimensions of the PM role. A product manager might find themselves, for example, deciding whether to override an AI-generated feature prioritization because it could negatively impact a vulnerable user group, or instituting checks to monitor an AI\'92s performance for potential drift or bias over time. These tasks require a blend of technical understanding, ethical reasoning, and stakeholder communication\'97competencies that define the new, AI-aware breed of product managers.
+
+Together, these trends paint a picture of AI as \'93catalyst and companion\'94 for product management rather than as a replacement for it:contentReference[oaicite:16]{index=16. AI acts as a catalyst by accelerating analysis and revealing insights that drive innovation, and as a companion by collaborating with the PM in day-to-day decision-making. The value of the product manager\'92s human expertise is in fact enhanced: their judgment is still the final filter, and their ability to synthesize AI input with human values and business context determines success. But the job now calls for new forms of competence (like understanding AI outputs and limitations), new forms of judgment (deciding when to trust or override the AI), and new forms of accountability (ensuring AI use aligns with ethical standards and regulatory requirements). Organizations adopting AI in product management are thus not removing the human from the loop; rather, they are placing an even greater premium on skilled, AI-savvy humans to lead the loop.
+
+\paragraph*{Summary. In summary, this literature review has examined the intersection of human memory, AI-generated external representations, and managerial practice. We have seen that human memory is highly adaptable and can be both supported and distorted by external aids. AI systems\'97especially generative models that provide persistent, context-rich assistance\'97act as powerful external representations that can augment learning and decision-making (by scaffolding cognition and broadening access to knowledge), but they also introduce risks of over-reliance, misinformation, and eroded skill. In organizational settings, these cognitive dynamics translate into tangible changes in how work is done and how decisions are made. Evidence from the field of product management shows that AI can substantially boost efficiency and strategic insight, validating the view of AI as an augmenting tool, while simultaneously raising the bar for human oversight and governance.
+
+Several gaps remain in our understanding. For example, how do specific properties of AI support (such as the timing of information delivery or the format in which it is presented) quantitatively affect learning outcomes and memory accuracy? What interface designs best mitigate source confusion and foster user trust without engendering complacency? And at the organizational level, how can companies balance the benefits of AI automation with the need to preserve and grow human expertise? These open questions set the stage for further investigation. 
+
+The next chapter will introduce a conceptual framework for this thesis, the \emph{AI Buffer Model, which builds on the theoretical and empirical insights reviewed here. This model will articulate how persistent AI-generated representations might function as an external memory \'93buffer\'94 for users, and it will posit hypotheses about their effects on human memory performance and metacognitive judgment. Guided by the literature and gaps identified above, the framework aims to bridge the cognitive and managerial perspectives and provide a basis for the experimental and analytical work that follows in subsequent chapters.
+
+
+
+\chapter{Conceptual Framework and Hypotheses
+
+=========================
+% 4 | Methodology
+\chapter{Methodology
+\label{ch:methodology
+
+\chapter{Data Analysis
+\section{Memory
+\section{PM
+
+\chapter{Results
+\section{Results of the AI--Memory Experiment
+\section{Results of the Survey Study
+\section{Cross-Study Integration
+
+\chapter{Discussion
+\section{Cognitive Interpretation of Experimental Findings
+\section{Implications for Applied Decision-Making
+\section{Integrative Model for AI-Augmented Work
+\section{Ethical and Managerial Implications
+
+\chapter{Conclusion
+\section{Summary of Insights
+\section{Practical Recommendations
+\section{Limitations and Future Research
+
+\appendix
+\chapter{Appendix A: Experimental Materials
+\chapter{Appendix B: Survey Instrument
+\chapter{Appendix C: Statistical Outputs
+\chapter{Appendix D: Ethical Protocol
+
+\chapter{Appendix A
+If you need to include an appendix to support the research in your thesis, you can place it at the end of the manuscript.
+An appendix contains supplementary material (figures, tables, data, codes, mathematical proofs, surveys, \dots)
+which supplement the main results contained in the previous chapters.
+
+\chapter{Appendix B
+It may be necessary to include another appendix to better organize the presentation of supplementary material.
+
+
+% LIST OF FIGURES
+\listoffigures
+
+% LIST OF TABLES
+\listoftables
+
+% LIST OF SYMBOLS
+% Write out the List of Symbols in this page
+\chapter*{List of Symbols % You have to include a chapter for your list of symbols (
+\begin{table[H]
+    \centering
+    \begin{tabular{lll
+        \textbf{Variable & \textbf{Description & \textbf{SI unit \\\hline\\[-9px]
+        $\bm{u$ & solid displacement & m \\[2px]
+        $\bm{u_f$ & fluid displacement & m \\[2px]
+    \end{tabular
+\end{table
+
+% ACKNOWLEDGEMENTS
+\chapter*{Acknowledgements
+Here you might want to acknowledge someone.
+
+\cleardoublepage
+
+\end{document

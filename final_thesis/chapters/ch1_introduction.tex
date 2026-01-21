@@ -1,0 +1,163 @@
+Generative AI systems are increasingly embedded in everyday information work. Two use cases are especially salient
+for learning and decision-intensive knowledge work: (i) AI-generated summaries and explanations that accompany
+reading and study, and (ii) AI-generated analyses and recommendations that accompany professional judgment. In both
+cases, the AI produces \emph{external representations}---persistent, content-bearing artifacts that can guide
+attention, provide cues, and reshape how information is encoded, retrieved, and acted upon.
+
+From a cognitive perspective, external representations can support performance by reducing extraneous processing
+costs, but they can also change encoding strategies via cognitive offloading
+\citep{Risko2016CognitiveOffloading,Sparrow2011GoogleEffect}. From a decision-making perspective, the same
+representations can shape reliance: users may defer to AI outputs without fully scrutinizing their provenance or
+quality, creating epistemic and governance risks \citep{Pasquale2015BlackBoxSociety,Zhang2024KnowledgeImbalanceAI}.
+These tensions are particularly relevant for roles such as product management, where decisions integrate
+heterogeneous evidence (user research, analytics, technical constraints, and stakeholder input) and where
+generative AI is increasingly used to summarize, prioritize, and communicate \citep{Pinzauti2025ReinventingPM}.
+
+This thesis addresses these issues through a \emph{multi-level perspective} that links cognitive mechanisms to
+organizational practice. At the cognitive level, Study~1 uses a controlled reading-and-memory experiment in which
+AI assistance is operationalized as pre-generated summaries that vary in \emph{structure} (integrated vs.\ segmented)
+and \emph{timing} (pre-reading vs.\ synchronous vs.\ post-reading). At the organizational level, Study~2 examines
+how product managers integrate generative AI tools into decision-intensive workflows and how they perceive impacts
+on efficiency, judgment, and ethical responsibility \citep{Pinzauti2025ReinventingPM}. The thesis proposes the
+\emph{AI Buffer} as a unifying concept: AI-generated external representations can function as persistent buffers
+that support cue-based cognition while also introducing source-monitoring and reliance vulnerabilities.
+
+\section{Context and Motivation}
+\label{sec:motivation}
+Learning from text depends on how readers allocate attention during encoding, how they manage limited working-memory
+resources, and which cues are available at retrieval
+\citep{Baddeley2012WorkingMemory,Craik1972LevelsOfProcessing,Tulving1973EncodingSpecificity}. In real-world settings,
+learners frequently rely on external representations---notes, outlines, highlighted passages, and search
+engines---to support these processes. Generative AI introduces a new, scalable form of external representation:
+systems can produce structured summaries instantly and present them alongside source material.
+
+At the same time, external representations can shift effort away from internal encoding. The ``Google effect''
+shows that when information is easy to re-access, people are more likely to remember where it is than what it is
+\citep{Sparrow2011GoogleEffect,Risko2016CognitiveOffloading,Gong2024GoogleEffectsMetaAnalysis}. In generative-AI
+settings, this creates a core tension: summaries may support understanding and recognition by providing cues, but
+they may also encourage shallow processing, reduce detail-rich encoding, and increase vulnerability to source
+confusion when AI content blends with the original material
+\citep{Johnson1993SourceMonitoring,Chan2024ConversationalAIFalseMemories}.
+
+Beyond individual learning, the same dynamics play out in professional contexts where decisions depend on accurate,
+contextual recall. Knowledge-management research suggests that AI can help organizations retrieve prior decisions
+and maintain continuity across projects \citep{Pai2022AIKnowledgeManagement}. However, AI-advised decision-making
+also raises risks of epistemic dependence and opaque reasoning
+\citep{Pasquale2015BlackBoxSociety,Zhang2024KnowledgeImbalanceAI}. Product management provides a concrete setting in
+which these issues are amplified: product managers are expected to synthesize noisy information into decisions and
+to communicate rationale clearly across teams, making AI-provided summaries and recommendations both useful and
+potentially hazardous \citep{Pinzauti2025ReinventingPM}.
+
+\section{Research Problem and Gap}
+\label{sec:research_problem}
+Despite rapid adoption, there remains limited integrated evidence on \emph{how} AI-generated external
+representations shape cognition and decision-making.
+
+At the cognitive level, evidence on generative AI is still emerging and often treats ``AI assistance'' as a
+unitary intervention. Yet design choices matter: \emph{when} a summary is available and \emph{how} it is structured
+can change attention allocation, encoding depth, and the balance between internal reconstruction and reliance on
+external cues. Controlled studies suggest that conversational AI can amplify false memories under certain
+conditions \citep{Chan2024ConversationalAIFalseMemories}, and reviews warn about over-reliance and reduced cognitive
+engagement \citep{Zhai2024OverRelianceAIDialogue}, but there is still a need for causal evidence that isolates
+interface-relevant dimensions (timing, format) and measures both performance and epistemic risk.
+
+At the organizational level, many accounts focus on productivity or adoption narratives, while fewer connect
+observed reliance patterns to cognitive mechanisms such as offloading and source monitoring. For decision-intensive
+roles such as product management, the open question is not only whether AI improves efficiency, but whether it
+changes how decisions are formed, justified, and governed---including how trust, transparency, and accountability
+are maintained when AI outputs shape reasoning \citep{Pasquale2015BlackBoxSociety,Pinzauti2025ReinventingPM}.
+
+The central gap motivating this thesis is therefore the lack of a \emph{multi-level framework} that links (i)
+mechanisms of AI-assisted encoding and retrieval to (ii) patterns of reliance and judgment in professional
+decision-making contexts.
+
+\section{Research Objectives and Multi-Level Perspective}
+\label{sec:objectives}
+Following common master-thesis conventions, the work is organized around concrete objectives that span the two
+levels of analysis and their integration.
+\begin{itemize}
+  \item \textbf{O1 --- Cognitive baseline:} quantify memory differences between AI-assisted reading and unaided
+  reading under matched constraints (Study~1).
+  \item \textbf{O2 --- Cognitive design dimensions:} test how summary \emph{timing} and \emph{structure} affect
+  recall quality, recognition accuracy, and behavioral indicators of reliance (Study~1).
+  \item \textbf{O3 --- Epistemic risk:} measure susceptibility to false-lure endorsement and source-monitoring
+  errors when AI-generated content is present (Study~1).
+  \item \textbf{O4 --- Organizational practice:} characterize how product managers deploy generative AI tools in
+  decision-intensive workflows, including perceived benefits, risks, and ethical responsibilities (Study~2)
+  \citep{Pinzauti2025ReinventingPM}.
+  \item \textbf{O5 --- Cross-level integration:} develop an integrated account linking AI-generated external
+  representations to both memory mechanisms and professional decision processes, and derive propositions that can
+  guide safer tool design and governance.
+\end{itemize}
+
+\section{Research Questions (RQ1--RQ3)}
+\label{sec:research_questions}
+The thesis addresses the objectives through three research questions that map to the cognitive level, the
+organizational level, and their integration:
+\begin{itemize}
+  \item \textbf{RQ1 (Cognitive level):} How do AI-generated summaries---and their timing and structure---affect
+  memory performance (free recall and recognition) and epistemic risk (false-lure endorsement and source
+  confusions) during expository reading?
+  \item \textbf{RQ2 (Organizational level):} How do product managers integrate generative AI into decision-intensive
+  work, and what patterns of perceived reliance, skill shift, and ethical governance emerge?
+  \item \textbf{RQ3 (Cross-level integration):} How can observed organizational reliance patterns be interpreted in
+  terms of cognitive mechanisms (offloading, cue-dependent retrieval, source monitoring), and what boundary
+  conditions are likely to moderate these relationships?
+\end{itemize}
+
+\section{Contribution of the Thesis}
+\label{sec:contribution}
+The thesis contributes at three levels: cognitive theory, organizational understanding, and integrative framing.
+
+\textbf{Cognitive contribution.} Study~1 provides design-sensitive evidence on AI-assisted reading by measuring both
+performance (recall and recognition) and epistemic risk (false-lure endorsement), explicitly manipulating timing
+and structure of AI-generated summaries.
+
+\textbf{Organizational contribution.} Study~2 synthesizes patterns of AI use in product management and clarifies how
+AI tools are positioned as automation and augmentation within decision-intensive workflows, including perceived
+shifts in responsibility and ethical vigilance \citep{Pinzauti2025ReinventingPM}.
+
+\textbf{Integrative contribution.} The thesis advances the \emph{AI Buffer} as a compact bridge concept:
+AI-generated representations can function as persistent external buffers that support cue-based cognition while
+also altering source monitoring and reliance conditions. This framing supports actionable implications for AI
+interface design, training, and governance in knowledge work.
+
+\section{Scope, Definitions, and Assumptions}
+\label{sec:scope}
+This thesis focuses on AI-generated external representations and their consequences under two complementary
+methodological lenses.
+
+\textbf{Key definitions.} \emph{Generative AI} refers to systems that produce novel text based on learned patterns
+from data. \emph{External representations} refer to persistent artifacts (summaries, notes, recommendations) that
+users can consult during a task. \emph{Cognitive offloading} refers to shifting cognitive work from internal memory
+to external aids \citep{Risko2016CognitiveOffloading}. \emph{Source monitoring} refers to processes by which people
+attribute information to its origin \citep{Johnson1993SourceMonitoring}. In this thesis, the \emph{AI Buffer} is
+defined as an AI-generated representation that persists during a task and can shape encoding, retrieval, and
+metacognitive monitoring.
+
+\textbf{Study boundaries.} Study~1 is intentionally scoped to controlled laboratory conditions, pre-generated
+summaries (rather than open-ended dialogue), and within-session memory measures. Study~2 is scoped to product
+management as a decision-intensive domain and emphasizes professional practice and governance rather than direct
+cognitive performance measurement.
+
+\textbf{Assumptions.} The thesis treats AI summaries as fallible representations rather than authoritative ground
+truth and assumes that interface properties (timing, structure, provenance cues) can change cognitive and
+organizational outcomes by shaping attention, cue availability, and reliance norms.
+
+\section{Structure of the Thesis}
+\label{sec:thesis_structure}
+The remainder of the thesis follows the structure below:
+\begin{itemize}
+  \item \textbf{Chapter~2 (Literature Review)} synthesizes human-memory foundations and research on cognitive
+  offloading, external representations, and human--AI reliance in knowledge work and managerial contexts.
+  \item \textbf{Chapter~3 (Conceptual Framework and Hypotheses)} introduces the AI Buffer model and derives
+  cross-level propositions linking cognitive mechanisms to decision processes.
+  \item \textbf{Chapter~4 (Methodology)} details Study~1 (controlled experiment) and Study~2 (field study on product
+  managers), including instruments and ethical considerations.
+  \item \textbf{Chapters~5--7 (Analysis, Results, Integration)} report analytical strategy and findings for each
+  study and then integrate evidence across levels.
+  \item \textbf{Chapters~8--9 (Discussion and Conclusion)} interpret implications, limitations, and future research
+  directions, and summarize the thesis contributions.
+  \item \textbf{Appendices} provide study materials, instruments, and supplementary outputs.
+\end{itemize}
+

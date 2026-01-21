@@ -1,0 +1,28 @@
+% Wrapper file to compile the existing PDF thesis ("Tesi edo Cina copia.pdf")
+% inside a standard LaTeX thesis project structure.
+%
+% Note: this does not convert the PDF back into editable LaTeX source; it simply
+% embeds the PDF pages into a LaTeX build so you can keep everything together.
+
+\documentclass[12pt,a4paper]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{pdfpages}
+
+\hypersetup{hidelinks}
+
+\begin{document}
+
+\frontmatter
+\chapter*{Edo Thesis (PDF Wrapper)}
+This document wraps the existing file \texttt{Tesi edo Cina copia.pdf} so it can be built via
+\LaTeX{} within this repository.
+\cleardoublepage
+
+\mainmatter
+\includepdf[pages=-]{\detokenize{Tesi edo Cina copia.pdf}}
+
+\end{document}
+

@@ -1,0 +1,299 @@
+This chapter reviews prior work that motivates the thesis structure introduced in \Cref{sec:thesis_structure}. It
+first establishes foundations of human memory and learning from text, then synthesizes research on cognitive
+offloading and external representations. Building on this, it reviews how generative AI functions as a new kind of
+external representation in knowledge work, with particular attention to confidence, source monitoring, cognitive
+load, and reliance in decision-making. The chapter closes by synthesizing these strands into a multi-level research
+gap that motivates the conceptual framework developed in Chapter~3.
+
+\section{Foundations of Human Memory}
+
+\subsection{Theoretical Foundations of Human Memory}
+The study of human memory has evolved through several major theoretical frameworks that describe how information is
+encoded, stored, and retrieved. The earliest comprehensive account is the \emph{modal model} proposed by Atkinson
+and Shiffrin \citep{Atkinson1968HumanMemory}, which conceptualizes memory as a system composed of three structural
+stores: sensory memory, short-term memory (STM), and long-term memory (LTM). According to this framework,
+information enters through high-capacity but rapidly decaying sensory registers, is filtered into STM via
+attentional control, and may be consolidated into LTM through rehearsal and elaborative processing. This model
+introduced the influential distinction between temporary and durable memory systems and highlighted the central
+role of control processes---particularly attention and rehearsal---in regulating information flow.
+
+A major theoretical shift occurred with Baddeley’s reconceptualization of STM as \emph{working memory}
+\citep{Baddeley2012WorkingMemory}. Rather than a passive buffer, working memory is understood as an active
+cognitive workspace composed of multiple subsystems (the phonological loop, visuospatial sketchpad, episodic
+buffer, and a central executive) that enable the integration of multimodal information. This framework supports
+reasoning, decision-making, and sustained mental effort, and it aligns with extensive neuropsychological evidence
+for domain-specific maintenance mechanisms and executive-control functions distributed across the cortex.
+
+Building on these models, Tulving introduced the distinction between \emph{episodic} and \emph{semantic} memory
+\citep{Tulving1972EpisodicSemantic}. Episodic memory refers to the recollection of personally experienced,
+context-rich events, whereas semantic memory stores generalized knowledge about the world. Tulving further proposed
+the \emph{encoding specificity} principle \citep{Tulving1973EncodingSpecificity}, which posits that retrieval is
+most successful when the cues available at encoding are reinstated at recall. This principle is central for
+understanding how external aids (including AI-generated summaries) may facilitate or distort later recall by
+changing which cues are available and salient.
+
+Craik and Lockhart’s \emph{Levels of Processing} framework \citep{Craik1972LevelsOfProcessing} emphasized that the
+durability of a memory trace depends not on which store it resides in, but on the \emph{depth} and \emph{semantic
+elaboration} of processing applied to the information. Deep, meaning-oriented encoding produces more persistent
+memory traces than shallow, perceptual processing---a finding repeatedly confirmed by subsequent behavioral and
+neuroscientific studies.
+
+Neurophysiological research has extended classical models by illuminating the biological basis of encoding and
+retrieval. Single-neuron recording studies show that hippocampal and medial-temporal lobe neurons respond
+selectively to abstract concepts, forming building blocks of episodic and semantic representations
+\citep{Rutishauser2021ArchitectureHumanMemory}. Electrophysiological evidence further demonstrates that stronger
+neural activation during encoding predicts greater likelihood of later retrieval success---the subsequent-memory
+effect \citep{Caplan2009EEGAssociativeOrder}.
+
+Memory research has also embraced ecological and contextual perspectives. Studies using immersive virtual
+environments indicate that spatially rich, multisensory contexts enhance episodic encoding
+\citep{Plancher2018VREpisodicMemory}, while ``real-life'' neuroscience approaches argue that memory should be
+studied in dynamic, socially embedded settings rather than in isolation \citep{ShamayTsoory2019RealLifeNeuroscience}.
+At a systems level, contemporary accounts emphasize that memory emerges from distributed interactions across
+cortical--hippocampal networks \citep{Moscovitch2006CognitiveNeuroscienceRemoteMemory}, and neuroimaging evidence
+suggests that retrieving a memory can reactivate cortical patterns present during encoding
+\citep{Liu2021TransformativeNeuralRepresentations}. Taken together, these perspectives motivate two principles used
+throughout this thesis: (i) encoding depth and attentional control strongly shape memory outcomes, and (ii) memory
+is cue-dependent, reconstructive, and sensitive to external context.
+
+\subsection{How Readers Learn from Expository Texts}
+Humans do not memorize information in a vacuum; when reading expository texts (such as scientific articles or
+technical reports), they actively construct a mental representation of the content that integrates new information
+with prior knowledge. According to discourse comprehension theory, readers form a hierarchical \emph{situation
+model} of a text, which entails establishing local coherence between consecutive ideas and global coherence across
+the entire discourse \citep{vanDijk1983Discourse}. In building this situation model, the reader must identify the
+text’s structure, discern relationships between key concepts, and continuously update their understanding as new
+information is introduced. This process places substantial demands on attention and working memory.
+
+Because of these cognitive demands, the way an expository text is structured---and the presence of guiding cues or
+previews---can significantly influence learning outcomes. Pre-reading aids, often termed \emph{advance organizers}
+\citep{Ausubel1960AdvanceOrganizers,Ausubel1968EducationalPsychology}, activate relevant schemas and highlight the
+organizational framework of the forthcoming content. Empirical studies find that students who receive a conceptual
+outline or summary before reading complex text often achieve better comprehension and organization of recall
+\citep{MayerBromage1980AdvanceOrganizersRecall,HartleyDavies1976PreinstructionalStrategies}. Structural cues such as
+informative headings guide attention and improve memory for the organization of ideas \citep{LorchLorch1996HeadingsRecall}.
+
+Importantly, these aids often improve \emph{integration} and comprehension even when total free recall of facts is
+unchanged. Hartley and Davies \citep{HartleyDavies1976PreinstructionalStrategies} found that overviews do not
+always increase verbatim recall but consistently improve learners’ ability to grasp and transfer key concepts.
+Similarly, Stull and Mayer \citep{Stull2007GraphicOrganizers} showed that instructor-generated graphic organizers
+improve conceptual performance even without an advantage on immediate factual recall. This distinction between
+organizational understanding and verbatim detail is relevant for evaluating AI-generated summaries: summaries may
+strengthen gist and coherence while potentially weakening detail-rich encoding.
+
+\section{Cognitive Offloading and External Representations}
+External representations are a long-standing feature of human cognition: people routinely use notes, outlines, and
+digital tools to reduce memory demands and to coordinate complex tasks. In cognitive terms, this is often
+described as \emph{cognitive offloading}---the strategic use of external artifacts to store information or to
+reduce internal processing requirements \citep{Risko2016CognitiveOffloading}. Offloading can be adaptive in
+environments where working-memory resources are limited and tasks are time-constrained
+\citep{Baddeley2012WorkingMemory}.
+
+The most visible modern example is internet search. When information is reliably accessible, people encode less of
+the content itself and more of the location or access strategy \citep{Sparrow2011GoogleEffect}. Meta-analytic
+evidence suggests that frequent search behavior is associated with reduced recall of content alongside improved
+memory for where information can be found \citep{Gong2024GoogleEffectsMetaAnalysis}. These findings clarify an
+important trade-off: external availability can improve task performance while weakening internal knowledge
+structures if it displaces deep processing \citep{Craik1972LevelsOfProcessing}.
+
+Generative AI extends offloading beyond retrieval by producing \emph{transformed} representations (summaries,
+explanations, and drafts). This transformation can function as a scaffold for comprehension and decision-making,
+but it also changes source-monitoring conditions: when AI-generated content is fluent and plausible, users may
+later confuse its origin or accept it with insufficient scrutiny
+\citep{Johnson1993SourceMonitoring,Zhai2024OverRelianceAIDialogue}. Accordingly, the effects of generative AI cannot
+be understood solely as ``more information access''; they depend on how AI representations are timed, structured,
+and integrated into the user’s workflow.
+
+\section{Generative AI as External Representation in Knowledge Work}
+\subsection{Cognitive Effects of Generative AI Systems}
+Generative AI systems can influence cognition through mechanisms such as prompting deeper processing, offloading
+cognitive tasks, providing meta-cognitive feedback, and offering context-specific cues. Research indicates that AI
+tools can improve learning outcomes when they encourage reflection and elaboration. For example, \citet{Bai2023ChatGPTLearningMemory}
+found that students who interact with a large language model by asking questions and explaining answers can
+achieve better learning results than those who study without AI. The dialogue can prompt deeper semantic processing,
+consistent with the Levels of Processing framework \citep{Craik1972LevelsOfProcessing}. Similarly, \citet{Haider2024AICognitiveFunctions}
+report improvements in recall and problem-solving in AI-assisted learning settings.
+
+Beyond encoding, AI can support rehearsal and retrieval by providing external memory scaffolds. The Memoro system,
+for instance, offers a real-time dialogue interface that prompts users to restate and verify information during
+study \citep{Memoro2024RealTimeMemoryAugmentation}. This resembles retrieval practice: periodic prompting and
+feedback can strengthen retention by reactivating information and integrating it with existing knowledge.
+Complementing behavioral evidence, preliminary neuroscience work suggests that AI-assisted writing can modulate
+neural engagement associated with attention and semantic processing \citep{MITMediaLab2023BrainOnChatGPT}.
+
+AI systems can also support \emph{metacognition}---the monitoring and regulation of one’s own cognitive processes.
+\citet{Sun2025GenerativeAICreativity} show that generative AI can improve metacognitive calibration in creative
+tasks by prompting evaluation of alternatives and reflection on uncertainty. In learning contexts, similar prompts
+may improve confidence judgments by making uncertainty explicit and by encouraging verification behaviors.
+
+\subsection{Benefits and Risks of AI as External Representation}
+The benefits of AI assistance are coupled with significant risks. One concern is that AI tools can encourage users
+to invest less effort in understanding and remembering, since fluent answers and summaries are available on demand.
+This may produce an illusion of competence: a user appears capable with AI support but has not internalized the
+information \citep{Oakley2025MemoryParadox}. Such risk is consistent with the offloading literature and with
+theories that emphasize deep processing and active engagement for durable memory
+\citep{Craik1972LevelsOfProcessing,Baddeley2012WorkingMemory}.
+
+Another risk is \emph{memory distortion} through AI-generated misinformation or suggestion. \citet{Chan2024ConversationalAIFalseMemories}
+show that conversational AI can inadvertently increase false memories in tasks analogous to witness interviews,
+highlighting how plausible, fluent AI output can become intertwined with a user’s own recollections. Systematic
+reviews also caution that heavy dependence on AI tutors can reduce active engagement and weaken long-term skill
+development \citep{Zhai2024OverRelianceAIDialogue}.
+
+At a broader level, pervasive AI tools may shift cognitive habits by reallocating effort from memorizing details
+toward managing interfaces and interpreting AI outputs \citep{Gerlich2025AIToolsSociety}. AI can also shape the
+emotional and contextual aspects of memory: AI-curated experiences may heighten arousal or personalization, which
+can strengthen certain memories, but can also narrow exposure and reduce diversity of encoded experiences
+\citep{Beyaria2024NeuromarketingAIEmotionMemory}. Understanding when AI functions as a beneficial extension versus a
+detrimental replacement of human memory is a central challenge; this thesis approaches the problem by examining
+design-sensitive mechanisms, particularly timing and structure of AI-generated summaries.
+
+\section{Confidence, Source Monitoring, and Cognitive Load in Assisted Cognition}
+AI-generated summaries can alter not only what is learned, but also the conditions under which confidence is
+formed and sources are discriminated. This section synthesizes three theoretical strands that motivate the key
+design manipulations in Study~1: (i) cognitive load and split attention during learning, (ii) how timing of access
+changes encoding and cue availability, and (iii) how source-monitoring demands shape vulnerability to plausible but
+incorrect information.
+
+\subsection{Foundational Theories Motivating Timing and Structure}\label{subsec:theories-timing-structure}
+The experimental manipulations in this thesis are grounded in well-established findings in the learning sciences.
+The AI-generated summary functions as a compact surrogate for an article’s key propositions. The timing of access
+to this summary is manipulated to test whether seeing a summary \emph{before} reading helps to organize and
+scaffold encoding of the full text, as opposed to seeing it mid-way or only after reading. The structure of the
+summary is manipulated to test whether presenting it as an \emph{integrated paragraph} versus as \emph{segmented
+bullet points} affects coherence building and source attributions.
+
+\paragraph{Advance organizers and pre-reading scaffolds.}
+Ausubel’s theory of advance organizers predicts that providing a high-level conceptual framework \emph{prior} to
+learning enhances integration of new knowledge by activating relevant schemas and guiding attention during encoding
+\citep{Ausubel1960AdvanceOrganizers,Ausubel1968EducationalPsychology}. Evidence on pre-instructional strategies
+shows that previews (e.g., outlines or summaries) can improve comprehension and organization
+\citep{MayerBromage1980AdvanceOrganizersRecall,HartleyDavies1976PreinstructionalStrategies}, and headings can guide
+attention and improve recall of structure \citep{LorchLorch1996HeadingsRecall}. This suggests that pre-reading access
+to AI summaries may be especially beneficial when the summary acts as an encoding scaffold rather than as a
+post-hoc reminder.
+
+\paragraph{Mid-reading interruptions and divided attention.}
+Presenting an AI summary synchronously may introduce costs via task-switching and disrupted coherence: readers may
+need to pause, reorient, and rebuild a situation model. Task interruption and divided attention can impose extra
+working-memory demands, potentially weakening integration of information and increasing reliance on surface-level
+cues \citep{Baddeley2012WorkingMemory}.
+
+\paragraph{Cognitive load, split attention, and integrated presentation.}
+Cognitive load theory emphasizes limited working-memory resources and predicts that formats that minimize
+extraneous processing demands yield better learning \citep{Sweller1988CognitiveLoad}. The split-attention effect
+shows that when related information is separated, learners must expend effort to integrate it, which can impair
+learning \citep{ChandlerSweller1992SplitAttention}. Applied evidence confirms that integration vs.\ separation can
+produce measurable performance differences \citep{PociaskMorrison2008SplitAttentionRedundancy}. In this context, an
+integrated paragraph summary may reduce unnecessary scanning and facilitate verification against the source text,
+whereas segmented bullet points may encourage piecemeal processing and increase coordination demands.
+
+\subsection{Memory Distortion and Epistemic Risk}\label{subsec:distortion-risk}
+The Source Monitoring Framework \citep{Johnson1993SourceMonitoring} emphasizes that remembering involves
+determining where information came from (e.g., ``Did I read this in the article, or did it come from the summary?'').
+Source attributions rely on contextual and qualitative features of a memory; when different sources overlap and
+memories lack distinctive details, misattribution becomes more likely. The misinformation effect illustrates this
+risk: misleading post-event information can be incorporated into memory and later misattributed to the original
+event \citep{LoftusPalmer1974Misinformation,Loftus2005PlantingMisinformation}. Related work shows that suggestibility
+increases when sources share overlapping details and contextual tags are weak \citep{LindsayJohnson1989SuggestibilitySource}.
+
+False-memory research further underscores how gist-based representations can generate confident errors. In the DRM
+paradigm, people falsely recall theme-consistent lure words \citep{RoedigerMcDermott1995FalseMemoriesDRM}. Fuzzy
+Trace Theory explains this by positing that both gist and verbatim traces are encoded, but reliance on gist can
+dominate when verbatim traces are weak \citep{BrainerdReyna2005ScienceFalseMemory}. Summaries emphasize gist and can
+thus increase vulnerability to gist-consistent false recognitions, especially if AI output is plausible and fluent.
+This motivates measuring epistemic risk (e.g., false-lure endorsement) in Study~1 and motivates design choices that
+support provenance discrimination.
+
+\section{Human--AI Decision-Making (Trust, Reliance, Bias, Accountability)}
+\label{sec:human-ai-decision-making}
+When AI outputs support decisions, the central behavioral question becomes not only \emph{accuracy} but also
+\emph{calibrated reliance}: users must decide when to accept an AI representation, when to verify it, and when to
+disregard it. In educational contexts, over-reliance can reduce active engagement and long-term skill development
+\citep{Zhai2024OverRelianceAIDialogue}. In professional contexts, similar dynamics can create a dependence loop in
+which decision-makers defer to AI recommendations even when they could reason independently, producing a knowledge
+imbalance and increasing epistemic risk \citep{Zhang2024KnowledgeImbalanceAI}. These dynamics are more likely when
+AI outputs are fluent, time pressure is high, and verification costs are non-trivial.
+
+Reliance is also shaped by accountability and transparency constraints. If an AI system influences decisions but
+its rationale is opaque, organizations may struggle to audit errors, detect bias, or assign responsibility. The
+``black-box'' problem is therefore not only a technical issue but a governance issue: opaque systems can encourage
+uncritical acceptance while making failures hard to diagnose \citep{Pasquale2015BlackBoxSociety}. For roles that
+mediate between stakeholders and technical systems---such as product management---this elevates the importance of
+provenance cues, documentation practices, and norms of verification when AI-generated summaries and
+recommendations enter decision workflows \citep{Pinzauti2025ReinventingPM}.
+
+\section{AI in Professional and Managerial Contexts}
+\subsection{AI--Augmented Memory in Organizations and Applied Systems}
+Beyond individual cognition, the integration of AI into memory processes has significant implications for
+organizations and knowledge-intensive work. Enterprises increasingly rely on digital ecosystems in which AI
+systems support information recall, contextual understanding, and knowledge retrieval, effectively functioning as
+external, collective memory infrastructures.
+
+AI tools can act as cognitive extensions in professional environments by organizing personal and collective
+knowledge into searchable, semantically structured archives. By surfacing prior meeting notes, decision histories,
+or relevant research exactly when needed, such systems externalize elements of working memory and help maintain
+continuity in fast-paced workflows \citep{Memoro2024RealTimeMemoryAugmentation,Gerlich2025AIToolsSociety}. This
+extends cognitive offloading \citep{Sparrow2011GoogleEffect,Risko2016CognitiveOffloading} into organizational
+settings where information fragmentation is a constant challenge.
+
+This perspective aligns with work on AI-assisted knowledge management, which emphasizes complementarity between AI
+systems and human expertise \citep{Pai2022AIKnowledgeManagement}. AI can rapidly organize and filter information,
+but it is most effective when guided by humans who provide context and interpretive insight. Together, they can
+sustain an organizational memory that is more comprehensive and accessible than unaided human memory, yet more
+flexible and meaningful than data left to accumulate without human interpretation.
+
+Applied AI--memory systems illustrate how algorithmic tools can function as external supports for encoding,
+retrieval, and metacognitive regulation in real-world settings. In healthcare and neurotechnology, AI-guided
+stimulation approaches have been shown to enhance episodic recall in clinical contexts
+\citep{Kucewicz2023BrainStimulationMemory}. In education, intelligent tutoring systems improve learning outcomes by
+tailoring practice and feedback \citep{Ma2014ITSMetaanalysis,Alshaikh2021ITS}, and active learning improves durable
+retention relative to passive reading \citep{Freeman2014ActiveLearning}. Generative AI tutors can leverage these
+principles by sustaining reflective dialogue and prompting retrieval and self-explanation \citep{Abrar2025Cognitive}.
+In everyday settings, augmented reality interfaces are emerging as a platform for on-demand contextual recall; the
+``AR Secretary Agent'' combines wearable AR glasses with an LLM-based assistant to provide real-time memory
+augmentation \citep{ElHaddad2025ARSecretaryAgent}.
+
+\section{Product Management as a Decision-Intensive Domain}
+Product management is a decision-intensive role that integrates heterogeneous evidence (user feedback, market
+signals, analytics, technical feasibility, and stakeholder constraints) into product choices under uncertainty and
+time pressure. In agile settings, product managers coordinate discovery and prioritization work while aligning
+cross-functional teams around goals and trade-offs \citep{TkaliRomanova2022AgilePM}. These responsibilities make the
+role highly dependent on \emph{external representations}: roadmaps, requirement documents, research summaries, and
+internal knowledge bases stabilize collective understanding over time.
+
+Generative AI is increasingly positioned as an additional representational layer in product-management workflows,
+supporting tasks such as summarizing customer feedback, drafting product narratives, and accelerating synthesis
+across fragmented information sources \citep{Pinzauti2025ReinventingPM}. These uses are best understood as a mix of
+automation (reducing repetitive synthesis work) and augmentation (supporting judgment with condensed
+representations). However, they also shift part of the role toward \emph{evaluation and governance} of AI outputs:
+product managers may need to detect when AI-generated summaries are incomplete or biased, maintain provenance cues,
+and ensure that accountability for decisions remains clear \citep{Pasquale2015BlackBoxSociety}.
+
+Because product management combines heavy information processing with high-stakes communication and justification,
+it provides a natural applied setting for studying how AI-generated representations shape both cognition and
+reliance. Competence in this setting plausibly includes \emph{AI literacy}---the ability to interpret, evaluate,
+and appropriately use AI outputs rather than treating them as authoritative \citep{WangPham2022AILiteracyScale}.
+
+\section{Synthesis and Research Gap}
+Across cognitive and organizational perspectives, prior work converges on a common pattern: external
+representations can enhance performance by providing cues and reducing load, but they can also induce cognitive
+offloading and source confusion when they displace deep processing
+\citep{Craik1972LevelsOfProcessing,Risko2016CognitiveOffloading,Sparrow2011GoogleEffect,Johnson1993SourceMonitoring}.
+Generative AI intensifies this trade-off because it produces fluent, transformed representations whose provenance
+may be ambiguous and whose errors can be incorporated into memory and judgment
+\citep{Chan2024ConversationalAIFalseMemories,Zhai2024OverRelianceAIDialogue}. In organizations, AI-augmented
+knowledge management promises continuity and efficiency \citep{Pai2022AIKnowledgeManagement}, yet can create
+epistemic dependence and accountability challenges when AI outputs shape professional decisions
+\citep{Zhang2024KnowledgeImbalanceAI,Pasquale2015BlackBoxSociety}.
+
+A key gap is that these strands are often studied in isolation. Cognitive studies rarely connect interface-level
+design choices (timing, structure, provenance cues) to professional reliance patterns, while organizational
+accounts rarely link observed AI use to mechanisms such as cue-dependent retrieval and source monitoring. This
+thesis addresses that gap with a multi-level design: Study~1 provides causal evidence on how timing and structure
+of AI-generated summaries affect memory and epistemic risk in a controlled reading task, while Study~2
+characterizes how product managers deploy AI-generated representations in decision-intensive work
+\citep{Pinzauti2025ReinventingPM}. The next chapter introduces the \emph{AI Buffer} model as an integrative
+framework to connect these levels and to derive propositions for safer, more effective AI-assisted cognition and
+decision-making.
+

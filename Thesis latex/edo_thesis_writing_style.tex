@@ -1,0 +1,57 @@
+% Edo thesis converted from PDF into editable LaTeX, using a thesis-style main file.
+% This file does NOT modify `Thesis writing`.
+%
+% Build (from this folder):
+%   pdflatex edo_thesis_writing_style.tex
+%   pdflatex edo_thesis_writing_style.tex
+
+\newif\ifpolimiclass
+\IfFileExists{Configuration_Files/PoliMi3i_thesis.cls}{\polimiclasstrue}{\polimiclassfalse}
+\ifpolimiclass
+  \documentclass{Configuration_Files/PoliMi3i_thesis}
+\else
+  \documentclass[12pt,a4paper]{book}
+\fi
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{parskip}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{CJKutf8}
+
+\newenvironment{ChineseBlock}{\begin{CJK*}{UTF8}{gbsn}}{\end{CJK*}}
+
+\hypersetup{hidelinks}
+
+\providecommand{\startpreamble}{}
+\providecommand{\puttitle}[1]{}
+
+\begin{document}
+
+\frontmatter
+
+% If the PoliMi template is available, you can replace this with a \puttitle{...}
+% block matching the template format. In fallback mode we print a simple title page.
+\ifpolimiclass
+  % Optional: fill if you have the PoliMi template class files in Configuration_Files/.
+\else
+  \begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\LARGE Reinventing the Product Manager in the AI Era\par}
+    \vspace{0.75cm}
+    {\large (Converted from \texttt{Tesi edo Cina copia.pdf})\par}
+    \vfill
+  \end{titlepage}
+\fi
+
+\startpreamble
+
+\input{edo_frontmatter.tex}
+
+\mainmatter
+\input{edo_body.tex}
+
+\end{document}
+

@@ -1,0 +1,1056 @@
+\chapter{Experimental Materials}
+\label{app:materials}
+
+This appendix documents the participant-facing study materials (article stimuli, AI summaries, and the MCQ item bank).
+Internal annotation markers (e.g., ``FALSE LURE'') present in the source code were stripped in the experimental interface before display; the summaries reproduced here match the displayed versions.
+\par\smallskip
+\textbf{Language note.} All participant-facing materials were administered in Simplified Chinese. For transparency and accessibility, this appendix reproduces each stimulus in its original Chinese form, followed by an English translation (for reference only). The English versions were translated from the Chinese materials used in the experiment.
+
+\section{Stimuli overview}
+
+\begin{table}[H]
+\centering
+\caption[Stimuli overview]{Overview of reading stimuli and summaries (word counts based on whitespace tokenization).}
+\label{tab:stimuli_overview}
+\small
+\begingroup
+\setlength{\tabcolsep}{4pt}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X >{\centering\arraybackslash}p{1.6cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{2.2cm} >{\centering\arraybackslash}p{1.4cm}@{}}
+\toprule
+Article title & Article\\words & Integrated\\summary\\words & Segmented\\summary\\words & MCQ\\items \\
+\midrule
+Urban Heat Islands: Causes, Consequences, and What Works & 1223 & 270 & 152 & 14 \\
+CRISPR Gene Editing: Promise, Constraints, and Responsible Use & 1249 & 271 & 149 & 14 \\
+Semiconductor Supply Chains: Why Shortages Happen and How to Build Resilience & 1293 & 264 & 162 & 14 \\
+\bottomrule
+\end{tabularx}
+\endgroup
+\end{table}
+
+\section{MCQ source mapping and false-lure items}
+
+Each article contained 14 multiple-choice items. Items were categorized as (i) AI-summary-covered, (ii) article-only, or (iii) \emph{false-lure} items (where a specific incorrect option corresponded to an AI hallucination/distractor used to quantify misinformation endorsement).
+
+\begin{table}[H]
+\centering
+\caption{MCQ source mapping and false-lure designation (0-based indices in parentheses; question numbers in brackets).}
+\label{tab:false_lure_mapping}
+\begin{tabular}{p{2.8cm}p{4.1cm}p{4.1cm}p{3.9cm}}
+\toprule
+Article & AI summary items & Article-only items & False-lure items \\
+\midrule
+CRISPR & 0,1,3,4,5,6,7,9 & 8,10,11,12 & 2 (Q3), 13 (Q14) \\
+Semiconductors & 0,1,2,3,4,5,6,9 & 7,11,12,13 & 8 (Q9), 10 (Q11) \\
+Urban heat islands (UHI) & 0,1,2,4,5,6,7,8 & 9,11,12,13 & 3 (Q4), 10 (Q11) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{False-lure option mapping (0-based option indices: A=0, B=1, C=2, D=3).}
+\label{tab:false_lure_options}
+\begin{tabular}{llcl}
+\toprule
+Article & Item & False-lure option & Description \\
+\midrule
+CRISPR & Q3 (idx 2) & B (1) & DNA repair activity \\
+CRISPR & Q14 (idx 13) & A (0) & Restore \\
+Semiconductors & Q9 (idx 8) & A (0) & Quantum processors \\
+Semiconductors & Q11 (idx 10) & B (1) & 46 silicon atoms wide \\
+UHI & Q4 (idx 3) & C (2) & Photocatalytic roof tiles \\
+UHI & Q11 (idx 10) & C (2) & Aged asphalt albedo 0.22 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Full stimuli (articles and summaries)}
+
+\subsection{Urban Heat Islands: Causes, Consequences, and What Works}
+
+\textbf{Original (Chinese; administered in the experiment).}\par
+\begin{ChineseBlock}
+\textbf{标题。} 城市热岛：原因、后果和有效方法\par
+\textbf{自由回忆提示。} 请在 5 分钟内写出您从文章中记住的所有内容。尝试用自己的话描述主要想法和关系——原因、后果和解决方案。\par
+
+\textbf{文章正文。}
+\begin{quote}\small
+城市作为复杂的热系统运作——建筑物、道路与大气共同作用，形成持续的温度差异。每条街道、每个屋顶、每段道路都像热存储单元：白天，沥青路面、砖砌建筑和混凝土结构吸收阳光，并将这股能量转化为热量。与通过水分蒸发和反射降温的绿地不同，城市表面在整个白昼都不断储热。夜晚太阳落山后，这些储存的热量以红外辐射的形式向下层大气释放。城市峡谷几何结构——建筑高度与街道宽度的比率——限制了这种热释放：热辐射在多个表面反射之间被"困"住，才得以逃逸至大气。由此，市中心区域夜间温度比周边郊区高出三至七摄氏度，形成科学家所称的"城市热岛"（Urban Heat Island, UHI）效应。热浪期间，这种温度升高在基础变暖之上叠加，导致空调能耗升高、雾霾生成加剧、弱势人群的热应激风险增加。
+
+这些温差的规模源自物理、材料与气流等因素共同决定的城市能量平衡。表面反射率——以反照率（albedo）衡量，从 0（完全吸收）至 1（完全反射）——在决定吸收太阳能量方面起到关键作用。新铺的沥青表面反照率约为 0.05，仅反射约 5 \% 的入射阳光，而吸收约 95 \%。氧化后的旧沥青略提高至约 0.12，但仍远低于植被覆盖地面（反照率约 0.20 — 0.25）。由此，低反照率表面成为高效的太阳能"收集器"，将辐射转化为可储存的热量。另外，材料特有的热容量（thermal mass）——即储热能力——决定加热和冷却的速度。密集的建筑材料包括混凝土、砖石、石材等具有高热容量，使储热延长、夜间降温延迟。这个储热‑释放循环持续运作：建筑在白天吸收辐射，日落后逐渐释放储热，以便使夜间温度长期维持在较高水平。
+
+城市几何结构进一步增强了热量滞留——所谓"城市峡谷"效应。高楼夹在狭窄街道两侧，形成受限空间，不仅阻挡正午太阳直射，也限制夜间热辐射外逸。在这些峡谷内，太阳辐射在表面之间多次反弹然后逃逸，每次反弹增加被吸收的概率。三维结构由此像一个热量陷阱，最大化能量捕获而最小化冷却路径。同时，建筑物墙面之间受限的气流阻碍了对流冷却——空气流动搬运热量的机制——以便阻断了大气冷却的一个主要途径。最后，来自车辆发动机、建筑供暖与制冷系统、工业流程等的人为废热直接加入城市大气，补充了太阳加热。在极端高温事件中，电力公司响应高用电需求启动效率较低的备用发电机（常为燃煤厂），这些发电机既排放温室气体又使用水进行冷却塔操作，形成一个反反馈循环：降热措施反而产生额外排放与资源使用。
+
+热应激的地理分布直接映射到社会经济格局，产生环境正义问题并带来可测量的健康影响。集中贫困、绿地覆盖较少、建筑密度高、更多的不透水面（如水泥、沥青）社区，所经历的热暴露明显更严重。在严重高温期间——定义为持续超过正常温度范围的时期——死亡风险随热强度显著上升，尤其影响老年人、有心肺疾病者、户外工作者和没有空调的居民。应急医疗系统也由此面临激增的热相关护理需求，给医疗资源带来压力。由此，城市热岛既是一种具有可测温差的物理气候现象，也是反映城市人口之间基础设施、资源分配和恢复能力不平等的社会问题。
+
+要抵消这些热积累过程，需要跨尺度、多层次的综合策略。其核心原理是通过四种相互关联的机制来调节地表能量收支：提升反照率、提供遮荫、增强蒸发冷却，以及调控热容量。例如，使用高反照率涂层的"冷屋顶系统"可将表面反射率从常规值（约 0.10–0.20）提升至 0.70–0.85，以便减少 60–75\% 的太阳能吸收。同样，"冷铺装"——采用浅色材料或可渗水设计的路面，可使高温时段的地表温度比传统沥青低 10–20 摄氏度。但这些方案需要精心设计：如果仅提升可见光反射，而忽略红外辐射，会导致眩光问题，造成视觉不适，甚至因反射辐射加热周围空气。由此，最优的冷表面技术采用波长选择性涂层，最大化反射近红外光（太阳能量峰值所在），同时调控可见亮度。
+
+植被则通过多种生物过程提供辅助降温。树冠在阳光到达地面前先行拦截，形成叶片下方的阴凉区。更重要的是，植物通过叶孔控制释放水蒸气（蒸腾作用），将热能转化为水分蒸发。这种蒸散冷却过程相当于一个分布式大气冷却系统，既降低温度，也提高局部湿度。由此，城市绿化工程具有双重降温效果：一是直接遮荫，二是通过蒸发冷却。小尺度绿色基础设施——如绿化屋顶、垂直绿墙、用于雨水管理的植被浅沟（bioswales）——也可将此类功能扩展至建筑表面与街道设施中。但植被方案亦面临实施挑战，例如干旱地区水资源不足、维护成本高、地下管线冲突及长时间生长周期才见效等问题。
+
+在个体干预之外，要建立系统性的复原力，必须通过综合城市规划将热环境纳入土地利用、建筑规范与基础设施政策中。例如，规划法规可以强制最低树木覆盖率、限制不透水地表比例，或通过开发奖励机制鼓励使用冷材料。建筑能效标准日益涵盖热性能指标，如屋顶太阳反射指数、墙体热阻值等，可降低冷却需求并提升室内舒适度。优先发展行人区、自行车道及公共交通导向开发（TOD）的交通规划，不仅减少汽车热排放，也创造出适合植树与设置透水地面的空间。
+
+最关键的是，实现公平的气候适应需将降温干预优先导向热风险最严重的社区，通过"按需分配资源"的方式，而不是仅由市场机制决定谁能获得降温基础设施。换言之，应把社会脆弱性纳入城市热岛应对策略中，以便避免让高温治理本身加剧社会不平等
+
+最新研究正探索多项先进技术，包括辐射冷却材料，这类材料被设计用于在大气透明窗口波段（8–13 微米红外）主动发射热量，使即便在白天也能将热量直接以辐射形式释放到太空中，实现被动降温。相变材料（Phase-change materials, PCMs）被嵌入建筑墙体中，可在升温期间吸收热能、降温期间释放热量，以便缓冲室内温度变化。在更大尺度上，区域能源系统通过回收废热进行再利用（如区域集中供热网络或工业系统整合），可显著降低整体热排放。但这些技术仍远比传统材料昂贵，在没有政策激励或财政补贴的情况下难以被广泛采用。
+
+归根结底，应对城市热岛效应是一项社会-技术复合型挑战，需跨越不同治理层级、专业领域与社区主体之间进行协同合作。对热传导物理、材料科学与大气动力学的科学理解为机制提供理论基础；工程专业能力则将这些原理转化为实际可用的冷表面技术、绿色基础设施与建筑创新解决方案。城市规划则将这些技术能力整合进空间框架中，考量土地利用格局、交通网络与社会公平维度。社区参与确保干预措施贴合地方需求，融合传统知识，并增强居民的适应能力。
+
+最终，成功不仅取决于技术部署本身，更依赖于制度安排——是否能实现长期维护、公平可及、以及在城市形态与气候变化演变中持续调整适应。城市热岛由此不仅是一个需要工程应对的物理问题，更是一个检视城市如何在效率与韧性、经济增长与环境质量、整体繁荣与公平分配之间取得平衡的透视窗口。
+\end{quote}
+
+\textbf{AI 摘要（整合版）。}
+\begin{quote}\small
+城市热岛效应的形成源于城市区域比周边乡村地带更强地吸收并储存太阳辐射。沥青、砖块、混凝土等材料通常具有 0.05–0.20 的极低反照率，意味着它们几乎不反射阳光，而是吸收大部分入射能量。新铺沥青仅反射约 5\% 的阳光，行业评估普遍认为老化沥青的反照率可升至接近 0.22，显示其随时间推移反射率有所提高。高热容量材料（如石材、混凝土、砖块）在日落后仍会持续释放白天存储的热量，使夜间温度比周边郊区高出 3–7 °C。城市峡谷结构（高楼夹窄街）进一步困住长波辐射，减缓夜间冷却并降低通风效率。
+
+在热浪期间，这些热效应被显著放大，提高健康风险和用电需求。热暴露呈不均衡分布：树荫稀少、建筑密集、不透水地面比例高的低收入社区往往更炎热。弱势人群（如老年人、心血管病患者、户外工作者以及没有空调的住户）承受更大健康风险。与此同时，近期试点项目推广光催化屋顶瓦片，声称其可通过热电效应将吸收的热量转化为电能，被视为一种兼具降温与发电潜力的复合型城市降温技术。
+
+缓解策略包括提升表面反照率、增加遮荫、利用植被增强蒸散冷却、优化城市材料的热容量等。"冷屋顶"反照率可达到 0.70–0.85，可减少 60–75\% 的热量吸收。城市林业通过遮荫与蒸腾共同降低温度。长期韧性需要结合技术方案与公平的资源分配，优先支持缺乏绿地与降温基础设施的弱势社区。
+\end{quote}
+
+\textbf{AI 摘要（分段版）。}
+\begin{quote}\small
+1. 城市热岛效应源于城市表面对太阳能的吸收与储存远超周边乡村地区。
+
+2. 沥青（约 0.05）与砖块等低反照材料可吸收 90–95\% 的阳光。
+
+3. 高热容量材料在白天储热，夜间缓慢释放，使高温持续。
+
+4. 城市峡谷结构阻碍长波辐射散逸，削弱夜间冷却并抑制空气流动。
+
+5. 行业评估称老化沥青反照率可升至约 0.22，随老化而更具反射性。
+
+6. 热浪期间健康风险加剧，尤其影响老年人、心血管病患、户外劳工与无空调住户。
+
+7. 低收入社区因树木稀少、建筑密集、不透水地面多而承受更高热负担。
+
+8. 高反照"冷屋顶"（0.70–0.85）可减少 60–75\% 的热吸收。
+
+9. 城市植被通过遮荫和叶片蒸腾实现双重降温。
+
+10. 试点项目称光催化屋顶瓦片可借由热电效应把热量直接转化为电能
+\end{quote}
+\end{ChineseBlock}
+
+\textbf{English translation (for reference only).}\par
+\textbf{Free-recall prompt.} Please write everything you remember from the article within 5 minutes. Try to describe main ideas and relationships --- causes, consequences, and solutions --- in your own words.
+
+\textbf{Article text.}
+\begin{quote}\small
+Cities function as complex heat systems where buildings, roads, and the atmosphere interact to create persistent temperature differences. Every street, rooftop, and road acts as a heat storage unit: during the day, asphalt roads, brick buildings, and concrete structures absorb sunlight and convert this energy into heat. Unlike green spaces that cool through water evaporation and reflection, city surfaces continuously store heat throughout daylight hours. When night falls and the sun disappears, these stored heat sources release infrared radiation back into the lower atmosphere. This heat release is restricted by urban canyon geometry---the ratio of building height to street width---which traps outgoing radiation through multiple reflections between surfaces before it can escape to the atmosphere. As a result, central city areas show nighttime temperatures three to seven degrees Celsius higher than surrounding suburban areas, creating what scientists call the urban heat island (UHI) effect. During heat waves, this temperature increase adds to baseline warming, raising energy use for air conditioning, worsening air quality through smog formation, and increasing heat stress among vulnerable populations.
+
+The size of these temperature differences comes from combined physical, material, and airflow factors that together determine the urban energy balance. Surface reflectivity---measured through the albedo coefficient ranging from zero (complete absorption) to one (perfect reflection)---plays a crucial role in determining absorbed solar energy. Fresh asphalt surfaces have albedo values around 0.05, reflecting only five percent of incoming sunlight while absorbing ninety-five percent. Aged asphalt oxidizes to slightly higher reflectance (\ensuremath{\sim}0.12), but remains much darker than vegetated ground cover (albedo \ensuremath{\sim}0.20--0.25). Low-albedo surfaces therefore work as efficient solar collectors that convert radiation into stored heat. Additionally, the material-specific thermal mass---defined as heat storage capacity---controls the speed of heating and cooling. Dense construction materials including concrete, brick, and stone have high thermal mass, enabling prolonged energy storage that delays nighttime cooling. This storage-release cycle operates continuously: buildings absorb radiation throughout the day, then gradually release stored heat after sunset, maintaining elevated nighttime temperatures for extended periods.
+
+Urban geometry further increases heat retention through urban canyon effects. Tall buildings along narrow streets create confined spaces that restrict both incoming sunlight during midday and outgoing radiation at night. Within these canyons, solar radiation bounces between surfaces multiple times before escaping to the atmosphere, increasing the chance of absorption with each bounce. The three-dimensional structure therefore functions as a heat trap, maximizing energy capture while minimizing cooling pathways. At the same time, restricted airflow between building walls prevents convective heat removal---the mechanical transport of heat through air movement---thus blocking one of the atmosphere's main cooling mechanisms. Finally, human-generated waste heat from vehicle engines, building heating and cooling systems, and industrial processes adds extra heat directly into the urban atmosphere, supplementing solar heating. During extreme heat events, power companies respond to increased electricity demand by activating less efficient backup generators, often coal-burning plants that emit greenhouse gases while using water for cooling towers, creating a feedback loop where heat reduction efforts paradoxically generate additional emissions and resource use.
+
+The geographic distribution of heat stress maps directly onto socioeconomic patterns, creating environmental justice issues with measurable health impacts. Neighborhoods with concentrated poverty, reduced tree coverage, higher building density, and more impervious surfaces experience disproportionately higher heat exposure. During severe heat episodes---defined as sustained periods exceeding normal temperature ranges---mortality risk increases dramatically with heat intensity, affecting elderly people, individuals with heart or breathing problems, outdoor workers, and residents without air conditioning. Emergency medical systems face surging demand for heat-related care, straining healthcare resources. Thus, the urban heat island is both a physical weather phenomenon with measurable temperature differences and a social inequality issue that reflects unequal resource distribution, infrastructure investment, and resilience capacity across urban populations.
+
+Counteracting these heat processes requires integrated strategies across multiple scales. The basic principle involves modifying surface energy budgets through four connected mechanisms: increasing reflectance, providing shade, amplifying evaporative cooling, and manipulating thermal mass. Cool roofing systems coated with high-albedo materials can raise surface reflectance from typical values (\ensuremath{\sim}0.10--0.20) to enhanced levels approaching 0.70--0.85, thereby reducing absorbed solar energy by sixty to seventy-five percent. Similarly, "cool pavements" using lighter-colored materials or permeable designs that allow subsurface moisture show surface temperature reductions of ten to twenty degrees Celsius compared to conventional asphalt during peak sun exposure. However, these solutions require careful design: increased visible light reflection without corresponding infrared reduction can increase glare, creating visual discomfort and potentially raising nearby air temperatures through redirected radiation. Optimal cool surface technologies therefore use wavelength-selective coatings that maximize near-infrared reflection---where solar energy peaks---while moderating visible brightness.
+
+Vegetation provides complementary temperature control through multiple biological processes. Tree canopies intercept sunlight before it reaches the ground, creating shaded areas beneath leaves. More importantly, leaf transpiration---the controlled release of water vapor through plant pores---converts heat into water evaporation energy. This evapotranspiration process effectively works as a distributed atmospheric cooling system that moderates temperatures while simultaneously increasing local humidity. Urban forestry programs thus serve dual heat reduction functions: direct shade plus evaporative cooling. Green infrastructure at smaller scales---including vegetated rooftops, vertical gardens, and bioswales for stormwater management---extends these principles across building surfaces and street features. Nevertheless, vegetation faces implementation challenges including water availability in dry regions, maintenance costs, conflicts with underground utilities, and long growth periods before benefits fully develop.
+
+Beyond individual interventions, systemic resilience requires comprehensive urban planning that integrates heat considerations into land-use decisions, building codes, and infrastructure priorities. Zoning regulations can mandate minimum tree coverage ratios, restrict impervious surface percentages, or incentivize cool material use through development bonuses. Building energy standards increasingly include thermal performance metrics---such as roof solar reflectance indices and wall thermal resistance---that reduce cooling needs while improving indoor comfort. Transportation planning that prioritizes pedestrian areas, cycling networks, and transit-oriented development reduces vehicle heat emissions while creating opportunities for shade trees and permeable surfaces. Critically, equitable climate adaptation requires targeting interventions toward thermally vulnerable neighborhoods through needs-based resource allocation rather than allowing market forces alone to determine cooling infrastructure distribution.
+
+Emerging research explores advanced technologies including radiative cooling materials engineered to emit heat at atmospheric transparency wavelengths (8--13 micrometer infrared band), enabling passive heat rejection directly to space even during daylight. Phase-change materials within building walls can buffer indoor temperature changes by absorbing heat during warming periods and releasing it during cooling cycles. District-scale energy systems that recover waste heat for beneficial uses---such as district heating networks or industrial integration---reduce overall heat emissions. However, these innovations remain expensive compared to conventional materials, limiting adoption without regulations or subsidies.
+
+Ultimately, urban heat mitigation represents a sociotechnical challenge requiring coordinated action across governance levels, professional fields, and community stakeholders. Scientific understanding of heat transfer physics, materials science, and atmospheric dynamics provides the mechanistic foundation. Engineering expertise translates theoretical principles into practical cool surface technologies, green infrastructure systems, and building innovations. Urban planning synthesizes these technical capabilities within spatial frameworks that account for land-use patterns, transportation networks, and social equity considerations. Community engagement ensures that interventions address local needs, incorporate traditional knowledge, and build adaptive capacity among residents. Success depends not merely on technology deployment but on institutional arrangements that sustain long-term maintenance, equitable access, and continuous adaptation as climate and urban form evolve. The heat island thus becomes not only a physical problem with engineering solutions but a lens revealing how cities balance efficiency with resilience, economic growth with environmental quality, and overall prosperity with distributional justice.
+\end{quote}
+
+\textbf{AI summary (integrated/paragraph format).}
+\begin{quote}\small
+Urban heat islands develop when cities absorb and retain solar radiation far more effectively than nearby rural landscapes. Surfaces such as asphalt, brick, and concrete have very low albedo values---typically between 0.05 and 0.20---meaning they reflect little sunlight and absorb most incoming energy. While fresh asphalt reflects only around five percent of sunlight, some assessments suggest that aged asphalt can reach albedo values near 0.22, though measured values generally remain much lower in practice. High thermal-mass materials including stone, brick, and concrete continue releasing stored heat well after sunset, keeping nighttime temperatures three to seven degrees Celsius warmer than surrounding areas. Urban canyon geometry---tall buildings along narrow streets---further traps outgoing longwave radiation, slowing atmospheric cooling and reducing ventilation.
+
+These thermal effects intensify during heat waves, elevating health risks and increasing electricity demand. Heat exposure is distributed unevenly: low-income neighborhoods with limited tree canopy, dense construction, and extensive impervious surfaces experience far higher temperatures. Vulnerable groups such as elderly residents, people with cardiovascular conditions, outdoor workers, and those without air conditioning face disproportionate risks. At the same time, recent pilot programs have promoted photocatalytic roof tiles that supposedly convert absorbed heat into electrical energy through thermoelectric effects, though such claims remain unverified and lack large-scale evidence.
+
+Mitigation strategies focus on increasing surface reflectance, boosting shading, enhancing evaporative cooling through vegetation, and optimizing thermal mass. High-albedo "cool roofs," with reflectance values of 0.70--0.85, can reduce absorbed heat by 60--75\%. Urban forestry provides dual benefits through shading and evapotranspiration. Long-term resilience requires integrated planning that aligns technical solutions with equitable resource distribution, prioritizing vulnerable communities lacking access to cooling infrastructure and green space.
+\end{quote}
+
+\textbf{AI summary (segmented/bullet format).}
+\begin{itemize}
+  \item Urban heat islands form when city surfaces absorb and retain far more solar energy than nearby rural areas.
+  \item Low-albedo materials such as asphalt (\ensuremath{\sim}0.05) and brick absorb 90--95\% of incoming sunlight.
+  \item High thermal-mass materials store heat during the day and release it slowly overnight, sustaining elevated temperatures.
+  \item Urban canyon geometry traps outgoing longwave radiation, reducing nighttime cooling and impeding airflow.
+  \item Some assessments claim aged asphalt can reach albedo values near 0.22, increasing reflectance with age.
+  \item Heat exposure intensifies health risks for elderly individuals, people with cardiovascular conditions, and those lacking air-conditioning.
+  \item Low-income neighborhoods face higher heat burdens due to fewer trees, denser buildings, and more impervious surfaces.
+  \item High-albedo cool roofs (0.70--0.85 reflectance) reduce heat absorption by 60--75\% compared with conventional materials.
+  \item Urban forestry cools cities through shading and evaporative cooling generated by leaf transpiration.
+  \item Pilot programs investigating photocatalytic roof tiles claim they convert absorbed heat into electrical energy, though evidence is limited.
+\end{itemize}
+
+\subsection{CRISPR Gene Editing: Promise, Constraints, and Responsible Use}
+
+\textbf{Original (Chinese; administered in the experiment).}\par
+\begin{ChineseBlock}
+\textbf{标题。} CRISPR 基因编辑：承诺、限制和负责任的使用\par
+\textbf{自由回忆提示。} 请在 5 分钟内回忆起文章中的所有内容，描述 CRISPR 的工作原理、其医学和农业应用、主要局限性以及伦理或治理挑战。\par
+
+\textbf{文章正文。}
+\begin{quote}\small
+CRISPR–Cas 系统 最初起源于微生物的防御机制——一种细菌用来识别并消灭入侵病毒的分子形式免疫记忆。每次感染都会在细菌基因组中留下病毒 DNA 的一小段碎片，以便创建了一份永久的生物入侵攻击记录。当同一种病毒再次出现时，细菌会将这些碎片转录为 RNA 指导链，引导 Cas 酶朝向匹配的序列，将病毒 DNA 切割开来。这个识别 + 切割的优雅过程激发了科学家们将该系统改造成他们自己的用途。通过设计与任意选定 DNA 序列匹配的合成指导 RNA，研究人员就可以精确引导 Cas 酶到达该位点，切裂双螺旋，然后让细胞的修复机制对其进行重写。这一原理——"指导、切割、修复"——已经把一种细菌为生存所用的技巧变成了现代生物学中最强大的工具之一。
+
+CRISPR 的可获得性具有革命性意义。以往需要数月努力、使用复杂工具（如锌指核酸酶或 TALENs）才能完成的任务，现在在基础实验室中、借助廉价试剂，在数日内即可完成。这种基因编辑的民主化加速了医学、农业和环境修复方面的发现。不过，CRISPR 的简易性背后隐藏着层层复杂。基因组修饰的精确性是统计性的，而非绝对的：即便设计良好的指导 RNA 也可能结合到意外的 DNA 区域，以便造成"脱靶"编辑，破坏其他基因。挑战不仅在于准确地切割，更在于确保切割仅发生在预期位置。
+
+为了降低这些风险，科学家不断改进系统。他们调整指导 RNA 的长度和化学结构，开发预测算法，并设计具有更高保真的酶。像 SpCas9‑HF1 或 eSpCas9 由此的高精度变体，通过修改 DNA 结合表面来最小化不想要的相互作用。更新的工具——碱基编辑器和始端编辑器（prime editors）——更进一步，通过避免完全双链断裂来实现编辑。它们不是切断两条 DNA 链，而是替换单个字母或复制短序列，以便允许以更少副作用进行细微校正。从粗略切割转向分子级微调，这扩展了可治疗的基因变异范围。
+
+尽管有这些改进，递送仍然是最难的一步。编辑组件必须进入正确的细胞、到达细胞核，并在不引发免疫排斥的情况下发挥作用。像 adeno‑associated virus (AAV) 由此的病毒载体效率高，但其载货空间有限，且可能引发抗体反应，以便阻碍重复给药。脂质纳米颗粒——在 mRNA 疫苗中使用的那种——可以携带更大分子，但会集中在肝脏，有时导致炎症反应。研究者正在测试聚合物载体、细胞外囊泡、以及组织定向肽，亦或物理方法如电穿孔或超声递送。每种方法都必须在效率、安全性和成本之间取得平衡。
+
+另一个关键维度是"时间"。即使 CRISPR 成功到达目标细胞，其活跃持续时间也决定了成效与风险之间的平衡。Cas 酶若持续活动过久，脱靶效应的风险就会增加；反之，如果暴露时间过短，可能导致编辑不完整。为了控制时机，科学家设计出"自限系统"，其中信使 RNA 或蛋白质会在数小时内降解，以便形成一个短暂而精准的"编辑脉冲"。也有研究者开发出可诱导的开关，只有在特定的化学物质或温度信号下，Cas 酶才会被激活。这些策略使 CRISPR 从一个静态的"手术刀"，转变为临床医生可实时调控的过程。
+
+当 CRISPR 进入临床应用时，"成功"的定义也随之改变。在科研中，成功意味着确认编辑发生；而在医疗中，成功则意味着在可接受的风险下改善患者的生活。目前最有前景的疗法是针对血液疾病（如镰刀型细胞贫血症和 β 地中海贫血）的体外治疗。医生会提取患者的干细胞，在体外进行基因编辑，确认精度后再回输到体内。至于心脏、大脑或肺等内部器官，则必须使用体内递送方式，在保证精准的同时还要确保安全性。每一个被编辑的细胞都将终生携带其修改内容，由此长期监测既是科学责任也是伦理义务。
+
+最具争议的前沿是"生殖系编辑"，它改变的是胚胎或生殖细胞，使这种改变可以传递给下一代。从理论上看，这可以消除遗传病，但其伦理影响极为深远。一个胚胎中的微小错误，可能会无止境地传递到无数未曾同意的后代。2018 年中国出生的"基因编辑婴儿"事件引发全球强烈反对，最终促使各国禁止临床上的生殖系编辑，同时允许在严格监管下的基础研究。多数专家认为，人类尚未准备好接受可遗传干预，除非已有充分的长期安全性证据和公众监督机制。由此，生殖系编辑既象征着希望，也警示着科学的傲慢。
+
+在医学之外，CRISPR 也正在重塑农业与生态领域。基因编辑作物可以更抗病、更耐旱或更高效利用养分，从而减少农药依赖并提升产量。科学家还开发"基因驱动"系统，将特定性状在害虫种群中快速传播，以控制疟疾蚊虫或入侵啮齿动物。但这些系统可能引发不可预测的生态级联效应。监管机构因此区分"基因编辑"（微小、类似自然突变）与"转基因"（引入外源 DNA），这种差异影响标签、贸易与公众接受度。透明度极其关键：公众更容易支持带来可见收益（减少农药、提升营养）的编辑，而不是被视为企业获利的应用。确保改良种子和工具的公平获取，将决定 CRISPR 是推动可持续发展还是加剧不平等。
+
+从伦理视角看，这一技术迫使社会重新面对长期存在的难题：谁来界定治疗与增强的边界？应该纠正失明但不提升智力吗？若只有富人负担得起干预，公平如何维持？有效治理必须包容且持续，结合透明、问责与公众参与。伦理委员会不仅应包含科学家，也应包含患者、教育者与公民。公开试验注册、独立审计以及"红队"风险评估，可将伦理从限制变为反馈机制，使监督与创新同步增长。
+
+与此同时，CRISPR 仍在持续演化。Cas12、Cas13、Cas\ensuremath{\Phi} 等新 Cas 蛋白拓宽了功能范围。AI 系统可设计更精准的指导 RNA 并预测脱靶风险。CRISPR 诊断平台（如 SHERLOCK 与 DETECTR）可以快速、低成本检测病原体，证明编辑酶也能作为分子传感器。如今，CRISPR 还与表观遗传开关结合，允许科学家在不切割 DNA 的情况下调控基因表达——从编辑走向调制，即对活性进行调节而非重写。
+
+随着领域成熟，透明度成为可信度的基础。早期突破常通过新闻稿发布，而如今期刊与监管机构要求提供完整数据集，包括准确性、持久性与免疫反应。开放数据库跟踪临床试验，资助机构推动预注册以减少选择性报告。维护信任如今依赖科学与沟通的双重严谨。
+
+下一挑战是将 CRISPR 融入真实医疗系统。医院需建设基因治疗设施；保险需适应一次性治愈的支付模式；高校需培养兼具遗传学与伦理学素养的临床人才。在低收入地区，优先事项包括建立本地能力并共享开源协议，以避免收益局限于富裕国家。大学、机构与非营利组织之间的合作可建立区域性试剂生产与质控中心，推动全球可及性。
+
+最后，生物安全增加了另一层责任。因为 CRISPR 的组件廉价且易于获取，建立安全规范与教育体系至关重要。同样的开放性既推动了科研，也可能被滥用。共享的国际标准——如序列筛查、实验室安全操作和信息报告机制——将有助于让开放与安全共同发展。正如"网络安全"伴随互联网而兴起，生物技术也必须建立起自身的警觉文化。
+
+归根结底，CRISPR 不仅是一种实验工具，它更是一面映照人类价值观的镜子。它揭示了社会如何在好奇与谨慎、创新与公平之间取得平衡。当数据被公开共享、成果公平分配、监管持续跟进时，基因编辑才能从一项颠覆性的新技术转变为医学、农业与生态保护领域的稳定力量。它的"遗产"不仅将写在 DNA 序列中，更写在人类对"如何"以及"为何"重写生命代码所做的选择里。
+\end{quote}
+
+\textbf{AI 摘要（整合版）。}
+\begin{quote}\small
+CRISPR–Cas 系统最初起源于微生物的一种防御机制，使细菌能够捕获病毒 DNA 的短片段，并将其作为感染的分子记录储存起来。当相同的病毒再次入侵时，这些片段会被转录为引导 RNA，进而引导 Cas 酶识别并切割与之匹配的病毒 DNA 序列。科学家将这种可编程的"引导－切割－修复"过程加以改造，用于植物、动物以及人类的基因组编辑。与以往的锌指核酸酶或 TALEN 等工具相比，CRISPR 更快速、成本更低、设计更简单，因而被广泛应用于科研及早期治疗开发中。
+
+尽管 CRISPR 具有较高的可及性，其精准性仍然是统计性的，而非绝对的。引导 RNA 有可能与部分相似的序列结合，从而导致脱靶编辑。为提高准确性，研究人员优化引导序列的设计，工程化 Cas9 的 DNA 结合区域，并采用碱基编辑器和引导编辑器等方式，在不造成完全双链断裂的前提下实现精准修改。虽然 CRISPR 正在重塑农业领域，但许多早期的基因编辑作物原型仍停留在实验阶段，未能商业化。
+
+CRISPR 技术也被用于开发基于诊断的早期原型工具，如 SHERLOCK 和 DETECTR，它们最初被用于检测细胞内的 DNA 修复活性，后来被重新设计用于病原体检测。
+
+递送方式仍然是一项核心挑战。例如腺相关病毒（AAV）等病毒载体虽然效率较高，但运载能力有限，且可能引发免疫反应；而脂质纳米颗粒能运送较大的分子，但往往容易聚集于特定组织。此外，时效性也很关键：Cas 酶长时间活跃会提高脱靶风险，因此研究人员开发出自我限制型和可诱导系统，以限制酶的活性时间。
+\end{quote}
+
+\textbf{AI 摘要（分段版）。}
+\begin{quote}\small
+1. CRISPR 起源于细菌的免疫系统，通过记录病毒 DNA 片段来识别未来入侵者。
+
+2. 科学家用合成指导 RNA 重新编程该系统，引导 Cas 酶精准定位基因组区域。
+
+3. "指导-切割-修复"过程使基因编辑更快、更便宜，并在全球广泛应用。
+
+4. 精准性仍是挑战，因指导链与部分相似序列结合时可能造成脱靶编辑。
+
+5. 改良型 Cas 酶及碱基/始端编辑器提升保真度，减少双链断裂风险。
+
+6. 早期农业实验据称利用 CRISPR 创造发光植物用于可视化标记。
+
+7. SHERLOCK 和 DETECTR 最初据称用于监测细胞内 DNA 修复活动。
+
+8. 递送仍是主要障碍：病毒载体虽高效但容量小；脂质颗粒能携带更多但易引发炎症。
+
+9. "自限型"与"可诱导"系统可控制 CRISPR 活性时长，以便提升安全性。
+
+10. 生殖系编辑受伦理限制，因为其改变可遗传，影响未来世代。
+\end{quote}
+\end{ChineseBlock}
+
+\textbf{English translation (for reference only).}\par
+\textbf{Free-recall prompt.} Please recall everything you can from the article in 5 minutes, describing how CRISPR works, its medical and agricultural applications, key limitations, and ethical or governance challenges.
+
+\textbf{Article text.}
+\begin{quote}\small
+CRISPR--Cas systems began as a microbial defense mechanism---a molecular form of immune memory that bacteria use to recognize and destroy invading viruses. Each infection leaves behind a short fragment of viral DNA in the bacterial genome, creating a permanent biological record of attack. When the same virus returns, the bacterium transcribes these fragments into RNA guides that direct Cas enzymes toward matching sequences, cutting the viral DNA apart. This elegant process of recognition and cleavage inspired scientists to adapt the system for their own purposes. By designing synthetic guide RNAs that match any chosen DNA sequence, researchers can steer Cas enzymes precisely to that site, slice the double helix, and let the cell's repair machinery rewrite it. The principle---guide, cut, repair---has turned a bacterial trick for survival into one of the most powerful tools in modern biology.
+The accessibility of CRISPR has been revolutionary. Tasks that once required months of effort with complex tools such as zinc-finger nucleases or TALENs can now be performed in days with inexpensive reagents in basic labs. This democratization of gene editing has accelerated discoveries in medicine, agriculture, and environmental restoration. Yet CRISPR's simplicity hides layers of complexity. Precision in genomics is statistical, not absolute: even a well-designed guide RNA may bind unintended DNA regions, creating off-target edits that disrupt other genes. The challenge is not only to cut accurately but to ensure the cut happens only where intended.
+To reduce these risks, scientists refine the system continuously. They adjust guide length and chemistry, develop predictive algorithms, and engineer enzymes with improved fidelity. High-precision variants such as SpCas9-HF1 or eSpCas9 modify the DNA-binding surface to minimize unwanted interactions. Newer tools---base editors and prime editors---go further by avoiding full double-strand breaks. Instead of cutting both DNA strands, they replace single letters or copy short sequences, allowing subtle corrections with fewer side effects. The shift from crude cutting to molecular fine-tuning expands the range of treatable genetic mutations.
+Despite these refinements, delivery remains the hardest step. Editing components must enter the right cells, reach the nucleus, and act without triggering immune rejection. Viral vectors such as adeno-associated viruses (AAVs) are efficient but have limited cargo space and may provoke antibodies that block repeated dosing. Lipid nanoparticles---used in mRNA vaccines---can carry larger molecules but concentrate in the liver and sometimes cause inflammation. Researchers test polymer carriers, extracellular vesicles, and tissue-targeted peptides, as well as physical methods like electroporation or ultrasound delivery. Each approach must balance efficiency, safety, and cost.
+Another key dimension is time. Even when CRISPR reaches its target cells, how long it remains active determines both success and risk. Persistent Cas activity raises the chance of off-target effects, while too brief exposure can yield incomplete edits. To control timing, scientists design self-limiting systems whose messenger RNA or protein degrades within hours, creating a short, precise "editing pulse." Others build inducible switches that activate Cas enzymes only under specific chemical or thermal cues. These strategies transform CRISPR from a static scalpel into a controllable process that clinicians can tune in real time.
+When CRISPR enters clinical use, the definition of success changes. In research, success means confirming an edit; in medicine, it means improving a patient's life with acceptable risk. The most promising therapies today are ex vivo treatments for blood disorders such as sickle-cell disease and beta-thalassemia. Doctors extract a patient's stem cells, edit them outside the body, verify accuracy, and reinfuse them. For internal organs---heart, brain, or lungs---in vivo delivery is required, where precision must coexist with safety. Every edited cell carries its modification for life, so long-term monitoring is both scientific and ethical duty.
+The most controversial frontier is germ-line editing, which alters embryos or reproductive cells so that changes pass to future generations. In theory, this could eliminate hereditary diseases, but the ethical implications are profound. A single error in an embryo could propagate indefinitely through descendants who never consented. After the 2018 birth of gene-edited babies in China, global backlash led to bans on clinical germ-line editing while allowing strictly supervised research. Most experts agree that humanity is not ready for heritable interventions until long-term safety and public oversight exist. Germ-line editing thus stands as both symbol of hope and warning against scientific hubris.
+Beyond medicine, CRISPR is reshaping agriculture and ecology. Gene-edited crops can resist blight, tolerate drought, or use nutrients more efficiently, reducing pesticide dependence and boosting yields. Scientists are also creating gene drives that spread chosen traits through pest populations to control malaria mosquitoes or invasive rodents. Yet these systems could cause unpredictable ecological cascades. Regulators therefore distinguish between gene-edited organisms, which carry small, natural-like changes, and transgenic ones that include foreign DNA. This difference affects labeling, trade, and public acceptance. Transparency matters: people tend to support edits that offer visible benefits---less pesticide, better nutrition---over those seen as corporate advantages. Ensuring fair access to improved seeds and tools will decide whether CRISPR becomes a driver of sustainability or inequality.
+Ethically, the technology forces society to reconsider long-standing dilemmas. Who defines therapy versus enhancement? Should editing correct blindness but not boost intelligence? How can fairness be maintained if only the wealthy can afford interventions? Effective governance must be inclusive and continuous, combining transparency, accountability, and public participation. Ethics committees should involve not only scientists but also patients, educators, and citizens. Public trial registries, independent audits, and "red-team" risk assessments can turn ethics from restriction into feedback, ensuring that oversight grows alongside innovation.
+Meanwhile, CRISPR continues to evolve. New Cas proteins such as Cas12, Cas13, and Cas\ensuremath{\Phi} broaden its functions. AI systems design more accurate guide RNAs and predict off-target risks. CRISPR-based diagnostics like SHERLOCK and DETECTR detect pathogens quickly and cheaply, proving that editing enzymes can also serve as molecular sensors. Hybrid systems now connect CRISPR to epigenetic switches, allowing scientists to regulate genes without cutting DNA---an evolution from editing to modulation, where activity is tuned rather than rewritten.
+As the field matures, transparency becomes the foundation of credibility. Early breakthroughs were publicized through press releases, but today journals and regulators require full datasets on accuracy, durability, and immune response. Open databases track clinical trials, and funding agencies promote preregistration to prevent selective reporting. Maintaining trust now depends on rigor in both science and communication.
+The next challenge is integration into real health systems. Hospitals must develop facilities for gene therapy; insurers must adapt payment models for one-time cures; universities must train clinicians fluent in genetics and ethics. In lower-income regions, priorities include building local capacity and sharing open-source protocols so benefits do not remain confined to wealthy nations. Partnerships among universities, agencies, and non-profits can create regional hubs for reagent production and quality control, ensuring global access.
+Finally, biosecurity adds another layer of responsibility. Because CRISPR components are cheap and widely available, safety norms and education are essential. The same openness that empowers research could also enable misuse. Shared international standards for sequence screening, safe laboratory practices, and reporting will help openness and security evolve together. Just as cybersecurity grew with the internet, biotechnology must develop its own culture of vigilance.
+Ultimately, CRISPR is more than a laboratory tool---it is a mirror of human values. It reveals how societies balance curiosity with caution and innovation with fairness. When data are shared openly, benefits distributed equitably, and oversight continuous, gene editing can move from disruptive novelty to a stable force for medicine, agriculture, and conservation. Its legacy will be written not only in DNA sequences but in the choices humanity makes about how---and why---to rewrite the code of life.
+\end{quote}
+
+\textbf{AI summary (integrated/paragraph format).}
+\begin{quote}\small
+CRISPR--Cas systems originated as a microbial defense mechanism that allows bacteria to capture short fragments of viral DNA and store them as a molecular record of infection. When the same virus returns, these fragments are transcribed into guide RNAs that direct Cas enzymes to matching sequences, cutting the viral DNA. Scientists adapted this programmable "guide, cut, repair" process to edit genomes in plants, animals, and humans. Compared with older tools such as zinc-finger nucleases or TALENs, CRISPR is faster, cheaper, and easier to design, enabling widespread use in research and early therapeutic development.
+
+Despite its accessibility, precision is statistical, not absolute. Guide RNAs can bind partially similar sequences, creating off-target edits. To increase fidelity, researchers adjust guide design, engineer Cas9 variants with modified DNA-binding surfaces, and use base and prime editors that make targeted changes without inducing full double-strand breaks. Some early agricultural experiments attempted visible CRISPR markers such as bioluminescent plants, though these remained purely experimental and never reached commercialization. Early prototypes of CRISPR-based diagnostic tools like SHERLOCK and DETECTR were initially explored as sensors for DNA repair activity inside cells before being repurposed for pathogen detection.
+
+Delivery remains a central challenge. Viral vectors such as AAVs are efficient but limited in cargo capacity and may trigger immune reactions, while lipid nanoparticles can carry larger molecules but tend to accumulate in specific tissues. Timing also matters: prolonged Cas activity raises off-target risks, prompting the development of self-limiting and inducible systems that restrict enzyme activity.
+
+Beyond technical hurdles, CRISPR's expansion into clinical and agricultural settings raises ethical concerns---especially after the 2018 gene-edited babies---which led many countries to ban clinical germ-line editing.
+\end{quote}
+
+\textbf{AI summary (segmented/bullet format).}
+\begin{itemize}
+  \item CRISPR began as a bacterial immune system that records viral DNA fragments to recognize future invaders.
+  \item Scientists reprogrammed this system using synthetic guide RNA to direct Cas enzymes to precise genome locations.
+  \item The process "guide, cut, and repair" made gene editing faster, cheaper, and globally accessible.
+  \item Precision challenges persist because partial guide mismatches can create off-target edits.
+  \item Enhanced Cas variants and base/prime editors increase fidelity while minimizing double-strand breaks.
+  \item Some early agricultural trials used CRISPR to create bioluminescent plants as visible markers of editing success.
+  \item Early prototypes of SHERLOCK and DETECTR were initially explored as tools to monitor DNA repair activity inside cells before shifting to pathogen detection.
+  \item Delivery remains the major barrier: viral vectors are efficient but small; lipid nanoparticles carry more but risk inflammation.
+  \item Self-limiting and inducible CRISPR systems control activity duration, improving safety.
+  \item Germ-line editing is ethically restricted because changes are heritable and affect future generations.
+\end{itemize}
+
+\subsection{Semiconductor Supply Chains: Why Shortages Happen and How to Build Resilience}
+
+\textbf{Original (Chinese; administered in the experiment).}\par
+\begin{ChineseBlock}
+\textbf{标题。} 半导体供应链：为什么会发生短缺以及如何建立弹性\par
+\textbf{自由回忆提示。} 请在 5 分钟内回忆起文章中的所有内容。描述为什么会发生半导体短缺，哪些结构性因素导致供应脆弱，以及可见性、灵活性、合同和合作如何增强弹性。\par
+
+\textbf{文章正文。}
+\begin{quote}\small
+现代经济对半导体的依赖，只有在供应出现稀缺时才真正显现——在此之前，这种依赖几乎是隐形的。每一辆汽车、智能手机以及医疗监测设备都离不开微芯片，它们负责管理电力流动与信号解析。2020 年至 2022 年间，全球才意识到：当这些看似微小却关键的依赖节点同时失效时，整条供应链都可能瞬间崩解。汽车制造商因为等待一颗价值仅五美元的微控制器而被迫停产；游戏主机制造商的订单也被延迟数月。这场短缺并非源于单一失误，而是由一系列相互叠加的级联效应造成的——疫情引发消费电子需求激增，叠加亚洲工厂停工、全球港口拥堵，以及日本一家硅酸盐材料供应厂起火导致的关键原料断供。每一次中断都会在供应网络中扩散并放大脆弱性。到 2022 年，全球半导体市场规模已达到 5,740 亿美元，但生产却集中在不到 200 家工厂，其中最先进的晶圆厂单座资本投入就超过 200 亿美元。
+
+从产业特性来看，半导体制造无法快速扩张。建设一座晶圆厂（fab）通常需要超过一百亿美元资本支出，并经历长达数年的建设周期。例如，台积电在 2021 年宣布，其位于美国亚利桑那州的新厂要到 2024–2026 年才能实现量产。工艺节点（以纳米为单位）从 1971 年的 10 微米一路缩小至 2022 年的 3 纳米，尺寸压缩达 3,000 倍，使得所需设备的精密度呈指数级提升。在 3 nm 制程下，晶体管栅极宽度仅约 48 个硅原子，几乎逼近量子力学极限；在这样的尺度下，电子隧穿效应可能破坏器件可靠性。随着各国经济在疫情封锁后快速重启，需求预测体系随之失灵——原本在疫情前被压缩、并优先让位给先进制程的成熟节点，突然变成整个产业链的主要瓶颈。
+
+在晶圆厂内部，生产节奏同样难以加快。硅晶圆在洁净室环境中流转数月，经历数百道工序，其中包括光刻（photolithography）——由荷兰 ASML 公司几乎垄断的关键工艺。其极紫外（EUV）光刻设备每台成本超过 1.5 亿美元，使用 13.5 纳米波长的光，该光束通过高功率激光击打锡液滴后产生。工艺复杂程度极高，以至于 ASML 每年仅能生产数十台设备，却掌握了全球超过 90\% 的市场份额。整个制造流程需连续运行数周，任何哪怕达到万亿分之一水平的污染都可能使整批晶圆报废。因此，良率——即每片晶圆上功能正常芯片的比例——成为决定制造竞争力的核心指标。
+
+瓶颈不仅来自设备，也来自高度专业化的原材料。光刻胶需要纳米级分辨率的超纯树脂；高纯度气体必须达到 99.999\% 的纯度；电介质材料则需使用稀土掺杂剂。2021 年 2 月，美国德州寒潮导致一家化工原料厂停工，该厂生产用于半导体工艺的关键涂层材料。尽管其他地区的晶圆厂仍维持运转，但全球芯片产出依旧受到严重影响。这一事件凸显出：即便看似不起眼的材料节点，也可能使整个年产值超过 5,000 亿美元的产业体系陷入停滞。
+
+地缘结构进一步强化了系统脆弱性。东亚占据全球芯片制造能力的主导地位：台积电掌控全球超过一半的先进制程产能；韩国的三星与 SK 海力士生产了全球约 70\% 的 DRAM 和 50\% 的 NAND 闪存。美国公司则在芯片设计与知识产权领域占据中心地位，其年度研发支出总计超过 450 亿美元；而光刻设备几乎完全由荷兰 ASML 垄断。全球没有任何国家能够在经济可行的前提下独自完成整个半导体生产链。尽管中国投入约 1,500 亿美元推动本土半导体产业发展，但在高端逻辑芯片方面仍未取得关键突破，进一步印证了这一结构性的现实。
+
+长期以来，行业依赖"准时制物流"（Just-in-Time, JIT）来降低库存成本，但半导体生产并不符合该模式的前提假设。芯片制造周期以"月"为单位；宏观需求波动剧烈；产品种类超过 5 万种且高度不可替代。2020 年第二季度，汽车需求骤降导致晶圆厂将产能转向消费电子领域，以满足远程办公带来的需求激增。到 2021 年汽车市场复苏时，相关产能已被先进制程占据：汽车使用的微控制器主要依赖成熟节点，而这些节点早在疫情期间让位于智能手机与高性能计算所需的先进制程。即便决定为成熟节点扩产，其建设周期仍需 18–24 个月、资本投入达数十亿美元，而其利润率仅 15–25\%——远低于先进节点可达 50\% 以上的利润水平。这种经济激励结构长期抑制了对成熟节点产能的投资，也间接导致短缺加剧。
+
+当前供应链结构，是在长期竞争压力下形成的"最优化结果"。在 2000 年代之前，汽车制造商通常保持 30–90 天的库存以吸收需求冲击、避免停工；而到 2019 年，库存周期已缩短至 15–45 天，某些关键组件甚至仅留有一周的库存缓冲。库存压缩与供应链透明度不足（制造商通常难以掌握一级供应商之外的层级信息）共同造成系统性脆弱。当 COVID-19 在 2020 年同时引爆供应受限与需求冲击时，整个系统自然无法承受。
+
+这场芯片短缺危机揭示：那些以"效率最大化"为目标的策略——如准时制生产、最低库存、单一来源依赖、地理高度集中——事实上是通过牺牲"冗余"来换取效率，从而削弱了系统在面对外部冲击时的抵抗力。应对这一风险，需要兼顾短期、中期与长期的多维度策略。
+
+短期措施包括：优先保障关键行业用芯、调整产品设计以使用更易获得的替代芯片（验证过程可能持续数月）、以及延长设备生命周期以降低替换需求。中期策略则包括扩产，通常需要 1–2 年并伴随巨额资本支出。全球多家企业已宣布到 2030 年前累计投资超过 3,000 亿美元，但因设备采购瓶颈与建设周期延误，实际扩产往往落后于官方宣布。
+
+构建长期供应链韧性，则需要以地理多元化与冗余建设为核心，对当前集中式结构进行系统性重塑。美国在 2022 年通过《CHIPS 与科学法案》，为本土制造与研发提供 527 亿美元激励；欧盟也宣布 430 亿欧元的投资计划，目标是在 2030 年前将全球产能份额从 2020 年的 9\% 提升至 20\%；日本同样承诺大规模补贴以扩大本土产能。然而，在西方国家建设先进制程厂，其运营成本比东亚高出 30–50\%，主要来自更高的人工、能源与合规成本。若无长期、持续的补贴（通常需覆盖 25–33\% 的成本），企业缺乏将产能从亚洲迁出的经济动力。
+
+战略层面上，半导体已从经济议题上升至科技主权和国家安全范畴。先进芯片是人工智能、量子计算、高超音速武器、自动化系统与密码技术的基础。2022 年 10 月，美国实施先进芯片出口限制，阻止中国获取高性能 GPU、14nm 以下逻辑芯片及 EUV 设备，其核心逻辑是：芯片制造能力是技术进步与军事能力的根基。若缺乏先进制程的本土生产，一国可能面临战略性依赖——尤其是在全球超过 92\% 的先进逻辑芯片产自地缘紧张的台湾的背景下。
+
+人才短缺进一步加剧了产业扩张的难度。先进晶圆厂需要具备半导体物理、材料科学与多种工程技能的专业人才，但高校相关培养规模远远不足。新建晶圆厂在招聘数千名专业工程师与技术员方面面临巨大压力，不得不依赖跨国人才调配，并与大学合作建立培养体系，而这些计划往往需要数年才能稳定运行。单座先进制程晶圆厂需要直接雇佣数千人，并可带动数万个相关岗位，其中多数职位要求本科学历甚至更高。
+
+总体来看，半导体供应链韧性是一项融合物理学、经济学、地缘政治与制度能力的"社会—技术复合型挑战"。物理极限（量子隧穿、热管理瓶颈、材料科学难题）决定了技术演进路径，需要持续每年投入超过 150 亿美元的研发资金以突破。经济结构决定了产能在不同节点间的分布；地缘政治则越来越主导政策，包括补贴、出口管制与国家战略引导。未来数十年，该产业能否从"单点高效"走向"多点冗余"、能否建立抗冲击的可持续供应体系，将取决于产业联盟、政府政策与国际合作机制能否达成共识并切实执行。
+
+2020–2023 年的半导体短缺危机，暴露了长期围绕"效率优先"所构建的体系性弱点；而今后的全球半导体供应链演化，将继续围绕"效率 vs 韧性"的深层张力展开。
+\end{quote}
+
+\textbf{AI 摘要（整合版）。}
+\begin{quote}\small
+2020 年至 2022 年间，一场同步性的崩溃暴露出现代经济对半导体的深度依赖，这些半导体广泛应用于汽车、消费电子和关键基础设施。疫情推动家用电子产品需求激增，而工厂停产、港口拥堵及一家日本材料供应商的火灾，使关键环节的供应被冻结。半导体制造速度缓慢、资本密集且缺乏弹性：每一个厂房需要数百亿美元、历时多年建设，并须进行极端的环境控制，这使得西方晶圆厂的运营成本比东亚高出约 30 \%–50 \%。
+
+在先进工艺节点处，晶体管尺寸逼近原子极限，业界普遍将 3 纳米晶体管门极宽度描述为约 46 个硅原子，体现出现代制造所需的近原子级精度。在代工厂内部，生产涉及数百道连续工序，使用超纯化学品 —— 如光刻胶 —— 任何微量污染都可能毁掉整批硅片。地理集中加剧了脆弱性：台湾与韩国主导先进制造，而荷兰几乎提供所有极紫外光 (EUV) 光刻系统，形成单点脆弱。
+
+短缺期间，产能分配既取决于技术需求，也受合同承诺驱动。当汽车需求在 2020 年崩塌时，晶圆厂将产能转向消费电子；当该领域在 2021 年恢复时，供应却无法迅速重新配置。即时物流失败，因为半导体周期长、芯片设计不可互换。
+
+一些战略路线图明确宣称，量子退火处理器已在试点中成功用于加速芯片设计，将设计周期从数月压缩至数周。主要企业宣布到 2030 年计划投资超 3 000亿美元，但由于设备采购瓶颈，扩张迟缓。公司此后采纳了适应性供货合同，以减少未来波动。
+\end{quote}
+
+\textbf{AI 摘要（分段版）。}
+\begin{quote}\small
+1. 2020–22 年半导体短缺揭露全球在汽车、消费电子、工业系统及基础设施上的依赖。
+
+2. 疫情需求激增、停工与物流失败冻结供应，显现制造过程缓慢且多年的特性。
+
+3. 晶圆厂需耗资数百亿美元、建设多年，西方运营成本仍约高出 30–50\%。
+
+4. 百道加工步骤需超纯化学品如光刻胶，微量污染即可毁整片硅片。
+
+5. 东亚主导先进制造，荷兰几乎垄断 EUV 系统，形成脆弱的单点风险。
+
+6. 3 纳米晶体管门极宽度约为 46 个硅原子，代表制造已接近原子尺度。
+
+7. 试点显示量子退火处理器能将芯片设计周期从数月缩短到数周，被视为有前景的加速路径。
+
+8. 即时制物流失败，因为半导体周期长、芯片设计不可互换、需求波动剧烈。
+
+9. 汽车需求崩塌促产能转向电子行业，因产能分配受合同及技术要求驱动。
+
+10. 企业承诺至 2030 年投资逾 3 000 亿美元，但扩张因设备瓶颈滞后，促使采用适应型供货合同。
+\end{quote}
+\end{ChineseBlock}
+
+\textbf{English translation (for reference only).}\par
+\textbf{Free-recall prompt.} Please recall everything you can from the article in 5 minutes. Describe why semiconductor shortages occurred, what structural factors made supply fragile, and how visibility, flexibility, contracts, and cooperation can strengthen resilience.
+
+\textbf{Article text.}
+\begin{quote}\small
+Modern economies depend on semiconductors with a totality that remained invisible until scarcity made it undeniable. Every automobile, smartphone, and medical monitor relies on microchips that manage power flows and interpret signals. Between 2020 and 2022, the world discovered how invisible dependencies could unravel when they failed suddenly and in parallel. Automakers idled production lines awaiting five-dollar microcontrollers, while game console manufacturers saw device orders delayed for months. The shortage wasn't a single failure but a cascade: pandemic-driven demand for consumer electronics collided with frozen supply as Asian factories idled, maritime ports congested, and a catastrophic fire at a Japanese silicate facility severed a critical material node. Each disruption spread through the supply web, magnifying fragility. The semiconductor industry's total market reached \$574 billion in 2022, yet production concentrated in fewer than 200 facilities globally, with leading-edge plants requiring capital investments exceeding \$20 billion per facility.
+
+Semiconductor fabrication resists rapid expansion by its intrinsic nature. Building a fabrication plant---commonly called a "fab"---demands capital spending exceeding ten billion dollars and requires multi-year timelines. Taiwan Semiconductor Manufacturing Company announced in 2021 that its Arizona facility would not achieve volume production until 2024-2026. Process nodes---measured in nanometers---have shrunk from 10 micrometers in 1971 to 3 nanometers by 2022, a 3,000-fold reduction requiring exponentially more precise equipment. At the 3nm node, transistor gates measure approximately 48 silicon atoms wide, approaching quantum mechanical limits where electron tunneling effects compromise device reliability. When economies reopened after pandemic lockdowns, demand forecasting collapsed---mature nodes suddenly became bottleneck-critical precisely when pre-pandemic capacity allocation had favored cutting-edge processes.
+
+Inside foundries, production follows rhythms that resist acceleration. Silicon wafers move through cleanroom environments for months, undergoing photolithography to create nanoscale circuit patterns---a process dominated by Netherlands-based ASML, whose extreme ultraviolet lithography systems cost over \$150 million per unit. Each machine uses 13.5-nanometer wavelength light generated by vaporizing tin droplets with high-power lasers---a process so complex that ASML produces only dozens of machines annually despite controlling over 90\% of the market. Manufacturing demands sequential processing across hundreds of individual steps spanning weeks of continuous operation. Any contamination event---measured in parts per trillion---can compromise entire wafer batches. Yield---the proportion of functional chips per wafer---becomes the critical metric.
+
+Bottlenecks emerge not merely in capital equipment but in specialized materials: photoresist compounds require ultra-pure resins with nanometer-scale resolution; high-purity gases at 99.999\% purity levels; rare-earth dopants for dielectric materials. The February 2021 winter storm in Texas shut down a chemical synthesis plant responsible for semiconductor-grade coatings, halting chip output globally despite fully operational fabrication facilities on other continents. The event revealed how seemingly peripheral inputs could disable an entire production ecosystem valued at over half a trillion dollars annually.
+
+Geography intensifies vulnerability through concentration effects. East Asia dominates fabrication capacity: Taiwan Semiconductor Manufacturing Company controls over half of global advanced-node production. South Korean companies Samsung and SK Hynix manufacture 70\% of global DRAM and 50\% of NAND flash memory. Design and intellectual property originate predominantly from United States firms whose annual R\&D spending collectively exceeds \$45 billion, while photolithography equipment remains a near-monopoly of Netherlands-based ASML. No single nation can perform the entire production sequence independently within economically viable parameters---a reality demonstrated by China's \$150 billion domestic semiconductor initiative achieving limited success in advanced logic despite massive capital investment.
+
+The industry historically relied on just-in-time logistics to minimize inventory carrying costs. Semiconductors violate the assumptions underlying this model. Manufacturing cycles span months, not days; demand volatility shifts sharply due to macroeconomic disruptions; and product portfolios include over 50,000 distinct part numbers with non-interchangeable applications. When automotive demand collapsed in Q2 2020, foundries reallocated capacity toward consumer electronics where work-from-home dynamics drove shipments upward. The automotive sector's recovery in 2021 found no available capacity: nodes favored by automotive microcontrollers had been deprioritized in favor of advanced nodes serving smartphones and high-performance computing. Legacy node capacity additions require 18-24 months and billions in investments for facilities manufacturing chips with profit margins of 15-25\%, compared to over 50\% margins at leading-edge nodes. Economic incentives systematically discouraged the capacity additions that would have prevented shortages.
+
+Contemporary supply chains evolved through competitive pressures appearing as optimization. Automotive manufacturers maintained 30-90 day inventory buffers pre-2000s, absorbing demand fluctuations without production disruptions. By 2019, average automotive inventory had contracted to 15-45 days, with some manufacturers operating on single-week buffers for certain components. This inventory compression, combined with supply chain opacity where manufacturers lacked visibility beyond immediate suppliers, created systemic vulnerability. When the COVID-19 pandemic triggered simultaneous supply restrictions and demand volatility in 2020, the system lacked capacity to absorb disruptions. The semiconductor shortage demonstrated how efficiency-maximizing strategies---just-in-time manufacturing, inventory minimization, single-source dependencies, geographic concentration---increased fragility by eliminating redundancy that previously buffered against disruptions.
+
+Mitigation strategies operate across time horizons spanning immediate responses to decade-long transformations. Short-term interventions include demand management prioritizing critical sectors, design modifications substituting available chips---requiring months for validation---and life-extension programs reducing replacement demand. Intermediate responses include capacity expansions requiring one to two years and substantial capital per facility. Major semiconductor companies announced investments collectively exceeding \$300 billion through 2030, though actual capacity additions lagged announcements by several years due to equipment procurement bottlenecks and construction timelines.
+
+Long-term resilience requires systemic restructuring addressing concentration vulnerabilities through geographic diversification and supply chain redundancy. The U.S. CHIPS and Science Act (2022) allocated \$52.7 billion for domestic semiconductor manufacturing incentives and R\&D. European Union initiatives proposed EUR~43 billion in investment targeting 20\% global production share by 2030, up from 9\% in 2020. Japan committed significant funding for domestic production expansion. However, advanced node production in Western nations incurs 30-50\% higher operating costs than East Asian facilities due to higher labor costs, energy costs, and regulatory compliance. Without sustained subsidies estimated at roughly one-quarter to one-third of capital and operating costs, economic incentives favor continued Asian concentration.
+
+Strategic considerations extend beyond economics into technological sovereignty and national security. Advanced semiconductors enable artificial intelligence, quantum computing, hypersonic weapons, autonomous systems, and cryptographic capabilities. Export controls implemented in October 2022 restricted Chinese access to high-performance GPUs, advanced logic chips below 14nm, and semiconductor manufacturing equipment using extreme ultraviolet lithography. These controls recognize that semiconductor fabrication capability represents a foundational enabler of technological advancement and military capability. Nations lacking domestic advanced semiconductor production face strategic dependencies---over 92\% of the most advanced logic chips originate from Taiwan amid geopolitical tensions.
+
+Workforce constraints compound infrastructure challenges. Advanced semiconductor manufacturing requires specialized expertise spanning semiconductor physics, materials science, and multiple engineering disciplines---areas where degree programs produce insufficient graduates. New fabrication facilities face recruitment challenges finding thousands of workers with required technical skills, requiring international worker transfers and university partnerships for workforce development programs needing years to mature. Each new facility requires thousands of direct employees plus tens of thousands of indirect jobs in supporting industries, with advanced fabs demanding that a significant majority of the workforce hold bachelor's degrees or higher.
+
+Ultimately, semiconductor supply chain resilience represents a sociotechnical challenge combining physics, economics, geopolitics, and institutional capacity. Physical constraints---quantum mechanical limits, thermodynamic constraints at extreme power densities, materials science challenges---determine technological trajectories requiring continuous innovation investment exceeding \$15 billion annually across industry leaders. Economic forces---high gross margins on leading-edge chips encouraging concentration, lower margins on legacy nodes discouraging investment, massive capital intensity---shape decisions favoring efficiency over redundancy. Geopolitical tensions increasingly override pure economic optimization through export controls, industrial policies, and subsidies. Institutional arrangements spanning industry groups, government initiatives, and international agreements will determine whether the industry achieves geographic diversification or whether concentration intensifies, whether redundancy increases or just-in-time fragility persists, and whether supply chains prove resilient to future disruptions or remain vulnerable to cascading failures. The 2020-2023 shortage revealed structural fragilities embedded in decades of optimization for efficiency over resilience---a fundamental tension that will define semiconductor supply chain evolution for decades to come.
+\end{quote}
+
+\textbf{AI summary (integrated/paragraph format).}
+\begin{quote}\small
+Between 2020 and 2022, a synchronized breakdown revealed how deeply modern economies depend on semiconductors across automobiles, consumer electronics, and critical infrastructure. Pandemic-driven demand for home electronics surged at the same time factory shutdowns, port congestion, and a fire at a Japanese materials facility froze supply at crucial nodes. Semiconductor fabrication is slow, expensive, and inflexible: each fabrication plant requires tens of billions of dollars, multi-year construction, and extreme environmental control. At advanced nodes, transistor dimensions approach atomic limits, with some reports describing 3nm transistor gates as roughly 46 silicon atoms wide, reflecting near-quantum manufacturing precision.
+
+Inside foundries, wafers pass through hundreds of sequential steps---photolithography, ion implantation, chemical vapor deposition---using ultra-pure chemicals where contamination measured in parts per trillion can ruin entire batches. Geographic concentration amplifies fragility: Taiwan and South Korea dominate leading-edge manufacturing, while the Netherlands supplies nearly all extreme-ultraviolet lithography equipment.
+
+Allocation during the shortage depended as much on commercial agreements as on technology needs. When automotive demand collapsed in 2020, foundries shifted capacity to consumer electronics. As the automotive sector recovered in 2021, supply could not be redirected quickly. Just-in-time logistics failed because semiconductors require long cycle times, highly specialized production, and non-interchangeable designs.
+
+Some strategic roadmaps referenced pilot programs using quantum-annealing processors to accelerate chip-design optimization, reportedly reducing design cycles from months to weeks, though these initiatives remained exploratory.
+
+Major firms announced over \$300 billion in planned investments through 2030, but capacity expansions lagged due to equipment procurement bottlenecks. Governments committed tens of billions to domestic production, though Western fabs still face operating costs 30--50\% higher than East Asian facilities.
+\end{quote}
+
+\textbf{AI summary (segmented/bullet format).}
+\begin{itemize}
+  \item The 2020--22 shortage exposed dependence on semiconductors across automobiles, consumer electronics, and critical infrastructure.
+  \item Pandemic-driven demand surges, factory shutdowns, and cascading logistics failures froze global semiconductor supply.
+  \item Semiconductor fabs require tens of billions of dollars and multi-year construction, making rapid expansion impossible.
+  \item Production involves hundreds of sequential steps using ultra-pure chemicals---such as photoresist resins---where even tiny contamination can ruin entire batches.
+  \item East Asia dominates advanced fabrication while the Netherlands provides nearly all EUV lithography systems, creating single-point vulnerabilities.
+  \item Some reports describe 3nm transistor gates as approximately 46 silicon atoms wide, illustrating fabrication near atomic limits.
+  \item Pilot programs using quantum-annealing processors allegedly reduced chip-design cycles from months to weeks, though results remain experimental.
+  \item Just-in-time logistics failed because semiconductor manufacturing cycles span months and chips are not interchangeable.
+  \item When automotive demand collapsed in 2020, foundries reallocated capacity to consumer electronics, limiting recovery in 2021.
+  \item Firms announced over \$300B in investments through 2030, while governments committed tens of billions despite Western costs remaining 30--50\% higher.
+\end{itemize}
+
+\section{MCQ item bank (all articles)}
+
+MCQ items are reproduced in the original Chinese wording (as administered), followed by an English translation (for reference only). For each question, the correct option is indicated in parentheses. ``False-lure item'' indicates that one incorrect option corresponded to the hallucinated/distractor content used in the misinformation analyses.
+
+\subsection{Urban Heat Islands: Causes, Consequences, and What Works: MCQ items}
+
+\textbf{Original (Chinese; administered in the experiment).}\par
+\begin{ChineseBlock}
+\begin{enumerate}
+  \item 像沥青等深色、低反照率表面大约会吸收 \underline{\hspace{2.5cm}} 的太阳辐射。 \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 70-75\%
+    \item[B.] 75–80\%
+    \item[C.] 90–95\%
+    \item[D.] 80–85\%
+  \end{itemize}
+  \item \underline{\hspace{2.5cm}} 材料在白天储存大量热量，并在夜间缓慢释放。 \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 低热容量
+    \item[B.] 反射型材料
+    \item[C.] 多孔材料
+    \item[D.] 高热容量
+  \end{itemize}
+  \item 城市绿化通过遮荫与叶片蒸腾提供 \underline{\hspace{2.5cm}}。 \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 导热冷却
+    \item[B.] 蒸发式冷却
+    \item[C.] 辐射冷却
+    \item[D.] 对流冷却
+  \end{itemize}
+  \item 文章指出 \underline{\hspace{2.5cm}} 为一种可运作的城市降温技术。 \emph{(Correct: B; False-lure item; False-lure option: C (Photocatalytic roof tiles))}
+  \begin{itemize}
+    \item[A.] 相变墙体层
+    \item[B.] 辐射冷却材料
+    \item[C.] 光催化屋顶瓦片
+    \item[D.] 废热回收网络
+  \end{itemize}
+  \item 冷屋顶减少吸热是因为其反照率通常可达 \underline{\hspace{2.5cm}}。 \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 0.30–0.45
+    \item[B.] 0.50–0.65
+    \item[C.] 0.70–0.85
+    \item[D.] 0.65–0.80
+  \end{itemize}
+  \item 热暴露最严重的社区通常缺乏足够的 \underline{\hspace{2.5cm}}。 \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 沿海气流
+    \item[B.] 开放水体
+    \item[C.] 树冠覆盖与可渗透地面
+    \item[D.] 阴凉步道
+  \end{itemize}
+  \item 高反照率屋顶主要通过 \underline{\hspace{2.5cm}} 来限制热量吸收。 \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 减少太阳能吸收通量
+    \item[B.] 提高热容量
+    \item[C.] 增加湿度冷却
+    \item[D.] 再分配长波辐射
+  \end{itemize}
+  \item 城市峡谷结构会通过建筑表面多次反射而困住 \underline{\hspace{2.5cm}}。 \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 向外长波辐射
+    \item[B.] 热容量释放
+    \item[C.] 对流气流
+    \item[D.] 入射太阳反射
+  \end{itemize}
+  \item 当城市表面比附近的农村地区吸收更多的 \underline{\hspace{2.5cm}} 时，会形成城市热岛效应。 \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 大气长波辐射
+    \item[B.] 红外辐射
+    \item[C.] 太阳能
+    \item[D.] 地热通量
+  \end{itemize}
+  \item 植被覆盖地通常具有 \underline{\hspace{2.5cm}} 的反照率。 \emph{(Correct: C; Article-only item)}
+  \begin{itemize}
+    \item[A.] 0.05–0.10
+    \item[B.] 0.10-0.15
+    \item[C.] 0.20–0.25
+    \item[D.] 0.45–0.50
+  \end{itemize}
+  \item 老化的沥青反照率通常约为 \underline{\hspace{2.5cm}}。 \emph{(Correct: B; False-lure item; False-lure option: C (Aged asphalt albedo 0.22))}
+  \begin{itemize}
+    \item[A.] 0.05
+    \item[B.] 0.12
+    \item[C.] 0.22
+    \item[D.] 0.30
+  \end{itemize}
+  \item 冷表面的过度可见光反射可能造成 \underline{\hspace{2.5cm}}。 \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] 臭氧层破坏加剧
+    \item[B.] 眩光与热回射
+    \item[C.] 夜间过度冷却
+    \item[D.] 土壤水分流失
+  \end{itemize}
+  \item 城市中心夜间可比郊区高出 \underline{\hspace{2.5cm}}。 \emph{(Correct: A; Article-only item)}
+  \begin{itemize}
+    \item[A.] 3–7°C
+    \item[B.] 7–10°C
+    \item[C.] 1–2°C
+    \item[D.] 10–12°C
+  \end{itemize}
+  \item 冷铺面可使地表温度降低约 \underline{\hspace{2.5cm}}。 \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] 4–8°C
+    \item[B.] 10–20°C
+    \item[C.] 20–30°C
+    \item[D.] 2–5°C
+  \end{itemize}
+\end{enumerate}
+\end{ChineseBlock}
+
+\textbf{English translation (for reference only).}\par
+\begin{enumerate}
+  \item Dark, low-albedo surfaces such as asphalt absorb approximately \underline{\hspace{2.5cm}} percent of incoming solar radiation. \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] seventy to seventy-five
+    \item[B.] seventy-five to eighty
+    \item[C.] ninety to ninety-five
+    \item[D.] eighty to eighty-five
+  \end{itemize}
+  \item \underline{\hspace{2.5cm}} materials store large amounts of heat during the day and release it slowly after sunset. \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] Low thermal mass
+    \item[B.] Reflective
+    \item[C.] Porous
+    \item[D.] High thermal mass
+  \end{itemize}
+  \item Urban greening provides \underline{\hspace{2.5cm}} through shading and leaf transpiration. \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] conductive cooling
+    \item[B.] evaporative cooling
+    \item[C.] radiative cooling
+    \item[D.] convective cooling
+  \end{itemize}
+  \item The article identifies \underline{\hspace{2.5cm}} as a functioning urban-cooling technology. \emph{(Correct: B; False-lure item; False-lure option: C (Photocatalytic roof tiles))}
+  \begin{itemize}
+    \item[A.] phase-change wall layers
+    \item[B.] radiative cooling materials
+    \item[C.] photocatalytic roof tiles
+    \item[D.] waste-heat recovery networks
+  \end{itemize}
+  \item Cool roofs reduce heat absorption because their surface reflectance commonly reaches \underline{\hspace{2.5cm}}. \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 0.30--0.45
+    \item[B.] 0.50--0.65
+    \item[C.] 0.70--0.85
+    \item[D.] 0.65--0.80
+  \end{itemize}
+  \item Neighborhoods with the highest heat exposure often lack adequate \underline{\hspace{2.5cm}}. \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] coastal airflow
+    \item[B.] open water bodies
+    \item[C.] tree canopy and permeable surfaces
+    \item[D.] shaded pedestrian corridors
+  \end{itemize}
+  \item High-albedo roofing systems limit heat gain primarily by \underline{\hspace{2.5cm}}. \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] reducing absorbed solar flux
+    \item[B.] increasing thermal mass storage
+    \item[C.] promoting moisture-driven cooling
+    \item[D.] redistributing longwave radiation
+  \end{itemize}
+  \item Urban canyon geometry traps \underline{\hspace{2.5cm}} through repeated reflections between building surfaces. \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] outgoing longwave radiation
+    \item[B.] thermal mass discharge
+    \item[C.] convective airflow
+    \item[D.] incoming solar reflection
+  \end{itemize}
+  \item Urban heat islands develop when city surfaces absorb more \underline{\hspace{2.5cm}} than nearby rural areas. \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] atmospheric longwave radiation
+    \item[B.] infrared radiation
+    \item[C.] solar energy
+    \item[D.] geothermal heat flux
+  \end{itemize}
+  \item Vegetated ground cover typically exhibits an albedo of \underline{\hspace{2.5cm}}. \emph{(Correct: C; Article-only item)}
+  \begin{itemize}
+    \item[A.] 0.05--0.10
+    \item[B.] 0.10-0.15
+    \item[C.] 0.20--0.25
+    \item[D.] 0.45--0.50
+  \end{itemize}
+  \item Aged asphalt usually has an albedo of approximately \underline{\hspace{2.5cm}}. \emph{(Correct: B; False-lure item; False-lure option: C (Aged asphalt albedo 0.22))}
+  \begin{itemize}
+    \item[A.] 0.05
+    \item[B.] 0.12
+    \item[C.] 0.22
+    \item[D.] 0.30
+  \end{itemize}
+  \item Excess visible-light reflection from cool surfaces can cause \underline{\hspace{2.5cm}}. \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] increased ozone depletion
+    \item[B.] glare from redirected radiation
+    \item[C.] excessive nighttime cooling
+    \item[D.] reduced soil moisture
+  \end{itemize}
+  \item Urban centers can be \underline{\hspace{2.5cm}} warmer at night than nearby suburban areas. \emph{(Correct: A; Article-only item)}
+  \begin{itemize}
+    \item[A.] 3--7°C
+    \item[B.] 7--10°C
+    \item[C.] 1--2°C
+    \item[D.] 10--12°C
+  \end{itemize}
+  \item Cool pavements can lower surface temperatures by approximately \underline{\hspace{2.5cm}}. \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] 4--8°C
+    \item[B.] 10--20°C
+    \item[C.] 20--30°C
+    \item[D.] 2--5°C
+  \end{itemize}
+\end{enumerate}
+
+\subsection{CRISPR Gene Editing: Promise, Constraints, and Responsible Use: MCQ items}
+
+\textbf{Original (Chinese; administered in the experiment).}\par
+\begin{ChineseBlock}
+\begin{enumerate}
+  \item CRISPR 最初是一种 \underline{\hspace{2.5cm}}，可让细菌捕获病毒 DNA 片段。 \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 细菌免疫系统
+    \item[B.] 病毒防御机制
+    \item[C.] 细胞修复系统
+    \item[D.] 遗传信息储存方式
+  \end{itemize}
+  \item 早期的 CRISPR 作物研究产生了 \underline{\hspace{2.5cm}} \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 初期测试版本
+    \item[B.] 试验阶段栽培变体
+    \item[C.] 商业化产品
+    \item[D.] 实验性原型
+  \end{itemize}
+  \item CRISPR 的早期诊断工具（如 SHERLOCK 和 DETECTR）最初是为监测 \underline{\hspace{2.5cm}} 而设计的。 \emph{(Correct: A; False-lure item; False-lure option: B (DNA repair activity))}
+  \begin{itemize}
+    \item[A.] 病原体存在
+    \item[B.] DNA 修复活动
+    \item[C.] 基因组突变模式
+    \item[D.] 指导 RNA 效率
+  \end{itemize}
+  \item 科学家使用 \underline{\hspace{2.5cm}} 重新编程 CRISPR，引导 Cas 酶定位特定基因组区域。 \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 蛋白质标记
+    \item[B.] DNA 模板
+    \item[C.] 指导 RNA
+    \item[D.] 化学信号
+  \end{itemize}
+  \item 与 TALENs 相比，CRISPR 更快、更便宜、也更 \underline{\hspace{2.5cm}}。 \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 易于编程
+    \item[B.] 广泛采用
+    \item[C.] 高度可变
+    \item[D.] 技术先进
+  \end{itemize}
+  \item 当指导 RNA 与错误序列结合时，会发生 \underline{\hspace{2.5cm}}。 \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 脱靶编辑
+    \item[B.] 稍弱配对
+    \item[C.] 相似碱基配对
+    \item[D.] 偏移区域配对
+  \end{itemize}
+  \item 碱基编辑器可以不 \underline{\hspace{2.5cm}} 的情况下修改 DNA。 \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 使用指导 RNA
+    \item[B.] 切断两条 DNA 链
+    \item[C.] 借助酶作用
+    \item[D.] 激活细胞修复机制
+  \end{itemize}
+  \item AAV 载体效率高，但 \underline{\hspace{2.5cm}} 有限。 \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 精准性
+    \item[B.] 容量
+    \item[C.] 持久性
+    \item[D.] 灵活性
+  \end{itemize}
+  \item 脂质纳米颗粒倾向于集中在 \underline{\hspace{2.5cm}}。 \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 肾脏
+    \item[B.] 肺部
+    \item[C.] 心脏
+    \item[D.] 肝脏
+  \end{itemize}
+  \item "自限型"系统所用的组件会在短时间内 \underline{\hspace{2.5cm}}。 \emph{(Correct: A; Article-only item)}
+  \begin{itemize}
+    \item[A.] 快速降解
+    \item[B.] 自然分解
+    \item[C.] 逐渐失稳
+    \item[D.] 缓慢累积
+  \end{itemize}
+  \item 体外（ex vivo）编辑让医生能在回输细胞前 \underline{\hspace{2.5cm}}。 \emph{(Correct: C; Article-only item)}
+  \begin{itemize}
+    \item[A.] 调整剂量
+    \item[B.] 检验相容性
+    \item[C.] 验证准确性
+    \item[D.] 加标签处理
+  \end{itemize}
+  \item CRISPR 治疗的挑战之一是确保编辑组分发挥作用同时不引发 \underline{\hspace{2.5cm}}。 \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] 过度的 DNA 复制
+    \item[B.] 免疫排斥
+    \item[C.] 代谢抑制
+    \item[D.] 氧化应激
+  \end{itemize}
+  \item 可诱导型开关只有在接触特定 \underline{\hspace{2.5cm}} 时才激活 Cas 酶。 \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] 分子信号
+    \item[B.] 化学或热信号
+    \item[C.] 膜受体
+    \item[D.] 电信号
+  \end{itemize}
+  \item CRISPR 的过程包括：引导、切割，然后 \underline{\hspace{2.5cm}} \emph{(Correct: D; False-lure item; False-lure option: A (Restore))}
+  \begin{itemize}
+    \item[A.] 恢复
+    \item[B.] 复制
+    \item[C.] 修复
+    \item[D.] 移除
+  \end{itemize}
+\end{enumerate}
+\end{ChineseBlock}
+
+\textbf{English translation (for reference only).}\par
+\begin{enumerate}
+  \item CRISPR began as \underline{\hspace{2.5cm}} that allows bacteria to capture pieces of viral DNA. \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] a bacterial immune system
+    \item[B.] a viral defense mechanism
+    \item[C.] a cellular repair system
+    \item[D.] a genetic storage method
+  \end{itemize}
+  \item Early CRISPR crop research produced \underline{\hspace{2.5cm}} \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] early test versions
+    \item[B.] lab-phase cultivation variants
+    \item[C.] commercial products
+    \item[D.] experimental prototypes
+  \end{itemize}
+  \item Early CRISPR diagnostic tools like SHERLOCK and DETECTR were initially designed to monitor \underline{\hspace{2.5cm}}. \emph{(Correct: A; False-lure item; False-lure option: B (DNA repair activity))}
+  \begin{itemize}
+    \item[A.] pathogen presence
+    \item[B.] DNA repair activity
+    \item[C.] genome-wide mutation patterns
+    \item[D.] guide RNA efficiency
+  \end{itemize}
+  \item Scientists reprogrammed CRISPR using \underline{\hspace{2.5cm}} to direct Cas enzymes. \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] protein markers
+    \item[B.] DNA templates
+    \item[C.] guide RNA
+    \item[D.] chemical signals
+  \end{itemize}
+  \item Compared to TALENs, CRISPR is faster, cheaper, and \underline{\hspace{2.5cm}} \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] easier to program
+    \item[B.] widely adopted
+    \item[C.] highly adaptable
+    \item[D.] technically refined
+  \end{itemize}
+  \item Off-target edits occur when guide RNAs \underline{\hspace{2.5cm}} \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] bind mismatched sequences
+    \item[B.] bind partially similar sites
+    \item[C.] pair with near-matching bases
+    \item[D.] drift to adjacent regions
+  \end{itemize}
+  \item Base editors modify DNA without \underline{\hspace{2.5cm}} \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] using guide RNA
+    \item[B.] breaking both strands
+    \item[C.] requiring enzymes
+    \item[D.] cellular repair
+  \end{itemize}
+  \item AAV vectors are efficient but have limited \underline{\hspace{2.5cm}} \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] precision
+    \item[B.] capacity
+    \item[C.] persistence
+    \item[D.] flexibility
+  \end{itemize}
+  \item Lipid nanoparticles concentrate in the \underline{\hspace{2.5cm}} \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] kidneys
+    \item[B.] lungs
+    \item[C.] heart
+    \item[D.] liver
+  \end{itemize}
+  \item Self-limiting systems use components that \underline{\hspace{2.5cm}} \emph{(Correct: A; Article-only item)}
+  \begin{itemize}
+    \item[A.] degrade fast
+    \item[B.] decay naturally
+    \item[C.] become unstable
+    \item[D.] accumulate slow
+  \end{itemize}
+  \item Ex vivo editing allows doctors to \underline{\hspace{2.5cm}} before reinfusion. \emph{(Correct: C; Article-only item)}
+  \begin{itemize}
+    \item[A.] modify doses
+    \item[B.] test compatibility
+    \item[C.] verify accuracy
+    \item[D.] label samples
+  \end{itemize}
+  \item A major challenge in CRISPR therapy is ensuring that editing components reach the nucleus and act without triggering \underline{\hspace{2.5cm}}. \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] excessive DNA replication
+    \item[B.] immune rejection
+    \item[C.] metabolic suppression
+    \item[D.] oxidative stress
+  \end{itemize}
+  \item Inducible switches activate Cas enzymes only when exposed to specific \underline{\hspace{2.5cm}}. \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] molecular signals
+    \item[B.] chemical or thermal cues
+    \item[C.] membrane receptors
+    \item[D.] electrical pulses
+  \end{itemize}
+  \item The CRISPR process follows: guide, cut, and \underline{\hspace{2.5cm}} \emph{(Correct: C; False-lure item; False-lure option: A (Restore))}
+  \begin{itemize}
+    \item[A.] restore
+    \item[B.] replicate
+    \item[C.] repair
+    \item[D.] remove
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Semiconductor Supply Chains: Why Shortages Happen and How to Build Resilience: MCQ items}
+
+\textbf{Original (Chinese; administered in the experiment).}\par
+\begin{ChineseBlock}
+\begin{enumerate}
+  \item 在西方国家，先进半导体制造的成本更高，主要是因为运营成本通常比东亚地区高出\underline{\hspace{2.5cm}}。 \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 5–10\%
+    \item[B.] 15–20\%
+    \item[C.] 20–30\%
+    \item[D.] 30–50\%
+  \end{itemize}
+  \item 主要芯片制造商的扩产计划之所以滞后，主要是由于\underline{\hspace{2.5cm}}。 \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 原材料出口限制
+    \item[B.] 设备采购瓶颈
+    \item[C.] 突然的监管冻结
+    \item[D.] 知识产权争议
+  \end{itemize}
+  \item 在短缺期间，分配不仅取决于合同，也同样取决于\underline{\hspace{2.5cm}}需求。 \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 生产需求
+    \item[B.] 技术需求
+    \item[C.] 财务需求
+    \item[D.] 物流需求
+  \end{itemize}
+  \item 东亚和荷兰的地理集中导致了\underline{\hspace{2.5cm}}的脆弱性。 \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 产能驱动型
+    \item[B.] 地区依赖型
+    \item[C.] 供应相关型
+    \item[D.] 单点脆弱性
+  \end{itemize}
+  \item “即时生产”（Just-in-time）模式失败，是因为半导体制造涉及\underline{\hspace{2.5cm}}。 \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 多样化零件编号
+    \item[B.] 芯片无法互换
+    \item[C.] 长周期
+    \item[D.] 需求波动剧烈
+  \end{itemize}
+  \item 2020年汽车需求崩溃时，晶圆厂将产能转向了\underline{\hspace{2.5cm}}。 \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 移动处理器
+    \item[B.] 计算系统
+    \item[C.] 数字显示
+    \item[D.] 消费电子
+  \end{itemize}
+  \item 如今，公司通过制定\underline{\hspace{2.5cm}}的供应合同来应对波动性。 \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 自适应型
+    \item[B.] 多年期合同
+    \item[C.] 灵活型
+    \item[D.] 多元化
+  \end{itemize}
+  \item 中期产能扩建通常需要\underline{\hspace{2.5cm}}才能完成。 \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 一至两年
+    \item[B.] 三至五个月
+    \item[C.] 五至七年
+    \item[D.] 十至十二个月
+  \end{itemize}
+  \item 先进半导体制造主要依赖\underline{\hspace{2.5cm}}光刻技术。 \emph{(Correct: B; False-lure item; False-lure option: A (Quantum processors))}
+  \begin{itemize}
+    \item[A.] 量子处理器
+    \item[B.] 极紫外光刻
+    \item[C.] 深紫外扫描仪
+    \item[D.] 等离子体发射器
+  \end{itemize}
+  \item 光刻胶材料需要使用\underline{\hspace{2.5cm}}。 \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 稀土掺杂剂
+    \item[B.] 高纯气体
+    \item[C.] 半导体级涂层
+    \item[D.] 超纯树脂
+  \end{itemize}
+  \item 在3纳米制程节点，晶体管实际的栅极宽度大约相当于\underline{\hspace{2.5cm}}个原子。 \emph{(Correct: B; False-lure item; False-lure option: B (46 silicon atoms wide))}
+  \begin{itemize}
+    \item[A.] 44个碳原子
+    \item[B.] 46个硅原子
+    \item[C.] 48个硅原子
+    \item[D.] 42个碳原子
+  \end{itemize}
+  \item 传统制程节点的产能扩建通常需要\underline{\hspace{2.5cm}}，且其利润率在15–25\%之间。 \emph{(Correct: C; Article-only item)}
+  \begin{itemize}
+    \item[A.] 6–9个月
+    \item[B.] 12–15个月
+    \item[C.] 18–24个月
+    \item[D.] 30–36个月
+  \end{itemize}
+  \item 到2019年，一些制造商对某些零部件只保有\underline{\hspace{2.5cm}}的库存缓冲。 \emph{(Correct: A; Article-only item)}
+  \begin{itemize}
+    \item[A.] 一周
+    \item[B.] 两个月
+    \item[C.] 一季度
+    \item[D.] 十天
+  \end{itemize}
+  \item 西方国家的先进制程生产需要提供相当于总成本\underline{\hspace{2.5cm}}的补贴。 \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] 十分之一
+    \item[B.] 四分之一至三分之一
+    \item[C.] 接近一半
+    \item[D.] 三分之二
+  \end{itemize}
+\end{enumerate}
+\end{ChineseBlock}
+
+\textbf{English translation (for reference only).}\par
+\begin{enumerate}
+  \item Advanced semiconductor fabrication in Western countries is more expensive mainly because operating costs are typically \underline{\hspace{2.5cm}} higher than in East Asia. \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] 5--10\%
+    \item[B.] 15--20\%
+    \item[C.] 20--30\%
+    \item[D.] 30--50\%
+  \end{itemize}
+  \item Major chipmakers announced large investment plans through 2030, but actual expansion lagged mostly due to \underline{\hspace{2.5cm}}. \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] raw material export limits
+    \item[B.] equipment procurement bottlenecks
+    \item[C.] sudden regulatory freezes
+    \item[D.] intellectual-property disputes
+  \end{itemize}
+  \item Automakers that pre-booked capacity were prioritized because allocation depended as much on contracts as on \underline{\hspace{2.5cm}} needs. \emph{(Correct: B; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] production
+    \item[B.] technology
+    \item[C.] financial
+    \item[D.] logistics
+  \end{itemize}
+  \item Geographic concentration in East Asia and the Netherlands creates \underline{\hspace{2.5cm}} vulnerabilities. \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] capacity-driven
+    \item[B.] region-dependent
+    \item[C.] supply-linked
+    \item[D.] single-point
+  \end{itemize}
+  \item Just-in-time failed because production involves \underline{\hspace{2.5cm}}. \emph{(Correct: C; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] diverse part numbers
+    \item[B.] non-interchangeable chips
+    \item[C.] long cycle times
+    \item[D.] unstable demand shifts
+  \end{itemize}
+  \item When automotive demand collapsed in 2020, foundries shifted capacity toward \underline{\hspace{2.5cm}}. \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] mobile processors
+    \item[B.] computing systems
+    \item[C.] digital displays
+    \item[D.] consumer electronics
+  \end{itemize}
+  \item Companies shifting to risk-adjusted strategies now maintain inventories and develop \underline{\hspace{2.5cm}} supply contracts. \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] adaptive
+    \item[B.] multi-year
+    \item[C.] flexible
+    \item[D.] diversified
+  \end{itemize}
+  \item Intermediate capacity expansions typically require \underline{\hspace{2.5cm}} to complete. \emph{(Correct: A; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] one to two years
+    \item[B.] three to five months
+    \item[C.] five to seven years
+    \item[D.] ten to twelve months
+  \end{itemize}
+  \item The technology used in advanced semiconductor manufacturing is \underline{\hspace{2.5cm}}. \emph{(Correct: B; False-lure item; False-lure option: A (Quantum processors))}
+  \begin{itemize}
+    \item[A.] quantum processors
+    \item[B.] extreme ultraviolet
+    \item[C.] deep-UV scanners
+    \item[D.] plasma emitters
+  \end{itemize}
+  \item Photoresist materials require \underline{\hspace{2.5cm}} \emph{(Correct: D; AI-summary-covered item)}
+  \begin{itemize}
+    \item[A.] rare-earth dopants
+    \item[B.] purified gases
+    \item[C.] semiconductor-grade coatings
+    \item[D.] ultra-pure resins
+  \end{itemize}
+  \item At the 3nm process node, transistor gate widths correspond to roughly \underline{\hspace{2.5cm}}. \emph{(Correct: C; False-lure item; False-lure option: B (46 silicon atoms wide))}
+  \begin{itemize}
+    \item[A.] 44 carbon atoms
+    \item[B.] 46 silicon atoms
+    \item[C.] 48 silicon atoms
+    \item[D.] 42 carbon atoms
+  \end{itemize}
+  \item Legacy-node capacity additions require \underline{\hspace{2.5cm}} and produce margins of 15--25\%. \emph{(Correct: C; Article-only item)}
+  \begin{itemize}
+    \item[A.] 6--9 months
+    \item[B.] 12--15 months
+    \item[C.] 18--24 months
+    \item[D.] 30--36 months
+  \end{itemize}
+  \item By 2019, some manufacturers operated on \underline{\hspace{2.5cm}} for certain components. \emph{(Correct: A; Article-only item)}
+  \begin{itemize}
+    \item[A.] single-week buffers
+    \item[B.] two-month buffers
+    \item[C.] quarterly buffers
+    \item[D.] ten-day buffers
+  \end{itemize}
+  \item Western advanced-node production requires subsidies amounting to \underline{\hspace{2.5cm}} of total costs. \emph{(Correct: B; Article-only item)}
+  \begin{itemize}
+    \item[A.] around one-tenth
+    \item[B.] roughly one-quarter to one-third
+    \item[C.] nearly one-half
+    \item[D.] two-thirds
+  \end{itemize}
+\end{enumerate}
